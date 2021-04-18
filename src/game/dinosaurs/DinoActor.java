@@ -126,69 +126,47 @@ public abstract class DinoActor extends Actor {
 
     // IGNORE GET ALLOWABLE ACTIONS AND PLAY TURN FOR NOW - JUST TESTING STUFF OUT
 
+
     @Override
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
-        Actions allowableActions = new Actions();
-
-        if (otherActor instanceof DinoActor){
-            if (this.getSex() != ((DinoActor)otherActor).getSex()){
-//                allowableActions.add(new BreedingAction(this));
-            }
-        }
-        return allowableActions;
+        return new Actions(new BreedingAction(this));
     }
 
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        System.out.println(lastAction);
         aging();
         decrementFoodLevel();
         roarIfHungry();
 
-//        ArrayList<Action> allActions = new ArrayList<>();
-//        allActions.addAll(actions);
-//
-//        for (Behaviour b: behaviour){
-//            if (b.getAction() != null){
-//                allActions.add(b);
-//            }
-//        }
+        Action actionToExecute = new DoNothingAction();
 
-        // sort
-        // return the first action
+        // if lastAction has a subsequent action, always return that
+        if (lastAction != null && lastAction.getNextAction() != null){
+            actionToExecute = lastAction.getNextAction();
+        }
+        else {
+            // all possible actions included into this list
+            ArrayList<Action> possibleActions = new ArrayList<>();
+            for (Action a: actions){
+                possibleActions.add(a);
+            }
 
+            // calling getAction for every behaviour can help us to do some necessary processing
+            // as well even if it returns null in the end
+            for (Behaviour b: behaviour){
+                if (b.getAction(this, map) != null){
+                    possibleActions.add(b.getAction(this, map));
+                }
+            }
 
+            // sort the actions by defined priority
 
+            if (possibleActions.size() > 0){
+                actionToExecute = possibleActions.get(0);
+            }
+        }
 
-//
-//        if (getSex() == Sex.FEMALE && hasCapability(PregnancyStatus.PREGNANT)) {
-//            if (turnsTillLayEgg == 0) {
-//                System.out.println("Lay egg! ");
-//                removeCapability(PregnancyStatus.PREGNANT);
-//                return new LayEggAction();
-//            } else {
-//                System.out.println("decrement");
-//                turnsTillLayEgg--;
-//            }
-//        }
-//
-//        for (Action a: actions){
-//            if (a instanceof BreedingAction && a != null && firstTime){
-//                firstTime = false;
-//                return a;
-//            }
-//        }
-//        Action follow = new FollowMateBehaviour().getAction(this, map);
-//        if (follow != null){
-//            System.out.println("ret follow");
-//            return follow;
-//        }
-//        else {
-//            System.out.println("follow null");
-//        }
-
-
-        return behaviour.get(0).getAction(this, map);
+        return actionToExecute;
     }
 
 
