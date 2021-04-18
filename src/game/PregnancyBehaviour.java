@@ -19,6 +19,7 @@ public class PregnancyBehaviour implements Behaviour {
                     actorAsDino.decrementPregnancyPeriod();
                 }
                 else {
+                    actorAsDino.setPregnant(false);
                     return new LayEggAction();
                 }
             }
