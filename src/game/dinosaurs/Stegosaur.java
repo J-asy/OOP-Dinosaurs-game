@@ -16,14 +16,14 @@ import game.Sex;
 public class Stegosaur extends DinoActor {
 
 
-    private static final DinoEncyclopedia dinoType = DinoEncyclopedia.STEGOSAUR;
+    private static final DinoEncyclopedia DINO_TYPE = DinoEncyclopedia.STEGOSAUR;
 
     public Stegosaur(Sex sex) {
-        super(dinoType, sex);
+        super(DINO_TYPE, sex);
     }
 
     public Stegosaur() {
-        super(dinoType);
+        super(DINO_TYPE);
     }
 
     @Override

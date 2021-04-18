@@ -10,14 +10,14 @@ import game.Sex;
 
 public class Allosaur extends DinoActor {
 
-    private static final DinoEncyclopedia dinoType = DinoEncyclopedia.ALLOSAUR;
+    private static final DinoEncyclopedia DINO_TYPE = DinoEncyclopedia.ALLOSAUR;
 
     public Allosaur(Sex sex) {
-        super(dinoType, sex);
+        super(DINO_TYPE, sex);
     }
 
     public Allosaur() {
-        super(dinoType);
+        super(DINO_TYPE);
     }
 
     @Override

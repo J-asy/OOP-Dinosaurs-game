@@ -10,14 +10,14 @@ import game.Sex;
 
 public class Brachiosaur extends DinoActor {
 
-    private static final DinoEncyclopedia dinoType = DinoEncyclopedia.BRACHIOSAUR;
+    private static final DinoEncyclopedia DINO_TYPE = DinoEncyclopedia.BRACHIOSAUR;
 
     public Brachiosaur(Sex sex) {
-        super(dinoType, sex);
+        super(DINO_TYPE, sex);
     }
 
     public Brachiosaur() {
-        super(dinoType);
+        super(DINO_TYPE);
     }
 
     @Override
