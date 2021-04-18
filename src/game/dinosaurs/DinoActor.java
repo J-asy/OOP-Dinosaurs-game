@@ -137,7 +137,7 @@ public abstract class DinoActor extends Actor {
         }
         return allowableActions;
     }
-    
+
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         System.out.println(lastAction);
