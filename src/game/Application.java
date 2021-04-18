@@ -1,5 +1,6 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class Application {
 		".....#_____#....................................................................",
 		".....#_____#....................................................................",
 		".....###.###....................................................................",
-		"................................................................................",
+		"........+.......................................................................",
 		"......................................+++.......................................",
 		".......................................++++.....................................",
 		"...................................+++++........................................",
@@ -46,17 +47,29 @@ public class Application {
 		".........................................................................++++...",
 		"..........................................................................++....",
 		"................................................................................");
-		GameMap gameMap = new GameMap(groundFactory, map );
+		GameMap gameMap = new GameMap(groundFactory, map);
 		world.addGameMap(gameMap);
 		
 		Actor player = new Player("Player", '@', 100);
 		world.addPlayer(player, gameMap.at(9, 4));
-		
+
 		// Place a pair of stegosaurs in the middle of the map
-		gameMap.at(30, 12).addActor(new Stegosaur("Stegosaur"));
-		gameMap.at(32, 12).addActor(new Stegosaur("Stegosaur"));
-		
-			
+		gameMap.at(9, 3).addActor(new Stegosaur("Stegosaur", 'f'));
+		gameMap.at(32, 12).addActor(new Stegosaur("Stegosaur", 'm'));
+
+		// Add a small herd of brachiosaur in the middle of the map
+		ArrayList<Integer> x_placements = new ArrayList<>(Arrays.asList(50, 52, 40, 42));
+		ArrayList<Integer> y_placements = new ArrayList<>(Arrays.asList(6, 6, 18, 18));
+		char brachiosaurSex = 'm';
+		for (int i = 0; i < x_placements.size(); i++){
+			if (i < x_placements.size() / 2){
+				brachiosaurSex = 'f';
+			}
+			gameMap.at(x_placements.get(i), y_placements.get(i)).addActor(new Brachiosaur("Brachiosaur", brachiosaurSex));
+		}
+
 		world.run();
 	}
+
+
 }

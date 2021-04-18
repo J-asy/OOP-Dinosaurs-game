@@ -47,6 +47,7 @@ public class AttackAction extends Action {
 		target.hurt(damage);
 		if (!target.isConscious()) {
 			Item corpse = new PortableItem("dead " + target, '%');
+			corpse.hasCapability(FoodType.CARNIVORE);
 			map.locationOf(target).addItem(corpse);
 			
 			Actions dropActions = new Actions();
@@ -58,7 +59,6 @@ public class AttackAction extends Action {
 			
 			result += System.lineSeparator() + target + " is killed.";
 		}
-
 		return result;
 	}
 
