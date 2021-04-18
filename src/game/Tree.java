@@ -19,6 +19,6 @@ public class Tree extends Ground {
 			displayChar = 't';
 		if (age == 20)
 			displayChar = 'T';
-		
+
 	}
 }
