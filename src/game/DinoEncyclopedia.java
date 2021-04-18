@@ -2,7 +2,7 @@ package game;
 
 // enum class to store all values that don't need to be changed
 // utilized by DinoActor and its child classes
-// this way we dont need to have attributes to store these values in the actors - more clean and maintainable
+// this way we don't need to have attributes to store these values in the actors - more clean and maintainable
 
 public enum DinoEncyclopedia {
     STEGOSAUR('S', "Stegosaur", 50, 100, 90, 30, 50, 30, 20),

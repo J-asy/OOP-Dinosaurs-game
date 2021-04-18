@@ -21,8 +21,9 @@ public class BreedingAction extends Action {
         if (actor instanceof DinoActor) {
             boolean conditionOne = target.getSex() != ((DinoActor)actor).getSex();  // different sex
             boolean conditionTwo = target.getClass().getName().equals(actor.getClass().getName());  // same species
+            boolean conditionThree = target.isMatured() && ((DinoActor) actor).isMatured(); // both are adults 
 
-            if (conditionOne && conditionTwo){
+            if (conditionOne && conditionTwo && conditionThree){
                 DinoActor femaleDino;
                 if (target.getSex() == Sex.FEMALE){
                     femaleDino = target;
