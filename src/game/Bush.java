@@ -23,8 +23,8 @@ public class Bush extends Ground {
     @Override
     public void tick(Location location){
 
-        // If a Brachiosaur steps on the bush, ground reverts back to dirt :(
-        if (location.getActor() instanceof Brachiosaur){
+        // If a Brachiosaur steps on the bush, 50% chance ground reverts back to dirt :(
+        if (location.getActor() instanceof Brachiosaur && Probability.generateProbability(0.5f)){
             location.setGround(new Dirt());
         }
         else {
@@ -62,7 +62,9 @@ public class Bush extends Ground {
 
     @Override
     public Actions allowableActions(Actor actor, Location location, String direction){
-        return new Actions(new SearchItemAction(direction));
+        Actions list = super.allowableActions(actor, location, direction);
+        list.add(new SearchItemAction(direction));
+        return list;
     }
 
 }

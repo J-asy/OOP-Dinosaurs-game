@@ -30,6 +30,7 @@ public class Dirt extends Ground {
 			}
 			else if (groundType instanceof Tree) {
 				adjacentTree = true;
+				break;
 			}
 		}
 
