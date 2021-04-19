@@ -1,6 +1,7 @@
 package game.pregnancy;
 
 import edu.monash.fit2099.engine.Location;
+import game.FoodType;
 import game.PortableItem;
 import game.dinosaurs.Allosaur;
 import game.dinosaurs.Brachiosaur;
@@ -28,6 +29,7 @@ public class Egg extends PortableItem {
         super("Egg", 'o');
         initializeWaitTurns(DINO_EGG_DICTIONARY.get(parent));
         setParent(parent);
+        addCapability(FoodType.CARNIVORE);
     }
 
     private void setParent(char newParent){
