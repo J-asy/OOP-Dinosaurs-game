@@ -2,7 +2,7 @@ package game;
 
 import edu.monash.fit2099.engine.Item;
 
-public abstract class MealKitsItem extends Item {
+public class MealKitsItem extends Item {
     /***
      * Constructor.
      *  @param name the name of this Item

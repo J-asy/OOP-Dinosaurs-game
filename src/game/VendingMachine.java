@@ -17,16 +17,16 @@ class VendingMachine {
             System.out.println("Fruit Get!");
         }
         else if (choice == 2 && ecoPoints >= 100){
-            VegeMealKit vegeMealKit = new VegeMealKit("VegetarianMealKit",
-                    actor.getDisplayChar(),true);
+            MealKitsItem vegeMealKit = new MealKitsItem("VegetarianMealKit",
+                    actor.getDisplayChar(), true);
             vegeMealKit.addCapability(FoodType.HERBIVORE);
             actor.addItemToInventory(vegeMealKit);
             EcoPoints.decrementEcoPoints(100);
             System.out.println("Vege meal kit Get!");
         }
         else if (choice == 3 && ecoPoints >= 500){
-            MeatMealKit meatMealKit = new MeatMealKit("CarnivoreMealKit",
-                    actor.getDisplayChar(),true);
+            MealKitsItem meatMealKit = new MealKitsItem("CarnivoreMealKit",
+                    actor.getDisplayChar(), true);
             meatMealKit.addCapability(FoodType.CARNIVORE);
             actor.addItemToInventory(meatMealKit);
             EcoPoints.decrementEcoPoints(500);

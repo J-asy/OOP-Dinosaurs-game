@@ -32,6 +32,7 @@ public class Bush extends Ground {
             if (age > 10){
                 if (Probability.generateProbability(0.1f)) {
                     Fruit fruit = new Fruit("fruit", displayChar, false);
+                    fruit.addCapability(FoodType.HERBIVORE);
                     EcoPoints.incrementEcoPoints(1);
                     bushFruits.add(fruit);
                 }

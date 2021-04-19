@@ -28,17 +28,18 @@ public class Tree extends Ground {
 			//get the list of items at the current location
 			//if the item is a Fruit, get the groundTime, if > 15, remove from location(rots)
 			List<Item> itemAtLocation = location.getItems();
-			for (int i = 0; i < itemAtLocation.size(); i++) {
-				if (itemAtLocation.get(i) instanceof Fruit){
-					int groundTime = ((Fruit) itemAtLocation.get(i)).getGroundTime();
-					if (groundTime == 15){
-						location.removeItem(itemAtLocation.get(i));
+			for (Item item : itemAtLocation) {
+				if (item instanceof Fruit) {
+					int groundTime = ((Fruit) item).getGroundTime();
+					if (groundTime == 15) {
+						location.removeItem(item);
 					}
 				}
 			}
 
 			if (Probability.generateProbability(0.5f)){
 				Fruit fruit = new Fruit("fruit",displayChar,false);
+				fruit.addCapability(FoodType.HERBIVORE);
 				EcoPoints.incrementEcoPoints(1);
 				treeFruits.add(fruit);
 			}
@@ -68,7 +69,9 @@ public class Tree extends Ground {
 	}
 
 	public Actions allowableActions(Actor actor, Location location, String direction){
-		return new Actions(new SearchItemAction(direction));
+		Actions list = super.allowableActions(actor, location, direction);
+		list.add(new SearchItemAction(direction));
+		return list;
 	}
 
 }
