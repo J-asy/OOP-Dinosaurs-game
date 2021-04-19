@@ -118,7 +118,9 @@ public abstract class DinoActor extends Actor {
         age++;
         if (getAge() >= dinoType.getMatureWhen()){
             displayChar = Character.toUpperCase(getDisplayChar());
-            addCapability(BreedingCapability.CAN_BREED);
+            if (getFoodLevel() >= dinoType.getCapableBreedingWhen()){
+                addCapability(BreedingCapability.CAN_BREED);
+            }
         }
     }
 
