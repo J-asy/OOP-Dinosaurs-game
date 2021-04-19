@@ -39,7 +39,7 @@ public class Stegosaur extends Actor {
 	 * FIXME: Stegosaur wanders around at random, or if no suitable MoveActions are available, it
 	 * just stands there.  That's boring.
 	 * 
-	 * @see edu.monash.fit2099.engine.Actor#playTurn(Actions, Action, GameMap, Display)
+	 * @see Actor#playTurn(Actions, Action, GameMap, Display)
 	 */
 	@Override
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
