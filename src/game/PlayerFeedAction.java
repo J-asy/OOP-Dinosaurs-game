@@ -11,21 +11,22 @@ public class PlayerFeedAction extends Action {
     public String execute(Actor actor, GameMap map) {
 
         if (target instanceof Stegosaur || target instanceof Brachiosaur){
-            target.heal(20);
             for (Item item: actor.getInventory()){
                 if (item.hasCapability(FoodType.HERBIVORE)) {
+                    if (item instanceof Fruit)
+                        EcoPoints.incrementEcoPoints(10);
                     actor.removeItemFromInventory(item);
-                    EcoPoints.incrementEcoPoints(10);
+                    target.heal(20);
                     return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
                             ") increases food level by 20!";
                 }
             }
         }
         else if (target instanceof Allosaur){
-            target.heal(20);
             for (Item item: actor.getInventory()){
                 if (item.hasCapability(FoodType.CARNIVORE)) {
                     actor.removeItemFromInventory(item);
+                    target.heal(20);
                     return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
                             ") increases food level by 20!";
                 }
