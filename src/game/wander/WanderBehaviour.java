@@ -1,4 +1,4 @@
-package game.wanderbehaviour;
+package game.wander;
 
 import java.util.ArrayList;
 import java.util.Random;

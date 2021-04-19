@@ -21,7 +21,6 @@ public class FollowMateBehaviour implements Behaviour {
         // if actor is a player, player doesn't follow anything
         if(actor instanceof DinoActor) {
             Location actorLocation = map.locationOf(actor);
-            List<Exit> actorExits = actorLocation.getExits();  // exits that are directly adjacent to actor
             List<Exit> visibleExits = lookAround(map, actor);  // exits that are two squares away from actor
 
             DinoActor actorAsDino = (DinoActor) actor;

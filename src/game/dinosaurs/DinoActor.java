@@ -6,7 +6,7 @@ import game.*;
 import game.breed.BreedingAction;
 import game.breed.BreedingCapability;
 import game.utility.Probability;
-import game.wanderbehaviour.WanderBehaviour;
+import game.wander.WanderBehaviour;
 
 import java.util.ArrayList;
 
