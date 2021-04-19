@@ -2,7 +2,10 @@ package game.pregnancy;
 
 import edu.monash.fit2099.engine.Location;
 import game.PortableItem;
-import game.dinosaurs.*;
+import game.dinosaurs.Allosaur;
+import game.dinosaurs.Brachiosaur;
+import game.dinosaurs.DinoEncyclopedia;
+import game.dinosaurs.DinoActor;
 import game.dinosaurs.Stegosaur;
 
 import java.util.Map;
