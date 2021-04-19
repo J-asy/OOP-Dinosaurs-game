@@ -1,8 +1,5 @@
 package game.dinosaurs;
 
-import game.DinoEncyclopedia;
-import game.Sex;
-
 
 public class Brachiosaur extends DinoActor {
 

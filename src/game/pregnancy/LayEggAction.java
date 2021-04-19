@@ -1,4 +1,4 @@
-package game;
+package game.pregnancy;
 
 import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;

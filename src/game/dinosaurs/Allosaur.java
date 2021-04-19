@@ -3,10 +3,8 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.Actions;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
-import game.AttackAction;
-import game.BreedingAction;
-import game.DinoEncyclopedia;
-import game.Sex;
+import game.attack.AttackAction;
+import game.breed.BreedingAction;
 
 public class Allosaur extends DinoActor {
 

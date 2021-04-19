@@ -1,4 +1,4 @@
-package game;
+package game.dinosaurs;
 
 // enum class to store all values that don't need to be changed
 // utilized by DinoActor and its child classes

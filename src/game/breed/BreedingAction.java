@@ -1,8 +1,9 @@
-package game;
+package game.breed;
 
 import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
+import game.dinosaurs.Sex;
 import game.dinosaurs.DinoActor;
 import game.utility.Probability;
 
@@ -21,7 +22,8 @@ public class BreedingAction extends Action {
         if (actor instanceof DinoActor) {
             boolean conditionOne = target.getSex() != ((DinoActor)actor).getSex();  // different sex
             boolean conditionTwo = target.getClass().getName().equals(actor.getClass().getName());  // same species
-            boolean conditionThree = target.isMatured() && ((DinoActor) actor).isMatured(); // both are adults
+            boolean conditionThree = target.hasCapability(BreedingCapability.CAN_BREED) &&
+                    target.hasCapability(BreedingCapability.CAN_BREED); // both are adults and can breed
 
             if (conditionOne && conditionTwo && conditionThree){
                 DinoActor femaleDino;

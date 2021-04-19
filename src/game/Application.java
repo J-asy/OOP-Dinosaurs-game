@@ -8,6 +8,12 @@ import edu.monash.fit2099.engine.Display;
 import edu.monash.fit2099.engine.FancyGroundFactory;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.World;
+import game.dinosaurs.Sex;
+import game.dinosaurs.Stegosaur;
+import game.environment.Dirt;
+import game.environment.Floor;
+import game.environment.Tree;
+import game.environment.Wall;
 
 /**
  * The main class for the Jurassic World game.
@@ -53,8 +59,8 @@ public class Application {
 		world.addPlayer(player, gameMap.at(9, 4));
 		
 		// Place a pair of stegosaurs in the middle of the map
-		gameMap.at(30, 12).addActor(new Stegosaur("Stegosaur"));
-		gameMap.at(32, 12).addActor(new Stegosaur("Stegosaur"));
+		gameMap.at(30, 12).addActor(new Stegosaur(Sex.FEMALE));
+		gameMap.at(32, 12).addActor(new Stegosaur(Sex.MALE));
 		
 			
 		world.run();

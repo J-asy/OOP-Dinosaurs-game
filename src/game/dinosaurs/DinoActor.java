@@ -3,7 +3,11 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
+import game.breed.BreedingAction;
+import game.breed.BreedingCapability;
 import game.utility.Probability;
+import game.wanderbehaviour.WanderBehaviour;
+
 import java.util.ArrayList;
 
 
@@ -114,6 +118,7 @@ public abstract class DinoActor extends Actor {
         age++;
         if (getAge() >= dinoType.getMatureWhen()){
             displayChar = Character.toUpperCase(getDisplayChar());
+            addCapability(BreedingCapability.CAN_BREED);
         }
     }
 
