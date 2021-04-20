@@ -151,27 +151,17 @@ public abstract class DinoActor extends Actor {
         if (lastAction != null && lastAction.getNextAction() != null){
             actionToExecute = lastAction.getNextAction();
         }
-        else {
-            // all possible actions included into this list
-            ArrayList<Action> possibleActions = new ArrayList<>();
-            for (Action a: actions){
-                possibleActions.add(a);
-            }
+        else if (actions.size() > 0){
+            actionToExecute = actions.get(0);
+        }
 
-            // calling getAction for every behaviour can help us to do some necessary processing
-            // as well even if it returns null in the end
-            for (Behaviour b: behaviour){
-                if (b.getAction(this, map) != null){
-                    possibleActions.add(b.getAction(this, map));
+        // calling getAction for every behaviour can help us to do some necessary processing
+        // as well even if it returns null in the end
+        for (Behaviour b: behaviour){
+            if (b.getAction(this, map) != null && actionToExecute instanceof DoNothingAction){
+                    actionToExecute = b.getAction(this, map);
                 }
             }
-
-            // sort the actions by defined priority
-
-            if (possibleActions.size() > 0){
-                actionToExecute = possibleActions.get(0);
-            }
-        }
 
         return actionToExecute;
     }
