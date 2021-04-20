@@ -1,6 +1,11 @@
-package game;
+package game.environment;
 
 import edu.monash.fit2099.engine.*;
+import game.EcoPoints;
+import game.FoodType;
+import game.Player;
+import game.utility.Probability;
+import game.action.SearchItemAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +75,8 @@ public class Tree extends Ground {
 
 	public Actions allowableActions(Actor actor, Location location, String direction){
 		Actions list = super.allowableActions(actor, location, direction);
-		list.add(new SearchItemAction(direction));
+		if (actor instanceof Player)
+			list.add(new SearchItemAction(direction));
 		return list;
 	}
 

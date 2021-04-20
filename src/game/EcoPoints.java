@@ -1,6 +1,6 @@
 package game;
 
-class EcoPoints {
+public class EcoPoints {
 
     private static int ecoPoints = 0;
 

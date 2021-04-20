@@ -1,8 +1,9 @@
-package game;
+package game.environment;
 
 import edu.monash.fit2099.engine.Exit;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
+import game.utility.Probability;
 
 
 /**

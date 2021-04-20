@@ -1,17 +1,14 @@
-package game;
+package game.utility;
 
 import java.util.Random;
 
-class Probability {
+ public class Probability {
 
     public static boolean generateProbability(float probability){
 
         Random r = new Random();
         float randFloat =  r.nextFloat();
 
-        if (randFloat <= probability){
-            return true;
-        }
-        return false;
+        return randFloat <= probability;
     }
 }

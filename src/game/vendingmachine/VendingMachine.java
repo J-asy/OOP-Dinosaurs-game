@@ -1,6 +1,8 @@
-package game;
+package game.vendingmachine;
 
 import edu.monash.fit2099.engine.Actor;
+import game.*;
+import game.environment.Fruit;
 
 class VendingMachine {
 

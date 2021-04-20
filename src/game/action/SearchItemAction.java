@@ -1,11 +1,15 @@
-package game;
+package game.action;
 
 import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Exit;
 import edu.monash.fit2099.engine.GameMap;
+import game.EcoPoints;
+import game.environment.Bush;
+import game.environment.Fruit;
+import game.environment.Tree;
+import game.utility.Probability;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchItemAction extends Action {

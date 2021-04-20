@@ -1,6 +1,12 @@
-package game;
+package game.action;
 
 import edu.monash.fit2099.engine.*;
+import game.EcoPoints;
+import game.FoodType;
+import game.dinosaurs.Allosaur;
+import game.dinosaurs.Brachiosaur;
+import game.dinosaurs.Stegosaur;
+import game.environment.Fruit;
 
 public class PlayerFeedAction extends Action {
     private final Actor target;

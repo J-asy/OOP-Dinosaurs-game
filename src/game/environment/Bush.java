@@ -1,9 +1,13 @@
-package game;
+package game.environment;
 
 import edu.monash.fit2099.engine.Actions;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
+import game.*;
+import game.action.SearchItemAction;
+import game.dinosaurs.Brachiosaur;
+import game.utility.Probability;
 
 import java.util.ArrayList;
 
@@ -22,6 +26,7 @@ public class Bush extends Ground {
      */
     @Override
     public void tick(Location location){
+        super.tick(location);
 
         // If a Brachiosaur steps on the bush, 50% chance ground reverts back to dirt :(
         if (location.getActor() instanceof Brachiosaur && Probability.generateProbability(0.5f)){
@@ -64,7 +69,8 @@ public class Bush extends Ground {
     @Override
     public Actions allowableActions(Actor actor, Location location, String direction){
         Actions list = super.allowableActions(actor, location, direction);
-        list.add(new SearchItemAction(direction));
+        if (actor instanceof Player)
+            list.add(new SearchItemAction(direction));
         return list;
     }
 

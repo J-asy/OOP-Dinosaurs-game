@@ -1,6 +1,10 @@
-package game;
+package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
+import game.Behaviour;
+import game.FollowBehaviour;
+import game.action.PlayerFeedAction;
+import game.WanderBehaviour;
 
 import java.util.ArrayList;
 
@@ -34,9 +38,9 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    String getName(){ return name; }
+    public String getName(){ return name; }
 
-    int getFoodLevel(){
+    public int getFoodLevel(){
         return hitPoints;
     }
 

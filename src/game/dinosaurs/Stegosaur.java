@@ -1,8 +1,9 @@
-package game;
+package game.dinosaurs;
 
 import edu.monash.fit2099.engine.Actions;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
+import game.AttackAction;
 
 /**
  * A herbivorous dinosaur.

@@ -1,4 +1,4 @@
-package game;
+package game.dinosaurs;
 
 public class Allosaur extends DinoActor{
 

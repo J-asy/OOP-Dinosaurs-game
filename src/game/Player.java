@@ -1,6 +1,7 @@
 package game;
 
 import edu.monash.fit2099.engine.*;
+import game.vendingmachine.BuyAction;
 
 /**
  * Class representing the Player.
