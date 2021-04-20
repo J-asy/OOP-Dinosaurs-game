@@ -30,3 +30,7 @@ public class Allosaur extends DinoActor {
 
 
 }
+
+// sex?
+// attack behaviour
+// breeding behaviour

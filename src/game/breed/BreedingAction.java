@@ -18,34 +18,18 @@ public class BreedingAction extends Action {
 
     @Override
     public String execute(Actor actor, GameMap map) {
-        String executionDescription = null;
-        if (actor instanceof DinoActor) {
-            boolean conditionOne = target.getSex() != ((DinoActor)actor).getSex();  // different sex
-            boolean conditionTwo = target.getClass().getName().equals(actor.getClass().getName());  // same species
-            boolean conditionThree = target.hasCapability(BreedingCapability.CAN_BREED) &&
-                    target.hasCapability(BreedingCapability.CAN_BREED); // both are adults and can breed
-
-            if (conditionOne && conditionTwo && conditionThree){
-                DinoActor femaleDino;
-                if (target.getSex() == Sex.FEMALE){
-                    femaleDino = target;
-                }
-                else {
-                    femaleDino = (DinoActor)actor;
-                }
-
-                // if female dinosaur not already pregnant, breeding occurs
-                if (!femaleDino.isPregnant()) {
-                    executionDescription = menuDescription(actor);
-                    // but might or might not get pregnant later
-                    if (Probability.generateProbability(0.5F)){
-                        femaleDino.setPregnant(true);
-                    }
-                }
-
+        // might or might not get pregnant
+        if (Probability.generateProbability(0.5F)) {
+            DinoActor femaleDino;
+            if (target.getSex() == Sex.FEMALE){
+                femaleDino = target;
             }
+            else {
+                femaleDino = (DinoActor) actor;
+            }
+            femaleDino.setPregnant(true);
         }
-        return executionDescription;
+        return menuDescription(actor);
     }
 
     @Override
