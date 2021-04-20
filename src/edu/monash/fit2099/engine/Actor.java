@@ -155,6 +155,7 @@ public abstract class Actor implements ActorInterface, Capable, Printable {
 		return new IntrinsicWeapon(5, "punches");
 	}
 
+
 	/**
 	 * Returns true if and only if the current Actor has the required capability.
 	 *

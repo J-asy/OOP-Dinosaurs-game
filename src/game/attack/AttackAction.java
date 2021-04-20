@@ -1,4 +1,4 @@
-package game;
+package game.attack;
 
 import java.util.Random;
 
@@ -8,6 +8,9 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Weapon;
+import game.attack.Corpse;
+import game.dinosaurs.Allosaur;
+import game.dinosaurs.DinoActor;
 
 /**
  * Special Action for attacking other Actors.
@@ -46,7 +49,7 @@ public class AttackAction extends Action {
 
 		target.hurt(damage);
 		if (!target.isConscious()) {
-			Item corpse = new PortableItem("dead " + target, '%');
+			Item corpse = new Corpse(actor.getDisplayChar());
 			map.locationOf(target).addItem(corpse);
 			
 			Actions dropActions = new Actions();
@@ -57,6 +60,15 @@ public class AttackAction extends Action {
 			map.removeActor(target);	
 			
 			result += System.lineSeparator() + target + " is killed.";
+		}
+
+		if (actor instanceof Allosaur) {
+			if (((DinoActor)actor).isMatured()) {
+				actor.heal(20);
+			}
+			else {
+				actor.heal(10);
+			}
 		}
 
 		return result;
