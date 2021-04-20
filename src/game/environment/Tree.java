@@ -71,6 +71,8 @@ public class Tree extends Ground {
 		treeFruits.remove(i);
 	}
 
+
+
 	public Actions allowableActions(Actor actor, Location location, String direction){
 		Actions list = super.allowableActions(actor, location, direction);
 		list.add(new SearchItemAction(direction));
