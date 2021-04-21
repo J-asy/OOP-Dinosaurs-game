@@ -3,7 +3,7 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
 import game.FollowBehaviour;
-import game.action.PlayerFeedAction;
+import game.actions.PlayerFeedAction;
 import game.WanderBehaviour;
 
 import java.util.ArrayList;

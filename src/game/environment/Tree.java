@@ -5,7 +5,7 @@ import game.EcoPoints;
 import game.FoodType;
 import game.Player;
 import game.utility.Probability;
-import game.action.SearchItemAction;
+import game.actions.SearchItemAction;
 
 import java.util.ArrayList;
 import java.util.List;

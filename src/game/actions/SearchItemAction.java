@@ -1,4 +1,4 @@
-package game.action;
+package game.actions;
 
 import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
@@ -31,19 +31,15 @@ public class SearchItemAction extends Action {
                 if (exit.getName().equalsIgnoreCase(direction)) {
                     if (exit.getDestination().getGround() instanceof Bush) {
                         Fruit fruit = ((Bush) exit.getDestination().getGround()).decrementBushItem();
-//                        if (fruit != null) {
                         actor.addItemToInventory(fruit);
                         EcoPoints.incrementEcoPoints(10);
                         System.out.println("Fruit found from bush!");
-//                        }
                     }
                     else if (exit.getDestination().getGround() instanceof Tree){
                         Fruit fruit = ((Tree) exit.getDestination().getGround()).decrementTreeItem();
-//                        if (fruit != null) {
                         actor.addItemToInventory(fruit);
                         EcoPoints.incrementEcoPoints(10);
                         System.out.println("Fruit found from tree!");
-//                        }
                     }
                     break;
                 }

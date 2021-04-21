@@ -4,7 +4,7 @@ import edu.monash.fit2099.engine.Actor;
 import game.*;
 import game.environment.Fruit;
 
-class VendingMachine {
+public class VendingMachine {
 
     public static boolean choose(int choice, Actor actor){
 
@@ -20,7 +20,7 @@ class VendingMachine {
         }
         else if (choice == 2 && ecoPoints >= 100){
             MealKitsItem vegeMealKit = new MealKitsItem("VegetarianMealKit",
-                    actor.getDisplayChar(), true);
+                    actor.getDisplayChar());
             vegeMealKit.addCapability(FoodType.HERBIVORE);
             actor.addItemToInventory(vegeMealKit);
             EcoPoints.decrementEcoPoints(100);
@@ -28,7 +28,7 @@ class VendingMachine {
         }
         else if (choice == 3 && ecoPoints >= 500){
             MealKitsItem meatMealKit = new MealKitsItem("CarnivoreMealKit",
-                    actor.getDisplayChar(), true);
+                    actor.getDisplayChar());
             meatMealKit.addCapability(FoodType.CARNIVORE);
             actor.addItemToInventory(meatMealKit);
             EcoPoints.decrementEcoPoints(500);
