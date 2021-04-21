@@ -1,4 +1,4 @@
-package game.pregnancy;
+package game.dinosaurs;
 
 import edu.monash.fit2099.engine.Location;
 import game.FoodType;

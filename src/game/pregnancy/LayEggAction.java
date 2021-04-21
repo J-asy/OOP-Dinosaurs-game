@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import game.dinosaurs.DinoActor;
+import game.dinosaurs.Egg;
 
 // DONE
 public class LayEggAction extends Action {
