@@ -166,7 +166,7 @@ public abstract class DinoActor extends Actor {
         return actionToExecute;
     }
 
-
+//TODO: add player feed action in get allowable (also in child classes)
 
 }
 
