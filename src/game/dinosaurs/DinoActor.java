@@ -105,6 +105,7 @@ public abstract class DinoActor extends Actor {
         pregnancyPeriod--;
     }
 
+
     // age
     private int getAge(){
         return age;
@@ -127,9 +128,6 @@ public abstract class DinoActor extends Actor {
     public void setChildDisplayCharacter(){
         this.displayChar = Character.toLowerCase(displayChar);
     }
-
-    // unnecessary method to be remove just for testing
-    public void setAge(int age){ this.age = age; }
 
     // IGNORE GET ALLOWABLE ACTIONS AND PLAY TURN FOR NOW - JUST TESTING STUFF OUT
 

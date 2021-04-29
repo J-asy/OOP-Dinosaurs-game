@@ -6,13 +6,26 @@ import edu.monash.fit2099.engine.GameMap;
 import game.dinosaurs.DinoActor;
 import game.dinosaurs.Egg;
 
-// DONE
+/**
+ * Special Action for laying an Egg.
+ */
 public class LayEggAction extends Action {
 
-
+    /**
+     * Empty constructor.
+     */
     public LayEggAction(){
     }
 
+    /**
+     * Creates and places an Egg object at the location of the actor
+     * to simulate the actor laying an egg, as well as return a description
+     * of the process
+     *
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return Description of actor laying an egg
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         String executionDescription = null;
@@ -26,6 +39,11 @@ public class LayEggAction extends Action {
 
     }
 
+    /**
+     * Returns a descriptive string of the lay egg action
+     * @param actor The actor performing the action.
+     * @return Description of actor laying an egg
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor + " lays egg!";

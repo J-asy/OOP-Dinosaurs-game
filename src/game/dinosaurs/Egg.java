@@ -3,28 +3,39 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.Location;
 import game.FoodType;
 import game.PortableItem;
-import game.dinosaurs.Allosaur;
-import game.dinosaurs.Brachiosaur;
-import game.dinosaurs.DinoEncyclopedia;
-import game.dinosaurs.DinoActor;
-import game.dinosaurs.Stegosaur;
 
 import java.util.Map;
 import static java.util.Map.entry;
 
-// DONE
+/**
+ * Represents an egg of a DinoActor.
+ */
 public class Egg extends PortableItem {
 
-    // dictionary to refer to for the total number of turns to wait till hatch for each dinosaur
+    /**
+     * Stores the total number of turns to wait till hatching for each dinosaur.
+     */
     private final static Map<Character, Integer> DINO_EGG_DICTIONARY = Map.ofEntries(
             entry(DinoEncyclopedia.STEGOSAUR.getDisplayChar(), 30),
             entry(DinoEncyclopedia.BRACHIOSAUR.getDisplayChar(), 30),
             entry(DinoEncyclopedia.ALLOSAUR.getDisplayChar(), 50)
     );
 
-    private int waitTurns; // turns left to wait till egg hatches
-    private char parent;  // displayChar of parent used to identify the species of egg
+    /**
+     * Turns left to wait till the egg hatches.
+     */
+    private int waitTurns;
 
+    /**
+     * Display character of the egg's parent, which will be used to identify the species
+     * of the dinosaur to be hatched
+     */
+    private char parent;
+
+    /**
+     * Constructor.
+     * @param parent display character of the parent dinosaur of the egg
+     */
     public Egg(char parent){
         super("Egg", 'o');
         initializeWaitTurns(DINO_EGG_DICTIONARY.get(parent));
@@ -32,6 +43,13 @@ public class Egg extends PortableItem {
         addCapability(FoodType.CARNIVORE);
     }
 
+    /**
+     * Checks if the character argument passed in is appropriate by checking
+     * against the DINO_EGG_DICTIONARY. If it is appropriate, sets the value of
+     * parent to the argument.
+     *
+     * @param newParent display character of the parent dinosaur of the egg
+     */
     private void setParent(char newParent){
         char dinoParent = Character.toUpperCase(newParent);
         for (DinoEncyclopedia d: DinoEncyclopedia.values()){
@@ -54,9 +72,16 @@ public class Egg extends PortableItem {
         }
     }
 
+    /**
+     * Checks if it is time for the egg to hatch yet. If it is time,
+     * the Egg object is removed from the location and a DinoActor of appropriate species
+     * (determined by the display character of the parent), will be added to that location.
+     * If it is not time yet, decrement waitTurn to indicate the remaining turns that
+     * the Egg has to wait before hatching.
+     *
+     * @param currentLocation The location of the ground on which we lie.
+     */
     public void tick(Location currentLocation) {
-        // check if supposed to hatch yet, if yes, baby dino born, baby dino added and egg removed from that location
-        // otherwise decrement wait turn
         DinoActor newDino;
         if (waitTurns == 0) {
 
@@ -72,7 +97,10 @@ public class Egg extends PortableItem {
                 throw new IllegalStateException("Unexpected value: " + parent);
             }
 
-            newDino.setChildDisplayCharacter();  // initialize character with lower case since default is upper case
+            // Dinosaurs which are not grown up yet are indicated with a lowercase display character
+            // This function call simply sets the new dinosaur's display character to lowercase.
+            newDino.setChildDisplayCharacter();
+
             currentLocation.removeItem(this);
             currentLocation.addActor(newDino);
         }

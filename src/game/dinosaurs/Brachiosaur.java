@@ -1,6 +1,8 @@
 package game.dinosaurs;
 
-
+/**
+ *
+ */
 public class Brachiosaur extends DinoActor {
 
     private static final DinoEncyclopedia DINO_TYPE = DinoEncyclopedia.BRACHIOSAUR;

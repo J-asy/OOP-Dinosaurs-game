@@ -1,8 +1,11 @@
 package game.dinosaurs;
 
-// enum class to store all values that don't need to be changed
-// utilized by DinoActor and its child classes
-// this way we don't need to have attributes to store these values in the actors - more clean and maintainable
+/**
+ * Enum class used to store all constants of dinosaur attributes, mainly utilized by DinoActor
+ * The purpose of this class is to have a standardized set of values that can be accessed
+ * by other classes we needed. This ensures a single point of change and making code more maintainable.
+ */
+
 
 public enum DinoEncyclopedia {
     STEGOSAUR('S', "Stegosaur", 50, 100, 90, 30, 50, 30, 20),
@@ -18,7 +21,6 @@ public enum DinoEncyclopedia {
     int capableBreedingWhen;
     int pregnancyPeriod;
     int unconsciousPeriod;
-    // others ?
 
     DinoEncyclopedia(char displayChar, String name, int initialHitPoints, int maxHitPoints, int hungryWhen,
                      int matureWhen, int capableBreedingWhen, int pregnancyPeriod, int unconsciousPeriod) {
