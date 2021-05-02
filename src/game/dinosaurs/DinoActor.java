@@ -5,6 +5,8 @@ import game.*;
 
 import game.breed.BreedingAction;
 import game.breed.BreedingCapability;
+import game.follow.FollowActorBehaviour;
+import game.pregnancy.PregnancyBehaviour;
 import game.utility.Probability;
 import game.wander.WanderBehaviour;
 
@@ -50,6 +52,46 @@ public abstract class DinoActor extends Actor {
         return dinoType;
     }
 
+    public Sex getSex(){
+        return sex;
+    }
+
+    /**
+     * Initializes the dinoActor with the standard behaviour that they should have.
+     */
+    private void initializeDinoBehaviour(){
+        behaviour = new ArrayList<>();
+        behaviour.add(new PregnancyBehaviour());
+        behaviour.add(new FollowActorBehaviour());
+        behaviour.add(new WanderBehaviour());
+    }
+
+    /**
+     * Increments the age of the dinosaur and simulates the action of the dinosaur growing up
+     */
+    private void aging(){
+        age++;
+        if (age >= dinoType.getMatureWhen()){
+            displayChar = Character.toUpperCase(getDisplayChar());
+        }
+    }
+
+    /**
+     * Sets the display character of the dinoActor to lowercase
+     * to show that the dinoActor is a baby dinosaur / not matured yet.
+     */
+    public void setChildDisplayCharacter(){
+        this.displayChar = Character.toLowerCase(displayChar);
+    }
+
+    /**
+     * Returns true if the dinoActor is matured, false otherwise.
+     * @return true if the dinoActor is matured, false otherwise
+     */
+    public boolean isMatured(){
+        return age >= dinoType.getMatureWhen();
+    }
+
     /**
      * Initializes the maxHitPoints of the dinoActor if the argument
      * passed in is greater than its hitPoints.
@@ -59,14 +101,6 @@ public abstract class DinoActor extends Actor {
         if (newMaxHitPoints >= hitPoints) {
             maxHitPoints = newMaxHitPoints;
         }
-    }
-
-    /**
-     * Initializes the dinoActor with the standard behaviour that they should have.
-     */
-    private void initializeDinoBehaviour(){
-        behaviour = new ArrayList<>();
-        behaviour.add(new WanderBehaviour());
     }
 
     /**
@@ -92,10 +126,6 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    public Sex getSex(){
-        return sex;
-    }
-
     /**
      * Returns true if the dinoActor has the capability to breed, false otherwise.
      * A dinoActor should only be able to breed if:
@@ -108,31 +138,29 @@ public abstract class DinoActor extends Actor {
     }
 
     /**
+     * Determines whether the dinoActor should have the Capability to breed and
+     * add or remove the capability accordingly.
+     */
+    public void adjustBreedingCapability() {
+        if (!canBreed()){
+            if (hitPoints >= dinoType.capableBreedingWhen && !isPregnant() && isMatured()){
+                addCapability(BreedingCapability.CAN_BREED);
+            }
+        }
+        else {
+            if (hitPoints < dinoType.capableBreedingWhen){
+                removeCapability(BreedingCapability.CAN_BREED);
+            }
+        }
+    }
+
+    /**
      * Returns true if the dinoActor is pregnant, false otherwise.
      * A dinoActor only has a chance to be pregnant after breeding.
      * @return true if the dinoActor is pregnant, false otherwise
      */
     public boolean isPregnant(){
         return hasCapability(PregnancyStatus.PREGNANT);
-    }
-
-    /**
-     * Change the dinoActor's state appropriately depending on argument passed in.
-     * If true is given as an argument, the dinoActor is set to pregnant,
-     * otherwise dinoActor is set to not pregnant.
-     * @param status true if the dinoActor should be pregnant, false otherwise
-     */
-    public void setPregnant(boolean status){
-        if (status){
-            addCapability(PregnancyStatus.PREGNANT);
-            initializePregnancyPeriod();
-            if (hasCapability(BreedingCapability.CAN_BREED)){
-                removeCapability(BreedingCapability.CAN_BREED);
-            }
-        }
-        else {
-            removeCapability(PregnancyStatus.PREGNANT);
-        }
     }
 
     /**
@@ -157,29 +185,22 @@ public abstract class DinoActor extends Actor {
     }
 
     /**
-     * Returns true if the dinoActor is matured, false otherwise.
-     * @return true if the dinoActor is matured, false otherwise
+     * Change the dinoActor's state appropriately depending on argument passed in.
+     * If true is given as an argument, the dinoActor is set to pregnant,
+     * otherwise dinoActor is set to not pregnant.
+     * @param status true if the dinoActor should be pregnant, false otherwise
      */
-    public boolean isMatured(){
-        return age >= dinoType.getMatureWhen();
-    }
-
-    /**
-     * Increments the age of the dinosaur and simulates the action of the dinosaur growing up
-     */
-    private void aging(){
-        age++;
-        if (age >= dinoType.getMatureWhen()){
-            displayChar = Character.toUpperCase(getDisplayChar());
+    public void setPregnant(boolean status){
+        if (status){
+            addCapability(PregnancyStatus.PREGNANT);
+            initializePregnancyPeriod();
+            if (hasCapability(BreedingCapability.CAN_BREED)){
+                removeCapability(BreedingCapability.CAN_BREED);
+            }
         }
-    }
-
-    /**
-     * Sets the display character of the dinoActor to lowercase
-     * to show that the dinoActor is a baby dinosaur / not matured yet.
-     */
-    public void setChildDisplayCharacter(){
-        this.displayChar = Character.toLowerCase(displayChar);
+        else {
+            removeCapability(PregnancyStatus.PREGNANT);
+        }
     }
 
     @Override
@@ -192,7 +213,7 @@ public abstract class DinoActor extends Actor {
         aging();
         decrementFoodLevel();
         roarIfHungry(map);
-        // add capability of breeding when reached level
+        adjustBreedingCapability();
 
         Action actionToExecute = new DoNothingAction();
 
@@ -216,7 +237,7 @@ public abstract class DinoActor extends Actor {
     }
 
 //TODO: add player feed action in get allowable (also in child classes) and fix playTurn method
-// make sure breeding capability added whenever needed etc
+
 }
 
 

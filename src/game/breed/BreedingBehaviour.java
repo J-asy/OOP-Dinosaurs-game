@@ -15,7 +15,7 @@ public class BreedingBehaviour implements Behaviour {
 
     /**
      * Constructor
-     * @param target
+     * @param target target that the actor intends to breed with
      */
     public BreedingBehaviour(DinoActor target) {
         this.target = target;
@@ -26,11 +26,11 @@ public class BreedingBehaviour implements Behaviour {
         if (actor instanceof DinoActor) {
             DinoActor actorAsDino = (DinoActor) actor;
 
-            boolean conditionOne = target.getSex() != actorAsDino.getSex();  // different sex
-            boolean conditionTwo = target.getDinoType() == actorAsDino.getDinoType(); // same species
-            boolean conditionThree = target.canBreed() && actorAsDino.canBreed(); // both are adults and can breed
+            boolean differentSex = target.getSex() != actorAsDino.getSex();
+            boolean sameSpecies = target.getDinoType() == actorAsDino.getDinoType();
+            boolean bothAbleToBreed = target.canBreed() && actorAsDino.canBreed();
 
-            if (conditionOne && conditionTwo && conditionThree) {
+            if (differentSex && sameSpecies && bothAbleToBreed) {
                 return new BreedingAction(target);
             }
 

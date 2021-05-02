@@ -7,17 +7,19 @@ import game.dinosaurs.DinoActor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Behaviour class that simulates Actor following another Actor
+ */
+public class FollowActorBehaviour implements Behaviour {
 
-public class FollowMateBehaviour implements Behaviour {
 
-
-    public FollowMateBehaviour() {
+    public FollowActorBehaviour() {
     }
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
         // if actor is a player, player doesn't follow anything
-        if(actor instanceof DinoActor) {
+        if (actor instanceof DinoActor) {
             Location actorLocation = map.locationOf(actor);
             List<Exit> visibleExits = lookAround(map, actor);  // exits that are two squares away from actor
 
@@ -31,11 +33,7 @@ public class FollowMateBehaviour implements Behaviour {
 
                     if (nearbyActor instanceof DinoActor) {
                         DinoActor targetAsDino = (DinoActor) nearbyActor;
-                        boolean conditionOne = targetAsDino.getSex() != actorAsDino.getSex(); // opposite sex
-                        boolean conditionTwo = !targetAsDino.isPregnant() && !actorAsDino.isPregnant(); // not pregnant
-                        boolean conditionThree = actorAsDino.getDinoType() == targetAsDino.getDinoType(); // same species
-
-                        if (conditionOne && conditionTwo && conditionThree){
+                        if (shouldFollowForBreeding(actorAsDino, targetAsDino)) {
                             return moveCloser(actorLocation, destination, actor);
                         }
                     }
@@ -43,10 +41,25 @@ public class FollowMateBehaviour implements Behaviour {
                 }
             }
         }
-
-        return null;
-
+            return null;
     }
+
+    private boolean shouldFollowForBreeding(DinoActor actorAsDino, DinoActor targetAsDino){
+        boolean differentSex = targetAsDino.getSex() != actorAsDino.getSex();
+        boolean sameSpecies = actorAsDino.getDinoType() == targetAsDino.getDinoType();
+        boolean bothCanBreed = targetAsDino.canBreed() && !actorAsDino.canBreed();
+        return differentSex && sameSpecies && bothCanBreed;
+    }
+
+    private boolean shouldFollowForAttacking(DinoActor actorAsDino, DinoActor nearbyActor){
+//        boolean isCarnivorous = actorAsDino.hasCapability();
+//        boolean
+//
+//        return isCarnivorous &&
+        return false;
+    }
+
+
 
     /**
      *  Returns the MoveActorAction that leads actor closer to target destination.
