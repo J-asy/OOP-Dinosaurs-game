@@ -5,7 +5,6 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import game.Behaviour;
 import game.dinosaurs.DinoActor;
-import game.dinosaurs.PregnancyStatus;
 
 /**
  * Simulates the pregnancy behaviour of an Actor.
@@ -24,7 +23,7 @@ public class PregnancyBehaviour implements Behaviour {
         if (actor instanceof DinoActor){
             DinoActor actorAsDino = (DinoActor) actor;
 
-            if (actorAsDino.hasCapability(PregnancyStatus.PREGNANT)){
+            if (actorAsDino.isPregnant()){
                 if (actorAsDino.getPregnancyPeriod() > 0){
                     actorAsDino.decrementPregnancyPeriod();
                 }

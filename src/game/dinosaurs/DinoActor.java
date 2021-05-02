@@ -82,6 +82,11 @@ public abstract class DinoActor extends Actor {
         return sex;
     }
 
+    // breeding
+    public boolean canBreed() {
+        return hasCapability(BreedingCapability.CAN_BREED);
+    }
+
     // pregnancy
     public boolean isPregnant(){
         return hasCapability(PregnancyStatus.PREGNANT);
@@ -124,9 +129,7 @@ public abstract class DinoActor extends Actor {
         age++;
         if (getAge() >= dinoType.getMatureWhen()){
             displayChar = Character.toUpperCase(getDisplayChar());
-            if (getFoodLevel() >= dinoType.getCapableBreedingWhen()){
-                addCapability(BreedingCapability.CAN_BREED);
-            }
+
         }
     }
 

@@ -7,8 +7,6 @@ import game.dinosaurs.DinoActor;
 import java.util.ArrayList;
 import java.util.List;
 
-// NOTE: I reckon the only part to change to adapt for following food - tree / corpse / egg etc
-// should be line 31 and the conditions to check
 
 public class FollowMateBehaviour implements Behaviour {
 
@@ -35,13 +33,13 @@ public class FollowMateBehaviour implements Behaviour {
                         DinoActor targetAsDino = (DinoActor) nearbyActor;
                         boolean conditionOne = targetAsDino.getSex() != actorAsDino.getSex(); // opposite sex
                         boolean conditionTwo = !targetAsDino.isPregnant() && !actorAsDino.isPregnant(); // not pregnant
-                        boolean conditionThree = actorAsDino.getClass().getName().equals(targetAsDino.getClass().
-                                getName()); // same species
+                        boolean conditionThree = actorAsDino.getDinoType() == targetAsDino.getDinoType(); // same species
 
                         if (conditionOne && conditionTwo && conditionThree){
                             return moveCloser(actorLocation, destination, actor);
                         }
                     }
+
                 }
             }
         }
@@ -50,7 +48,13 @@ public class FollowMateBehaviour implements Behaviour {
 
     }
 
-    // Returns the MoveActorAction that leads actor closer to target destination
+    /**
+     *  Returns the MoveActorAction that leads actor closer to target destination
+     * @param actorLocation
+     * @param destination
+     * @param actor
+     * @return
+     */
     private Action moveCloser(Location actorLocation, Location destination, Actor actor) {
         int currentDistance = distance(actorLocation, destination);
 
@@ -68,7 +72,13 @@ public class FollowMateBehaviour implements Behaviour {
         return null;
     }
 
-    // Retrieve all exits that are two squares away from actor
+
+    /**
+     * Returns a List of all Exits that are two squares away from actor
+     * @param map
+     * @param actor
+     * @return
+     */
     private List<Exit> lookAround(GameMap map, Actor actor){
         Location actorLocation = map.locationOf(actor);
         int[] seekOffset = {1, -1};
@@ -125,7 +135,7 @@ public class FollowMateBehaviour implements Behaviour {
      * @param b the first location
      * @return the number of steps between a and b if you only move in the four cardinal directions.
      */
-    private int distance(Location a, Location b) {
+    private static int distance(Location a, Location b) {
         return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
     }
 

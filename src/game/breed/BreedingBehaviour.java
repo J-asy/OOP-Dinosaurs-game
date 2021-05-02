@@ -28,12 +28,12 @@ public class BreedingBehaviour implements Behaviour {
 
             boolean conditionOne = target.getSex() != actorAsDino.getSex();  // different sex
             boolean conditionTwo = target.getDinoType() == actorAsDino.getDinoType(); // same species
-            boolean conditionThree = target.hasCapability(BreedingCapability.CAN_BREED) &&
-                    target.hasCapability(BreedingCapability.CAN_BREED); // both are adults and can breed
+            boolean conditionThree = target.canBreed() && actorAsDino.canBreed(); // both are adults and can breed
 
             if (conditionOne && conditionTwo && conditionThree) {
                 return new BreedingAction(target);
             }
+
         }
 
         return null;
