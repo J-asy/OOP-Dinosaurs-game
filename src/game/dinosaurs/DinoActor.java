@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public abstract class DinoActor extends Actor {
 
-    private ArrayList<Behaviour> behaviour;  // should have priority of behaviours
+    private ArrayList<Behaviour> behaviour;
     private DinoEncyclopedia dinoType;
     private Sex sex;
     private int age = 0;
@@ -39,6 +39,10 @@ public abstract class DinoActor extends Actor {
         else {
             sex = Sex.FEMALE;
         }
+    }
+
+    public DinoEncyclopedia getDinoType() {
+        return dinoType;
     }
 
     protected void setDinoType(DinoEncyclopedia dinoType){
@@ -87,6 +91,7 @@ public abstract class DinoActor extends Actor {
         if (status){
             addCapability(PregnancyStatus.PREGNANT);
             initializePregnancyPeriod();
+            removeCapability(BreedingCapability.CAN_BREED);
         }
         else {
             removeCapability(PregnancyStatus.PREGNANT);

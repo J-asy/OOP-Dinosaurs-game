@@ -1,16 +1,16 @@
 package game.dinosaurs;
 
 /**
- * Enum class used to store all constants of dinosaur attributes, mainly utilized by DinoActor
+ * Enum class used to store all constants of dinosaur attributes, mainly utilized by DinoActor.
  * The purpose of this class is to have a standardized set of values that can be accessed
- * by other classes we needed. This ensures a single point of change and making code more maintainable.
+ * by other classes we needed. This ensures a single point of change, making code more maintainable.
  */
 
 
 public enum DinoEncyclopedia {
-    STEGOSAUR('S', "Stegosaur", 50, 100, 90, 30, 50, 30, 20),
-    BRACHIOSAUR('B', "Brachiosaur", 100, 160, 140, 50, 70, 50, 15),
-    ALLOSAUR('A', "Allosaur", 20, 100, 90, 50, 50, 50, 20);
+    STEGOSAUR('S', "Stegosaur", 50, 100, 90, 30, 50, 10, 20),
+    BRACHIOSAUR('B', "Brachiosaur", 100, 160, 140, 50, 70, 30, 15),
+    ALLOSAUR('A', "Allosaur", 20, 100, 90, 50, 50, 20, 20);
 
     char displayChar;
     String name;

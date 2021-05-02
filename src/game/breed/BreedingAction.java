@@ -7,15 +7,30 @@ import game.dinosaurs.Sex;
 import game.dinosaurs.DinoActor;
 import game.utility.Probability;
 
-// DONE
+/**
+ * Simulates breeding action of Actors
+ */
 public class BreedingAction extends Action {
 
+    /**
+     * The dinosaur that another Actor will breed with.
+     */
     protected DinoActor target;
 
+    /**
+     * Constructor.
+     * @param target dinosaur that another Actor will breed with
+     */
     public BreedingAction(DinoActor target) {
         this.target = target;
     }
 
+    /**
+     *
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         // might or might not get pregnant

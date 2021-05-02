@@ -13,12 +13,12 @@ import static java.util.Map.entry;
 public class Egg extends PortableItem {
 
     /**
-     * Stores the total number of turns to wait till hatching for each dinosaur.
+     * Stores constants representing the total number of turns to wait till hatching for each dinosaur.
      */
-    private final static Map<Character, Integer> DINO_EGG_DICTIONARY = Map.ofEntries(
-            entry(DinoEncyclopedia.STEGOSAUR.getDisplayChar(), 30),
-            entry(DinoEncyclopedia.BRACHIOSAUR.getDisplayChar(), 30),
-            entry(DinoEncyclopedia.ALLOSAUR.getDisplayChar(), 50)
+    private final static Map<DinoEncyclopedia, Integer> DINO_EGG_DICTIONARY = Map.ofEntries(
+            entry(DinoEncyclopedia.STEGOSAUR, 30),
+            entry(DinoEncyclopedia.BRACHIOSAUR, 30),
+            entry(DinoEncyclopedia.ALLOSAUR, 50)
     );
 
     /**
@@ -27,55 +27,42 @@ public class Egg extends PortableItem {
     private int waitTurns;
 
     /**
-     * Display character of the egg's parent, which will be used to identify the species
-     * of the dinosaur to be hatched
+     * Uniquely identifies the species of the Egg's parent,
+     * baby dinosaur hatched out of the Egg will be of the same species
      */
-    private char parent;
+    private DinoEncyclopedia parent;
 
     /**
      * Constructor.
-     * @param parent display character of the parent dinosaur of the egg
+     * @param parent DinoEncyclopedia enum value of the parent dinosaur to identify its species
      */
-    public Egg(char parent){
+    public Egg(DinoEncyclopedia parent){
         super("Egg", 'o');
         initializeWaitTurns(DINO_EGG_DICTIONARY.get(parent));
         setParent(parent);
         addCapability(FoodType.CARNIVORE);
     }
 
-    /**
-     * Checks if the character argument passed in is appropriate by checking
-     * against the DINO_EGG_DICTIONARY. If it is appropriate, sets the value of
-     * parent to the argument.
-     *
-     * @param newParent display character of the parent dinosaur of the egg
-     */
-    private void setParent(char newParent){
-        char dinoParent = Character.toUpperCase(newParent);
-        for (DinoEncyclopedia d: DinoEncyclopedia.values()){
-            if (d.getDisplayChar() == newParent){
-                parent = dinoParent;
-                break;
-            }
-        }
+    private void setParent(DinoEncyclopedia newParent){
+        parent = newParent;
     }
 
-    public void initializeWaitTurns(int newWaitTurn){
+    private void initializeWaitTurns(int newWaitTurn){
         if (newWaitTurn >= 0){
             waitTurns = newWaitTurn;
         }
     }
 
-    public void decrementWaitTurn(){
+    private void decrementWaitTurn(){
         if (waitTurns > 0){
             waitTurns--;
         }
     }
 
     /**
-     * Checks if it is time for the egg to hatch yet. If it is time,
-     * the Egg object is removed from the location and a DinoActor of appropriate species
-     * (determined by the display character of the parent), will be added to that location.
+     * Checks if it is time for the egg to hatch yet.
+     * If it is time, the Egg object is removed from the location and
+     * a DinoActor of appropriate species will be added to that location.
      * If it is not time yet, decrement waitTurn to indicate the remaining turns that
      * the Egg has to wait before hatching.
      *
@@ -85,17 +72,11 @@ public class Egg extends PortableItem {
         DinoActor newDino;
         if (waitTurns == 0) {
 
-            if (parent == DinoEncyclopedia.STEGOSAUR.getDisplayChar()) {
-                newDino = new Stegosaur();
-            } else if (parent == DinoEncyclopedia.BRACHIOSAUR.getDisplayChar()){
-                newDino = new Brachiosaur();
-            }
-            else if (parent == DinoEncyclopedia.ALLOSAUR.getDisplayChar()) {
-                newDino = new Allosaur();
-            }
-            else {
-                throw new IllegalStateException("Unexpected value: " + parent);
-            }
+            newDino = switch (parent) {
+                case STEGOSAUR -> new Stegosaur();
+                case BRACHIOSAUR -> new Brachiosaur();
+                case ALLOSAUR -> new Allosaur();
+            };
 
             // Dinosaurs which are not grown up yet are indicated with a lowercase display character
             // This function call simply sets the new dinosaur's display character to lowercase.

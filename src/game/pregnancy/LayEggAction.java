@@ -30,7 +30,7 @@ public class LayEggAction extends Action {
     public String execute(Actor actor, GameMap map) {
         String executionDescription = null;
         if (actor instanceof DinoActor){
-            map.locationOf(actor).addItem(new Egg(actor.getDisplayChar()));
+            map.locationOf(actor).addItem(new Egg(((DinoActor) actor).getDinoType()));
             executionDescription = menuDescription(actor) + " at (" + map.locationOf(actor).x() + ", " +
                     map.locationOf(actor).y() + ")";
         }
@@ -40,7 +40,7 @@ public class LayEggAction extends Action {
     }
 
     /**
-     * Returns a descriptive string of the lay egg action
+     * Returns a descriptive string of the lay egg action.
      * @param actor The actor performing the action.
      * @return Description of actor laying an egg
      */
