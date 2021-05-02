@@ -1,13 +1,16 @@
 package game.dinosaurs;
 
-// enum class to store all values that don't need to be changed
-// utilized by DinoActor and its child classes
-// this way we don't need to have attributes to store these values in the actors - more clean and maintainable
+/**
+ * Enum class used to store all constants of dinosaur attributes, mainly utilized by DinoActor.
+ * The purpose of this class is to have a standardized set of values that can be accessed
+ * by other classes we needed. This ensures a single point of change, making code more maintainable.
+ */
+
 
 public enum DinoEncyclopedia {
-    STEGOSAUR('S', "Stegosaur", 50, 100, 90, 30, 50, 30, 20),
-    BRACHIOSAUR('B', "Brachiosaur", 100, 160, 140, 50, 70, 50, 15),
-    ALLOSAUR('A', "Allosaur", 20, 100, 90, 50, 50, 50, 20);
+    STEGOSAUR('S', "Stegosaur", 50, 100, 90, 30, 50, 10, 20, false),
+    BRACHIOSAUR('B', "Brachiosaur", 100, 160, 140, 50, 70, 30, 15, false),
+    ALLOSAUR('A', "Allosaur", 20, 100, 90, 50, 50, 20, 20, false);
 
     char displayChar;
     String name;
@@ -18,10 +21,10 @@ public enum DinoEncyclopedia {
     int capableBreedingWhen;
     int pregnancyPeriod;
     int unconsciousPeriod;
-    // others ?
+    boolean isUnconscious;
 
     DinoEncyclopedia(char displayChar, String name, int initialHitPoints, int maxHitPoints, int hungryWhen,
-                     int matureWhen, int capableBreedingWhen, int pregnancyPeriod, int unconsciousPeriod) {
+                     int matureWhen, int capableBreedingWhen, int pregnancyPeriod, int unconsciousPeriod, boolean isUnconscious) {
         this.displayChar = displayChar;
         this.name = name;
         this.initialHitPoints = initialHitPoints;
@@ -31,6 +34,7 @@ public enum DinoEncyclopedia {
         this.capableBreedingWhen = capableBreedingWhen;
         this.pregnancyPeriod = pregnancyPeriod;
         this.unconsciousPeriod = unconsciousPeriod;
+        this.isUnconscious = isUnconscious;
     }
 
     public char getDisplayChar(){
@@ -69,6 +73,10 @@ public enum DinoEncyclopedia {
         return unconsciousPeriod;
     }
 
+    public boolean getIsUnconscious(){
+        return isUnconscious;
+    }
+
 
 
 
@@ -76,4 +84,3 @@ public enum DinoEncyclopedia {
 
 
 }
-

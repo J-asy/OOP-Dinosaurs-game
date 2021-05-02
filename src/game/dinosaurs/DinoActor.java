@@ -3,17 +3,22 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
+import game.breed.BreedingAction;
+import game.breed.BreedingCapability;
 import game.utility.Probability;
+import game.wander.WanderBehaviour;
+
 import java.util.ArrayList;
 
 
 public abstract class DinoActor extends Actor {
 
-    private ArrayList<Behaviour> behaviour;  // should have priority of behaviours
+    private ArrayList<Behaviour> behaviour;
     private DinoEncyclopedia dinoType;
     private Sex sex;
     private int age = 0;
     private int pregnancyPeriod;
+    private int unconsciousPeriod;
 
     public DinoActor(DinoEncyclopedia dinoType, Sex sex){
         super(dinoType.getName(), dinoType.getDisplayChar(), dinoType.getInitialHitPoints());
@@ -37,6 +42,10 @@ public abstract class DinoActor extends Actor {
         }
     }
 
+    public DinoEncyclopedia getDinoType() {
+        return dinoType;
+    }
+
     protected void setDinoType(DinoEncyclopedia dinoType){
         this.dinoType = dinoType;
     }
@@ -53,7 +62,7 @@ public abstract class DinoActor extends Actor {
     }
 
     // Food level
-    public int getFoodLevel(){
+    int getFoodLevel(){
         return hitPoints;
     }
 
@@ -74,6 +83,11 @@ public abstract class DinoActor extends Actor {
         return sex;
     }
 
+    // breeding
+    public boolean canBreed() {
+        return hasCapability(BreedingCapability.CAN_BREED);
+    }
+
     // pregnancy
     public boolean isPregnant(){
         return hasCapability(PregnancyStatus.PREGNANT);
@@ -83,6 +97,7 @@ public abstract class DinoActor extends Actor {
         if (status){
             addCapability(PregnancyStatus.PREGNANT);
             initializePregnancyPeriod();
+            removeCapability(BreedingCapability.CAN_BREED);
         }
         else {
             removeCapability(PregnancyStatus.PREGNANT);
@@ -101,6 +116,19 @@ public abstract class DinoActor extends Actor {
         pregnancyPeriod--;
     }
 
+    // unconscious
+    public void initializeUnconsciousPeriod() {
+        unconsciousPeriod = dinoType.getUnconsciousPeriod();
+    }
+
+    public int getUnconsciousPeriod() {
+        return unconsciousPeriod;
+    }
+
+    public void decrementUnconsciousPeriod(){
+        unconsciousPeriod--;
+    }
+
     // age
     private int getAge(){
         return age;
@@ -114,15 +142,13 @@ public abstract class DinoActor extends Actor {
         age++;
         if (getAge() >= dinoType.getMatureWhen()){
             displayChar = Character.toUpperCase(getDisplayChar());
+
         }
     }
 
     public void setChildDisplayCharacter(){
         this.displayChar = Character.toLowerCase(displayChar);
     }
-
-    // unnecessary method to be remove just for testing
-    public void setAge(int age){ this.age = age; }
 
     // IGNORE GET ALLOWABLE ACTIONS AND PLAY TURN FOR NOW - JUST TESTING STUFF OUT
 
@@ -144,32 +170,21 @@ public abstract class DinoActor extends Actor {
         if (lastAction != null && lastAction.getNextAction() != null){
             actionToExecute = lastAction.getNextAction();
         }
-        else {
-            // all possible actions included into this list
-            ArrayList<Action> possibleActions = new ArrayList<>();
-            for (Action a: actions){
-                possibleActions.add(a);
-            }
+        else if (actions.size() > 0){
+            actionToExecute = actions.get(0);
+        }
 
-            // calling getAction for every behaviour can help us to do some necessary processing
-            // as well even if it returns null in the end
-            for (Behaviour b: behaviour){
-                if (b.getAction(this, map) != null){
-                    possibleActions.add(b.getAction(this, map));
-                }
-            }
-
-            // sort the actions by defined priority
-
-            if (possibleActions.size() > 0){
-                actionToExecute = possibleActions.get(0);
+        // calling getAction for every behaviour can help us to do some necessary processing
+        // as well even if it returns null in the end
+        for (Behaviour b: behaviour){
+            if (b.getAction(this, map) != null && actionToExecute instanceof DoNothingAction){
+                actionToExecute = b.getAction(this, map);
             }
         }
 
         return actionToExecute;
     }
 
-
-
+//TODO: add player feed action in get allowable (also in child classes) and fix playTurn method
+// make sure breeding capability added whenver needed etc
 }
-
