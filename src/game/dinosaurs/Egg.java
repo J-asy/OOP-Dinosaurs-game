@@ -15,10 +15,16 @@ public class Egg extends PortableItem {
     /**
      * Stores constants representing the total number of turns to wait till hatching for each dinosaur.
      */
+//    private final static Map<DinoEncyclopedia, Integer> DINO_EGG_DICTIONARY = Map.ofEntries(
+//            entry(DinoEncyclopedia.STEGOSAUR, 30),
+//            entry(DinoEncyclopedia.BRACHIOSAUR, 30),
+//            entry(DinoEncyclopedia.ALLOSAUR, 50)
+//    );
+
     private final static Map<DinoEncyclopedia, Integer> DINO_EGG_DICTIONARY = Map.ofEntries(
-            entry(DinoEncyclopedia.STEGOSAUR, 30),
-            entry(DinoEncyclopedia.BRACHIOSAUR, 30),
-            entry(DinoEncyclopedia.ALLOSAUR, 50)
+            entry(DinoEncyclopedia.STEGOSAUR, 3),
+            entry(DinoEncyclopedia.BRACHIOSAUR, 2),
+            entry(DinoEncyclopedia.ALLOSAUR, 1)
     );
 
     /**
