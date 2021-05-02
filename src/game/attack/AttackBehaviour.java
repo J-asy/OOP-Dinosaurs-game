@@ -3,6 +3,8 @@ import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import game.Behaviour;
+import game.FoodType;
+import game.HerbivoreType;
 import game.Player;
 import game.dinosaurs.Allosaur;
 import game.dinosaurs.DinoActor;
@@ -20,13 +22,13 @@ public class AttackBehaviour implements Behaviour {
     public Action getAction(Actor actor, GameMap map) {
 
 
-            if (target instanceof Stegosaur && actor instanceof Player) {
+            if (target.hasCapability(HerbivoreType.SHORT_HERBIVORE) && actor instanceof Player) {
                 return new AttackAction(target);
             }
-            else if (target instanceof Allosaur && actor instanceof Player) {
+            else if (target.hasCapability(FoodType.CARNIVORE) && actor instanceof Player) {
                 return new AttackAction(target);
             }
-            else if (actor instanceof Allosaur && target instanceof Stegosaur) {
+            else if (actor.hasCapability(FoodType.CARNIVORE) && target.hasCapability(HerbivoreType.SHORT_HERBIVORE)) {
                 if ( !((DinoActor) actor).isMatured() ) {
                     return new AttackAction(target);
                 }

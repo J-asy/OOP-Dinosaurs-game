@@ -1,9 +1,11 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
+import game.HerbivoreType;
 import game.attack.AttackAction;
 import game.BreedingAction;
 import game.FoodType;
+import game.attack.Corpse;
 
 
 /**
@@ -17,12 +19,14 @@ public class Stegosaur extends DinoActor {
 
     public Stegosaur(Sex sex) {
         super(DINO_TYPE, sex);
-        hasCapability(FoodType.HERBIVORE);
+        addCapability(FoodType.HERBIVORE);
+        addCapability(HerbivoreType.SHORT_HERBIVORE);
     }
 
     public Stegosaur() {
         super(DINO_TYPE);
-        hasCapability(FoodType.HERBIVORE);
+        addCapability(FoodType.HERBIVORE);
+        addCapability(HerbivoreType.SHORT_HERBIVORE);
     }
 
     @Override
@@ -36,11 +40,20 @@ public class Stegosaur extends DinoActor {
 
     @Override
     public Action playTurn (Actions actions, Action lastAction, GameMap map, Display display) {
-        if (getUnconsciousPeriod() > DinoEncyclopedia.STEGOSAUR.getUnconsciousPeriod()) {
+        if (!this.isConscious()) {
+            if (getUnconsciousPeriod() > DinoEncyclopedia.STEGOSAUR.getUnconsciousPeriod()) {
+                return null;
+            } else if (getUnconsciousPeriod() == 0) {
+                Location stegoLocation = map.locationOf(this);
+                // Get rid of dino in this location
+                Corpse corpseStego = new Corpse(DinoEncyclopedia.STEGOSAUR.getDisplayChar());
+                stegoLocation.addItem(corpseStego);
+            }
+        }
+        else {
             return super.playTurn(actions, lastAction, map, display);
         }
         return null;
-
     }
 
 }

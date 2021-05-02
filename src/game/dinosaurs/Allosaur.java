@@ -1,8 +1,10 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
+import game.FoodType;
 import game.attack.AttackAction;
 import game.breed.BreedingAction;
+import game.attack.Corpse;
 
 public class Allosaur extends DinoActor {
 
@@ -10,10 +12,12 @@ public class Allosaur extends DinoActor {
 
     public Allosaur(Sex sex) {
         super(DINO_TYPE, sex);
+        addCapability(FoodType.CARNIVORE);
     }
 
     public Allosaur() {
         super(DINO_TYPE);
+        addCapability(FoodType.CARNIVORE);
     }
 
     @Override
@@ -28,7 +32,17 @@ public class Allosaur extends DinoActor {
 
     @Override
     public Action playTurn (Actions actions, Action lastAction, GameMap map, Display display) {
-        if (getUnconsciousPeriod() > DinoEncyclopedia.ALLOSAUR.getUnconsciousPeriod()) {
+        if (!this.isConscious()) {
+            if (getUnconsciousPeriod() > DinoEncyclopedia.ALLOSAUR.getUnconsciousPeriod()) {
+                return null;
+            } else if (getUnconsciousPeriod() == 0) {
+                Location alloLocation = map.locationOf(this);
+                // Get rid of dino in this location
+                Corpse corpseAllo = new Corpse(DinoEncyclopedia.ALLOSAUR.getDisplayChar());
+                alloLocation.addItem(corpseAllo);
+            }
+        }
+        else {
             return super.playTurn(actions, lastAction, map, display);
         }
         return null;

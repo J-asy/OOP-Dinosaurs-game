@@ -1,10 +1,9 @@
 package game.dinosaurs;
 
-import edu.monash.fit2099.engine.Action;
-import edu.monash.fit2099.engine.Actions;
-import edu.monash.fit2099.engine.Display;
-import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.*;
 import game.FoodType;
+import game.HerbivoreType;
+import game.attack.Corpse;
 
 
 public class Brachiosaur extends DinoActor {
@@ -13,21 +12,32 @@ public class Brachiosaur extends DinoActor {
 
     public Brachiosaur(Sex sex) {
         super(DINO_TYPE, sex);
-        hasCapability(FoodType.HERBIVORE);
+        addCapability(FoodType.HERBIVORE);
+        addCapability(HerbivoreType.TALL_HERBIVORE);
     }
 
     public Brachiosaur() {
         super(DINO_TYPE);
-        hasCapability(FoodType.HERBIVORE);
+        addCapability(FoodType.HERBIVORE);
+        addCapability(HerbivoreType.TALL_HERBIVORE);
     }
 
     @Override
     public Action playTurn (Actions actions, Action lastAction, GameMap map, Display display) {
-        if (getUnconsciousPeriod() > DinoEncyclopedia.BRACHIOSAUR.getUnconsciousPeriod()) {
+        if (!this.isConscious()) {
+            if (getUnconsciousPeriod() > DinoEncyclopedia.BRACHIOSAUR.getUnconsciousPeriod()) {
+                return null;
+            } else if (getUnconsciousPeriod() == 0) {
+                Location brachioLocation = map.locationOf(this);
+                // Get rid of dino in this location
+                Corpse corpseBrachio = new Corpse(DinoEncyclopedia.BRACHIOSAUR.getDisplayChar());
+                brachioLocation.addItem(corpseBrachio);
+            }
+        }
+        else {
             return super.playTurn(actions, lastAction, map, display);
         }
         return null;
-
     }
 
 

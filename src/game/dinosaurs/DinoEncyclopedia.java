@@ -8,9 +8,9 @@ package game.dinosaurs;
 
 
 public enum DinoEncyclopedia {
-    STEGOSAUR('S', "Stegosaur", 50, 100, 90, 30, 50, 10, 20, false),
-    BRACHIOSAUR('B', "Brachiosaur", 100, 160, 140, 50, 70, 30, 15, false),
-    ALLOSAUR('A', "Allosaur", 20, 100, 90, 50, 50, 20, 20, false);
+    STEGOSAUR('S', "Stegosaur", 50, 100, 90, 30, 50, 10, 20, true),
+    BRACHIOSAUR('B', "Brachiosaur", 100, 160, 140, 50, 70, 30, 15, true),
+    ALLOSAUR('A', "Allosaur", 20, 100, 90, 50, 50, 20, 20, true);
 
     char displayChar;
     String name;
@@ -21,10 +21,10 @@ public enum DinoEncyclopedia {
     int capableBreedingWhen;
     int pregnancyPeriod;
     int unconsciousPeriod;
-    boolean isUnconscious;
+    boolean isConscious;
 
     DinoEncyclopedia(char displayChar, String name, int initialHitPoints, int maxHitPoints, int hungryWhen,
-                     int matureWhen, int capableBreedingWhen, int pregnancyPeriod, int unconsciousPeriod, boolean isUnconscious) {
+                     int matureWhen, int capableBreedingWhen, int pregnancyPeriod, int unconsciousPeriod, boolean isConscious) {
         this.displayChar = displayChar;
         this.name = name;
         this.initialHitPoints = initialHitPoints;
@@ -34,7 +34,7 @@ public enum DinoEncyclopedia {
         this.capableBreedingWhen = capableBreedingWhen;
         this.pregnancyPeriod = pregnancyPeriod;
         this.unconsciousPeriod = unconsciousPeriod;
-        this.isUnconscious = isUnconscious;
+        this.isConscious = isConscious;
     }
 
     public char getDisplayChar(){
@@ -73,14 +73,8 @@ public enum DinoEncyclopedia {
         return unconsciousPeriod;
     }
 
-    public boolean getIsUnconscious(){
-        return isUnconscious;
+    public boolean getIsConscious(){
+        return isConscious;
     }
-
-
-
-
-
-
 
 }

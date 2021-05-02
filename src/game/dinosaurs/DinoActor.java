@@ -117,7 +117,8 @@ public abstract class DinoActor extends Actor {
     }
 
     // unconscious
-    public boolean isUnconscious(){
+    @Override
+    public boolean isConscious(){
         return hasCapability(UnconsciousStatus.UNCONSCIOUS);
     }
 
