@@ -117,6 +117,17 @@ public abstract class DinoActor extends Actor {
     }
 
     // unconscious
+    public boolean isUnconscious(){
+        return hasCapability(UnconsciousStatus.UNCONSCIOUS);
+    }
+
+    public void setUnconscious(boolean status){
+        if (status){
+            addCapability(UnconsciousStatus.UNCONSCIOUS);
+            initializeUnconsciousPeriod();
+        }
+    }
+
     public void initializeUnconsciousPeriod() {
         unconsciousPeriod = dinoType.getUnconsciousPeriod();
     }

@@ -1,12 +1,8 @@
 package game.dinosaurs;
 
-import edu.monash.fit2099.engine.Actions;
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.IntrinsicWeapon;
+import edu.monash.fit2099.engine.*;
 import game.attack.AttackAction;
-import game.BreedingAction;
-import game.FoodType;
+import game.breed.BreedingAction;
 
 public class Allosaur extends DinoActor {
 
@@ -14,12 +10,10 @@ public class Allosaur extends DinoActor {
 
     public Allosaur(Sex sex) {
         super(DINO_TYPE, sex);
-        hasCapability(FoodType.CARNIVORE);
     }
 
     public Allosaur() {
         super(DINO_TYPE);
-        hasCapability(FoodType.CARNIVORE);
     }
 
     @Override
@@ -33,8 +27,14 @@ public class Allosaur extends DinoActor {
     }
 
     @Override
-    protected IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(20, "punches");
+    public Action playTurn (Actions actions, Action lastAction, GameMap map, Display display) {
+        if (getUnconsciousPeriod() > DinoEncyclopedia.ALLOSAUR.getUnconsciousPeriod()) {
+            return super.playTurn(actions, lastAction, map, display);
+        }
+        return null;
     }
-
 }
+
+// sex?
+// attack behaviour
+// breeding behaviour

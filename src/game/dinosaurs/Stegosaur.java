@@ -1,8 +1,6 @@
 package game.dinosaurs;
 
-import edu.monash.fit2099.engine.Actions;
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.*;
 import game.attack.AttackAction;
 import game.BreedingAction;
 import game.FoodType;
@@ -36,6 +34,14 @@ public class Stegosaur extends DinoActor {
         return allowableActions;
     }
 
+    @Override
+    public Action playTurn (Actions actions, Action lastAction, GameMap map, Display display) {
+        if (getUnconsciousPeriod() > DinoEncyclopedia.STEGOSAUR.getUnconsciousPeriod()) {
+            return super.playTurn(actions, lastAction, map, display);
+        }
+        return null;
+
+    }
 
 }
 
