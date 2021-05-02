@@ -170,7 +170,7 @@ public abstract class DinoActor extends Actor {
     }
 
 //TODO: add player feed action in get allowable (also in child classes) and fix playTurn method
-
+// make sure breeding capability added whenver needed etc
 }
 
 
