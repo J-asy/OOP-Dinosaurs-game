@@ -1,5 +1,6 @@
 package game.dinosaurs;
 
+//TODO: override initialize behaviours in child classes
 
 /**
  * A herbivorous dinosaur.

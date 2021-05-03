@@ -67,10 +67,10 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
      */
     private void initializeDinoBehaviour(){
         behaviour = new ArrayList<>();
-        behaviour.add(new PregnancyBehaviour());
-        behaviour.add(new FollowMateBehaviour());
-        behaviour.add(new FollowVictimBehaviour());
-        behaviour.add(new WanderBehaviour());
+//        behaviour.add(new PregnancyBehaviour());
+//        behaviour.add(new FollowMateBehaviour());
+//        behaviour.add(new FollowVictimBehaviour());
+//        behaviour.add(new WanderBehaviour());
     }
 
     /**
