@@ -27,6 +27,19 @@ public class Allosaur extends DinoActor {
         addCapability(DinoCapabilities.CARNIVORE);
     }
 
+
+    public boolean hasAttackedStegosaur(Stegosaur stegosaur, GameMap map) {
+        if (attackedStegos.containsKey(stegosaur) ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public void decrementAttackedPeriod(Stegosaur stegosaur) {
+        attackedStegos.put(stegosaur, attackedStegos.get(stegosaur) - 1);
+    }
 //    @Override
     // allosaur can be attacked by player so add attack action
 //    public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
