@@ -25,6 +25,7 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
     private final Sex sex;
     private int age;
     private int pregnancyPeriod;
+    private int unconsciousPeriod;
     private Action actionInMotion;
 
     // default baby dino
@@ -295,6 +296,28 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 //
 
         return actionToExecute;
+
+        public boolean checkUnconsciousPeriod(GameMap map ) {
+            Location dinoLocation = map.locationOf(this);
+            if (!this.isConscious()){
+                if (this.getUnconsciousPeriod() > 0){
+                    this.decrementUnconsciousPeriod();
+                    this.setUnconscious(true);
+                }
+                else {
+                    this.setUnconscious(false);
+                    System.out.println("Dinosaur at " + (map.locationOf(this).x()) + " " + (map.locationOf(this).y()) + " is dead!")  ;
+                    map.removeActor(this);
+                    Corpse corpseDino = new Corpse(dinoType.getDisplayChar());
+                    dinoLocation.addItem(corpseDino);
+                }
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
 
 
 
