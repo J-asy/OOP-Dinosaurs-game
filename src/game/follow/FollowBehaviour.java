@@ -21,6 +21,10 @@ public abstract class FollowBehaviour implements Behaviour {
         followPurpose = purpose;
     }
 
+    protected DinoCapabilities getFollowPurpose(){
+            return followPurpose;
+    }
+
     @Override
     public Action getAction(Actor actor, GameMap map) {
         // if actor is a player, player doesn't follow anything
@@ -33,7 +37,7 @@ public abstract class FollowBehaviour implements Behaviour {
             for (Exit exit : visibleExits) {
                 Location destination = exit.getDestination();
                 Location actualDestination = null;
-                if (actorAsDino.canBreed() || actorAsDino.isCarnivorous()){
+                if (followPurpose == DinoCapabilities.CAN_BREED || followPurpose == DinoCapabilities.CAN_ATTACK){
                     actualDestination = followActor(map, destination, actorAsDino);
                 }
                 else if (followPurpose == DinoCapabilities.HERBIVORE || followPurpose == DinoCapabilities.CARNIVORE){
@@ -53,10 +57,10 @@ public abstract class FollowBehaviour implements Behaviour {
         Location returnDestination = null;
         List<Item> groundItems = map.locationOf(actorAsDino).getItems();
 
-        for (Item currentItem : groundItems){
+//        for (Item currentItem : groundItems){
             // has capability of herbivore
             // has capability of carnivore
-        }
+//        }
 
 
 

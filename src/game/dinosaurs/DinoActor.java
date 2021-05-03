@@ -132,6 +132,8 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
         return hasCapability(DinoCapabilities.CARNIVORE);
     }
 
+    public boolean canAttack(){ return hasCapability(DinoCapabilities.CAN_ATTACK); }
+
     public boolean canBeAttacked(){
         return hasCapability(DinoCapabilities.CAN_BE_ATTACKED);
     }
