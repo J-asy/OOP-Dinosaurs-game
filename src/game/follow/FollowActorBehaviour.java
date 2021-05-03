@@ -3,6 +3,7 @@ package game.follow;
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
 import game.dinosaurs.DinoActor;
+import game.dinosaurs.DinoCapabilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +11,18 @@ import java.util.List;
 /**
  * Behaviour class that simulates Actor following another Actor
  */
-public class FollowActorBehaviour implements Behaviour {
+public abstract class FollowActorBehaviour implements Behaviour {
 
+    private final DinoCapabilities followPurpose;
 
-    public FollowActorBehaviour() {
+    public FollowActorBehaviour(DinoCapabilities purpose) {
+        followPurpose = purpose;
     }
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
         // if actor is a player, player doesn't follow anything
+        Action actionToReturn = null;
         if (actor instanceof DinoActor) {
             Location actorLocation = map.locationOf(actor);
             List<Exit> visibleExits = lookAround(map, actor);  // exits that are two squares away from actor
@@ -33,33 +37,39 @@ public class FollowActorBehaviour implements Behaviour {
 
                     if (nearbyActor instanceof DinoActor) {
                         DinoActor targetAsDino = (DinoActor) nearbyActor;
-                        if (shouldFollowForBreeding(actorAsDino, targetAsDino)) {
-                            return moveCloser(actorLocation, destination, actor);
-                        }
-                    }
 
+                        if (followPurpose == DinoCapabilities.CAN_BREED &&
+                                followForBreeding(actorAsDino, targetAsDino)) {
+                                targetAsDino.setActionInMotion(new DoNothingAction());
+                                actionToReturn = moveCloser(actorLocation, destination, actor);
+                        }
+                        else if (followPurpose == DinoCapabilities.CAN_ATTACK &&
+                                followForAttacking(actorAsDino, targetAsDino)){
+                            actionToReturn = moveCloser(actorLocation, destination, actor);
+                        }
+
+                    }
                 }
             }
         }
-            return null;
+            return actionToReturn;
     }
 
-    private boolean shouldFollowForBreeding(DinoActor actorAsDino, DinoActor targetAsDino){
+    private boolean followForBreeding(DinoActor actorAsDino, DinoActor targetAsDino){
         boolean differentSex = targetAsDino.getSex() != actorAsDino.getSex();
         boolean sameSpecies = actorAsDino.getDinoType() == targetAsDino.getDinoType();
-        boolean bothCanBreed = targetAsDino.canBreed() && !actorAsDino.canBreed();
+        boolean bothCanBreed = targetAsDino.canBreed() && actorAsDino.canBreed();
+        System.out.println("diff sex: " + differentSex);
+        System.out.println("same sp: " + sameSpecies);
+        System.out.println("both breed: " + bothCanBreed);
         return differentSex && sameSpecies && bothCanBreed;
     }
 
-    private boolean shouldFollowForAttacking(DinoActor actorAsDino, DinoActor nearbyActor){
-//        boolean isCarnivorous = actorAsDino.hasCapability();
-//        boolean
-//
-//        return isCarnivorous &&
-        return false;
+    private boolean followForAttacking(DinoActor actorAsDino, DinoActor nearbyActor){
+        boolean isCarnivorous = actorAsDino.isCarnivorous();
+        boolean canBeAttacked = nearbyActor.canBeAttacked();
+        return isCarnivorous && canBeAttacked;
     }
-
-
 
     /**
      *  Returns the MoveActorAction that leads actor closer to target destination.
@@ -77,8 +87,9 @@ public class FollowActorBehaviour implements Behaviour {
             if (possibleStep.canActorEnter(actor)) {
                 int newDistance = distance(possibleStep, destination);
                 if (newDistance < currentDistance) {
-                    return new MoveActorAction(exit.getDestination(), exit.getName());
-//                    return new MoveActorAction(exit.getDestination(), "fdsljfl");  // only for testing
+                    System.out.println("success");
+//                    return new MoveActorAction(exit.getDestination(), exit.getName());
+                    return new MoveActorAction(exit.getDestination(), "fdsljfl");  // only for testing
                 }
             }
         }

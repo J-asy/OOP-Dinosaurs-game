@@ -3,9 +3,9 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
-import game.breed.BreedingAction;
 import game.breed.BreedingBehaviour;
-import game.pregnancy.LayEggAction;
+import game.follow.FollowMateBehaviour;
+import game.follow.FollowVictimBehaviour;
 import game.pregnancy.PregnancyBehaviour;
 import game.utility.Probability;
 import game.wander.WanderBehaviour;
@@ -66,7 +66,8 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
     private void initializeDinoBehaviour(){
         behaviour = new ArrayList<>();
         behaviour.add(new PregnancyBehaviour());
-//        behaviour.add(new FollowActorBehaviour());
+        behaviour.add(new FollowMateBehaviour());
+        behaviour.add(new FollowVictimBehaviour());
         behaviour.add(new WanderBehaviour());
     }
 
@@ -127,6 +128,14 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
         }
     }
 
+    public boolean isCarnivorous(){
+        return hasCapability(DinoCapabilities.CARNIVORE);
+    }
+
+    public boolean canBeAttacked(){
+        return hasCapability(DinoCapabilities.CAN_BE_ATTACKED);
+    }
+
     /**
      * Checks if the food level / hit points has reached
      * the point where the dinoActor will get hungry.
@@ -158,12 +167,12 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
      */
     public void adjustBreedingCapability() {
         if (!canBreed()){
-            if (hitPoints >= dinoType.breedingMinFoodLevel && !isPregnant() && isMatured()){
+            if (hitPoints >= dinoType.getBreedingMinFoodLevel() && !isPregnant() && isMatured()){
                 addCapability(DinoCapabilities.CAN_BREED);
             }
         }
         else {
-            if (hitPoints < dinoType.breedingMinFoodLevel){
+            if (hitPoints < dinoType.getBreedingMinFoodLevel()){
                 removeCapability(DinoCapabilities.CAN_BREED);
             }
         }
@@ -256,23 +265,24 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
         System.out.println("has breeding capability: " + canBreed());
         System.out.println("pregnancy period: " + pregnancyPeriod);
 
-        Action actionToExecute = new DoNothingAction();
+        Action actionToExecute = null;
 
         // if the actor has been determined to perform an Action with another Actor previously
         // it should always return that Action
         if (actionInMotion != null){
-            return actionInMotion;
+            actionToExecute = actionInMotion;
+            actionInMotion = null;
         }
 
         // calling getAction for every behaviour can help us to do some necessary processing
         // as well even if it returns null in the end
         for (Behaviour b: behaviour){
             Action resultingAction = b.getAction(this, map);
-            if (resultingAction != null && actionToExecute instanceof DoNothingAction){
-//                    actionToExecute = resultingAction;
-                if (resultingAction instanceof LayEggAction){
-                    return resultingAction;
-                }
+            System.out.println(b);
+            if (resultingAction != null && actionToExecute == null){
+                System.out.println(b + "is not null");
+                    actionToExecute = resultingAction;
+                    System.out.println("changed");
                 }
             }
 
@@ -282,14 +292,9 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 //                return a;
 //            }
 //        }
+//
 
-        for (Action a : actions){
-            if (a instanceof BreedingAction){
-                return a;
-            }
-        }
-
-        return new WanderBehaviour().getAction(this, map);
+        return actionToExecute;
 
 
 
