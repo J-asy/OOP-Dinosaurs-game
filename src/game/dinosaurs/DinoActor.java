@@ -4,8 +4,9 @@ import edu.monash.fit2099.engine.*;
 import game.*;
 
 import game.breed.BreedingAction;
+import game.breed.BreedingBehaviour;
 import game.breed.BreedingCapability;
-import game.follow.FollowActorBehaviour;
+import game.pregnancy.LayEggAction;
 import game.pregnancy.PregnancyBehaviour;
 import game.utility.Probability;
 import game.wander.WanderBehaviour;
@@ -23,20 +24,24 @@ public abstract class DinoActor extends Actor {
     private ArrayList<Behaviour> behaviour;
     private final DinoEncyclopedia dinoType;
     private final Sex sex;
-    private int age = 0;
+    private int age;
     private int pregnancyPeriod;
+    private Action actionInMotion;
 
-    public DinoActor(DinoEncyclopedia dinoType, Sex sex){
+    // default baby dino
+    public DinoActor(DinoEncyclopedia dinoType, Sex sex, Boolean isMatured){
         super(dinoType.getName(), dinoType.getDisplayChar(), dinoType.getInitialHitPoints());
         this.dinoType = dinoType;
         this.sex = sex;
+        setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
         initializeDinoBehaviour();
     }
 
-    public DinoActor(DinoEncyclopedia dinoType){
+    public DinoActor(DinoEncyclopedia dinoType, Boolean isMatured){
         super(dinoType.getName(), dinoType.getDisplayChar(), dinoType.getInitialHitPoints());
         this.dinoType = dinoType;
+        setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
         initializeDinoBehaviour();
 
@@ -62,7 +67,7 @@ public abstract class DinoActor extends Actor {
     private void initializeDinoBehaviour(){
         behaviour = new ArrayList<>();
         behaviour.add(new PregnancyBehaviour());
-        behaviour.add(new FollowActorBehaviour());
+//        behaviour.add(new FollowActorBehaviour());
         behaviour.add(new WanderBehaviour());
     }
 
@@ -70,25 +75,36 @@ public abstract class DinoActor extends Actor {
      * Increments the age of the dinosaur and simulates the action of the dinosaur growing up
      */
     private void aging(){
-        age++;
         if (age >= dinoType.getMatureWhen()){
             displayChar = Character.toUpperCase(getDisplayChar());
         }
+        else {
+            age++;
+        }
     }
 
-    /**
-     * Sets the display character of the dinoActor to lowercase
-     * to show that the dinoActor is a baby dinosaur / not matured yet.
-     */
-    public void setChildDisplayCharacter(){
-        this.displayChar = Character.toLowerCase(displayChar);
+    public void setAge(int newAge){
+        if (newAge > 0){
+            age =  newAge;
+        }
+    }
+
+    private void setMaturity(boolean maturityStatus){
+        if (maturityStatus) {
+            setAge(dinoType.getMatureWhen());
+            displayChar = Character.toUpperCase(displayChar);
+        }
+        else {
+            displayChar = Character.toLowerCase(displayChar);
+        }
+        adjustBreedingCapability();
     }
 
     /**
      * Returns true if the dinoActor is matured, false otherwise.
      * @return true if the dinoActor is matured, false otherwise
      */
-    public boolean isMatured(){
+    private boolean isMatured(){
         return age >= dinoType.getMatureWhen();
     }
 
@@ -122,7 +138,7 @@ public abstract class DinoActor extends Actor {
         if (hitPoints < dinoType.getHungryWhen()) {
             int x = map.locationOf(this).x();
             int y = map.locationOf(this).y();
-            System.out.printf("%s at (%d, %d) getting hungry!", name, x, y);
+            System.out.printf("%s at (%d, %d) getting hungry!\n", name, x, y);
         }
     }
 
@@ -143,14 +159,20 @@ public abstract class DinoActor extends Actor {
      */
     public void adjustBreedingCapability() {
         if (!canBreed()){
-            if (hitPoints >= dinoType.capableBreedingWhen && !isPregnant() && isMatured()){
+            if (hitPoints >= dinoType.breedingMinFoodLevel && !isPregnant() && isMatured()){
                 addCapability(BreedingCapability.CAN_BREED);
             }
         }
         else {
-            if (hitPoints < dinoType.capableBreedingWhen){
+            if (hitPoints < dinoType.breedingMinFoodLevel){
                 removeCapability(BreedingCapability.CAN_BREED);
             }
+        }
+    }
+
+    public void setActionInMotion(Action newAction){
+        if (actionInMotion == null){
+            actionInMotion = newAction;
         }
     }
 
@@ -193,6 +215,7 @@ public abstract class DinoActor extends Actor {
     public void setPregnant(boolean status){
         if (status){
             addCapability(PregnancyStatus.PREGNANT);
+            System.out.println(hasCapability(PregnancyStatus.PREGNANT));
             initializePregnancyPeriod();
             if (hasCapability(BreedingCapability.CAN_BREED)){
                 removeCapability(BreedingCapability.CAN_BREED);
@@ -205,38 +228,95 @@ public abstract class DinoActor extends Actor {
 
     @Override
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
-        return new Actions(new BreedingAction(this));
+        Actions validActions = new Actions();
+        ArrayList<Behaviour> adjacentActorBehaviour = new ArrayList<>();
+        adjacentActorBehaviour.add(new BreedingBehaviour(this));
+
+        System.out.println("\nhere");
+        for (Behaviour b : adjacentActorBehaviour){
+            Action resultingAction = b.getAction(otherActor, map);
+            System.out.println(resultingAction);
+            if (resultingAction != null){
+                validActions.add(resultingAction);
+            }
+        }
+
+        return validActions;
     }
 
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         aging();
+        System.out.println("");
+        System.out.println("age: " + age);
         decrementFoodLevel();
+        System.out.println("food lvl: " + hitPoints);
+        System.out.println("sex: " + sex);
         roarIfHungry(map);
         adjustBreedingCapability();
+        System.out.println("has breeding capability: " + canBreed());
+        System.out.println("pregnancy period: " + pregnancyPeriod);
 
         Action actionToExecute = new DoNothingAction();
 
-        // if lastAction has a subsequent action, always return that
-        if (lastAction != null && lastAction.getNextAction() != null){
-            actionToExecute = lastAction.getNextAction();
-        }
-        else if (actions.size() > 0){
-            actionToExecute = actions.get(0);
+        if (actionInMotion != null){
+            return actionInMotion;
         }
 
         // calling getAction for every behaviour can help us to do some necessary processing
         // as well even if it returns null in the end
         for (Behaviour b: behaviour){
-            if (b.getAction(this, map) != null && actionToExecute instanceof DoNothingAction){
-                    actionToExecute = b.getAction(this, map);
+            Action resultingAction = b.getAction(this, map);
+            if (resultingAction != null && actionToExecute instanceof DoNothingAction){
+//                    actionToExecute = resultingAction;
+                if (resultingAction instanceof LayEggAction){
+                    return resultingAction;
+                }
                 }
             }
 
-        return actionToExecute;
+
+//        for (Action a : actions){
+//            if (a instanceof LayEggAction){
+//                return a;
+//            }
+//        }
+
+        for (Action a : actions){
+            if (a instanceof BreedingAction){
+                return a;
+            }
+        }
+
+        return new WanderBehaviour().getAction(this, map);
+
+
+
+
+        // if lastAction has a subsequent action, always return that
+//        if (lastAction != null && lastAction.getNextAction() != null){
+//            actionToExecute = lastAction.getNextAction();
+//        }
+//        else if (actions.size() > 0){
+//            actionToExecute = actions.get(0);
+//        }
+//
+//
+//        return actionToExecute;
     }
 
 //TODO: add player feed action in get allowable (also in child classes) and fix playTurn method
+
+    // Precedence
+    // layEgg
+    // breeding
+    // attack for food
+    // feeding from player
+    // feeding on its own
+    // follow mate
+    // follow food
+
+
 
 }
 

@@ -46,7 +46,7 @@ public class LayEggAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " lays egg!";
+        return actor + " lays egg";
     }
 
 }

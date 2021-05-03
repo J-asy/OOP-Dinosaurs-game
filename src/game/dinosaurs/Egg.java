@@ -75,18 +75,15 @@ public class Egg extends PortableItem {
      * @param currentLocation The location of the ground on which we lie.
      */
     public void tick(Location currentLocation) {
+        System.out.println("Wait: " + waitTurns);
         DinoActor newDino;
         if (waitTurns == 0) {
 
             newDino = switch (parent) {
-                case STEGOSAUR -> new Stegosaur();
-                case BRACHIOSAUR -> new Brachiosaur();
-                case ALLOSAUR -> new Allosaur();
+                case STEGOSAUR -> new Stegosaur(false);
+                case BRACHIOSAUR -> new Brachiosaur(false);
+                case ALLOSAUR -> new Allosaur(false);
             };
-
-            // Dinosaurs which are not grown up yet are indicated with a lowercase display character
-            // This function call simply sets the new dinosaur's display character to lowercase.
-            newDino.setChildDisplayCharacter();
 
             currentLocation.removeItem(this);
             currentLocation.addActor(newDino);

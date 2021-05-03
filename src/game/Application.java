@@ -8,10 +8,7 @@ import edu.monash.fit2099.engine.Display;
 import edu.monash.fit2099.engine.FancyGroundFactory;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.World;
-import game.dinosaurs.DinoEncyclopedia;
-import game.dinosaurs.Egg;
-import game.dinosaurs.Sex;
-import game.dinosaurs.Stegosaur;
+import game.dinosaurs.*;
 import game.environment.Dirt;
 import game.environment.Floor;
 import game.environment.Tree;
@@ -61,12 +58,23 @@ public class Application {
 		world.addPlayer(player, gameMap.at(9, 4));
 		
 		// Place a pair of stegosaurs in the middle of the map
-		gameMap.at(30, 12).addActor(new Stegosaur(Sex.FEMALE));
-		gameMap.at(32, 12).addActor(new Stegosaur(Sex.MALE));
+//		gameMap.at(30, 12).addActor(new Stegosaur(Sex.FEMALE));
 
-		gameMap.at(1,1).addItem(new Egg(DinoEncyclopedia.STEGOSAUR));
-		gameMap.at(1,3).addItem(new Egg(DinoEncyclopedia.BRACHIOSAUR));
-		gameMap.at(1,5).addItem(new Egg(DinoEncyclopedia.ALLOSAUR));
+		DinoActor s1 = new Stegosaur(Sex.MALE, true);
+		gameMap.at(32, 12).addActor(s1);
+		DinoActor s2 = new Stegosaur(Sex.FEMALE, true);
+		gameMap.at(32, 11).addActor(s2);
+
+
+//		gameMap.at(1,3).addActor(new Stegosaur(true));
+//		DinoActor b = new Brachiosaur(Sex.FEMALE, true);
+//		gameMap.at(1,1).addActor(b);
+//		DinoActor a = new Allosaur(true);
+//		gameMap.at(1,5).addActor(a);
+
+//		gameMap.at(1, 11).addItem(new Egg(DinoEncyclopedia.STEGOSAUR));
+//		gameMap.at(1, 15).addItem(new Egg(DinoEncyclopedia.BRACHIOSAUR));
+//		gameMap.at(1, 18).addItem(new Egg(DinoEncyclopedia.ALLOSAUR));
 
 		world.run();
 	}

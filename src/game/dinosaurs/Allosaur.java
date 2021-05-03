@@ -10,23 +10,23 @@ public class Allosaur extends DinoActor {
 
     private static final DinoEncyclopedia DINO_TYPE = DinoEncyclopedia.ALLOSAUR;
 
-    public Allosaur(Sex sex) {
-        super(DINO_TYPE, sex);
+    public Allosaur(Sex sex, Boolean isMatured) {
+        super(DINO_TYPE, sex, isMatured);
     }
 
-    public Allosaur() {
-        super(DINO_TYPE);
+    public Allosaur(Boolean isMatured) {
+        super(DINO_TYPE, isMatured);
     }
 
-    @Override
+//    @Override
     // allosaur can be attacked by player so add attack action
-    public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
-        Actions allowableActions = new Actions();
-        allowableActions.add(new AttackAction(this));
-        allowableActions.add(new BreedingAction(this));
-
-        return allowableActions;
-    }
+//    public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
+//        Actions allowableActions = new Actions();
+//        allowableActions.add(new AttackAction(this));
+//        allowableActions.add(new BreedingAction(this));
+//
+//        return allowableActions;
+//    }
 
 
 }

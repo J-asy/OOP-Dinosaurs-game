@@ -7,12 +7,12 @@ public class Brachiosaur extends DinoActor {
 
     private static final DinoEncyclopedia DINO_TYPE = DinoEncyclopedia.BRACHIOSAUR;
 
-    public Brachiosaur(Sex sex) {
-        super(DINO_TYPE, sex);
+    public Brachiosaur(Sex sex, Boolean isMatured) {
+        super(DINO_TYPE, sex, isMatured);
     }
 
-    public Brachiosaur() {
-        super(DINO_TYPE);
+    public Brachiosaur(Boolean isMatured) {
+        super(DINO_TYPE, isMatured);
     }
 
     // don't need to override getAllowableActions, cuz can only breed - dealt with by DinoActor
