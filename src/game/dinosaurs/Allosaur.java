@@ -12,17 +12,17 @@ public class Allosaur extends DinoActor {
 
     public Allosaur(Sex sex, Boolean isMatured) {
         super(DINO_TYPE, sex, isMatured);
-        initializeCapabilities();
     }
 
     public Allosaur(Boolean isMatured) {
         super(DINO_TYPE, isMatured);
-        initializeCapabilities();
     }
 
-    public void initializeCapabilities(){
+    @Override
+    void initializeCapabilities(){
         addCapability(DinoCapabilities.CARNIVORE);
     }
+
 
 //    @Override
     // allosaur can be attacked by player so add attack action

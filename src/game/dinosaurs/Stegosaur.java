@@ -12,15 +12,14 @@ public class Stegosaur extends DinoActor {
 
     public Stegosaur(Sex sex, Boolean isMatured) {
         super(DINO_TYPE, sex, isMatured);
-        initializeCapabilities();
     }
 
     public Stegosaur(Boolean isMatured) {
         super(DINO_TYPE, isMatured);
-        initializeCapabilities();
     }
 
-    public void initializeCapabilities(){
+    @Override
+    void initializeCapabilities(){
         addCapability(DinoCapabilities.HERBIVORE);
         addCapability(DinoCapabilities.CAN_BE_ATTACKED);
     }

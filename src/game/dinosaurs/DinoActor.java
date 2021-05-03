@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Base class for Stegosaur, Brachiosaur and Allosaur for representing dinosaur Actors.
  */
-public abstract class DinoActor extends Actor implements DinoInitialization {
+public abstract class DinoActor extends Actor {
 
     /**
      * An ArrayList of standard behaviours that the DinoActor should have
@@ -35,6 +35,7 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
         initializeDinoBehaviour();
+        initializeCapabilities();
     }
 
     public DinoActor(DinoEncyclopedia dinoType, Boolean isMatured){
@@ -70,6 +71,8 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
         behaviour.add(new FollowVictimBehaviour());
         behaviour.add(new WanderBehaviour());
     }
+
+    abstract void initializeCapabilities();
 
     /**
      * Increments the age of the dinosaur and simulates the action of the dinosaur growing up

@@ -21,27 +21,27 @@ public abstract class FollowBehaviour implements Behaviour {
         followPurpose = purpose;
     }
 
-    protected DinoCapabilities getFollowPurpose(){
+    protected DinoCapabilities getFollowPurpose() {
             return followPurpose;
     }
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
-        // if actor is a player, player doesn't follow anything
         Action actionToReturn = null;
         if (actor instanceof DinoActor) {
             Location actorLocation = map.locationOf(actor);
-            List<Exit> visibleExits = lookAround(map, actor);  // exits that are two squares away from actor
+            List<Exit> visibleExits = lookAround(map, actor);  // get exits that are two squares away from actor
 
             DinoActor actorAsDino = (DinoActor) actor;
             for (Exit exit : visibleExits) {
                 Location destination = exit.getDestination();
                 Location actualDestination = null;
-                if (followPurpose == DinoCapabilities.CAN_BREED || followPurpose == DinoCapabilities.CAN_ATTACK){
+
+                if (shouldFollowActor()){
                     actualDestination = followActor(map, destination, actorAsDino);
                 }
-                else if (followPurpose == DinoCapabilities.HERBIVORE || followPurpose == DinoCapabilities.CARNIVORE){
-                    actualDestination = followFoodItem(map, destination, actorAsDino);
+                else if (shouldFollowItem()){
+                    actualDestination = followItem(map, destination, actorAsDino);
                 }
 
                 if (actualDestination != null){
@@ -53,7 +53,7 @@ public abstract class FollowBehaviour implements Behaviour {
             return actionToReturn;
     }
 
-    private Location followFoodItem(GameMap map, Location destination, DinoActor actorAsDino){
+    private Location followItem(GameMap map, Location destination, DinoActor actorAsDino){
         Location returnDestination = null;
         List<Item> groundItems = map.locationOf(actorAsDino).getItems();
 
@@ -77,23 +77,44 @@ public abstract class FollowBehaviour implements Behaviour {
             if (nearbyActor instanceof DinoActor) {
                 DinoActor targetAsDino = (DinoActor) nearbyActor;
 
-                if (followPurpose == DinoCapabilities.CAN_BREED &&
-                        followForBreeding(actorAsDino, targetAsDino)) {
+                if (tryingToBreed() && breedingPossible(actorAsDino, targetAsDino)) {
                     targetAsDino.setActionInMotion(new DoNothingAction());
                     returnDestination = destination;
                 }
-                else if (followPurpose == DinoCapabilities.CAN_ATTACK &&
-                        followForAttacking(actorAsDino, targetAsDino)){
+                else if (tryingToAttack() && attackingPossible(actorAsDino, targetAsDino)){
                     returnDestination = destination;
                 }
 
             }
         }
         return returnDestination;
-
     }
 
-    private boolean followForBreeding(DinoActor actorAsDino, DinoActor targetAsDino){
+    private boolean tryingToAttack() {
+        return followPurpose == DinoCapabilities.CAN_ATTACK;
+    }
+
+    private boolean tryingToBreed() {
+        return followPurpose == DinoCapabilities.CAN_BREED;
+    }
+
+    private boolean tryingToEatMeat() {
+        return followPurpose == DinoCapabilities.CARNIVORE;
+    }
+
+    private boolean tryingToEatVegetables() {
+        return followPurpose == DinoCapabilities.HERBIVORE;
+    }
+
+    private boolean shouldFollowActor(){
+        return tryingToBreed() || tryingToAttack();
+    }
+
+    private boolean shouldFollowItem(){
+        return tryingToEatVegetables() || tryingToEatMeat();
+    }
+
+    private boolean breedingPossible(DinoActor actorAsDino, DinoActor targetAsDino){
         boolean differentSex = targetAsDino.getSex() != actorAsDino.getSex();
         boolean sameSpecies = actorAsDino.getDinoType() == targetAsDino.getDinoType();
         boolean bothCanBreed = targetAsDino.canBreed() && actorAsDino.canBreed();
@@ -103,10 +124,10 @@ public abstract class FollowBehaviour implements Behaviour {
         return differentSex && sameSpecies && bothCanBreed;
     }
 
-    private boolean followForAttacking(DinoActor actorAsDino, DinoActor nearbyActor){
-        boolean isCarnivorous = actorAsDino.isCarnivorous();
+    private boolean attackingPossible(DinoActor actorAsDino, DinoActor nearbyActor){
+        boolean canAttack = actorAsDino.canAttack();
         boolean canBeAttacked = nearbyActor.canBeAttacked();
-        return isCarnivorous && canBeAttacked;
+        return canAttack && canBeAttacked;
     }
 
     /**
