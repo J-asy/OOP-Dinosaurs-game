@@ -284,47 +284,50 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        aging();
-//        System.out.println("");
-        System.out.println("age: " + age);
-        decrementFoodLevel();
-        System.out.println("food lvl: " + hitPoints);
-        System.out.println("sex: " + sex);
-        roarIfHungry(map);
-        adjustBreedingCapability();
-        System.out.println("has breeding capability: " + canBreed());
-        System.out.println("pregnancy period: " + pregnancyPeriod);
+        if (!checkUnconsciousPeriod(map)) {
+            aging();
+            //        System.out.println("");
+            System.out.println("age: " + age);
+            decrementFoodLevel();
+            System.out.println("food lvl: " + hitPoints);
+            System.out.println("sex: " + sex);
+            roarIfHungry(map);
+            adjustBreedingCapability();
+            System.out.println("has breeding capability: " + canBreed());
+            System.out.println("pregnancy period: " + pregnancyPeriod);
 
-        Action actionToExecute = null;
+            Action actionToExecute = null;
 
-        // if the actor has been determined to perform an Action with another Actor previously
-        // it should always return that Action
-        if (actionInMotion != null) {
-            actionToExecute = actionInMotion;
-            actionInMotion = null;
-        }
-
-        // calling getAction for every behaviour can help us to do some necessary processing
-        // as well even if it returns null in the end
-        for (Behaviour b : behaviour) {
-            Action resultingAction = b.getAction(this, map);
-            System.out.println(b);
-            if (resultingAction != null && actionToExecute == null) {
-                System.out.println(b + "is not null");
-                actionToExecute = resultingAction;
-                System.out.println("changed");
+            // if the actor has been determined to perform an Action with another Actor previously
+            // it should always return that Action
+            if (actionInMotion != null) {
+                actionToExecute = actionInMotion;
+                actionInMotion = null;
             }
+
+            // calling getAction for every behaviour can help us to do some necessary processing
+            // as well even if it returns null in the end
+            for (Behaviour b : behaviour) {
+                Action resultingAction = b.getAction(this, map);
+                System.out.println(b);
+                if (resultingAction != null && actionToExecute == null) {
+                    System.out.println(b + "is not null");
+                    actionToExecute = resultingAction;
+                    System.out.println("changed");
+                }
+            }
+
+
+            //        for (Action a : actions){
+            //            if (a instanceof LayEggAction){
+            //                return a;
+            //            }
+            //        }
+            //
+
+            return actionToExecute;
         }
-
-
-//        for (Action a : actions){
-//            if (a instanceof LayEggAction){
-//                return a;
-//            }
-//        }
-//
-
-        return actionToExecute;
+        return null;
     }
 
     public boolean checkUnconsciousPeriod(GameMap map ) {
@@ -362,7 +365,7 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 //
 //
 //        return actionToExecute;
-    }
+}
 
 //TODO: add player feed action in get allowable (also in child classes) and fix playTurn method
 
@@ -377,6 +380,6 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 
 
 
-}
+
 
 

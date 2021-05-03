@@ -71,15 +71,9 @@ public enum DinoEncyclopedia {
         return pregnancyPeriod;
     }
 
-    public int getUnconsciousPeriod(){
+    public int getInitialUnconsciousPeriod(){
         return unconsciousPeriod;
     }
-
-
-
-
-
-
 
 }
 
