@@ -3,6 +3,7 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
+import game.attack.Corpse;
 import game.breed.BreedingBehaviour;
 import game.follow.FollowMateBehaviour;
 import game.follow.FollowVictimBehaviour;
@@ -25,6 +26,7 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
     private final Sex sex;
     private int age;
     private int pregnancyPeriod;
+    private int unconsciousPeriod;
     private Action actionInMotion;
 
     // default baby dino
@@ -104,7 +106,7 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
      * Returns true if the dinoActor is matured, false otherwise.
      * @return true if the dinoActor is matured, false otherwise
      */
-    private boolean isMatured(){
+    public boolean isMatured(){
         return age >= dinoType.getMatureWhen();
     }
 
@@ -236,6 +238,34 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
         }
     }
 
+    // unconscious
+    @Override
+    public boolean isConscious(){
+        return hasCapability(UnconsciousStatus.CONSCIOUS);
+    }
+
+    public void setUnconscious(boolean status){
+        if (status){
+            addCapability(UnconsciousStatus.UNCONSCIOUS);
+            initializeUnconsciousPeriod();
+        }
+        else {
+            removeCapability(UnconsciousStatus.UNCONSCIOUS);
+        }
+    }
+
+    public void initializeUnconsciousPeriod() {
+        unconsciousPeriod = dinoType.getInitialUnconsciousPeriod();
+    }
+
+    public int getUnconsciousPeriod() {
+        return unconsciousPeriod;
+    }
+
+    public void decrementUnconsciousPeriod(){
+        unconsciousPeriod--;
+    }
+
     @Override
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
         Actions validActions = new Actions();
@@ -256,47 +286,73 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        aging();
-//        System.out.println("");
-        System.out.println("age: " + age);
-        decrementFoodLevel();
-        System.out.println("food lvl: " + hitPoints);
-        System.out.println("sex: " + sex);
-        roarIfHungry(map);
-        adjustBreedingCapability();
-        System.out.println("has breeding capability: " + canBreed());
-        System.out.println("pregnancy period: " + pregnancyPeriod);
+        if (!checkUnconsciousPeriod(map)) {
+            aging();
+            //        System.out.println("");
+            System.out.println("age: " + age);
+            decrementFoodLevel();
+            System.out.println("food lvl: " + hitPoints);
+            System.out.println("sex: " + sex);
+            roarIfHungry(map);
+            adjustBreedingCapability();
+            System.out.println("has breeding capability: " + canBreed());
+            System.out.println("pregnancy period: " + pregnancyPeriod);
 
-        Action actionToExecute = null;
+            Action actionToExecute = null;
 
-        // if the actor has been determined to perform an Action with another Actor previously
-        // it should always return that Action
-        if (actionInMotion != null){
-            actionToExecute = actionInMotion;
-            actionInMotion = null;
-        }
+            // if the actor has been determined to perform an Action with another Actor previously
+            // it should always return that Action
+            if (actionInMotion != null) {
+                actionToExecute = actionInMotion;
+                actionInMotion = null;
+            }
 
-        // calling getAction for every behaviour can help us to do some necessary processing
-        // as well even if it returns null in the end
-        for (Behaviour b: behaviour){
-            Action resultingAction = b.getAction(this, map);
-            System.out.println(b);
-            if (resultingAction != null && actionToExecute == null){
-                System.out.println(b + "is not null");
+            // calling getAction for every behaviour can help us to do some necessary processing
+            // as well even if it returns null in the end
+            for (Behaviour b : behaviour) {
+                Action resultingAction = b.getAction(this, map);
+                System.out.println(b);
+                if (resultingAction != null && actionToExecute == null) {
+                    System.out.println(b + "is not null");
                     actionToExecute = resultingAction;
                     System.out.println("changed");
                 }
             }
 
 
-//        for (Action a : actions){
-//            if (a instanceof LayEggAction){
-//                return a;
-//            }
-//        }
-//
+            //        for (Action a : actions){
+            //            if (a instanceof LayEggAction){
+            //                return a;
+            //            }
+            //        }
+            //
 
-        return actionToExecute;
+            return actionToExecute;
+        }
+        return null;
+    }
+
+    public boolean checkUnconsciousPeriod(GameMap map ) {
+        Location dinoLocation = map.locationOf(this);
+        if (!this.isConscious()){
+            if (this.getUnconsciousPeriod() > 0){
+                this.decrementUnconsciousPeriod();
+                this.setUnconscious(true);
+            }
+            else {
+                this.setUnconscious(false);
+                System.out.println("Dinosaur at " + (map.locationOf(this).x()) + " " + (map.locationOf(this).y()) + " is dead!")  ;
+                map.removeActor(this);
+                Corpse corpseDino = new Corpse(dinoType.getDisplayChar());
+                dinoLocation.addItem(corpseDino);
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 
 
 
@@ -311,7 +367,7 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 //
 //
 //        return actionToExecute;
-    }
+}
 
 //TODO: add player feed action in get allowable (also in child classes) and fix playTurn method
 
@@ -326,6 +382,6 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 
 
 
-}
+
 
 
