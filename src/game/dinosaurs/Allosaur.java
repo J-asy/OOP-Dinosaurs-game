@@ -40,6 +40,15 @@ public class Allosaur extends DinoActor {
     public void decrementAttackedPeriod(Stegosaur stegosaur) {
         attackedStegos.put(stegosaur, attackedStegos.get(stegosaur) - 1);
     }
+
+    public int getAttackedPeriod(Stegosaur stegosaur){
+        return attackedStegos.get(stegosaur);
+    }
+
+    public void removeAttackedStego(Stegosaur stegosaur){
+        attackedStegos.remove(stegosaur);
+    }
+
 //    @Override
     // allosaur can be attacked by player so add attack action
 //    public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {

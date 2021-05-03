@@ -106,7 +106,7 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
      * Returns true if the dinoActor is matured, false otherwise.
      * @return true if the dinoActor is matured, false otherwise
      */
-    private boolean isMatured(){
+    public boolean isMatured(){
         return age >= dinoType.getMatureWhen();
     }
 
