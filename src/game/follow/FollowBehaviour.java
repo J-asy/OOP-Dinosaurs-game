@@ -33,7 +33,7 @@ public abstract class FollowBehaviour implements Behaviour {
             for (Exit exit : visibleExits) {
                 Location destination = exit.getDestination();
                 Location actualDestination = null;
-                if (followPurpose == DinoCapabilities.CAN_BREED || followPurpose == DinoCapabilities.CAN_ATTACK){
+                if (actorAsDino.canBreed() || actorAsDino.isCarnivorous()){
                     actualDestination = followActor(map, destination, actorAsDino);
                 }
                 else if (followPurpose == DinoCapabilities.HERBIVORE || followPurpose == DinoCapabilities.CARNIVORE){
