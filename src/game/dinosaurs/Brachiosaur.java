@@ -9,10 +9,16 @@ public class Brachiosaur extends DinoActor {
 
     public Brachiosaur(Sex sex, Boolean isMatured) {
         super(DINO_TYPE, sex, isMatured);
+        initializeCapabilities();
     }
 
     public Brachiosaur(Boolean isMatured) {
         super(DINO_TYPE, isMatured);
+    }
+
+    public void initializeCapabilities(){
+        addCapability(DinoCapabilities.BUSH_DESTROYER);
+        addCapability(DinoCapabilities.HERBIVORE);
     }
 
     // don't need to override getAllowableActions, cuz can only breed - dealt with by DinoActor

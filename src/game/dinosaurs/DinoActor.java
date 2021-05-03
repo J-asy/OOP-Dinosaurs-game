@@ -5,7 +5,6 @@ import game.*;
 
 import game.breed.BreedingAction;
 import game.breed.BreedingBehaviour;
-import game.breed.BreedingCapability;
 import game.pregnancy.LayEggAction;
 import game.pregnancy.PregnancyBehaviour;
 import game.utility.Probability;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Base class for Stegosaur, Brachiosaur and Allosaur for representing dinosaur Actors.
  */
-public abstract class DinoActor extends Actor {
+public abstract class DinoActor extends Actor implements DinoInitialization {
 
     /**
      * An ArrayList of standard behaviours that the DinoActor should have
@@ -150,7 +149,7 @@ public abstract class DinoActor extends Actor {
      * @return true if the dinoActor can breed, false otherwise
      */
     public boolean canBreed() {
-        return hasCapability(BreedingCapability.CAN_BREED);
+        return hasCapability(DinoCapabilities.CAN_BREED);
     }
 
     /**
@@ -160,12 +159,12 @@ public abstract class DinoActor extends Actor {
     public void adjustBreedingCapability() {
         if (!canBreed()){
             if (hitPoints >= dinoType.breedingMinFoodLevel && !isPregnant() && isMatured()){
-                addCapability(BreedingCapability.CAN_BREED);
+                addCapability(DinoCapabilities.CAN_BREED);
             }
         }
         else {
             if (hitPoints < dinoType.breedingMinFoodLevel){
-                removeCapability(BreedingCapability.CAN_BREED);
+                removeCapability(DinoCapabilities.CAN_BREED);
             }
         }
     }
@@ -182,7 +181,7 @@ public abstract class DinoActor extends Actor {
      * @return true if the dinoActor is pregnant, false otherwise
      */
     public boolean isPregnant(){
-        return hasCapability(PregnancyStatus.PREGNANT);
+        return hasCapability(DinoCapabilities.PREGNANT);
     }
 
     /**
@@ -214,15 +213,15 @@ public abstract class DinoActor extends Actor {
      */
     public void setPregnant(boolean status){
         if (status){
-            addCapability(PregnancyStatus.PREGNANT);
-            System.out.println(hasCapability(PregnancyStatus.PREGNANT));
+            addCapability(DinoCapabilities.PREGNANT);
+            System.out.println(hasCapability(DinoCapabilities.PREGNANT));
             initializePregnancyPeriod();
-            if (hasCapability(BreedingCapability.CAN_BREED)){
-                removeCapability(BreedingCapability.CAN_BREED);
+            if (hasCapability(DinoCapabilities.CAN_BREED)){
+                removeCapability(DinoCapabilities.CAN_BREED);
             }
         }
         else {
-            removeCapability(PregnancyStatus.PREGNANT);
+            removeCapability(DinoCapabilities.PREGNANT);
         }
     }
 
@@ -259,6 +258,8 @@ public abstract class DinoActor extends Actor {
 
         Action actionToExecute = new DoNothingAction();
 
+        // if the actor has been determined to perform an Action with another Actor previously
+        // it should always return that Action
         if (actionInMotion != null){
             return actionInMotion;
         }
