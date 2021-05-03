@@ -1,4 +1,4 @@
-package game;
+package game.follow;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
@@ -7,7 +7,7 @@ import game.Behaviour;
  * A class that figures out a MoveAction that will move the actor one step 
  * closer to a target Actor.
  */
-public class FollowBehaviour implements Behaviour {
+public class FollowBehaviourDeleteLater implements Behaviour {
 
 	private Actor target;
 
@@ -16,7 +16,7 @@ public class FollowBehaviour implements Behaviour {
 	 * 
 	 * @param subject the Actor to follow
 	 */
-	public FollowBehaviour(Actor subject) {
+	public FollowBehaviourDeleteLater(Actor subject) {
 		this.target = subject;
 	}
 
