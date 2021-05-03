@@ -15,17 +15,21 @@ import java.util.List;
  */
 public abstract class FollowBehaviour implements Behaviour {
 
-    private final DinoCapabilities followPurpose;
+    private DinoCapabilities followPurpose;
+
+    public FollowBehaviour(){
+    }
 
     public FollowBehaviour(DinoCapabilities purpose) {
         followPurpose = purpose;
     }
 
+
     @Override
     public Action getAction(Actor actor, GameMap map) {
         // if actor is a player, player doesn't follow anything
         Action actionToReturn = null;
-        if (actor instanceof DinoActor) {
+        if (actor instanceof DinoActor && followPurpose != null) {
             Location actorLocation = map.locationOf(actor);
             List<Exit> visibleExits = lookAround(map, actor);  // exits that are two squares away from actor
 
@@ -53,10 +57,10 @@ public abstract class FollowBehaviour implements Behaviour {
         Location returnDestination = null;
         List<Item> groundItems = map.locationOf(actorAsDino).getItems();
 
-        for (Item currentItem : groundItems){
+//        for (Item currentItem : groundItems){
             // has capability of herbivore
             // has capability of carnivore
-        }
+//        }
 
 
 
