@@ -19,13 +19,13 @@ public class AttackBehaviour implements Behaviour {
     public Action getAction(Actor actor, GameMap map) {
 
 
-            if (target.hasCapability(DinoCapabilities.CAN_BE_ATTACKED) && actor instanceof Player) {
+            if (target.canBeAttacked() && actor instanceof Player) {
                 return new AttackAction(target);
             }
-            else if (target.hasCapability(FoodType.CARNIVORE) && actor instanceof Player) {
+            else if (target.isCarnivorous() && actor instanceof Player) {
                 return new AttackAction(target);
             }
-            else if (actor.hasCapability(FoodType.CARNIVORE) && target.hasCapability(DinoCapabilities.CAN_BE_ATTACKED)) {
+            else if (((DinoActor) actor).isCarnivorous() && target.canBeAttacked()) {
                 if (!((Allosaur)actor).hasAttackedStegosaur((Stegosaur)target, map)){
 
                     if (!((DinoActor) actor).isMatured()) {
