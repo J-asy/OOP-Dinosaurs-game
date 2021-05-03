@@ -8,14 +8,16 @@ import game.dinosaurs.DinoCapabilities;
 import java.util.ArrayList;
 import java.util.List;
 
+// might need to change look around
+
 /**
  * Behaviour class that simulates Actor following another Actor
  */
-public abstract class FollowActorBehaviour implements Behaviour {
+public abstract class FollowBehaviour implements Behaviour {
 
     private final DinoCapabilities followPurpose;
 
-    public FollowActorBehaviour(DinoCapabilities purpose) {
+    public FollowBehaviour(DinoCapabilities purpose) {
         followPurpose = purpose;
     }
 
@@ -30,29 +32,54 @@ public abstract class FollowActorBehaviour implements Behaviour {
             DinoActor actorAsDino = (DinoActor) actor;
             for (Exit exit : visibleExits) {
                 Location destination = exit.getDestination();
+                Location actualDestination = null;
+                if (followPurpose == DinoCapabilities.CAN_BREED || followPurpose == DinoCapabilities.CAN_ATTACK){
+                    actualDestination = followActor(map, destination, actorAsDino);
+                }
+                else if (followPurpose == DinoCapabilities.HERBIVORE || followPurpose == DinoCapabilities.CARNIVORE){
+                    actualDestination = followFoodItem(map, destination, actorAsDino);
+                }
 
-                // if there is an actor two squares away
-                if (map.isAnActorAt(destination)) {
-                    Actor nearbyActor = destination.getActor();
-
-                    if (nearbyActor instanceof DinoActor) {
-                        DinoActor targetAsDino = (DinoActor) nearbyActor;
-
-                        if (followPurpose == DinoCapabilities.CAN_BREED &&
-                                followForBreeding(actorAsDino, targetAsDino)) {
-                                targetAsDino.setActionInMotion(new DoNothingAction());
-                                actionToReturn = moveCloser(actorLocation, destination, actor);
-                        }
-                        else if (followPurpose == DinoCapabilities.CAN_ATTACK &&
-                                followForAttacking(actorAsDino, targetAsDino)){
-                            actionToReturn = moveCloser(actorLocation, destination, actor);
-                        }
-
-                    }
+                if (actualDestination != null){
+                    actionToReturn = moveCloser(actorLocation, actualDestination, actor);
+                    break;
                 }
             }
         }
             return actionToReturn;
+    }
+
+    private Location followFoodItem(GameMap map, Location destination, DinoActor actorAsDino){
+        Location returnDestination = null;
+        // if destination has capability of herbivore
+        // if destination has capability of carnivore
+        return returnDestination;
+    }
+
+    private Location followActor(GameMap map, Location destination, DinoActor actorAsDino){
+        Location returnDestination = null;
+
+        // if there is an actor two squares away
+        if (map.isAnActorAt(destination)) {
+            Actor nearbyActor = destination.getActor();
+
+            if (nearbyActor instanceof DinoActor) {
+                DinoActor targetAsDino = (DinoActor) nearbyActor;
+
+                if (followPurpose == DinoCapabilities.CAN_BREED &&
+                        followForBreeding(actorAsDino, targetAsDino)) {
+                    targetAsDino.setActionInMotion(new DoNothingAction());
+                    returnDestination = destination;
+                }
+                else if (followPurpose == DinoCapabilities.CAN_ATTACK &&
+                        followForAttacking(actorAsDino, targetAsDino)){
+                    returnDestination = destination;
+                }
+
+            }
+        }
+        return returnDestination;
+
     }
 
     private boolean followForBreeding(DinoActor actorAsDino, DinoActor targetAsDino){
