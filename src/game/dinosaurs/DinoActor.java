@@ -235,6 +235,34 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
         }
     }
 
+    // unconscious
+    @Override
+    public boolean isConscious(){
+        return hasCapability(UnconsciousStatus.CONSCIOUS);
+    }
+
+    public void setUnconscious(boolean status){
+        if (status){
+            addCapability(UnconsciousStatus.UNCONSCIOUS);
+            initializeUnconsciousPeriod();
+        }
+        else {
+            removeCapability(UnconsciousStatus.UNCONSCIOUS);
+        }
+    }
+
+    public void initializeUnconsciousPeriod() {
+        unconsciousPeriod = dinoType.getInitialUnconsciousPeriod();
+    }
+
+    public int getUnconsciousPeriod() {
+        return unconsciousPeriod;
+    }
+
+    public void decrementUnconsciousPeriod(){
+        unconsciousPeriod--;
+    }
+
     @Override
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
         Actions validActions = new Actions();
@@ -270,22 +298,22 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 
         // if the actor has been determined to perform an Action with another Actor previously
         // it should always return that Action
-        if (actionInMotion != null){
+        if (actionInMotion != null) {
             actionToExecute = actionInMotion;
             actionInMotion = null;
         }
 
         // calling getAction for every behaviour can help us to do some necessary processing
         // as well even if it returns null in the end
-        for (Behaviour b: behaviour){
+        for (Behaviour b : behaviour) {
             Action resultingAction = b.getAction(this, map);
             System.out.println(b);
-            if (resultingAction != null && actionToExecute == null){
+            if (resultingAction != null && actionToExecute == null) {
                 System.out.println(b + "is not null");
-                    actionToExecute = resultingAction;
-                    System.out.println("changed");
-                }
+                actionToExecute = resultingAction;
+                System.out.println("changed");
             }
+        }
 
 
 //        for (Action a : actions){
@@ -296,27 +324,28 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 //
 
         return actionToExecute;
+    }
 
-        public boolean checkUnconsciousPeriod(GameMap map ) {
-            Location dinoLocation = map.locationOf(this);
-            if (!this.isConscious()){
-                if (this.getUnconsciousPeriod() > 0){
-                    this.decrementUnconsciousPeriod();
-                    this.setUnconscious(true);
-                }
-                else {
-                    this.setUnconscious(false);
-                    System.out.println("Dinosaur at " + (map.locationOf(this).x()) + " " + (map.locationOf(this).y()) + " is dead!")  ;
-                    map.removeActor(this);
-                    Corpse corpseDino = new Corpse(dinoType.getDisplayChar());
-                    dinoLocation.addItem(corpseDino);
-                }
-                return true;
+    public boolean checkUnconsciousPeriod(GameMap map ) {
+        Location dinoLocation = map.locationOf(this);
+        if (!this.isConscious()){
+            if (this.getUnconsciousPeriod() > 0){
+                this.decrementUnconsciousPeriod();
+                this.setUnconscious(true);
             }
             else {
-                return false;
+                this.setUnconscious(false);
+                System.out.println("Dinosaur at " + (map.locationOf(this).x()) + " " + (map.locationOf(this).y()) + " is dead!")  ;
+                map.removeActor(this);
+                Corpse corpseDino = new Corpse(dinoType.getDisplayChar());
+                dinoLocation.addItem(corpseDino);
             }
+            return true;
         }
+        else {
+            return false;
+        }
+    }
 
 
 
