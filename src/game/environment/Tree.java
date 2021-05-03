@@ -1,4 +1,4 @@
-package game;
+package game.environment;
 
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
@@ -19,5 +19,6 @@ public class Tree extends Ground {
 			displayChar = 't';
 		if (age == 20)
 			displayChar = 'T';
+
 	}
 }
