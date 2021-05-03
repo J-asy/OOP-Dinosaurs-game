@@ -1,11 +1,5 @@
 package game.dinosaurs;
 
-import edu.monash.fit2099.engine.Actions;
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.GameMap;
-import game.attack.AttackAction;
-import game.breed.BreedingAction;
-
 
 /**
  * A herbivorous dinosaur.
@@ -28,7 +22,7 @@ public class Stegosaur extends DinoActor {
 
     public void initializeCapabilities(){
         addCapability(DinoCapabilities.HERBIVORE);
-        addCapability(DinoCapabilities.ATTACKABLE);
+        addCapability(DinoCapabilities.CAN_BE_ATTACKED);
     }
 
 //    @Override
