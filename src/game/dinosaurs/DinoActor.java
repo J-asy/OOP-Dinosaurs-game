@@ -3,6 +3,7 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
+import game.attack.Corpse;
 import game.breed.BreedingBehaviour;
 import game.follow.FollowMateBehaviour;
 import game.follow.FollowVictimBehaviour;
