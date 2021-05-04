@@ -44,6 +44,7 @@ public abstract class DinoActor extends Actor {
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
         initializeDinoBehaviour();
+        initializeCapabilities();
 
         if (Probability.generateProbability(0.5F)){
             sex = Sex.MALE;
@@ -202,7 +203,7 @@ public abstract class DinoActor extends Actor {
      * Initializes the dinoActor's pregnancy period to an
      * appropriate value.
      */
-    public void initializePregnancyPeriod(){
+    private void initializePregnancyPeriod(){
         pregnancyPeriod = dinoType.getPregnancyPeriod();
     }
 
