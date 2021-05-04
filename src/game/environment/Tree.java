@@ -3,9 +3,9 @@ package game.environment;
 import edu.monash.fit2099.engine.*;
 import game.EcoPoints;
 import game.FoodType;
-import game.environment.Fruit;
+import game.Player;
 import game.utility.Probability;
-import game.SearchItemAction;
+import game.actions.SearchItemAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,21 +62,20 @@ public class Tree extends Ground {
 		}
 	}
 
+	public ArrayList<Fruit> getTreeFruits(){ return treeFruits; }
 
-	public int getNumberTreeFruits() {
-		return treeFruits.size();
+	public Fruit decrementTreeItem(){
+		Fruit fruit = null;
+		if (treeFruits.size()>0) {
+			fruit = treeFruits.get(0);
+			treeFruits.remove(0);
+		}
+		return fruit;
 	}
-
-	public void removeTreeFruits(int i) {
-		treeFruits.remove(i);
-	}
-
-
 
 	public Actions allowableActions(Actor actor, Location location, String direction){
 		Actions list = super.allowableActions(actor, location, direction);
-		list.add(new SearchItemAction(direction));
+		if (actor instanceof Player)
+			list.add(new SearchItemAction(direction));
 		return list;
 	}
-
-}
