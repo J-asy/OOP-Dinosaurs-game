@@ -1,5 +1,6 @@
 package game.dinosaurs;
 
 public enum UnconsciousStatus {
-    UNCONSCIOUS
+    UNCONSCIOUS,
+    CONSCIOUS;
 }

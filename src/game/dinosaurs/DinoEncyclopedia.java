@@ -8,9 +8,13 @@ package game.dinosaurs;
 
 
 public enum DinoEncyclopedia {
-    STEGOSAUR('S', "Stegosaur", 50, 100, 90, 30, 50, 10, 20, true),
-    BRACHIOSAUR('B', "Brachiosaur", 100, 160, 140, 50, 70, 30, 15, true),
-    ALLOSAUR('A', "Allosaur", 20, 100, 90, 50, 50, 20, 20, true);
+    STEGOSAUR('S', "Stegosaur", 30, 100, 10, 5, 2, 10, 20),
+    BRACHIOSAUR('B', "Brachiosaur", 30, 160, 10, 8, 2, 30, 15),
+    ALLOSAUR('A', "Allosaur", 30, 100, 10, 10, 2, 20, 20);
+
+    //    STEGOSAUR('S', "Stegosaur", 50, 100, 90, 30, 50, 10, 20);
+    //    BRACHIOSAUR('B', "Brachiosaur", 100, 160, 140, 50, 70, 30, 15),
+//    ALLOSAUR('A', "Allosaur", 20, 100, 90, 50, 50, 20, 20);
 
     char displayChar;
     String name;
@@ -18,23 +22,21 @@ public enum DinoEncyclopedia {
     int maxHitPoints;
     int hungryWhen;
     int matureWhen;
-    int capableBreedingWhen;
+    int breedingMinFoodLevel;
     int pregnancyPeriod;
     int unconsciousPeriod;
-    boolean isConscious;
 
     DinoEncyclopedia(char displayChar, String name, int initialHitPoints, int maxHitPoints, int hungryWhen,
-                     int matureWhen, int capableBreedingWhen, int pregnancyPeriod, int unconsciousPeriod, boolean isConscious) {
+                     int matureWhen, int breedingMinFoodLevel, int pregnancyPeriod, int unconsciousPeriod) {
         this.displayChar = displayChar;
         this.name = name;
         this.initialHitPoints = initialHitPoints;
         this.maxHitPoints = maxHitPoints;
         this.hungryWhen = hungryWhen;
         this.matureWhen = matureWhen;
-        this.capableBreedingWhen = capableBreedingWhen;
+        this.breedingMinFoodLevel = breedingMinFoodLevel;
         this.pregnancyPeriod = pregnancyPeriod;
         this.unconsciousPeriod = unconsciousPeriod;
-        this.isConscious = isConscious;
     }
 
     public char getDisplayChar(){
@@ -61,20 +63,17 @@ public enum DinoEncyclopedia {
         return matureWhen;
     }
 
-    public int getCapableBreedingWhen(){
-        return capableBreedingWhen;
+    public int getBreedingMinFoodLevel(){
+        return breedingMinFoodLevel;
     }
 
     public int getPregnancyPeriod(){
         return pregnancyPeriod;
     }
 
-    public int getUnconsciousPeriod(){
+    public int getInitialUnconsciousPeriod(){
         return unconsciousPeriod;
     }
 
-    public boolean getIsConscious(){
-        return isConscious;
-    }
-
 }
+
