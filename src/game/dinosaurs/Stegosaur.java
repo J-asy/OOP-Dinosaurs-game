@@ -1,9 +1,9 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
+import game.dinosaurs.DinoActor;
 import game.HerbivoreType;
 import game.attack.AttackAction;
-import game.BreedingAction;
 import game.FoodType;
 import game.attack.Corpse;
 

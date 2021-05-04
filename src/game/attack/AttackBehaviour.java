@@ -6,8 +6,7 @@ import game.Behaviour;
 import game.FoodType;
 import game.HerbivoreType;
 import game.Player;
-import game.dinosaurs.Allosaur;
-import game.dinosaurs.DinoActor;
+import game.DinoActor;
 import game.dinosaurs.Stegosaur;
 
 public class AttackBehaviour implements Behaviour {

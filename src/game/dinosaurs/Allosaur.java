@@ -1,6 +1,7 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
+import game.DinoActor;
 import game.FoodType;
 import game.attack.AttackAction;
 import game.breed.BreedingAction;

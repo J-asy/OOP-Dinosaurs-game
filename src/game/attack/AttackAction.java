@@ -8,9 +8,8 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Weapon;
-import game.attack.Corpse;
 import game.dinosaurs.Allosaur;
-import game.dinosaurs.DinoActor;
+import game.DinoActor;
 
 /**
  * Special Action for attacking other Actors.
