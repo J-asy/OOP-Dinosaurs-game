@@ -316,7 +316,7 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
             return actionToExecute;
         }
         else {
-            return null;
+            return new DoNothingAction();
         }
     }
 
