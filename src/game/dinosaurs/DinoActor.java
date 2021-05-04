@@ -242,8 +242,9 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 
     public void setUnconscious(boolean status){
         if (status){
-            addCapability(UnconsciousStatus.UNCONSCIOUS);
-            initializeUnconsciousPeriod();
+            this.removeCapability(UnconsciousStatus.CONSCIOUS);
+            this.addCapability(UnconsciousStatus.UNCONSCIOUS);
+            this.initializeUnconsciousPeriod();
         }
         else {
             removeCapability(UnconsciousStatus.UNCONSCIOUS);
@@ -283,8 +284,6 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         if(this.hitPoints == 0) {
             this.setUnconscious(true);
-            this.removeCapability(UnconsciousStatus.CONSCIOUS);
-            this.addCapability(UnconsciousStatus.UNCONSCIOUS);
         }
 
         if (!checkUnconsciousPeriod(map)) {
@@ -332,7 +331,6 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
         if (!this.isConscious()){
             if (this.getUnconsciousPeriod() > 0){
                 this.decrementUnconsciousPeriod();
-                this.setUnconscious(true);
             }
             else {
                 this.setUnconscious(false);
