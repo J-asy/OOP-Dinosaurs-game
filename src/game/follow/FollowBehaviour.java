@@ -97,9 +97,6 @@ public abstract class FollowBehaviour implements Behaviour {
         boolean differentSex = targetAsDino.getSex() != actorAsDino.getSex();
         boolean sameSpecies = actorAsDino.getDinoType() == targetAsDino.getDinoType();
         boolean bothCanBreed = targetAsDino.canBreed() && actorAsDino.canBreed();
-        System.out.println("diff sex: " + differentSex);
-        System.out.println("same sp: " + sameSpecies);
-        System.out.println("both breed: " + bothCanBreed);
         return differentSex && sameSpecies && bothCanBreed;
     }
 
@@ -125,9 +122,7 @@ public abstract class FollowBehaviour implements Behaviour {
             if (possibleStep.canActorEnter(actor)) {
                 int newDistance = distance(possibleStep, destination);
                 if (newDistance < currentDistance) {
-                    System.out.println("success");
-//                    return new MoveActorAction(exit.getDestination(), exit.getName());
-                    return new MoveActorAction(exit.getDestination(), "fdsljfl");  // only for testing
+                    return new MoveActorAction(exit.getDestination(), exit.getName());
                 }
             }
         }

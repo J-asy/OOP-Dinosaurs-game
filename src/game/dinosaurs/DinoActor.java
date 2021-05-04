@@ -272,7 +272,6 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
         ArrayList<Behaviour> adjacentActorBehaviour = new ArrayList<>();
         adjacentActorBehaviour.add(new BreedingBehaviour(this));
 
-        System.out.println("\nhere");
         for (Behaviour b : adjacentActorBehaviour){
             Action resultingAction = b.getAction(otherActor, map);
             System.out.println(resultingAction);
@@ -288,15 +287,9 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         if (!checkUnconsciousPeriod(map)) {
             aging();
-            //        System.out.println("");
-            System.out.println("age: " + age);
             decrementFoodLevel();
-            System.out.println("food lvl: " + hitPoints);
-            System.out.println("sex: " + sex);
             roarIfHungry(map);
             adjustBreedingCapability();
-            System.out.println("has breeding capability: " + canBreed());
-            System.out.println("pregnancy period: " + pregnancyPeriod);
 
             Action actionToExecute = null;
 
@@ -311,11 +304,8 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
             // as well even if it returns null in the end
             for (Behaviour b : behaviour) {
                 Action resultingAction = b.getAction(this, map);
-                System.out.println(b);
                 if (resultingAction != null && actionToExecute == null) {
-                    System.out.println(b + "is not null");
                     actionToExecute = resultingAction;
-                    System.out.println("changed");
                 }
             }
 
