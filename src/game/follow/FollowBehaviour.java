@@ -101,9 +101,9 @@ public abstract class FollowBehaviour implements Behaviour {
     }
 
     private boolean followForAttacking(DinoActor actorAsDino, DinoActor nearbyActor){
-        boolean isCarnivorous = actorAsDino.isCarnivorous();
+        boolean canAttack = actorAsDino.canAttack();
         boolean canBeAttacked = nearbyActor.canBeAttacked();
-        return isCarnivorous && canBeAttacked;
+        return canAttack && canBeAttacked;
     }
 
     /**
