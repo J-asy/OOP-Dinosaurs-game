@@ -10,6 +10,8 @@ import game.dinosaurs.Brachiosaur;
 import game.utility.Probability;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Bush extends Ground {
 
@@ -18,6 +20,7 @@ public class Bush extends Ground {
 
     public Bush() {
         super('~');
+        addCapability(TerrainType.BUSH);
     }
 
     /**
@@ -36,8 +39,8 @@ public class Bush extends Ground {
             // If it's a fully grown bush, it can grow fruits, if a fruit grown then add to the fruits list
             if (age > 10){
                 if (Probability.generateProbability(0.1f)) {
-                    Fruit fruit = new Fruit("fruit", displayChar, false);
-                    fruit.addCapability(FoodType.HERBIVORE);
+                    Fruit fruit = new Fruit("fruit", displayChar);
+//                    fruit.addCapability(FoodType.HERBIVORE);
                     EcoPoints.incrementEcoPoints(1);
                     bushFruits.add(fruit);
                 }
@@ -54,16 +57,18 @@ public class Bush extends Ground {
         }
     }
 
-    public ArrayList<Fruit> getBushFruits(){return bushFruits;}
-
     //decrement the list after it gets eaten
     public Fruit decrementBushItem(){
         Fruit fruit = null;
         if (bushFruits.size()>0) {
-            fruit = bushFruits.get(0);
-            bushFruits.remove(0);
+            fruit = bushFruits.remove(0);
         }
         return fruit;
+    }
+
+    public void removeBushItem(){
+        if (bushFruits.size()>0)
+            bushFruits.remove(0);
     }
 
     @Override

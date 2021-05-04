@@ -16,6 +16,7 @@ public class Tree extends Ground {
 
 	public Tree() {
 		super('+');
+		addCapability(TerrainType.TREE);
 	}
 
 	@Override
@@ -43,8 +44,8 @@ public class Tree extends Ground {
 			}
 
 			if (Probability.generateProbability(0.5f)){
-				Fruit fruit = new Fruit("fruit",displayChar,false);
-				fruit.addCapability(FoodType.HERBIVORE);
+				Fruit fruit = new Fruit("fruit",displayChar);
+//				fruit.addCapability(FoodType.HERBIVORE);
 				EcoPoints.incrementEcoPoints(1);
 				treeFruits.add(fruit);
 			}
@@ -53,7 +54,7 @@ public class Tree extends Ground {
 			if (treeFruits.size() > 0){
 				for (int i = 0; i < treeFruits.size(); i++){
 					if (Probability.generateProbability(0.05f)) {
-						treeFruits.get(i).setPortability(true);
+//						treeFruits.get(i).setPortability(true);
 						location.addItem(treeFruits.get(i));
 						treeFruits.remove(i);
 					}
@@ -62,15 +63,17 @@ public class Tree extends Ground {
 		}
 	}
 
-	public ArrayList<Fruit> getTreeFruits(){ return treeFruits; }
-
 	public Fruit decrementTreeItem(){
 		Fruit fruit = null;
 		if (treeFruits.size()>0) {
-			fruit = treeFruits.get(0);
-			treeFruits.remove(0);
+			fruit = treeFruits.remove(0);
 		}
 		return fruit;
+	}
+
+	public void removeTreeItem(){
+		if (treeFruits.size()>0)
+			treeFruits.remove(0);
 	}
 
 	public Actions allowableActions(Actor actor, Location location, String direction){

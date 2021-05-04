@@ -12,8 +12,8 @@ public class VendingMachine {
 
         if (choice == 1 && ecoPoints >= 30){
             Fruit fruit = new Fruit("fruit",
-                    actor.getDisplayChar(),true);
-            fruit.addCapability(FoodType.HERBIVORE);
+                    actor.getDisplayChar());
+//            fruit.addCapability(FoodType.HERBIVORE);
             actor.addItemToInventory(fruit);
             EcoPoints.decrementEcoPoints(30);
             System.out.println("Fruit Get!");

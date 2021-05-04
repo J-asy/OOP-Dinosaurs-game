@@ -2,19 +2,17 @@ package game.environment;
 
 import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Location;
+import game.FoodType;
+import game.PortableItem;
 
-public class Fruit extends Item {
+public class Fruit extends PortableItem {
     private int groundTime;
 
-    public Fruit(String name, char displayChar, boolean portable){
-        super(name,displayChar,portable);
+    public Fruit(String name, char displayChar){
+        super(name,displayChar);
         groundTime = 0;
+        addCapability(FoodType.HERBIVORE);
     }
-
-    //used when fruit falls, portable will == true
-    public void setPortability(boolean portability){
-        this.portable = portability;
-     }
 
     public int getGroundTime() { return groundTime; }
 

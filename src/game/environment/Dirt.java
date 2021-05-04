@@ -26,10 +26,10 @@ public class Dirt extends Ground {
 		for (Exit elem : location.getExits()) {
 			Ground groundType = elem.getDestination().getGround();
 
-			if (groundType instanceof Bush) {
+			if (groundType.hasCapability(TerrainType.BUSH)) {
 				surroundingBushes++;
 			}
-			else if (groundType instanceof Tree) {
+			else if (groundType.hasCapability(TerrainType.TREE)) {
 				adjacentTree = true;
 				break;
 			}
