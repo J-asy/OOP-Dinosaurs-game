@@ -130,10 +130,6 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
         }
     }
 
-    public boolean isCarnivorous(){
-        return hasCapability(DinoCapabilities.CARNIVORE);
-    }
-
     public boolean canAttack(){return hasCapability(DinoCapabilities.CAN_ATTACK); }
 
     public boolean canBeAttacked(){

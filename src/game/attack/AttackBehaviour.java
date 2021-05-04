@@ -22,10 +22,10 @@ public class AttackBehaviour implements Behaviour {
             if (target.canBeAttacked() && actor instanceof Player) {
                 return new AttackAction(target);
             }
-            else if (target.isCarnivorous() && actor instanceof Player) {
+            else if (target.canAttack() && actor instanceof Player) {
                 return new AttackAction(target);
             }
-            else if (((DinoActor) actor).isCarnivorous() && target.canBeAttacked()) {
+            else if (((DinoActor) actor).canAttack() && target.canBeAttacked()) {
                 if (!((Allosaur)actor).hasAttackedStegosaur((Stegosaur)target, map)){
 
                     if (!((DinoActor) actor).isMatured()) {
