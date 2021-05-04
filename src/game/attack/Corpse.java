@@ -1,7 +1,7 @@
 package game.attack;
 
 import edu.monash.fit2099.engine.Location;
-import game.dinosaurs.FoodType;
+import game.FoodType;
 import game.PortableItem;
 import game.dinosaurs.DinoEncyclopedia;
 import java.util.Map;
