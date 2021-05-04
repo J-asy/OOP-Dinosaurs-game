@@ -66,10 +66,10 @@ public class FeedingAction extends Action {
         else {
             if (actor.hasCapability(FoodType.HERBIVORE)){
                 if (map.at(x,y).getGround() instanceof Tree) {
-                    int noOfTreeFruits = ((Tree) map.at(x,y).getGround()).getNumberTreeFruits();
+                    int noOfTreeFruits = ((Tree) map.at(x,y).getGround()).getTreeFruits().size();
                     for (int i = 0; i < noOfTreeFruits; i++){
                         if (Probability.generateProbability(0.5f)) {
-                            ((Tree) map.at(x,y).getGround()).removeTreeFruits(i);
+                            ((Tree) map.at(x,y).getGround()).decrementTreeItem();
                             actor.heal(10);
                         }
                     }
