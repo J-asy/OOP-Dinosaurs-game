@@ -315,8 +315,11 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 
             return actionToExecute;
         }
-        return null;
+        else {
+            return null;
+        }
     }
+
 
     public boolean checkUnconsciousPeriod(GameMap map ) {
         Location dinoLocation = map.locationOf(this);

@@ -25,6 +25,7 @@ public class Allosaur extends DinoActor {
 
     public void initializeCapabilities(){
         addCapability(DinoCapabilities.CARNIVORE);
+        addCapability(UnconsciousStatus.CONSCIOUS);
     }
 
 
