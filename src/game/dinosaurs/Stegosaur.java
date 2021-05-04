@@ -24,6 +24,7 @@ public class Stegosaur extends DinoActor {
     public void initializeCapabilities(){
         addCapability(DinoCapabilities.HERBIVORE);
         addCapability(DinoCapabilities.CAN_BE_ATTACKED);
+        addCapability(UnconsciousStatus.CONSCIOUS);
     }
 
 //    @Override

@@ -2,9 +2,9 @@ package game.feeding;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
-import game.Egg;
 import game.FoodType;
 import game.attack.Corpse;
+import game.dinosaurs.Egg;
 import game.environment.Bush;
 import game.environment.Fruit;
 import game.environment.Tree;

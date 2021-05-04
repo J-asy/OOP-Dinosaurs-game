@@ -1,7 +1,6 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.Location;
-import game.DinoActor;
 import game.FoodType;
 import game.PortableItem;
 
@@ -16,10 +15,16 @@ public class Egg extends PortableItem {
     /**
      * Stores constants representing the total number of turns to wait till hatching for each dinosaur.
      */
+//    private final static Map<DinoEncyclopedia, Integer> DINO_EGG_DICTIONARY = Map.ofEntries(
+//            entry(DinoEncyclopedia.STEGOSAUR, 30),
+//            entry(DinoEncyclopedia.BRACHIOSAUR, 30),
+//            entry(DinoEncyclopedia.ALLOSAUR, 50)
+//    );
+
     private final static Map<DinoEncyclopedia, Integer> DINO_EGG_DICTIONARY = Map.ofEntries(
-            entry(DinoEncyclopedia.STEGOSAUR, 30),
-            entry(DinoEncyclopedia.BRACHIOSAUR, 30),
-            entry(DinoEncyclopedia.ALLOSAUR, 50)
+            entry(DinoEncyclopedia.STEGOSAUR, 3),
+            entry(DinoEncyclopedia.BRACHIOSAUR, 2),
+            entry(DinoEncyclopedia.ALLOSAUR, 1)
     );
 
     /**
@@ -70,18 +75,15 @@ public class Egg extends PortableItem {
      * @param currentLocation The location of the ground on which we lie.
      */
     public void tick(Location currentLocation) {
+        System.out.println("Wait: " + waitTurns);
         DinoActor newDino;
         if (waitTurns == 0) {
 
             newDino = switch (parent) {
-                case STEGOSAUR -> new Stegosaur();
-                case BRACHIOSAUR -> new Brachiosaur();
-                case ALLOSAUR -> new Allosaur();
+                case STEGOSAUR -> new Stegosaur(false);
+                case BRACHIOSAUR -> new Brachiosaur(false);
+                case ALLOSAUR -> new Allosaur(false);
             };
-
-            // Dinosaurs which are not grown up yet are indicated with a lowercase display character
-            // This function call simply sets the new dinosaur's display character to lowercase.
-            newDino.setChildDisplayCharacter();
 
             currentLocation.removeItem(this);
             currentLocation.addActor(newDino);
@@ -93,4 +95,3 @@ public class Egg extends PortableItem {
 
 
 }
-

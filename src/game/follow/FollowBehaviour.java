@@ -2,7 +2,7 @@ package game.follow;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
-import game.DinoActor;
+import game.dinosaurs.DinoActor;
 import game.dinosaurs.DinoCapabilities;
 
 import java.util.ArrayList;
@@ -101,7 +101,7 @@ public abstract class FollowBehaviour implements Behaviour {
     }
 
     private boolean followForAttacking(DinoActor actorAsDino, DinoActor nearbyActor){
-        boolean isCarnivorous = actorAsDino.isCarnivorous();
+        boolean isCarnivorous = actorAsDino.canAttack();
         boolean canBeAttacked = nearbyActor.canBeAttacked();
         return isCarnivorous && canBeAttacked;
     }
