@@ -35,7 +35,8 @@ public class AttackBehaviour implements Behaviour {
                     }
                 }
                 else{
-                    if ( ((Allosaur) actor).getAttackedPeriod((Stegosaur) target) > 0 && ((Allosaur) actor).getAttackedPeriod((Stegosaur) target) <= 20 ) {
+                    if ( ((Allosaur) actor).getAttackedPeriod((Stegosaur) target) > 0 &&
+                            ((Allosaur) actor).getAttackedPeriod((Stegosaur) target) <= 20 ) {
                         ((Allosaur) actor).decrementAttackedPeriod((Stegosaur) target);
                     }
                     else if (((Allosaur) actor).getAttackedPeriod((Stegosaur) target) == 0){
