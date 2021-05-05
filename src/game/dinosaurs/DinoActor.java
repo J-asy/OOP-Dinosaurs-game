@@ -5,11 +5,7 @@ import game.*;
 
 import game.attack.Corpse;
 import game.breed.BreedingBehaviour;
-import game.follow.FollowMateBehaviour;
-import game.follow.FollowVictimBehaviour;
-import game.pregnancy.PregnancyBehaviour;
-import game.utility.Probability;
-import game.wander.WanderBehaviour;
+import game.Probability;
 
 import java.util.ArrayList;
 

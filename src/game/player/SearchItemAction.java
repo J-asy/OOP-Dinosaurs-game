@@ -1,4 +1,4 @@
-package game.actions;
+package game.player;
 
 import edu.monash.fit2099.engine.*;
 import game.EcoPoints;
@@ -6,7 +6,7 @@ import game.environment.Bush;
 import game.environment.Fruit;
 import game.environment.TerrainType;
 import game.environment.Tree;
-import game.utility.Probability;
+import game.Probability;
 
 public class SearchItemAction extends Action {
 

@@ -13,6 +13,7 @@ import game.environment.Dirt;
 import game.environment.Floor;
 import game.environment.Tree;
 import game.environment.Wall;
+import game.player.Player;
 
 /**
  * The main class for the Jurassic World game.

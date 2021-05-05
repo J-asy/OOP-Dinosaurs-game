@@ -4,7 +4,7 @@ import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.*;
 import game.dinosaurs.Brachiosaur;
-import game.utility.Probability;
+import game.Probability;
 import java.util.ArrayList;
 
 public class Bush extends Ground {

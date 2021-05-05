@@ -3,9 +3,8 @@ import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import game.Behaviour;
-import game.FoodType;
 import game.dinosaurs.*;
-import game.Player;
+import game.player.Player;
 
 public class AttackBehaviour implements Behaviour {
 
