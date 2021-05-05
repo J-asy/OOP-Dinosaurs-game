@@ -10,12 +10,6 @@ import game.utility.Probability;
 
 public class SearchItemAction extends Action {
 
-    String direction;
-
-    public SearchItemAction(String direction) {
-        this.direction = direction;
-    }
-
     @Override
     public String execute(Actor actor, GameMap map) {
 

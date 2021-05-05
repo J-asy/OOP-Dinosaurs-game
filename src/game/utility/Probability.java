@@ -2,7 +2,7 @@ package game.utility;
 
 import java.util.Random;
 
-public class Probability {
+public abstract class Probability {
 
     public static boolean generateProbability(float probability){
 
