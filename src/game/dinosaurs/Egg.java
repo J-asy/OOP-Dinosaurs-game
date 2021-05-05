@@ -75,7 +75,6 @@ public class Egg extends PortableItem {
      * @param currentLocation The location of the ground on which we lie.
      */
     public void tick(Location currentLocation) {
-        System.out.println("Wait: " + waitTurns);
         DinoActor newDino;
         if (waitTurns == 0) {
 

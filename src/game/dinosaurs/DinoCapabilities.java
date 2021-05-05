@@ -7,5 +7,6 @@ public enum DinoCapabilities {
     CAN_BE_ATTACKED,
     CAN_BREED,
     HERBIVORE,
-    CARNIVORE
+    CARNIVORE,
+    CAN_REACH_TREE
 }
