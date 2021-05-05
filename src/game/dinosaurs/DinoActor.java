@@ -19,19 +19,18 @@ public abstract class DinoActor extends Actor {
      */
     private ArrayList<Behaviour> behaviour;
     private final DinoEncyclopedia dinoType;
-    private final Sex sex;
     private int age;
     private int pregnancyPeriod;
     private int unconsciousPeriod;
     private Action actionInMotion;
 
     // default baby dino
-    public DinoActor(DinoEncyclopedia dinoType, Sex sex, Boolean isMatured){
+    public DinoActor(DinoEncyclopedia dinoType, DinoCapabilities sex, Boolean isMatured){
         super(dinoType.getName(), dinoType.getDisplayChar(), dinoType.getInitialHitPoints());
         this.dinoType = dinoType;
-        this.sex = sex;
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
+        addCapability(sex);
         initializeDinoBehaviour();
     }
 
@@ -43,10 +42,10 @@ public abstract class DinoActor extends Actor {
         initializeDinoBehaviour();
 
         if (Probability.generateProbability(0.5F)){
-            sex = Sex.MALE;
+            addCapability(DinoCapabilities.MALE);
         }
         else {
-            sex = Sex.FEMALE;
+            addCapability(DinoCapabilities.FEMALE);
         }
     }
 
@@ -54,7 +53,14 @@ public abstract class DinoActor extends Actor {
         return dinoType;
     }
 
-    public Sex getSex(){
+    public DinoCapabilities getSex(){
+        DinoCapabilities sex;
+        if (hasCapability(DinoCapabilities.MALE)){
+            sex = DinoCapabilities.MALE;
+        }
+        else  {
+            sex = DinoCapabilities.FEMALE;
+        }
         return sex;
     }
 

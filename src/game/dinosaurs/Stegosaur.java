@@ -11,8 +11,9 @@ public class Stegosaur extends DinoActor {
 
     private static final DinoEncyclopedia DINO_TYPE = DinoEncyclopedia.STEGOSAUR;
 
-    public Stegosaur(Sex sex, Boolean isMatured) {
+    public Stegosaur(DinoCapabilities sex, Boolean isMatured) {
         super(DINO_TYPE, sex, isMatured);
+        addCapability(sex);
         initializeCapabilities();
     }
 
@@ -25,7 +26,7 @@ public class Stegosaur extends DinoActor {
     void initializeCapabilities(){
         addCapability(DinoCapabilities.HERBIVORE);
         addCapability(DinoCapabilities.CAN_BE_ATTACKED);
-        addCapability(UnconsciousStatus.CONSCIOUS);
+        addCapability(DinoCapabilities.CONSCIOUS);
     }
 
 //    @Override

@@ -7,8 +7,9 @@ public class Brachiosaur extends DinoActor {
 
     private static final DinoEncyclopedia DINO_TYPE = DinoEncyclopedia.BRACHIOSAUR;
 
-    public Brachiosaur(Sex sex, Boolean isMatured) {
+    public Brachiosaur(DinoCapabilities sex, Boolean isMatured) {
         super(DINO_TYPE, sex, isMatured);
+        addCapability(sex);
         initializeCapabilities();
     }
 

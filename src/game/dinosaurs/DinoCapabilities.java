@@ -1,6 +1,8 @@
 package game.dinosaurs;
 
 public enum DinoCapabilities {
+    MALE,
+    FEMALE,
     PREGNANT,
     BUSH_DESTROYER,
     CAN_ATTACK,
