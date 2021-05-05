@@ -30,7 +30,7 @@ public class Allosaur extends DinoActor {
     }
 
 
-    public boolean hasAttackedStegosaur(Stegosaur stegosaur, GameMap map) {
+    public boolean hasAttackedStegosaur(Stegosaur stegosaur) {
         return attackedStegos.containsKey(stegosaur);
     }
 

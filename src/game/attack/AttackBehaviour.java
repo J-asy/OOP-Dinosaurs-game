@@ -26,7 +26,7 @@ public class AttackBehaviour implements Behaviour {
                 return new AttackAction(target);
             }
             else if (((DinoActor) actor).canAttack() && target.canBeAttacked()) {
-                if (!((Allosaur)actor).hasAttackedStegosaur((Stegosaur)target, map)){
+                if (!((Allosaur)actor).hasAttackedStegosaur((Stegosaur)target)){
 
                     if (!((DinoActor) actor).isMatured()) {
                         return new AttackAction(target);
