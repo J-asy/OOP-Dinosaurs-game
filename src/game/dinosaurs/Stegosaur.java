@@ -13,7 +13,6 @@ public class Stegosaur extends DinoActor {
 
     public Stegosaur(DinoCapabilities sex, Boolean isMatured) {
         super(DINO_TYPE, sex, isMatured);
-        addCapability(sex);
         initializeCapabilities();
     }
 
