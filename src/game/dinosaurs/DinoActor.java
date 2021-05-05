@@ -283,8 +283,10 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        if (this.hitPoints == 0) {
-            this.setUnconscious(true);
+        if (this.isConscious()) {
+            if (this.hitPoints == 0) {
+                this.setUnconscious(true);
+            }
         }
 
         if (!checkUnconsciousPeriod(map)) {
