@@ -7,15 +7,19 @@ import game.Probability;
 
 
 /**
- * A class that represents bare dirt and grow bushes on it.
+ * A class that represents bare dirt and grows Bush on it.
  */
 public class Dirt extends CapableGround {
 
 	public Dirt() { super('.'); }
 
 	/**
-	 * Updates the dirt/bush every turn. "Lets the dirt/bush experience the joy of time XD \(^-^)/"
-	 * @param location The location of the Ground
+	 * Updates the dirt/bush every turn.
+	 * On every tick, the surrounding Exits are checked to find out the terrain type of each Exits. If there are Tree
+	 * surrounding the current location, no Bush is grown. If not, Bush has 0.5% chance to grow, if there are more than 1
+	 * Bush surrounding it, the Dirt will have 5% to grown a new Bush.
+	 *
+	 * @param location the location of the Dirt
 	 */
 	@Override
 	public void tick(Location location) {

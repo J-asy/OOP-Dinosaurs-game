@@ -7,11 +7,32 @@ import game.dinosaurs.*;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Special Action for Player to feed Actor.
+ */
 public class PlayerFeedAction extends Action {
+
+    /**
+     * The Actor that is to be fed.
+     */
     private final Actor target;
 
+    /**
+     * Constructor
+     * @param target the Actor (DinoActor) to feed
+     */
     public PlayerFeedAction(Actor target){ this.target=target; }
 
+    /**
+     * Perform the Action.
+     * A list of items from the Player inventory will be shown to the user. User can choose the item they want to feed
+     * to the target. Checking is done to ensure that the correct food type (food for Herbivore or Carnivore) is fed to
+     * the correct dinosaur.
+     *
+     * @param actor The actor performing the action.
+     * @param map The map the actor (Player) is on.
+     * @return a description of whether the feeding is successful that can be displayed to the user.
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
 

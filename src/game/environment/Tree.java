@@ -6,15 +6,29 @@ import game.Probability;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class representing terrain of Tree type.
+ */
 public class Tree extends CapableGround {
 	private int age = 0;
 	private ArrayList<Fruit> treeFruits = new ArrayList<>(); //fruits on the tree
 
+	/**
+	 * Constructor
+	 */
 	public Tree() {
 		super('+');
 		addCapability(TerrainType.TREE);
 	}
 
+	/**
+	 * Updates the tree every turn.
+	 * On every tick, the age of the Tree is increased. When the age of the Tree is over 20, it will have a 50% chance
+	 * to grow a Fruit. The Fruit have a 5% chance of falling onto the ground, when that happens it is removed from the
+	 * list of Fruits. The time the fallen Fruit are on the ground are checked every turn to see if it reached 15, if
+	 * yes, it will rot and be removed from the Location.
+	 * @param location the current Location of the Tree
+	 */
 	@Override
 	public void tick(Location location) {
 		super.tick(location);
@@ -39,20 +53,8 @@ public class Tree extends CapableGround {
 				}
 			}
 
-
-//			List<Item> itemAtLocation = location.getItems();
-//			for (Item item : itemAtLocation) {
-//				if (item instanceof Fruit) {
-//					int groundTime = ((Fruit) item).getGroundTime();
-//					if (groundTime == 15) {
-//						location.removeItem(item);
-//					}
-//				}
-//			}
-
 			if (Probability.generateProbability(0.5f)){
 				Fruit fruit = new Fruit(displayChar);
-//				fruit.addCapability(FoodType.HERBIVORE);
 				EcoPoints.incrementEcoPoints(1);
 				treeFruits.add(fruit);
 			}
@@ -61,7 +63,6 @@ public class Tree extends CapableGround {
 			if (treeFruits.size() > 0){
 				for (int i = 0; i < treeFruits.size(); i++){
 					if (Probability.generateProbability(0.05f)) {
-//						treeFruits.get(i).setPortability(true);
 						location.addItem(treeFruits.get(i));
 						treeFruits.remove(i);
 					}
@@ -70,6 +71,11 @@ public class Tree extends CapableGround {
 		}
 	}
 
+	/**
+	 * Removes the first Fruit in list.
+	 *
+	 * @return the removed Fruit
+	 */
 	public Fruit decrementTreeItem(){
 		Fruit fruit = null;
 		if (treeFruits.size()>0) {
@@ -78,11 +84,18 @@ public class Tree extends CapableGround {
 		return fruit;
 	}
 
+	/**
+	 * Removes the first Fruit in the List without returning anything.
+	 */
 	public void removeTreeItem(){
 		if (treeFruits.size()>0)
 			treeFruits.remove(0);
 	}
 
+	/**
+	 * Access the size of the treeFruits ArrayList
+	 * @return the size of the treeFruits ArrayList
+	 */
 	public int getTreeFruitsSize() {
 		return treeFruits.size();
 	}

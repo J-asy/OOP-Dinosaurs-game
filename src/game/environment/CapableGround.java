@@ -16,10 +16,18 @@ public abstract class CapableGround extends Ground {
         super(displayChar);
     }
 
+    /**
+     * Checks if current Location has capability of Tree.
+     * @return true or false
+     */
     public boolean isTree(){
         return hasCapability(TerrainType.TREE);
     }
 
+    /**
+     * Checks if current Location has capability of Bush.
+     * @return true or false
+     */
     public boolean isBush(){
         return hasCapability(TerrainType.BUSH);
     }
