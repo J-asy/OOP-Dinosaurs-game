@@ -283,6 +283,10 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        if (this.hitPoints == 0) {
+            this.setUnconscious(true);
+        }
+
         if (!checkUnconsciousPeriod(map)) {
             aging();
             decrementFoodLevel();
@@ -325,7 +329,6 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
         if (!this.isConscious()){
             if (this.getUnconsciousPeriod() > 0){
                 this.decrementUnconsciousPeriod();
-                this.setUnconscious(true);
             }
             else {
                 this.setUnconscious(false);
