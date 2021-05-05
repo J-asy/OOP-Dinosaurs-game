@@ -7,9 +7,10 @@ import game.attack.Corpse;
 import game.dinosaurs.DinoCapabilities;
 import game.dinosaurs.Egg;
 import game.environment.Bush;
-import game.environment.Fruit;
-import game.environment.TerrainType;
-import game.environment.Tree;
+//import game.environment.Fruit;
+//import game.environment.TerrainType;
+//import game.environment.Tree;
+import game.environment.*;
 
 import java.util.List;
 
@@ -46,9 +47,6 @@ public class FeedingBehaviour implements Behaviour {
             }
 
         }
-
-
-
         return null;
     }
 }
