@@ -244,11 +244,13 @@ public abstract class DinoActor extends Actor {
 
     public void setUnconscious(boolean status){
         if (status){
+            removeCapability(UnconsciousStatus.CONSCIOUS);
             addCapability(UnconsciousStatus.UNCONSCIOUS);
             initializeUnconsciousPeriod();
         }
         else {
             removeCapability(UnconsciousStatus.UNCONSCIOUS);
+            addCapability(UnconsciousStatus.CONSCIOUS);
         }
     }
 
@@ -283,6 +285,12 @@ public abstract class DinoActor extends Actor {
 
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        if (this.isConscious()) {
+            if (this.hitPoints == 0) {
+                this.setUnconscious(true);
+            }
+        }
+
         if (!checkUnconsciousPeriod(map)) {
             aging();
             decrementFoodLevel();
@@ -325,7 +333,6 @@ public abstract class DinoActor extends Actor {
         if (!this.isConscious()){
             if (this.getUnconsciousPeriod() > 0){
                 this.decrementUnconsciousPeriod();
-                this.setUnconscious(true);
             }
             else {
                 this.setUnconscious(false);
