@@ -7,7 +7,7 @@ import game.dinosaurs.Brachiosaur;
 import game.Probability;
 import java.util.ArrayList;
 
-public class Bush extends Ground {
+public class Bush extends CapableGround {
 
     private int age = 0;  //the age of the bush
     private ArrayList<Fruit> bushFruits = new ArrayList<>(); //arrayList of the fruits that have grown on the bush

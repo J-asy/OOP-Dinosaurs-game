@@ -2,6 +2,7 @@ package game.follow;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
+import game.FoodType;
 import game.dinosaurs.DinoActor;
 import game.dinosaurs.DinoCapabilities;
 
@@ -65,16 +66,16 @@ public abstract class FollowBehaviour implements Behaviour {
         Location returnDestination = null;
         List<Item> groundItems = map.locationOf(actorAsDino).getItems();
 
-//        for (Item currentItem : groundItems){
-//            if (tryingToEatVegetables() ){
-//
+        for (Item currentItem : groundItems){
+//            if (tryingToEatVegetables() && currentItem){
+//                // find fruit, tree or bush
 //            }
-//            else if (tryingTo)
+//            else if (tryingToEatMeat() && currentItem.hasCapability(FoodType.HERBIVORE))
 //            {
 //
 //            }
-//
-//        }
+
+        }
 
         return returnDestination;
     }

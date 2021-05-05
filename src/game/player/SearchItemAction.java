@@ -2,10 +2,7 @@ package game.player;
 
 import edu.monash.fit2099.engine.*;
 import game.EcoPoints;
-import game.environment.Bush;
-import game.environment.Fruit;
-import game.environment.TerrainType;
-import game.environment.Tree;
+import game.environment.*;
 import game.Probability;
 
 public class SearchItemAction extends Action {
@@ -15,19 +12,28 @@ public class SearchItemAction extends Action {
 
         Ground ground = map.locationOf(actor).getGround();
 
-        if (Probability.generateProbability(0.4f)){
-            if (ground.hasCapability(TerrainType.BUSH)){
-                Fruit fruit = ((Bush) ground).decrementBushItem();
-                actor.addItemToInventory(fruit);
-                EcoPoints.incrementEcoPoints(10);
-                System.out.println("Fruit found from bush!");
+        Fruit fruit = null;
+        int earnedPoints = 0;
+        String groundDescription = null;
+        if (ground instanceof CapableGround && Probability.generateProbability(0.4f)){
+            CapableGround capableGround = (CapableGround) ground;
+            if (capableGround.isBush()){
+                fruit = ((Bush) ground).decrementBushItem();
+                groundDescription = "bush";
+                earnedPoints = 10;
             }
-            else if (ground.hasCapability(TerrainType.TREE)){
-                Fruit fruit = ((Tree) ground).decrementTreeItem();
-                actor.addItemToInventory(fruit);
-                EcoPoints.incrementEcoPoints(10);
-                System.out.println("Fruit found from tree!");
+            else if (capableGround.isTree()){
+                fruit = ((Tree) ground).decrementTreeItem();
+                groundDescription = "tree";
+                earnedPoints = 10;
             }
+
+            if (fruit != null){
+                actor.addItemToInventory(fruit);
+                EcoPoints.incrementEcoPoints(earnedPoints);
+                System.out.println("Fruit found from " + groundDescription + "!");
+            }
+
         }
 
         else

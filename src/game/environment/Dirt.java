@@ -9,7 +9,7 @@ import game.Probability;
 /**
  * A class that represents bare dirt and grow bushes on it.
  */
-public class Dirt extends Ground {
+public class Dirt extends CapableGround {
 
 	public Dirt() { super('.'); }
 

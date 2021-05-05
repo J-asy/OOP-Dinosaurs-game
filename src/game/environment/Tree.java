@@ -6,7 +6,7 @@ import game.Probability;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tree extends Ground {
+public class Tree extends CapableGround {
 	private int age = 0;
 	private ArrayList<Fruit> treeFruits = new ArrayList<>(); //fruits on the tree
 

@@ -7,10 +7,11 @@ import edu.monash.fit2099.engine.Location;
 import game.*;
 import game.dinosaurs.DinoEncyclopedia;
 import game.dinosaurs.Egg;
+import game.environment.CapableGround;
 import game.environment.Fruit;
 import game.environment.TerrainType;
 
-public class VendingMachine extends Ground {
+public class VendingMachine extends CapableGround {
 
     /**
      * Constructor.
@@ -19,7 +20,7 @@ public class VendingMachine extends Ground {
      */
     public VendingMachine() {
         super('X');
-        addCapability(TerrainType.VENDINGMACHINE);
+        addCapability(TerrainType.VENDING_MACHINE);
     }
 
     public static boolean choose(int choice, Actor actor){
