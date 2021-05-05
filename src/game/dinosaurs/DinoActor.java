@@ -67,7 +67,10 @@ public abstract class DinoActor extends Actor {
     }
 
      void initializeCapabilities(){
-        adjustBreedingCapability();
+        addCapability(DinoCapabilities.CONSCIOUS);
+        if (isMatured()){
+            addCapability(DinoCapabilities.CAN_BREED);
+        }
     }
 
     /**

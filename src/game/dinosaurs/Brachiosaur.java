@@ -18,10 +18,9 @@ public class Brachiosaur extends DinoActor {
     @Override
     void initializeCapabilities(){
         super.initializeCapabilities();
+        addCapability(DinoCapabilities.HERBIVORE);
         addCapability(DinoCapabilities.CAN_REACH_TREE);
         addCapability(DinoCapabilities.BUSH_DESTROYER);
-        addCapability(DinoCapabilities.HERBIVORE);
-        addCapability(DinoCapabilities.CONSCIOUS);
     }
 
     // don't need to override getAllowableActions, cuz can only breed - dealt with by DinoActor
