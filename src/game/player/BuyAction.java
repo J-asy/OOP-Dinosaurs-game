@@ -6,7 +6,20 @@ import edu.monash.fit2099.engine.GameMap;
 import game.EcoPoints;
 import java.util.Scanner;
 
+/**
+ * Special Action for Player to buy Item from the VendingMachine.
+ */
 public class BuyAction extends Action {
+
+    /**
+     * Perform the Action.
+     * User input is requested when user chooses this Action and a menu of items is listed for the user to see.
+     * EcoPoints is also shown to remind the user of how much they can buy. The choice the user made will be the input
+     * for VendingMachine.choose() and the purchase will be processed.
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return a message or empty string
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         Scanner input = new Scanner(System.in);

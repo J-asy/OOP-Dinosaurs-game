@@ -10,18 +10,27 @@ import game.environment.CapableGround;
 import game.environment.Fruit;
 import game.environment.TerrainType;
 
+/**
+ * Class to represent the Vending Machine.
+ */
 public class VendingMachine extends CapableGround {
 
     /**
      * Constructor.
-     *
-     *
      */
     public VendingMachine() {
         super('X');
         addCapability(TerrainType.VENDING_MACHINE);
     }
 
+    /**
+     * A static method that checks whether a user is eligible to buy their chosen item and makes the purchase.
+     * The EcoPoints are checked to ensure that the user is able to pay for the item they want to buy. The item is
+     * added to the Player's inventory if purchase is successful and EcoPoints are deducted.
+     * @param choice an int that indicates the item the user wants to buy
+     * @param actor the actor performing the BuyAction that invokes this method.
+     * @return a boolean indicating success or failure of purchase
+     */
     public static boolean choose(int choice, Actor actor){
 
         int ecoPoints = EcoPoints.getEcoPoints();
