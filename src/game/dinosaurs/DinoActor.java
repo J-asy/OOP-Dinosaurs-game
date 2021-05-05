@@ -30,8 +30,9 @@ public abstract class DinoActor extends Actor {
         this.dinoType = dinoType;
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
-        addCapability(sex);
         initializeDinoBehaviour();
+        initializeCapabilities();
+        addCapability(sex);
     }
 
     public DinoActor(DinoEncyclopedia dinoType, Boolean isMatured){
@@ -40,6 +41,7 @@ public abstract class DinoActor extends Actor {
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
         initializeDinoBehaviour();
+        initializeCapabilities();
 
         if (Probability.generateProbability(0.5F)){
             addCapability(DinoCapabilities.MALE);
@@ -64,7 +66,9 @@ public abstract class DinoActor extends Actor {
         return sex;
     }
 
-    abstract void initializeCapabilities();
+     void initializeCapabilities(){
+        adjustBreedingCapability();
+    }
 
     /**
      * Initializes the dinoActor with the standard behaviour that they should have.

@@ -24,9 +24,11 @@ public class Allosaur extends DinoActor {
     }
 
     @Override
-     void initializeCapabilities(){
+      void initializeCapabilities(){
+        super.initializeCapabilities();
         addCapability(DinoCapabilities.CARNIVORE);
         addCapability(DinoCapabilities.CONSCIOUS);
+        addCapability(DinoCapabilities.CAN_ATTACK);
     }
 
 
