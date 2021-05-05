@@ -13,12 +13,10 @@ public class Stegosaur extends DinoActor {
 
     public Stegosaur(DinoCapabilities sex, Boolean isMatured) {
         super(DINO_TYPE, sex, isMatured);
-        initializeCapabilities();
     }
 
     public Stegosaur(Boolean isMatured) {
         super(DINO_TYPE, isMatured);
-        initializeCapabilities();
     }
 
     @Override

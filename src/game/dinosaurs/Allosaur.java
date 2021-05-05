@@ -15,12 +15,10 @@ public class Allosaur extends DinoActor {
 
     public Allosaur(DinoCapabilities sex, Boolean isMatured) {
         super(DINO_TYPE, sex, isMatured);
-        initializeCapabilities();
     }
 
     public Allosaur(Boolean isMatured) {
         super(DINO_TYPE, isMatured);
-        initializeCapabilities();
     }
 
     @Override

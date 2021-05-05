@@ -9,7 +9,6 @@ public class Brachiosaur extends DinoActor {
 
     public Brachiosaur(DinoCapabilities sex, Boolean isMatured) {
         super(DINO_TYPE, sex, isMatured);
-        initializeCapabilities();
     }
 
     public Brachiosaur(Boolean isMatured) {
