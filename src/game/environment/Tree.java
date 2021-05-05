@@ -82,4 +82,8 @@ public class Tree extends CapableGround {
 		if (treeFruits.size()>0)
 			treeFruits.remove(0);
 	}
+
+	public int getTreeFruitsSize() {
+		return treeFruits.size();
+	}
 }
