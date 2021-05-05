@@ -18,22 +18,15 @@ public class Corpse extends PortableItem {
     );
 
     private int waitTurns;
-    private DinoEncyclopedia parent;
+    private final DinoEncyclopedia parent;
 
-    public Corpse(DinoEncyclopedia parent) {
+    public Corpse(DinoEncyclopedia newParent) {
         super("dead",'%');
-        initializeWaitTurns(DINO_CORPSE_DICTIONARY.get(parent));
-        setParent(parent);
+        parent = newParent;
+        initializeWaitTurns(DINO_CORPSE_DICTIONARY.get(newParent));
         addCapability(FoodType.CARNIVORE);
     }
 
-    private void setParent(DinoEncyclopedia newParent){
-        parent = newParent;
-    }
-
-    public DinoEncyclopedia getParent(){
-        return parent;
-    }
 
     public void initializeWaitTurns(int newWaitTurn){
         if (newWaitTurn >= 0){
@@ -48,10 +41,8 @@ public class Corpse extends PortableItem {
     }
 
     public void tick(Location currentLocation) {
-        PortableItem dinoCorpse;
-
         if (waitTurns == 0) {
-            dinoCorpse = new PortableItem("dead",'%');
+            currentLocation.removeItem(this);
         }
         else {
             decrementWaitTurn();
