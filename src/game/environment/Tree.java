@@ -51,7 +51,7 @@ public class Tree extends CapableGround {
 //			}
 
 			if (Probability.generateProbability(0.5f)){
-				Fruit fruit = new Fruit();
+				Fruit fruit = new Fruit(displayChar);
 //				fruit.addCapability(FoodType.HERBIVORE);
 				EcoPoints.incrementEcoPoints(1);
 				treeFruits.add(fruit);

@@ -2,6 +2,9 @@ package game.environment;
 
 import edu.monash.fit2099.engine.Ground;
 
+/**
+ * A class to add all the necessary capabilities to different terrain.
+ */
 public abstract class CapableGround extends Ground {
 
     /**

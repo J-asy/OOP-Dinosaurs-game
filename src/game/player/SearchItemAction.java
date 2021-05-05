@@ -33,7 +33,6 @@ public class SearchItemAction extends Action {
                 EcoPoints.incrementEcoPoints(earnedPoints);
                 System.out.println("Fruit found from " + groundDescription + "!");
             }
-
         }
 
         else

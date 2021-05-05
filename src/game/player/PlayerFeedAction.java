@@ -4,8 +4,6 @@ import edu.monash.fit2099.engine.*;
 import game.EcoPoints;
 import game.FoodType;
 import game.dinosaurs.*;
-import game.environment.Fruit;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -54,32 +52,6 @@ public class PlayerFeedAction extends Action {
         }
         else
             return "You currently have no item in your inventory.";
-
-
-//        if (target.hasCapability(DinoEncyclopedia.STEGOSAUR) || target.hasCapability(DinoEncyclopedia.BRACHIOSAUR)){
-//            for (Item item: actor.getInventory()){
-//                if (item.hasCapability(FoodType.HERBIVORE)) {
-//                    if (item instanceof Fruit)
-//                        EcoPoints.incrementEcoPoints(10);
-//                    actor.removeItemFromInventory(item);
-//                    target.heal(20);
-//                    return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
-//                            ") increases food level by 20!";
-//                }
-//            }
-//        }
-//        else if (target.hasCapability(DinoEncyclopedia.ALLOSAUR)){
-//            for (Item item: actor.getInventory()){
-//                if (item.hasCapability(FoodType.CARNIVORE)) {
-//                    actor.removeItemFromInventory(item);
-//                    target.heal(20);
-//                    return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
-//                            ") increases food level by 20!";
-//                }
-//            }
-//        }
-
-
     }
 
     @Override

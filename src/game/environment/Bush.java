@@ -1,6 +1,5 @@
 package game.environment;
 
-import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.*;
 import game.dinosaurs.Brachiosaur;
@@ -33,7 +32,7 @@ public class Bush extends CapableGround {
             // If it's a fully grown bush, it can grow fruits, if a fruit grown then add to the fruits list
             if (age > 10){
                 if (Probability.generateProbability(0.1f)) {
-                    Fruit fruit = new Fruit();
+                    Fruit fruit = new Fruit(displayChar);
 //                    fruit.addCapability(FoodType.HERBIVORE);
                     EcoPoints.incrementEcoPoints(1);
                     bushFruits.add(fruit);
@@ -66,7 +65,3 @@ public class Bush extends CapableGround {
     }
 
 }
-
-
-// change getFruits -> getFruit only since bush you can only get one fruit for dinos?
-// important difference -> player can pick up multiple fruits from bushes, but dinos can only eat one fruit at each turn?

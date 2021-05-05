@@ -2,7 +2,6 @@ package game.player;
 
 import edu.monash.fit2099.engine.Actions;
 import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.*;
 import game.dinosaurs.DinoEncyclopedia;
@@ -28,8 +27,7 @@ public class VendingMachine extends CapableGround {
         int ecoPoints = EcoPoints.getEcoPoints();
 
         if (choice == 1 && ecoPoints >= 30){
-            Fruit fruit = new Fruit();
-//            fruit.addCapability(FoodType.HERBIVORE);
+            Fruit fruit = new Fruit('F');
             actor.addItemToInventory(fruit);
             EcoPoints.decrementEcoPoints(30);
             System.out.println("Fruit Get!");
