@@ -1,4 +1,4 @@
-package game.actions;
+package game.player;
 
 import edu.monash.fit2099.engine.*;
 import game.EcoPoints;

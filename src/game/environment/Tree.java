@@ -2,7 +2,7 @@ package game.environment;
 
 import edu.monash.fit2099.engine.*;
 import game.EcoPoints;
-import game.utility.Probability;
+import game.Probability;
 import java.util.ArrayList;
 import java.util.List;
 

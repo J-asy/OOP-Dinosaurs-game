@@ -6,7 +6,7 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 import game.dinosaurs.Sex;
 import game.dinosaurs.DinoActor;
-import game.utility.Probability;
+import game.Probability;
 
 /**
  * Simulates breeding action of Actors

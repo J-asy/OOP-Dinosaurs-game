@@ -1,4 +1,4 @@
-package game;
+package game.player;
 
 import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actions;
@@ -6,7 +6,8 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Display;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Menu;
-import game.actions.SearchItemAction;
+import game.EcoPoints;
+import game.player.SearchItemAction;
 import game.environment.TerrainType;
 
 /**

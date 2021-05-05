@@ -1,6 +1,5 @@
-package game.vendingmachine;
+package game.player;
 
-import edu.monash.fit2099.engine.Item;
 import game.PortableItem;
 
 public class MealKitsItem extends PortableItem {

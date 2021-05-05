@@ -1,4 +1,4 @@
-package game.vendingmachine;
+package game.player;
 
 import edu.monash.fit2099.engine.WeaponItem;
 
