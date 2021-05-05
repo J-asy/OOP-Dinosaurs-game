@@ -7,8 +7,8 @@ import game.PortableItem;
 public class Fruit extends PortableItem {
     private int groundTime;
 
-    public Fruit(){
-        super("Fruit",'O');
+    public Fruit(Character displayChar){
+        super("Fruit",displayChar);
         groundTime = 0;
         addCapability(FoodType.HERBIVORE);
     }

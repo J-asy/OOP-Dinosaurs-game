@@ -37,8 +37,8 @@ public class Dirt extends Ground {
 
 		//if there are no trees and this square is still just bare dirt, grow the bushes according to the probability
 		if (!adjacentTree) {
-			if ((surroundingBushes >= 2 && Probability.generateProbability(0.1f)) ||
-					Probability.generateProbability(0.01f)){
+			if ((surroundingBushes >= 2 && Probability.generateProbability(0.05f)) ||
+					Probability.generateProbability(0.005f)){
 				location.setGround(new Bush());
 			}
 		}

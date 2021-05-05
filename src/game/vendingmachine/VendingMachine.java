@@ -28,7 +28,7 @@ public class VendingMachine extends Ground {
         int ecoPoints = EcoPoints.getEcoPoints();
 
         if (choice == 1 && ecoPoints >= 30){
-            Fruit fruit = new Fruit();
+            Fruit fruit = new Fruit('F');
 //            fruit.addCapability(FoodType.HERBIVORE);
             actor.addItemToInventory(fruit);
             EcoPoints.decrementEcoPoints(30);
@@ -36,7 +36,7 @@ public class VendingMachine extends Ground {
         }
         else if (choice == 2 && ecoPoints >= 100){
             MealKitsItem vegeMealKit = new MealKitsItem("VegetarianMealKit",
-                    '=');
+                    '[');
             vegeMealKit.addCapability(FoodType.HERBIVORE);
             actor.addItemToInventory(vegeMealKit);
             EcoPoints.decrementEcoPoints(100);
@@ -44,7 +44,7 @@ public class VendingMachine extends Ground {
         }
         else if (choice == 3 && ecoPoints >= 500){
             MealKitsItem meatMealKit = new MealKitsItem("CarnivoreMealKit",
-                    '=');
+                    ']');
             meatMealKit.addCapability(FoodType.CARNIVORE);
             actor.addItemToInventory(meatMealKit);
             EcoPoints.decrementEcoPoints(500);
