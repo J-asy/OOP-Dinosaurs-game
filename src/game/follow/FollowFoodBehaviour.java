@@ -8,8 +8,10 @@ import game.dinosaurs.DinoCapabilities;
 
 public class FollowFoodBehaviour extends FollowBehaviour {
 
+    private static final String DESCRIPTION = "find food";
+
     public FollowFoodBehaviour(DinoCapabilities diet) {
-        super(diet);
+        super(diet, DESCRIPTION);
     }
 
     @Override

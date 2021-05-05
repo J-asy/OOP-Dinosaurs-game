@@ -284,11 +284,9 @@ public abstract class DinoActor extends Actor {
         // as well even if it returns null in the end
         for (Behaviour b: behaviour){
             Action resultingAction = b.getAction(this, map);
-            System.out.println(b);
+//            System.out.println(b);
             if (resultingAction != null && actionToExecute == null){
-                System.out.println(b + "is not null");
                     actionToExecute = resultingAction;
-                    System.out.println("changed");
                 }
             }
 

@@ -8,7 +8,6 @@ import game.dinosaurs.DinoCapabilities;
 import java.util.ArrayList;
 import java.util.List;
 
-// might need to change look around
 
 /**
  * Behaviour class that simulates Actor following another Actor
@@ -16,53 +15,66 @@ import java.util.List;
 public abstract class FollowBehaviour implements Behaviour {
 
     private final DinoCapabilities followPurpose;
+    private final String purposeDescription;
+    private static final int MAX_RADIUS = 4;
 
-    public FollowBehaviour(DinoCapabilities purpose) {
+    public FollowBehaviour(DinoCapabilities purpose, String description) {
         followPurpose = purpose;
+        purposeDescription = description;
     }
 
-    protected DinoCapabilities getFollowPurpose() {
+     DinoCapabilities getFollowPurpose() {
             return followPurpose;
     }
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
         Action actionToReturn = null;
+        int radius = 2;
+        boolean found = false;
         if (actor instanceof DinoActor) {
             Location actorLocation = map.locationOf(actor);
-            List<Exit> visibleExits = lookAround(map, actor);  // get exits that are two squares away from actor
-
             DinoActor actorAsDino = (DinoActor) actor;
-            for (Exit exit : visibleExits) {
-                Location destination = exit.getDestination();
-                Location actualDestination = null;
 
-                if (shouldFollowActor()){
-                    actualDestination = followActor(map, destination, actorAsDino);
-                }
-                else if (shouldFollowItem()){
-                    actualDestination = followItem(map, destination, actorAsDino);
-                }
+            Location actualDestination = null;
+            while (!found && radius <= FollowBehaviour.MAX_RADIUS) {
+                List<Location> visibleExits = lookAround(map, actor, radius);
+                for (Location destination : visibleExits) {
 
-                if (actualDestination != null){
-                    actionToReturn = moveCloser(actorLocation, actualDestination, actor);
-                    break;
+                    if (shouldFollowActor()) {
+                        actualDestination = followActor(map, destination, actorAsDino);
+                    } else if (shouldFollowItem()) {
+                        actualDestination = followItem(map, destination, actorAsDino);
+                    }
+
+                    if (actualDestination != null) {
+                        actionToReturn = moveCloser(actorLocation, actualDestination, actor);
+                        found = true;
+                        break;
+                    }
+
                 }
+                radius += 1;
             }
+
         }
             return actionToReturn;
     }
 
     private Location followItem(GameMap map, Location destination, DinoActor actorAsDino){
         Location returnDestination = null;
-        List<Item> groundItems = map.locationOf(actorAsDino).getItems();
-
+//        List<Item> groundItems = map.locationOf(actorAsDino).getItems();
+//
 //        for (Item currentItem : groundItems){
-            // has capability of herbivore
-            // has capability of carnivore
+//            if (tryingToEatVegetables() && currentItem.hasCapability(FoodType.HERBIVORE)){
+//
+//            }
+////            else if
+//            {
+//
+//            }
+//
 //        }
-
-
 
         return returnDestination;
     }
@@ -78,7 +90,6 @@ public abstract class FollowBehaviour implements Behaviour {
                 DinoActor targetAsDino = (DinoActor) nearbyActor;
 
                 if (tryingToBreed() && breedingPossible(actorAsDino, targetAsDino)) {
-                    targetAsDino.setActionInMotion(new DoNothingAction());
                     returnDestination = destination;
                 }
                 else if (tryingToAttack() && attackingPossible(actorAsDino, targetAsDino)){
@@ -118,9 +129,6 @@ public abstract class FollowBehaviour implements Behaviour {
         boolean differentSex = targetAsDino.getSex() != actorAsDino.getSex();
         boolean sameSpecies = actorAsDino.getDinoType() == targetAsDino.getDinoType();
         boolean bothCanBreed = targetAsDino.canBreed() && actorAsDino.canBreed();
-        System.out.println("diff sex: " + differentSex);
-        System.out.println("same sp: " + sameSpecies);
-        System.out.println("both breed: " + bothCanBreed);
         return differentSex && sameSpecies && bothCanBreed;
     }
 
@@ -146,9 +154,8 @@ public abstract class FollowBehaviour implements Behaviour {
             if (possibleStep.canActorEnter(actor)) {
                 int newDistance = distance(possibleStep, destination);
                 if (newDistance < currentDistance) {
-                    System.out.println("success");
-//                    return new MoveActorAction(exit.getDestination(), exit.getName());
-                    return new MoveActorAction(exit.getDestination(), "fdsljfl");  // only for testing
+                    String directionDescription = String.format("%s to %s.", exit.getName(), purposeDescription);
+                    return new MoveActorAction(exit.getDestination(), directionDescription);
                 }
             }
         }
@@ -156,60 +163,53 @@ public abstract class FollowBehaviour implements Behaviour {
     }
 
 
-    /**
-     * Returns a List of all Exits that are two squares away from actor.
-     * @param map GameMap that the actor is on
-     * @param actor actor trying to look around
-     * @return A List of Exits that are two squares away from the actor
-     */
-    private static List<Exit> lookAround(GameMap map, Actor actor){
-        Location actorLocation = map.locationOf(actor);
-        int[] seekOffset = {1, -1};
-        ArrayList<Location> seekPoints = new ArrayList<>();
-        List<Exit> exitsSeen = new ArrayList<>();
-        List<Exit> returnExits = new ArrayList<>();
+    private static List<Location> getSpottedLocations(GameMap map, Location actorLocation, NumberRange range,
+                                                      int offset, boolean isHorizontal) {
+        List<Location> allLocations = new ArrayList<>();
 
-        // Since there are only two items in seekOffset, there's only 4 seekPoints
-        for (int i : seekOffset){
-            // if x cord - 1 or x cord + 1 is in range of the map size
-            if (map.getXRange().contains(actorLocation.x() + i)){
-                for (int j: seekOffset){
-                    // if y cord - 1 or y cord + 1 is in range of the map size
-                    if(map.getYRange().contains(actorLocation.y() + j)){
-                        seekPoints.add(map.at(actorLocation.x() + i, actorLocation.y() + j));
-                    }
-                }
+        Location newLocation;
+        int xOffset, yOffset;
+
+        for (int i : range) {
+            if (isHorizontal){
+                xOffset = i;
+                yOffset = offset;
             }
-        }
-
-        // getting all exits of all seekPoints
-        for (Location sp: seekPoints){
-            exitsSeen.addAll(sp.getExits());
-        }
-
-        // in the end, in allExits we actually have some exits that we are not interested in -
-        // those directly adjacent to actor and position of actor itself, but we'll filter them out
-        for (Exit exit : exitsSeen) {
-            Location d = exit.getDestination();
-
-            boolean dontAdd = false;
-            for (Exit aExits: actorLocation.getExits()){
-                // condition true if the exit is already adjacent to actor or at actors location
-                // since actor wont follow a target that's already beside it
-                if (d.equals(aExits.getDestination()) || d.equals(actorLocation)){
-                    dontAdd = true;
-                    break;
-                }
+            else {
+                xOffset = offset;
+                yOffset = i;
             }
 
-            if (!dontAdd){
-                returnExits.add(exit);
+            int xValue = actorLocation.x() + xOffset;
+            int yValue = actorLocation.y() + yOffset;
+
+            if (map.getXRange().contains(xValue) && map.getYRange().contains(yValue)) {
+                newLocation = map.at(xValue, yValue);
+                allLocations.add(newLocation);
             }
+
         }
-
-        return returnExits;
-
+        return allLocations;
     }
+
+
+    public static List<Location> lookAround(GameMap map, Actor actor, int radius) {
+        Location actorLocation = map.locationOf(actor);
+        List<Location> locationsInSight = new ArrayList<>();
+        NumberRange horizontalRange = new NumberRange(-1*radius, 2*radius + 1);
+        NumberRange verticalRange = new NumberRange(-1*radius + 1, 2*radius - 1);
+
+        // get the horizontal locations
+        locationsInSight.addAll(getSpottedLocations(map, actorLocation, horizontalRange, horizontalRange.min(), true));
+        locationsInSight.addAll(getSpottedLocations(map, actorLocation, horizontalRange, horizontalRange.max(), true));
+
+        // get the vertical locations
+        locationsInSight.addAll(getSpottedLocations(map, actorLocation, verticalRange, horizontalRange.min(), false));
+        locationsInSight.addAll(getSpottedLocations(map, actorLocation, verticalRange, horizontalRange.max(), false));
+
+        return locationsInSight;
+    }
+
 
     /**
      * Compute the Manhattan distance between two locations.

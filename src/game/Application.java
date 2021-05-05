@@ -13,6 +13,7 @@ import game.environment.Dirt;
 import game.environment.Floor;
 import game.environment.Tree;
 import game.environment.Wall;
+import game.follow.FollowBehaviour;
 
 /**
  * The main class for the Jurassic World game.
@@ -61,9 +62,9 @@ public class Application {
 //		gameMap.at(30, 12).addActor(new Stegosaur(Sex.FEMALE));
 
 		DinoActor s1 = new Stegosaur(Sex.MALE, true);
-		gameMap.at(32, 12).addActor(s1);
+		gameMap.at(30, 10).addActor(s1);
 		DinoActor s2 = new Stegosaur(Sex.FEMALE, true);
-		gameMap.at(32, 10).addActor(s2);
+		gameMap.at(31, 14).addActor(s2);
 
 
 //		gameMap.at(1,3).addActor(new Stegosaur(true));
