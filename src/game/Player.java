@@ -6,6 +6,8 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Display;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Menu;
+import game.actions.SearchItemAction;
+import game.environment.TerrainType;
 
 /**
  * Class representing the Player.
@@ -30,6 +32,14 @@ public class Player extends Actor {
 		// Handle multi-turn Actions
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
+
+		if (map.locationOf(this).getGround().hasCapability(TerrainType.TREE)||
+				map.locationOf(this).getGround().hasCapability(TerrainType.BUSH))
+			actions.add(new SearchItemAction());
+
+		System.out.println("ECO points: " + EcoPoints.getEcoPoints());
+
 		return menu.showMenu(this, actions, display);
+
 	}
 }
