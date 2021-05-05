@@ -239,18 +239,18 @@ public abstract class DinoActor extends Actor {
     // unconscious
     @Override
     public boolean isConscious(){
-        return hasCapability(UnconsciousStatus.CONSCIOUS);
+        return hasCapability(DinoCapabilities.CONSCIOUS);
     }
 
     public void setUnconscious(boolean status){
         if (status){
-            removeCapability(UnconsciousStatus.CONSCIOUS);
-            addCapability(UnconsciousStatus.UNCONSCIOUS);
+            removeCapability(DinoCapabilities.CONSCIOUS);
+            addCapability(DinoCapabilities.UNCONSCIOUS);
             initializeUnconsciousPeriod();
         }
         else {
-            removeCapability(UnconsciousStatus.UNCONSCIOUS);
-            addCapability(UnconsciousStatus.CONSCIOUS);
+            removeCapability(DinoCapabilities.UNCONSCIOUS);
+            addCapability(DinoCapabilities.CONSCIOUS);
         }
     }
 

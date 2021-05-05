@@ -64,9 +64,9 @@ public abstract class FollowBehaviour implements Behaviour {
     private Location followItem(GameMap map, Location destination, DinoActor actorAsDino){
         Location returnDestination = null;
         List<Item> groundItems = map.locationOf(actorAsDino).getItems();
-//
+
 //        for (Item currentItem : groundItems){
-//            if (tryingToEatVegetables() && currentItem.hasCapability(FoodType.HERBIVORE)){
+//            if (tryingToEatVegetables() ){
 //
 //            }
 //            else if (tryingTo)

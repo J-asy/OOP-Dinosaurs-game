@@ -12,10 +12,11 @@ public class PortableItem extends Item {
 	}
 
 //	public boolean edibleByVegetarians(){
-//
+//		return hasCapability(FoodType.HERBIVORE);
 //	}
 //
 //	public boolean edibleByCarnivores(){
-//
+//		return hasCapability(FoodType.CARNIVORE);
 //	}
+
 }
