@@ -2,7 +2,6 @@ package game.environment;
 
 import edu.monash.fit2099.engine.*;
 import game.EcoPoints;
-import game.FoodType;
 import game.Player;
 import game.utility.Probability;
 import game.actions.SearchItemAction;
@@ -34,17 +33,29 @@ public class Tree extends Ground {
 			//get the list of items at the current location
 			//if the item is a Fruit, get the groundTime, if > 15, remove from location(rots)
 			List<Item> itemAtLocation = location.getItems();
-			for (Item item : itemAtLocation) {
-				if (item instanceof Fruit) {
-					int groundTime = ((Fruit) item).getGroundTime();
-					if (groundTime == 15) {
-						location.removeItem(item);
+			for (int i = 0; i < itemAtLocation.size(); i++) {
+				if (itemAtLocation.get(i) instanceof Fruit){
+					int groundTime = ((Fruit) itemAtLocation.get(i)).getGroundTime();
+					if (groundTime == 15){
+						location.removeItem(itemAtLocation.get(i));
 					}
 				}
 			}
 
+
+
+//			List<Item> itemAtLocation = location.getItems();
+//			for (Item item : itemAtLocation) {
+//				if (item instanceof Fruit) {
+//					int groundTime = ((Fruit) item).getGroundTime();
+//					if (groundTime == 15) {
+//						location.removeItem(item);
+//					}
+//				}
+//			}
+
 			if (Probability.generateProbability(0.5f)){
-				Fruit fruit = new Fruit("fruit",displayChar);
+				Fruit fruit = new Fruit();
 //				fruit.addCapability(FoodType.HERBIVORE);
 				EcoPoints.incrementEcoPoints(1);
 				treeFruits.add(fruit);
@@ -76,11 +87,20 @@ public class Tree extends Ground {
 			treeFruits.remove(0);
 	}
 
-	public Actions allowableActions(Actor actor, Location location, String direction){
-		Actions list = super.allowableActions(actor, location, direction);
-		if (actor instanceof Player)
-			list.add(new SearchItemAction(direction));
-		return list;
-	}
+//	public SearchItemAction getSearchItemAction(Actor actor,Location location){
+//		if (actor instanceof Player)
+//			return new SearchItemAction();
+//		return null;
+//	}
+//	@Override
+//	public Actions allowableActions(Actor actor, Location location, String direction){
+//		Actions list = super.allowableActions(actor, location, direction);
+//		direction = location.toString();
+//		if (actor instanceof Player)
+//			list.add(new SearchItemAction());
+//		return list;
+//	}
 
 }
+	//get the list of items at the current location
+	//if the item is a Fruit, get the groundTime, if > 15, remove from location(rots)

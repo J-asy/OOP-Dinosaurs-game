@@ -1,18 +1,34 @@
 package game.vendingmachine;
 
+import edu.monash.fit2099.engine.Actions;
 import edu.monash.fit2099.engine.Actor;
+import edu.monash.fit2099.engine.Ground;
+import edu.monash.fit2099.engine.Location;
 import game.*;
+import game.actions.SearchItemAction;
+import game.dinosaurs.DinoEncyclopedia;
+import game.dinosaurs.Egg;
 import game.environment.Fruit;
+import game.environment.TerrainType;
 
-public class VendingMachine {
+public class VendingMachine extends Ground {
+
+    /**
+     * Constructor.
+     *
+     *
+     */
+    public VendingMachine() {
+        super('X');
+        addCapability(TerrainType.VENDINGMACHINE);
+    }
 
     public static boolean choose(int choice, Actor actor){
 
         int ecoPoints = EcoPoints.getEcoPoints();
 
         if (choice == 1 && ecoPoints >= 30){
-            Fruit fruit = new Fruit("fruit",
-                    actor.getDisplayChar());
+            Fruit fruit = new Fruit();
 //            fruit.addCapability(FoodType.HERBIVORE);
             actor.addItemToInventory(fruit);
             EcoPoints.decrementEcoPoints(30);
@@ -20,7 +36,7 @@ public class VendingMachine {
         }
         else if (choice == 2 && ecoPoints >= 100){
             MealKitsItem vegeMealKit = new MealKitsItem("VegetarianMealKit",
-                    actor.getDisplayChar());
+                    '=');
             vegeMealKit.addCapability(FoodType.HERBIVORE);
             actor.addItemToInventory(vegeMealKit);
             EcoPoints.decrementEcoPoints(100);
@@ -28,31 +44,28 @@ public class VendingMachine {
         }
         else if (choice == 3 && ecoPoints >= 500){
             MealKitsItem meatMealKit = new MealKitsItem("CarnivoreMealKit",
-                    actor.getDisplayChar());
+                    '=');
             meatMealKit.addCapability(FoodType.CARNIVORE);
             actor.addItemToInventory(meatMealKit);
             EcoPoints.decrementEcoPoints(500);
             System.out.println("Carnivore meal kit Get!");
         }
         else if (choice == 4 && ecoPoints >= 200){
-            StegosaurEgg stegosaurEgg = new StegosaurEgg("StegoEgg",
-                    actor.getDisplayChar(),true);
+            Egg stegosaurEgg = new Egg(DinoEncyclopedia.STEGOSAUR);
             stegosaurEgg.addCapability(FoodType.CARNIVORE);
             actor.addItemToInventory(stegosaurEgg);
             EcoPoints.decrementEcoPoints(200);
             System.out.println("Stego egg Get!");
         }
         else if (choice == 5 && ecoPoints >= 500){
-            BrachiosaurEgg brachiosaurEgg = new BrachiosaurEgg("BrachioEgg",
-                    actor.getDisplayChar(),true);
+            Egg brachiosaurEgg = new Egg(DinoEncyclopedia.BRACHIOSAUR);
             brachiosaurEgg.addCapability(FoodType.CARNIVORE);
             actor.addItemToInventory(brachiosaurEgg);
             EcoPoints.decrementEcoPoints(500);
             System.out.println("Brachio egg Get!");
         }
         else if (choice == 6 && ecoPoints >= 1000){
-            AllosaurEgg allosaurEgg = new AllosaurEgg("AlloEgg",
-                    actor.getDisplayChar(),true);
+            Egg allosaurEgg = new Egg(DinoEncyclopedia.ALLOSAUR);
             allosaurEgg.addCapability(FoodType.CARNIVORE);
             actor.addItemToInventory(allosaurEgg);
             EcoPoints.decrementEcoPoints(1000);
@@ -72,5 +85,14 @@ public class VendingMachine {
             return false;
         }
         return true;
+    }
+
+
+    @Override
+    public Actions allowableActions(Actor actor, Location location, String direction) {
+        Actions list = super.allowableActions(actor, location, direction);
+        if (actor instanceof Player)
+            list.add(new BuyAction());
+        return list;
     }
 }

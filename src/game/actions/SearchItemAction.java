@@ -8,15 +8,7 @@ import game.environment.TerrainType;
 import game.environment.Tree;
 import game.utility.Probability;
 
-import java.util.List;
-
 public class SearchItemAction extends Action {
-
-    String direction;
-
-    public SearchItemAction(String direction) {
-        this.direction = direction;
-    }
 
     @Override
     public String execute(Actor actor, GameMap map) {

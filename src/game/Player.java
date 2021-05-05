@@ -1,7 +1,8 @@
 package game;
 
 import edu.monash.fit2099.engine.*;
-import game.vendingmachine.BuyAction;
+import game.actions.SearchItemAction;
+import game.environment.TerrainType;
 
 /**
  * Class representing the Player.
@@ -28,7 +29,10 @@ public class Player extends Actor {
 
 			return lastAction.getNextAction();
 
-		actions.add(new BuyAction());
+		if (map.locationOf(this).getGround().hasCapability(TerrainType.TREE)||
+			map.locationOf(this).getGround().hasCapability(TerrainType.BUSH))
+			actions.add(new SearchItemAction());
+//		actions.add(new BuyAction());
 		System.out.println("ECO points: " + EcoPoints.getEcoPoints());
 
 		return menu.showMenu(this, actions, display);

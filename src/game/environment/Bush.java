@@ -8,10 +8,7 @@ import game.*;
 import game.actions.SearchItemAction;
 import game.dinosaurs.Brachiosaur;
 import game.utility.Probability;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class Bush extends Ground {
 
@@ -39,7 +36,7 @@ public class Bush extends Ground {
             // If it's a fully grown bush, it can grow fruits, if a fruit grown then add to the fruits list
             if (age > 10){
                 if (Probability.generateProbability(0.1f)) {
-                    Fruit fruit = new Fruit("fruit", displayChar);
+                    Fruit fruit = new Fruit();
 //                    fruit.addCapability(FoodType.HERBIVORE);
                     EcoPoints.incrementEcoPoints(1);
                     bushFruits.add(fruit);
@@ -69,14 +66,6 @@ public class Bush extends Ground {
     public void removeBushItem(){
         if (bushFruits.size()>0)
             bushFruits.remove(0);
-    }
-
-    @Override
-    public Actions allowableActions(Actor actor, Location location, String direction){
-        Actions list = super.allowableActions(actor, location, direction);
-        if (actor instanceof Player)
-            list.add(new SearchItemAction(direction));
-        return list;
     }
 
 }
