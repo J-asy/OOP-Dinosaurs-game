@@ -23,19 +23,15 @@ public class Allosaur extends DinoActor {
         initializeCapabilities();
     }
 
-    public void initializeCapabilities(){
+    @Override
+     void initializeCapabilities(){
         addCapability(DinoCapabilities.CARNIVORE);
         addCapability(UnconsciousStatus.CONSCIOUS);
     }
 
 
     public boolean hasAttackedStegosaur(Stegosaur stegosaur, GameMap map) {
-        if (attackedStegos.containsKey(stegosaur) ) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return attackedStegos.containsKey(stegosaur);
     }
 
     public void decrementAttackedPeriod(Stegosaur stegosaur) {

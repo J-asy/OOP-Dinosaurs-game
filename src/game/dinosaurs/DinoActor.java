@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Base class for Stegosaur, Brachiosaur and Allosaur for representing dinosaur Actors.
  */
-public abstract class DinoActor extends Actor implements DinoInitialization {
+public abstract class DinoActor extends Actor {
 
     /**
      * An ArrayList of standard behaviours that the DinoActor should have
@@ -62,11 +62,13 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
         return sex;
     }
 
+    abstract void initializeCapabilities();
+
     /**
      * Initializes the dinoActor with the standard behaviour that they should have.
      */
     private void initializeDinoBehaviour(){
-        behaviour = new ArrayList<>();
+//        behaviour = new ArrayList<>();
 //        behaviour.add(new PregnancyBehaviour());
 //        behaviour.add(new FollowMateBehaviour());
 //        behaviour.add(new FollowVictimBehaviour());

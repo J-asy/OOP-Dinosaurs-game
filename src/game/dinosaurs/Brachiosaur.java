@@ -16,7 +16,8 @@ public class Brachiosaur extends DinoActor {
         super(DINO_TYPE, isMatured);
     }
 
-    public void initializeCapabilities(){
+    @Override
+    void initializeCapabilities(){
         addCapability(DinoCapabilities.BUSH_DESTROYER);
         addCapability(DinoCapabilities.HERBIVORE);
         addCapability(UnconsciousStatus.CONSCIOUS);
