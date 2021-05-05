@@ -242,11 +242,13 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
 
     public void setUnconscious(boolean status){
         if (status){
+            removeCapability(UnconsciousStatus.CONSCIOUS);
             addCapability(UnconsciousStatus.UNCONSCIOUS);
             initializeUnconsciousPeriod();
         }
         else {
             removeCapability(UnconsciousStatus.UNCONSCIOUS);
+            addCapability(UnconsciousStatus.CONSCIOUS);
         }
     }
 
