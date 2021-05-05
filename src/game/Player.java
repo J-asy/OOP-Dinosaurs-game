@@ -39,9 +39,4 @@ public class Player extends Actor {
 	}
 }
 
-//allowable actions ->  feed, -- ??
-// 						pickup fruit from ground, /
-// 						pick from bush or tree(60% fail), /
-// 						kill, /
-// 						buy from vending machine, /
-//        class ->	eco points
+

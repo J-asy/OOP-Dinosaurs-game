@@ -3,6 +3,9 @@ package game.vendingmachine;
 import edu.monash.fit2099.engine.Item;
 import game.PortableItem;
 
+/**
+ * Class represent Meal Kits that can be fed to the dinosaurs.
+ */
 public class MealKitsItem extends PortableItem {
     /***
      * Constructor.

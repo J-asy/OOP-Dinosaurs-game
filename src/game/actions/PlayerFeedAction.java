@@ -4,16 +4,36 @@ import edu.monash.fit2099.engine.*;
 import game.EcoPoints;
 import game.FoodType;
 import game.dinosaurs.*;
-import game.environment.Fruit;
-
 import java.util.List;
 import java.util.Scanner;
 
+
+/**
+ * Special Action for Player to feed Actor.
+ */
 public class PlayerFeedAction extends Action {
+
+    /**
+     * The Actor that is to be fed.
+     */
     private final Actor target;
 
+    /**
+     * Constructor
+     * @param target the Actor (DinoActor) to feed
+     */
     public PlayerFeedAction(Actor target){ this.target=target; }
 
+    /**
+     * Perform the Action.
+     * A list of items from the Player inventory will be shown to the user. User can choose the item they want to feed
+     * to the target. Checking is done to ensure that the correct food type (food for Herbivore or Carnivore) is fed to
+     * the correct dinosaur.
+     *
+     * @param actor The actor performing the action.
+     * @param map The map the actor (Player) is on.
+     * @return a description of whether the feeding is successful that can be displayed to the user.
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
 
@@ -54,32 +74,6 @@ public class PlayerFeedAction extends Action {
         }
         else
             return "You currently have no item in your inventory.";
-
-
-//        if (target.hasCapability(DinoEncyclopedia.STEGOSAUR) || target.hasCapability(DinoEncyclopedia.BRACHIOSAUR)){
-//            for (Item item: actor.getInventory()){
-//                if (item.hasCapability(FoodType.HERBIVORE)) {
-//                    if (item instanceof Fruit)
-//                        EcoPoints.incrementEcoPoints(10);
-//                    actor.removeItemFromInventory(item);
-//                    target.heal(20);
-//                    return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
-//                            ") increases food level by 20!";
-//                }
-//            }
-//        }
-//        else if (target.hasCapability(DinoEncyclopedia.ALLOSAUR)){
-//            for (Item item: actor.getInventory()){
-//                if (item.hasCapability(FoodType.CARNIVORE)) {
-//                    actor.removeItemFromInventory(item);
-//                    target.heal(20);
-//                    return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
-//                            ") increases food level by 20!";
-//                }
-//            }
-//        }
-
-
     }
 
     @Override
