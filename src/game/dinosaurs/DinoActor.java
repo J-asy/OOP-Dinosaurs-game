@@ -329,7 +329,7 @@ public abstract class DinoActor extends Actor implements DinoInitialization {
                 this.setUnconscious(false);
                 System.out.println("Dinosaur at " + (map.locationOf(this).x()) + " " + (map.locationOf(this).y()) + " is dead!")  ;
                 map.removeActor(this);
-                Corpse corpseDino = new Corpse(dinoType.getDisplayChar());
+                Corpse corpseDino = new Corpse(dinoType);
                 dinoLocation.addItem(corpseDino);
             }
             return true;

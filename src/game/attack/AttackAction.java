@@ -9,6 +9,7 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Weapon;
 import game.PortableItem;
+import game.dinosaurs.DinoActor;
 
 /**
  * Special Action for attacking other Actors.
@@ -47,7 +48,7 @@ public class AttackAction extends Action {
 
 		target.hurt(damage);
 		if (!target.isConscious()) {
-			Item corpse = new PortableItem("dead " + target, '%');
+			Item corpse = new Corpse(((DinoActor)actor).getDinoType());
 			map.locationOf(target).addItem(corpse);
 			
 			Actions dropActions = new Actions();
