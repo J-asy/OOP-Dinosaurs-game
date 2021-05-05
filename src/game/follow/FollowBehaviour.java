@@ -63,13 +63,13 @@ public abstract class FollowBehaviour implements Behaviour {
 
     private Location followItem(GameMap map, Location destination, DinoActor actorAsDino){
         Location returnDestination = null;
-//        List<Item> groundItems = map.locationOf(actorAsDino).getItems();
+        List<Item> groundItems = map.locationOf(actorAsDino).getItems();
 //
 //        for (Item currentItem : groundItems){
 //            if (tryingToEatVegetables() && currentItem.hasCapability(FoodType.HERBIVORE)){
 //
 //            }
-////            else if
+//            else if (tryingTo)
 //            {
 //
 //            }
@@ -125,18 +125,23 @@ public abstract class FollowBehaviour implements Behaviour {
         return tryingToEatVegetables() || tryingToEatMeat();
     }
 
-    private boolean breedingPossible(DinoActor actorAsDino, DinoActor targetAsDino){
+    private static boolean breedingPossible(DinoActor actorAsDino, DinoActor targetAsDino){
         boolean differentSex = targetAsDino.getSex() != actorAsDino.getSex();
         boolean sameSpecies = actorAsDino.getDinoType() == targetAsDino.getDinoType();
         boolean bothCanBreed = targetAsDino.canBreed() && actorAsDino.canBreed();
         return differentSex && sameSpecies && bothCanBreed;
     }
 
-    private boolean attackingPossible(DinoActor actorAsDino, DinoActor nearbyActor){
+    private static boolean attackingPossible(DinoActor actorAsDino, DinoActor nearbyActor){
         boolean canAttack = actorAsDino.canAttack();
         boolean canBeAttacked = nearbyActor.canBeAttacked();
         return canAttack && canBeAttacked;
     }
+
+//    private static boolean feedingPossible(DinoActor actorAsDino, Item foodItem){
+//        boolean canFeed = actorAsDino.isCarnivorous() &&
+//
+//    }
 
     /**
      *  Returns the MoveActorAction that leads actor closer to target destination.
