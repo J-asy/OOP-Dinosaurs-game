@@ -84,10 +84,10 @@ public class FeedingAction extends Action {
                     }
                 }
                 else if (map.at(x,y).getGround().hasCapability(TerrainType.BUSH)) {
-//                    if (((Bush) map.at(x,y).getGround()).decrementBushItem() != null) {
+                    if (((Bush) map.at(x,y).getGround()).decrementBushItem() != null) {
                         actor.heal(10);
                         foodName += "Fruit";
-//                    }
+                    }
                 }
             }
 

@@ -3,11 +3,13 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
+import game.attack.AttackAction;
 import game.attack.Corpse;
 import game.breed.BreedingBehaviour;
 import game.Probability;
 import game.environment.TerrainType;
 import game.feeding.FeedingAction;
+import game.player.Player;
 import game.wander.WanderBehaviour;
 
 import java.util.ArrayList;
@@ -299,7 +301,7 @@ public abstract class DinoActor extends Actor {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         if (this.isConscious()) {
-            if (this.hitPoints == 0) {
+            if (this.hitPoints <= 0) {
                 this.setUnconscious(true);
             }
         }
@@ -310,9 +312,13 @@ public abstract class DinoActor extends Actor {
             roarIfHungry(map);
             adjustBreedingCapability();
 
-            Action actionToExecute = new WanderBehaviour().getAction(this,map);
+            Action actionToExecute = new DoNothingAction();
 
-
+//            Location here = map.locationOf(this);
+//            for (Exit exit : here.getExits()) {
+//                Location destination = exit.getDestination();
+//
+//            }
 //            // if the actor has been determined to perform an Action with another Actor previously
 //            // it should always return that Action
 //            if (actionInMotion != null) {
@@ -330,30 +336,30 @@ public abstract class DinoActor extends Actor {
 //            }
 
 
-
             //        for (Action a : actions){
             //            if (a instanceof LayEggAction){
             //                return a;
             //            }
             //        }
             //
+            Stegosaur target = ((Stegosaur)map.at(32,12).getActor());
+            if (this.canAttack()){
+                ((Allosaur)this).addAttackedStego((Stegosaur) map.at(32,12).getActor());
 
-            if (this.hitPoints <= this.dinoType.getHungryWhen()){
-                Location here = map.locationOf(this);
-                for (Exit exit : here.getExits()) {
-                    Location destination = exit.getDestination();
-                    if (destination.getGround().hasCapability(TerrainType.BUSH)) {
-                        actionToExecute = new FeedingAction(false, null, destination.x(), destination.y());
-                    }
+                if ((((Allosaur) this).getAttackedPeriod(target)) > 0 && (((Allosaur) this).getAttackedPeriod((Stegosaur) target) <= 20))
+                {
+                    ((Allosaur) this).decrementAttackedPeriod(target);
+                    System.out.println("Allosaur already attacked Stegosaur. Wait for "+ ((Allosaur) this).getAttackedPeriod((Stegosaur) target)+" turns!");
+                }
+                else {
+                    return new AttackAction(map.at(32, 12).getActor());
                 }
             }
-            System.out.println("Hit Points : " + this.hitPoints);
-            System.out.println("Unconscious for : " + this.unconsciousPeriod);
+
+            System.out.println(this.dinoType.getName() + " hit pts: " + this.hitPoints);
             return actionToExecute;
         }
         else {
-            System.out.println("Hit Points : " + this.hitPoints);
-            System.out.println("Unconscious for : " + this.unconsciousPeriod);
             return new DoNothingAction();
         }
     }
@@ -363,10 +369,12 @@ public abstract class DinoActor extends Actor {
         if (!this.isConscious()){
             if (this.getUnconsciousPeriod() > 0){
                 this.decrementUnconsciousPeriod();
+                System.out.println(this.dinoType.getName() + " at " + "("+(map.locationOf(this).x()) + ", " + (map.locationOf(this).y()) + ")" + " is unconscious!")  ;
+
             }
             else {
                 this.setUnconscious(false);
-                System.out.println("Dinosaur at " + (map.locationOf(this).x()) + " " + (map.locationOf(this).y()) + " is dead!")  ;
+                System.out.println(this.dinoType.getName() + " at " + "("+(map.locationOf(this).x()) + ", " + (map.locationOf(this).y()) + ")" + " is dead!")  ;
                 map.removeActor(this);
                 Corpse corpseDino = new Corpse(dinoType);
                 dinoLocation.addItem(corpseDino);
