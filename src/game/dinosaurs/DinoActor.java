@@ -342,21 +342,7 @@ public abstract class DinoActor extends Actor {
             //            }
             //        }
             //
-            Stegosaur target = ((Stegosaur)map.at(32,12).getActor());
-            if (this.canAttack()){
-                ((Allosaur)this).addAttackedStego((Stegosaur) map.at(32,12).getActor());
 
-                if ((((Allosaur) this).getAttackedPeriod(target)) > 0 && (((Allosaur) this).getAttackedPeriod((Stegosaur) target) <= 20))
-                {
-                    ((Allosaur) this).decrementAttackedPeriod(target);
-                    System.out.println("Allosaur already attacked Stegosaur. Wait for "+ ((Allosaur) this).getAttackedPeriod((Stegosaur) target)+" turns!");
-                }
-                else {
-                    return new AttackAction(map.at(32, 12).getActor());
-                }
-            }
-
-            System.out.println(this.dinoType.getName() + " hit pts: " + this.hitPoints);
             return actionToExecute;
         }
         else {
@@ -364,6 +350,11 @@ public abstract class DinoActor extends Actor {
         }
     }
 
+    /**
+     * Checks if dinosaur is still unconscious
+     * @param map map of the game
+     * @return boolean if dinosaur is still unconscious or dead
+     */
     public boolean checkUnconsciousPeriod(GameMap map ) {
         Location dinoLocation = map.locationOf(this);
         if (!this.isConscious()){

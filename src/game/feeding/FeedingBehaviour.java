@@ -6,18 +6,23 @@ import game.FoodType;
 import game.attack.Corpse;
 import game.dinosaurs.DinoCapabilities;
 import game.dinosaurs.Egg;
-import game.environment.Bush;
-//import game.environment.Fruit;
-//import game.environment.TerrainType;
-//import game.environment.Tree;
 import game.environment.*;
 
 import java.util.List;
 
+/**
+ * Simulates the feeding behaviour of an Actor.
+ */
 public class FeedingBehaviour implements Behaviour {
 
     public FeedingBehaviour () { }
 
+    /***
+     * Checks if the Actor fulfills the following conditions:
+     * @param actor the Actor acting
+     * @param map the GameMap containing the Actor
+     * @return a new FeedingAction if it is possible for a dinosaur to feed, null otherwise.
+     */
     @Override
     public Action getAction(Actor actor, GameMap map) {
 
