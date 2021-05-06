@@ -45,32 +45,44 @@ public class PlayerFeedAction extends Action {
                 System.out.println((i + 1) + ". " + inventoryItems.get(i).toString() + "\n");
             }
             Scanner input = new Scanner(System.in);
-            System.out.println("Choose an item to feed the dinosaur: ");
+            System.out.println("Choose an inventory item to feed the dinosaur: ");
             int choice = input.nextInt();
             if (choice == 0)
                 return "No food chosen.";
-            Item chosenItem = inventoryItems.get(choice - 1);
+            Item item = inventoryItems.get(choice - 1);
 
-            if (target.isHerbivorous()) {
-                if (chosenItem.hasCapability(FoodType.HERBIVORE)) {
-                    if (chosenItem.toString().equalsIgnoreCase("Fruit"))
-                        EcoPoints.incrementEcoPoints(10);
-                    actor.removeItemFromInventory(chosenItem);
-                    target.heal(20);
-                    return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
-                            ") increases food level by 20!";
-                } else
-                    return target + " is a Herbivore. Please choose the correct item to feed.";
-            } else if (target.hasCapability(DinoCapabilities.CARNIVORE)) {
-                if (chosenItem.hasCapability(FoodType.CARNIVORE)) {
-                    actor.removeItemFromInventory(chosenItem);
-                    target.heal(20);
-                    return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
-                            ") increases food level by 20!";
-                } else
-                    return target + " is a Carnivore. Please choose the correct item to feed.";
-            } else
-                return target + " is not a dinosaur";
+            if (item instanceof PortableItem) {
+
+                PortableItem chosenItem = (PortableItem) item;
+
+                if (target.isHerbivorous()) {
+                    if (chosenItem.edibleByHerbivores()) {
+                        if (chosenItem.toString().equalsIgnoreCase("Fruit"))
+                            EcoPoints.incrementEcoPoints(10);
+                        actor.removeItemFromInventory(chosenItem);
+                        target.heal(20);
+                        return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
+                                ") increases food level by 20!";
+                    }
+                    else
+                        return target + " is a Herbivore. Please choose a suitable item to feed.";
+                }
+                else if (target.isCarnivorous()) {
+
+                    if (chosenItem.edibleByCarnivores()) {
+                        actor.removeItemFromInventory(chosenItem);
+                        target.heal(20);
+                        return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
+                                ") increases food level by 20!";
+                    }
+                    else
+                        return target + " is a Carnivore. Please choose a suitable item to feed.";
+                }
+                else
+                    return target + " is not a dinosaur";
+            }
+            else
+                return "Chosen item is not suitable to feed.";
         }
         else
             return "You currently have no item in your inventory.";
