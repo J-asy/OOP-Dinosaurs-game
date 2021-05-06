@@ -32,7 +32,6 @@ public class BreedingBehaviour implements Behaviour {
     public Action getAction(Actor actor, GameMap map) {
         if (actor instanceof DinoActor) {
             DinoActor actorAsDino = (DinoActor) actor;
-
             boolean differentSex = target.getSex() != actorAsDino.getSex();
             boolean sameSpecies = target.getDinoType() == actorAsDino.getDinoType();
             boolean bothAbleToBreed = target.canBreed() && actorAsDino.canBreed();

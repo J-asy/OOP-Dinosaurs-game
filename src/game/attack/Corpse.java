@@ -64,8 +64,8 @@ public class Corpse extends PortableItem {
      * Retrieves parent class character on the map
      * @return parent class character
      */
-    public Character getParentChar() {
-        return parent.getDisplayChar();
+    public DinoEncyclopedia getParent() {
+        return parent;
     }
 
     /**

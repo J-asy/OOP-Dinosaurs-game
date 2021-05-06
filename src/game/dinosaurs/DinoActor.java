@@ -3,16 +3,11 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
-import game.attack.AttackAction;
 import game.attack.Corpse;
-import game.breed.BreedingBehaviour;
 import game.Probability;
-import game.follow.FollowMateBehaviour;
-import game.follow.FollowVictimBehaviour;
+import game.follow.FollowFoodOnPlantBehaviour;
 import game.player.Player;
 import game.player.PlayerFeedAction;
-import game.pregnancy.PregnancyBehaviour;
-import game.wander.WanderBehaviour;
 
 import java.util.ArrayList;
 
@@ -54,7 +49,7 @@ public abstract class DinoActor extends Actor {
      * An Action that should be returned in the playTurn method
      * as the DinoActor is interacting with another Actor and their actions need to be in sync.
      */
-    private Action actionInMotion;
+    public Action actionInMotion;
 
     /**
      * Constructor.
@@ -95,10 +90,13 @@ public abstract class DinoActor extends Actor {
      */
     private void initializeDinoBehaviour(){
         behaviour = new ArrayList<>();
-        behaviour.add(new PregnancyBehaviour());
-        behaviour.add(new FollowMateBehaviour());
-        behaviour.add(new FollowVictimBehaviour());
-        behaviour.add(new WanderBehaviour());
+//        behaviour.add(new PregnancyBehaviour());
+//        behaviour.add(new FeedingBehaviour());
+//        behaviour.add(new FollowMateBehaviour());
+//        behaviour.add(new FollowVictimBehaviour());
+//        behaviour.add(new FollowFoodOnGroundBehaviour());
+        behaviour.add(new FollowFoodOnPlantBehaviour());
+//        behaviour.add(new WanderBehaviour());
     }
 
     void initializeCapabilities(){
@@ -191,6 +189,8 @@ public abstract class DinoActor extends Actor {
             super.hurt(1);
         }
     }
+
+    public boolean canReachTree(){return hasCapability(DinoCapabilities.CAN_REACH_TREE);}
 
     public boolean canAttack(){return hasCapability(DinoCapabilities.CAN_ATTACK); }
 
@@ -338,7 +338,8 @@ public abstract class DinoActor extends Actor {
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
         Actions validActions = new Actions();
         ArrayList<Behaviour> adjacentActorBehaviour = new ArrayList<>();
-        adjacentActorBehaviour.add(new BreedingBehaviour(this));
+//        adjacentActorBehaviour.add(new BreedingBehaviour(this));
+//        adjacentActorBehaviour.add(new AttackBehaviour(this));
 
         for (Behaviour b : adjacentActorBehaviour){
             Action resultingAction = b.getAction(otherActor, map);
@@ -347,17 +348,21 @@ public abstract class DinoActor extends Actor {
             }
         }
 
-        if (otherActor instanceof Player)
+        if (otherActor instanceof Player) {
             validActions.add(new PlayerFeedAction(this));
+        }
+
+        System.out.println("num valid actions: " + validActions.size());
 
         return validActions;
     }
 
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        if (this.isConscious() && this.hitPoints <= 0) {
-            this.setUnconscious(true);
+        if (this.isConscious() && this.hitPoints == 0) {
+                this.setUnconscious(true);
         }
+        System.out.println("x: " + map.locationOf(this).x() + "; y: " + map.locationOf(this).y());
 
         if (!checkUnconsciousPeriod(map)) {
             aging();
@@ -366,6 +371,8 @@ public abstract class DinoActor extends Actor {
             adjustBreedingCapability();
 
             Action actionToExecute = new DoNothingAction();
+            System.out.println("aim in: " + actionInMotion);
+
 
             // if the actor has been determined to perform an Action with another Actor previously
             // it should always return that Action
@@ -373,47 +380,23 @@ public abstract class DinoActor extends Actor {
 //                actionToExecute = actionInMotion;
 //                actionInMotion = null;
 //            }
-//
-//            // calling getAction for every behaviour can help us to do some necessary processing
-//            // as well even if it returns null in the end
-//            for (Behaviour b : behaviour) {
-//                Action resultingAction = b.getAction(this, map);
-//                if (resultingAction != null && actionToExecute == null) {
-//                    actionToExecute = resultingAction;
-//                }
+
+//            if (actionToExecute instanceof DoNothingAction && actions.size() > 0){
+//                actionToExecute = actions.get(0);
 //            }
 
-            if (this.canAttack()){
-                Stegosaur target = (Stegosaur)map.at(32,12).getActor();
-                if ( !((Allosaur) this).hasAttackedStegosaur((Stegosaur) target)) {
-                    ((Allosaur) this).addAttackedStego((Stegosaur) target);
-                    return new AttackAction(target);
-                }
-                else
-                {
-                    if ((((Allosaur) this).getAttackedPeriod((Stegosaur) target)) > 0
-                            && (((Allosaur) this).getAttackedPeriod((Stegosaur) target) <= 20))
-                    {
-                        ((Allosaur) this).decrementAttackedPeriod((Stegosaur) target);
-                        System.out.println("Allosaur already attacked Stegosaur. Wait for "+ ((Allosaur) this).getAttackedPeriod((Stegosaur) target)+" turns!");
-                    }
-                    else if (((Allosaur) this).getAttackedPeriod((Stegosaur) target) == 0)
-                    {
-                        ((Allosaur) this).removeAttackedStego((Stegosaur) target);
-                        return new AttackAction(target);
-                    }
+            // calling getAction for every behaviour can help us to do some necessary processing
+            // as well even if it returns null in the end
+            for (Behaviour b : behaviour) {
+                System.out.println(b);
+                Action resultingAction = b.getAction(this, map);
+                if (resultingAction != null && actionToExecute instanceof DoNothingAction) {
+                    actionToExecute = resultingAction;
                 }
             }
-            System.out.println("HP: " +this.hitPoints);
-            System.out.println("Unconscious Period: " + this.getUnconsciousPeriod());
-
             return actionToExecute;
         }
-        else{
-            System.out.println("HP-: " +this.hitPoints);
-            System.out.println("Unconscious Period-: " + this.getUnconsciousPeriod());
-            return new DoNothingAction();
-        }
+        return new DoNothingAction();
     }
 
     public boolean checkUnconsciousPeriod(GameMap map ) {

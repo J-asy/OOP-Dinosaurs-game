@@ -41,7 +41,6 @@ public class BreedingAction extends Action {
         if (actor instanceof DinoActor) {
             breedingDescription = menuDescription(actor);
             DinoActor actorAsDino = (DinoActor) actor;
-            target.setActionInMotion(new BreedingAction(actorAsDino));
 
             if (actorAsDino.getSex() == DinoCapabilities.FEMALE && Probability.generateProbability(0.5F)) {
                 actorAsDino.setPregnant(true);
@@ -49,6 +48,8 @@ public class BreedingAction extends Action {
                 breedingDescription += String.format("\n%s at (%d, %d) is pregnant!", actorAsDino, dinoLocation.x(),
                         dinoLocation.y());
             }
+            System.out.println("actor aim: " + actorAsDino.actionInMotion);
+            System.out.println("target aim: " + target.actionInMotion);
         }
         return breedingDescription;
     }

@@ -3,5 +3,6 @@ package game.environment;
 public enum TerrainType {
     BUSH,
     TREE,
-    VENDING_MACHINE
+    VENDING_MACHINE,
+    HAS_FRUITS
 }

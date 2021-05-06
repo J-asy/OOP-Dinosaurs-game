@@ -2,10 +2,8 @@ package game.feeding;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
-import game.FoodType;
-import game.attack.Corpse;
-import game.dinosaurs.DinoCapabilities;
-import game.dinosaurs.Egg;
+import game.PortableItem;
+import game.dinosaurs.DinoActor;
 import game.environment.*;
 
 import java.util.List;
@@ -26,30 +24,33 @@ public class FeedingBehaviour implements Behaviour {
     @Override
     public Action getAction(Actor actor, GameMap map) {
 
-        Location here = map.locationOf(actor);
-        for (Exit exit : here.getExits()) {
-            Location destination = exit.getDestination();
-            List<Item> items = destination.getItems();
+        if (actor instanceof DinoActor) {
+            DinoActor actorAsDino = (DinoActor) actor;
+            Location here = map.locationOf(actor);
 
-            for (Item item: items){
-                if (item.hasCapability(FoodType.HERBIVORE) &&
-                        (actor.hasCapability(DinoCapabilities.HERBIVORE))) {
-                    if (item instanceof Fruit) {
-                        return new FeedingAction(true,item, destination.x(), destination.y());
+            for (Exit exit : here.getExits()) {
+                Location destination = exit.getDestination();
+                Ground ground = destination.getGround();
+                List<Item> items = destination.getItems();
+
+                for (Item item : items) {
+                    if (item instanceof PortableItem) {
+                        PortableItem portableItem = (PortableItem) item;
+                        if (portableItem.edibleByHerbivores() && actorAsDino.isHerbivorous()) {
+                            return new FeedingAction(true, portableItem);
+                        } else if (portableItem.edibleByCarnivores() && actorAsDino.isCarnivorous()) {
+                            return new FeedingAction(true, portableItem);
+                        }
                     }
                 }
-                else if (item.hasCapability(FoodType.CARNIVORE) && (actor.hasCapability(DinoCapabilities.CARNIVORE))) {
-                    if (item instanceof Egg || item instanceof Corpse) {
-                        return new FeedingAction(true,item, destination.x(), destination.y());
+
+                if (ground instanceof CapableGround) {
+                    CapableGround capableGround = (CapableGround) ground;
+                    if ((capableGround.isTree() || capableGround.isBush()) && actorAsDino.isHerbivorous()) {
+                        return new FeedingAction(false, null);
                     }
                 }
             }
-
-            if (((exit.getDestination().getGround().hasCapability(TerrainType.TREE)) || (exit.getDestination().getGround().hasCapability(TerrainType.BUSH))) && actor.hasCapability(DinoCapabilities.HERBIVORE)) {
-                return new FeedingAction(false,null, destination.x(), destination.y());
-
-            }
-
         }
         return null;
     }
