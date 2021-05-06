@@ -1,5 +1,6 @@
 package game.follow;
 
+import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
@@ -13,6 +14,17 @@ public class FollowVictimBehaviour extends FollowBehaviour {
 
     public FollowVictimBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
+    }
+
+    @Override
+    public Action getAction(Actor actor, GameMap map) {
+        Action actionToReturn = null;
+        if (actor instanceof DinoActor){
+            if (((DinoActor) actor).isHungry()){
+                actionToReturn = super.getAction(actor, map);
+            }
+        }
+        return actionToReturn;
     }
 
     @Override

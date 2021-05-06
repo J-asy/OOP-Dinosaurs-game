@@ -38,7 +38,8 @@ public class AttackBehaviour implements Behaviour {
                                     && (((Allosaur) actor).getAttackedPeriod((Stegosaur) target) <= 20))
                             {
                                 ((Allosaur) actor).decrementAttackedPeriod((Stegosaur) target);
-                                System.out.println("Allosaur already attacked Stegosaur. Wait for "+ ((Allosaur) actor).getAttackedPeriod((Stegosaur) target)+" turns!");
+                                System.out.println("Allosaur already attacked Stegosaur. Wait for " +
+                                        ((Allosaur) actor).getAttackedPeriod((Stegosaur) target)+" turns!");
                             }
                             else if (((Allosaur) actor).getAttackedPeriod((Stegosaur) target) == 0)
                             {

@@ -26,14 +26,13 @@ public class FeedingBehaviour implements Behaviour {
 
         if (actor instanceof DinoActor) {
             DinoActor actorAsDino = (DinoActor) actor;
-            Location here = map.locationOf(actor);
+            Location actorLocation = map.locationOf(actor);
 
-            for (Exit exit : here.getExits()) {
+            for (Exit exit : actorLocation.getExits()) {
                 Location destination = exit.getDestination();
                 Ground ground = destination.getGround();
-                List<Item> items = destination.getItems();
 
-                for (Item item : items) {
+                for (Item item : destination.getItems()) {
                     if (item instanceof PortableItem) {
                         PortableItem portableItem = (PortableItem) item;
                         if (portableItem.edibleByHerbivores() && actorAsDino.isHerbivorous()) {
@@ -44,9 +43,10 @@ public class FeedingBehaviour implements Behaviour {
                     }
                 }
 
-                if (ground instanceof CapableGround) {
+                if (ground instanceof CapableGround && actorAsDino.isHerbivorous()) {
                     CapableGround capableGround = (CapableGround) ground;
-                    if ((capableGround.isTree() || capableGround.isBush()) && actorAsDino.isHerbivorous()) {
+                    if (capableGround.hasFruits() && ((capableGround.isTree() && actorAsDino.canReachTree())
+                            || (capableGround.isBush() && !actorAsDino.canReachTree()))) {
                         return new FeedingAction(false, null);
                     }
                 }
