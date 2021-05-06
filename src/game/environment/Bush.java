@@ -49,7 +49,6 @@ public class Bush extends CapableGround {
             if (age > 10){
                 if (Probability.generateProbability(0.1f)) {
                     Fruit fruit = new Fruit();
-                    EcoPoints.incrementEcoPoints(1);
                     displayChar = '^';
                     bushFruits.add(fruit);
                 }
