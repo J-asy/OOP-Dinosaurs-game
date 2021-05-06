@@ -49,15 +49,17 @@ public abstract class FollowBehaviour implements Behaviour {
 
             Location actualDestination;
             while (!found && radius <= MAX_RADIUS) {
-                System.out.println("rad: " + radius);
                 List<Location> locationsInSight = lookAround(map, actor, radius);
 
                 for (Location destination : locationsInSight) {
                         actualDestination = follow(map, destination, actorAsDino);
 
                     if (actualDestination != null) {
+                        System.out.println("found rad: " + radius);
+                        System.out.println("x: " + actualDestination.x() + "; y: " + actualDestination.y());
                         actionToReturn = moveCloser(actorLocation, actualDestination, actor);
                         found = true;
+                        break;
                     }
 
                 }

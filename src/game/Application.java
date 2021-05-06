@@ -60,7 +60,7 @@ public class Application {
 		// Place a pair of stegosaurs in the middle of the map
 //		gameMap.at(30, 12).addActor(new Stegosaur(Sex.FEMALE));
 
-		DinoActor s1 = new Stegosaur(DinoCapabilities.MALE, true);
+		DinoActor s1 = new Brachiosaur(DinoCapabilities.MALE, true);
 		gameMap.at(35, 13).addActor(s1);
 //		DinoActor s2 = new Allosaur(DinoCapabilities.MALE, true);
 //		gameMap.at(32, 13).addActor(s2);

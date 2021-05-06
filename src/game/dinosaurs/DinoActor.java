@@ -3,19 +3,11 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
-import game.attack.AttackBehaviour;
 import game.attack.Corpse;
-import game.breed.BreedingBehaviour;
 import game.Probability;
-import game.feeding.FeedingBehaviour;
-import game.follow.FollowFoodOnGroundBehaviour;
-import game.follow.FollowFoodOnTreeBehaviour;
-import game.follow.FollowMateBehaviour;
-import game.follow.FollowVictimBehaviour;
+import game.follow.FollowFoodOnPlantBehaviour;
 import game.player.Player;
 import game.player.PlayerFeedAction;
-import game.pregnancy.PregnancyBehaviour;
-import game.wander.WanderBehaviour;
 
 import java.util.ArrayList;
 
@@ -103,7 +95,7 @@ public abstract class DinoActor extends Actor {
 //        behaviour.add(new FollowMateBehaviour());
 //        behaviour.add(new FollowVictimBehaviour());
 //        behaviour.add(new FollowFoodOnGroundBehaviour());
-        behaviour.add(new FollowFoodOnTreeBehaviour());
+        behaviour.add(new FollowFoodOnPlantBehaviour());
 //        behaviour.add(new WanderBehaviour());
     }
 
@@ -370,6 +362,7 @@ public abstract class DinoActor extends Actor {
         if (this.isConscious() && this.hitPoints == 0) {
                 this.setUnconscious(true);
         }
+        System.out.println("x: " + map.locationOf(this).x() + "; y: " + map.locationOf(this).y());
 
         if (!checkUnconsciousPeriod(map)) {
             aging();

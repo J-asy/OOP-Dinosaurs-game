@@ -31,6 +31,7 @@ public class FollowFoodOnGroundBehaviour extends FollowBehaviour {
                 }
             }
         }
+        
         return returnDestination;
     }
 
