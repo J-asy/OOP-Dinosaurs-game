@@ -22,9 +22,9 @@ public class Egg extends PortableItem {
 //            entry(DinoEncyclopedia.BRACHIOSAUR, 30),
 //            entry(DinoEncyclopedia.ALLOSAUR, 50)
 //    );
-    private final static int[] STEGOVALUE = {3,100};
-    private final static int[] BRACHIOVALUE = {2,1000};
-    private final static int[] ALLOVALUE = {2,1000};
+    private final static int[] STEGOVALUE = {10,100};
+    private final static int[] BRACHIOVALUE = {10,1000};
+    private final static int[] ALLOVALUE = {10,1000};
 
     private final static Map<DinoEncyclopedia, int[]> DINO_EGG_DICTIONARY = Map.ofEntries(
             entry(DinoEncyclopedia.STEGOSAUR, STEGOVALUE),

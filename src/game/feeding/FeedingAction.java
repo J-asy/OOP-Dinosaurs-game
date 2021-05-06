@@ -68,7 +68,6 @@ public class FeedingAction extends Action {
         if (actor instanceof DinoActor) {
             DinoActor actorAsDino = (DinoActor) actor;
             if (foodOnGround) {
-
                     if (feedOnFruitPossible(actorAsDino, portableItem)) {
                         feedingPossible = true;
                         healPoints = 10;
@@ -77,27 +76,23 @@ public class FeedingAction extends Action {
 
                         if (portableItem instanceof Egg) {
                             healPoints = 10;
-
-                            foodName += portableItem.toString();
                         } else if (portableItem instanceof Corpse) {
-                            if (((Corpse) portableItem).getParent() == DinoEncyclopedia.ALLOSAUR ||
-                                    ((Corpse) portableItem).getParent() == DinoEncyclopedia.STEGOSAUR) {
+                            Corpse corpse = ((Corpse) portableItem);
+                            if (corpse.getParent() == DinoEncyclopedia.ALLOSAUR ||
+                                    corpse.getParent() == DinoEncyclopedia.STEGOSAUR) {
                                 healPoints = 50;
-                                foodName += portableItem.toString();
-                            } else if (((Corpse) portableItem).getParent() == DinoEncyclopedia.BRACHIOSAUR) {
+                            } else if (corpse.getParent() == DinoEncyclopedia.BRACHIOSAUR) {
                                 healPoints = 100;
                             }
                         }
                     }
 
                     if (feedingPossible) {
+                        foodName = portableItem.toString();
+                        System.out.println(foodName);
                         actorLocation.removeItem(portableItem);
                         actor.heal(healPoints);
-                        foodName = portableItem.toString();
-
                     }
-
-
             }
 
             else {

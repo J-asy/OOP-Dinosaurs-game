@@ -101,16 +101,16 @@ public abstract class DinoActor extends Actor {
      */
     private void initializeDinoBehaviour(){
         behaviour = new ArrayList<>();
-        behaviour.add(new PregnancyBehaviour());
-//        behaviour.add(new FeedingBehaviour());
-        behaviour.add(new FollowMateBehaviour());
-//        behaviour.add(new FollowFoodOnGroundBehaviour());
-//        behaviour.add(new FollowFoodOnPlantBehaviour());
-//        behaviour.add(new FollowVictimBehaviour());
+//        behaviour.add(new PregnancyBehaviour());
+        behaviour.add(new FeedingBehaviour());
+//        behaviour.add(new FollowMateBehaviour());
+        behaviour.add(new FollowFoodOnGroundBehaviour());
+        behaviour.add(new FollowFoodOnPlantBehaviour());
+        behaviour.add(new FollowVictimBehaviour());
         behaviour.add(new WanderBehaviour());
 
         interactiveBehaviours = new ArrayList<>();
-        interactiveBehaviours.add(new BreedingBehaviour(this));
+//        interactiveBehaviours.add(new BreedingBehaviour(this));
 //        interactiveBehaviours.add(new AttackBehaviour(this));
     }
 
@@ -428,8 +428,8 @@ public abstract class DinoActor extends Actor {
 //            System.out.println("age: " + age);
             roarIfHungry(map);
             adjustBreedingCapability();
-            System.out.println("can breed: " + hasCapability(DinoCapabilities.CAN_BREED));
-            System.out.println("pregnancy period: " + pregnancyPeriod);
+//            System.out.println("can breed: " + hasCapability(DinoCapabilities.CAN_BREED));
+//            System.out.println("pregnancy period: " + pregnancyPeriod);
 
             // calling getAction for every behaviour can help us to do some necessary processing
             // as well even if it returns null in the end
@@ -438,7 +438,7 @@ public abstract class DinoActor extends Actor {
                 Action resultingAction = b.getAction(this, map);
                 if (resultingAction != null && actionToExecute instanceof DoNothingAction) {
                     actionToExecute = resultingAction;
-//                    System.out.println("here: " + b);
+                    System.out.println("here: " + b);
                 }
             }
 
@@ -446,7 +446,7 @@ public abstract class DinoActor extends Actor {
                 for (Action a: actions) {
                     if (a instanceof BreedingAction || a instanceof AttackAction) {
                         actionToExecute = a;
-//                        System.out.println("there: " + a);
+                        System.out.println("there: " + a);
                     }
                 }
             }

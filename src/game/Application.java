@@ -61,10 +61,10 @@ public class Application {
 		// Place a pair of stegosaurs in the middle of the map
 //		gameMap.at(30, 12).addActor(new Stegosaur(Sex.FEMALE));
 
-		DinoActor s1 = new Stegosaur(DinoCapabilities.FEMALE, true);
-		gameMap.at(31, 16).addActor(s1);
-		DinoActor s2 = new Stegosaur(DinoCapabilities.MALE, true);
-		gameMap.at(31, 15).addActor(s2);
+		DinoActor s1 = new Allosaur(DinoCapabilities.FEMALE, true);
+		gameMap.at(36, 15).addActor(s1);
+//		DinoActor s2 = new Stegosaur(DinoCapabilities.MALE, true);
+//		gameMap.at(31, 15).addActor(s2);
 
 
 //		gameMap.at(30,3).addActor(new Stegosaur(false));
@@ -75,7 +75,7 @@ public class Application {
 
 //		gameMap.at(35, 4).addItem(new Fruit());
 
-//		gameMap.at(1, 11).addItem(new Egg(DinoEncyclopedia.STEGOSAUR));
+		gameMap.at(30, 16).addItem(new Corpse(DinoEncyclopedia.ALLOSAUR));
 //		gameMap.at(1, 15).addItem(new Egg(DinoEncyclopedia.BRACHIOSAUR));
 //		gameMap.at(1, 18).addItem(new Egg(DinoEncyclopedia.ALLOSAUR));
 

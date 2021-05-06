@@ -35,7 +35,7 @@ public class Corpse extends PortableItem {
      * @param newParent parent class of corpse
      */
     public Corpse(DinoEncyclopedia newParent) {
-        super("dead",'%');
+        super("Corpse",'%');
         parent = newParent;
         initializeWaitTurns(DINO_CORPSE_DICTIONARY.get(newParent));
         addCapability(FoodType.CARNIVORE);
