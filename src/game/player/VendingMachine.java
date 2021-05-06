@@ -36,7 +36,7 @@ public class VendingMachine extends CapableGround {
         int ecoPoints = EcoPoints.getEcoPoints();
 
         if (choice == 1 && ecoPoints >= 30){
-            Fruit fruit = new Fruit('F');
+            Fruit fruit = new Fruit();
             actor.addItemToInventory(fruit);
             EcoPoints.decrementEcoPoints(30);
             System.out.println("Fruit Get!");

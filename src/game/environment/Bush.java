@@ -39,14 +39,16 @@ public class Bush extends CapableGround {
         super.tick(location);
 
         // If a Brachiosaur steps on the bush, 50% chance ground reverts back to dirt :(
-        if (location.getActor().hasCapability(DinoCapabilities.BUSH_DESTROYER) && Probability.generateProbability(0.5f)){
+
+        if (location.getActor() != null && location.getActor().hasCapability(DinoCapabilities.BUSH_DESTROYER) &&
+                Probability.generateProbability(0.5f)){
             location.setGround(new Dirt());
         }
         else {
             // If it's a fully grown bush, it can grow fruits, if a fruit grown then add to the fruits list
             if (age > 10){
                 if (Probability.generateProbability(0.1f)) {
-                    Fruit fruit = new Fruit(displayChar);
+                    Fruit fruit = new Fruit();
                     EcoPoints.incrementEcoPoints(1);
                     bushFruits.add(fruit);
                 }

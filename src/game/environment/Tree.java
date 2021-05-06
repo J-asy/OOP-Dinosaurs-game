@@ -54,7 +54,7 @@ public class Tree extends CapableGround {
 			}
 
 			if (Probability.generateProbability(0.5f)){
-				Fruit fruit = new Fruit(displayChar);
+				Fruit fruit = new Fruit();
 				EcoPoints.incrementEcoPoints(1);
 				treeFruits.add(fruit);
 			}
