@@ -1,6 +1,7 @@
 package game.environment;
 
 import edu.monash.fit2099.engine.Ground;
+import game.EcoPoints;
 
 import java.util.ArrayList;
 
@@ -80,6 +81,7 @@ public abstract class CapableGround extends Ground {
 
     void addFruit(){
         fruitArrayList.add(new Fruit());
+        EcoPoints.incrementEcoPoints(1);
     }
 
      void adjustHasFruitCapability(){

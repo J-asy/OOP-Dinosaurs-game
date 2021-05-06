@@ -11,6 +11,7 @@ import edu.monash.fit2099.engine.Weapon;
 import game.PortableItem;
 import game.dinosaurs.Allosaur;
 import game.dinosaurs.DinoActor;
+import game.dinosaurs.DinoEncyclopedia;
 import game.dinosaurs.Stegosaur;
 
 /**
@@ -21,7 +22,7 @@ public class AttackAction extends Action {
 	/**
 	 * The Actor that is to be attacked
 	 */
-	protected Actor target;
+	private DinoActor target;
 	/**
 	 * Random number generator
 	 */
@@ -32,7 +33,7 @@ public class AttackAction extends Action {
 	 * 
 	 * @param target the Actor to attack
 	 */
-	public AttackAction(Actor target) {
+	public AttackAction(DinoActor target) {
 		this.target = target;
 	}
 
@@ -65,16 +66,18 @@ public class AttackAction extends Action {
 		}
 
 		// Adds stegosaur to Allosaur's attackedStego HashMap only after attacking it
-		if (! ((Allosaur)actor).hasAttackedStegosaur((Stegosaur) target)) {
-			((Allosaur) actor).addAttackedStego((Stegosaur) target);
+		if (actor instanceof Allosaur && target instanceof Stegosaur) {
+			if (!((Allosaur) actor).hasAttackedStegosaur((Stegosaur) target)) {
+				((Allosaur) actor).addAttackedStego((Stegosaur) target);
+			}
 		}
 
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 
 
 		target.hurt(damage);
-		if (((DinoActor)target).getHitPoints() <= 0){
-			Item corpse = new Corpse(((DinoActor)actor).getDinoType());
+		if ((target).getHitPoints() <= 0){
+			Item corpse = new Corpse((target).getDinoType());
 			map.locationOf(target).addItem(corpse);
 			map.removeActor(target);
 
