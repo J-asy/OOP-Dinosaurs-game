@@ -1,32 +1,47 @@
 package game.environment;
 
-import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.*;
 import game.dinosaurs.Brachiosaur;
 import game.Probability;
+import game.dinosaurs.DinoCapabilities;
+
 import java.util.ArrayList;
 
+/**
+ * Class representing terrain of Bush type.
+ */
 public class Bush extends CapableGround {
 
     private int age = 0;  //the age of the bush
     private ArrayList<Fruit> bushFruits = new ArrayList<>(); //arrayList of the fruits that have grown on the bush
 
+    /**
+     * Constructor.
+     */
     public Bush() {
         super('~');
         addCapability(TerrainType.BUSH);
     }
 
     /**
-     * Updates the bush every turn. "Lets the bush experience the joy of time XD"
-     * @param location The location of the Ground
+     * Updates the bush every turn.
+     * On each tick, the current Location is checked to see if the Actor (if any) has the capability of a BUSH_DESTROYER
+     * (a capability that only the Brachiosaur has). If yes, the Bush is reverted back to a Dirt as the Actor destroys
+     * the Bush. There is only a 50% chance that this can happen. The age of the Bush also increases on each tick and
+     * once it's over the age of 10, it has a 1% chance to grow fruit.
+     *
+     * @param location the current Location of the Bush
      */
+
     @Override
     public void tick(Location location){
         super.tick(location);
 
         // If a Brachiosaur steps on the bush, 50% chance ground reverts back to dirt :(
-        if (location.getActor() instanceof Brachiosaur && Probability.generateProbability(0.5f)){
+
+        if (location.getActor() != null && location.getActor().hasCapability(DinoCapabilities.BUSH_DESTROYER) &&
+                Probability.generateProbability(0.5f)){
             location.setGround(new Dirt());
         }
         else {
@@ -34,8 +49,8 @@ public class Bush extends CapableGround {
             if (age > 10){
                 if (Probability.generateProbability(0.1f)) {
                     Fruit fruit = new Fruit();
-//                    fruit.addCapability(FoodType.HERBIVORE);
                     EcoPoints.incrementEcoPoints(1);
+                    displayChar = '^';
                     bushFruits.add(fruit);
                 }
             }
@@ -51,7 +66,11 @@ public class Bush extends CapableGround {
         }
     }
 
-    //decrement the list after it gets eaten
+    /**
+     * Removes the first Fruit in list.
+     *
+     * @return the removed Fruit
+     */
     public Fruit decrementBushItem(){
         Fruit fruit = null;
         if (bushFruits.size()>0) {
@@ -60,13 +79,19 @@ public class Bush extends CapableGround {
         return fruit;
     }
 
+    //is this necessary??
+    /**
+     * Removes the first Fruit in the List without returning anything.
+     */
     public void removeBushItem(){
         if (bushFruits.size()>0)
             bushFruits.remove(0);
     }
 
+    public boolean hasBushFruits(){
+        if (bushFruits.size() > 0)
+            return true;
+        return false;
+    }
+
 }
-
-
-// change getFruits -> getFruit only since bush you can only get one fruit for dinos?
-// important difference -> player can pick up multiple fruits from bushes, but dinos can only eat one fruit at each turn?

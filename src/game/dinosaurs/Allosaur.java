@@ -12,13 +12,17 @@ public class Allosaur extends DinoActor {
 
     private static final DinoEncyclopedia DINO_TYPE = DinoEncyclopedia.ALLOSAUR;
     private HashMap<Stegosaur,Integer> attackedStegos = new HashMap<>();
+    private static int nextId = 1;
+
 
     public Allosaur(DinoCapabilities sex, Boolean isMatured) {
-        super(DINO_TYPE, sex, isMatured);
+        super(DINO_TYPE, sex, isMatured, nextId);
+        nextId += 1;
     }
 
     public Allosaur(Boolean isMatured) {
-        super(DINO_TYPE, isMatured);
+        super(DINO_TYPE, isMatured, nextId);
+        nextId += 1;
     }
 
     @Override

@@ -3,52 +3,111 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
-import game.attack.AttackAction;
 import game.attack.Corpse;
 import game.breed.BreedingBehaviour;
 import game.Probability;
-import game.environment.TerrainType;
-import game.feeding.FeedingAction;
-import game.player.Player;
+import game.follow.FollowMateBehaviour;
+import game.follow.FollowVictimBehaviour;
+import game.player.PlayerFeedAction;
+import game.pregnancy.PregnancyBehaviour;
 import game.wander.WanderBehaviour;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Base class for Stegosaur, Brachiosaur and Allosaur for representing dinosaur Actors.
  */
+
 public abstract class DinoActor extends Actor {
 
     /**
-     * An ArrayList of standard behaviours that the DinoActor should have
+     * An ArrayList of standard behaviours that the DinoActor should have.
      */
     private ArrayList<Behaviour> behaviour;
+
+    /**
+     * A reference to DinoEncyclopedia Enum class that indicates the species
+     * of the DinoActor and contains many useful constants for initialization or comparison etc
+     */
     private final DinoEncyclopedia dinoType;
+
+    /**
+     * Age of the dinosaur, will only be incremented until the maturity age
+     * (since we only need to know when the dinoActor is mature).
+     */
     private int age;
+
+    /**
+     * Indicates the number of turns till a pregnant female DinoActor
+     * has to wait till it is time to lay an Egg.
+     */
     private int pregnancyPeriod;
+
+    /**
+     * Indicates the number of turns since the DinoActor first became unconscious.
+     */
     private int unconsciousPeriod;
+
+    /**
+     * An Action that should be returned in the playTurn method
+     * as the DinoActor is interacting with another Actor and their actions need to be in sync.
+     */
     private Action actionInMotion;
 
-    // default baby dino
-    public DinoActor(DinoEncyclopedia dinoType, DinoCapabilities sex, Boolean isMatured){
-        super(dinoType.getName(), dinoType.getDisplayChar(), dinoType.getInitialHitPoints());
+    /**
+     * Constructor.
+     * @param dinoType DinoEncyclopedia value that indicates species of the DinoActor
+     * @param sex either DinoEncyclopedia.MALE or DinoEncyclopedia.FEMALE should be passed in
+     *            to indicate the sex of the DinoActor
+     * @param isMatured true if the DinoActor is grown up, false otherwise
+     */
+    public DinoActor(DinoEncyclopedia dinoType, DinoCapabilities sex, Boolean isMatured, int nextId){
+        super(dinoType.getName() + " " + nextId, dinoType.getDisplayChar(), dinoType.getInitialHitPoints());
         this.dinoType = dinoType;
-        setMaturity(isMatured);
-        setMaxHitPoints(dinoType.getMaxHitPoints());
-        initializeDinoBehaviour();
-        initializeCapabilities();
-        addCapability(sex);
+        initialization(isMatured);
+        setSex(sex);
     }
 
-    public DinoActor(DinoEncyclopedia dinoType, Boolean isMatured){
-        super(dinoType.getName(), dinoType.getDisplayChar(), dinoType.getInitialHitPoints());
+    /**
+     * Constructor that randomly assigns the DinoActor as male or female.
+     * @param dinoType DinoEncyclopedia value that indicates species of the DinoActor
+     * @param isMatured true if the DinoActor is grown up, false otherwise
+     */
+    public DinoActor(DinoEncyclopedia dinoType, Boolean isMatured, int nextId){
+        super(dinoType.getName() + " " + nextId, dinoType.getDisplayChar(), dinoType.getInitialHitPoints());
         this.dinoType = dinoType;
+        initialization(isMatured);
+        setSex();
+    }
+
+
+    private void initialization(boolean isMatured){
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
         initializeDinoBehaviour();
         initializeCapabilities();
+    }
 
+    /**
+     * Initializes the dinoActor with the standard behaviour that they should have.
+     */
+    private void initializeDinoBehaviour(){
+        behaviour = new ArrayList<>();
+        behaviour.add(new PregnancyBehaviour());
+        behaviour.add(new FollowMateBehaviour());
+        behaviour.add(new FollowVictimBehaviour());
+        behaviour.add(new WanderBehaviour());
+    }
+
+    void initializeCapabilities(){
+        addCapability(DinoCapabilities.CONSCIOUS);
+    }
+
+    public DinoEncyclopedia getDinoType() {
+        return dinoType;
+    }
+
+    private void setSex(){
         if (Probability.generateProbability(0.5F)){
             addCapability(DinoCapabilities.MALE);
         }
@@ -57,8 +116,10 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    public DinoEncyclopedia getDinoType() {
-        return dinoType;
+    private void setSex(DinoCapabilities sex) {
+        if (sex == DinoCapabilities.MALE || sex == DinoCapabilities.FEMALE) {
+            addCapability(sex);
+        }
     }
 
     public DinoCapabilities getSex(){
@@ -70,24 +131,6 @@ public abstract class DinoActor extends Actor {
             sex = DinoCapabilities.FEMALE;
         }
         return sex;
-    }
-
-     void initializeCapabilities(){
-        addCapability(DinoCapabilities.CONSCIOUS);
-        if (isMatured()){
-            addCapability(DinoCapabilities.CAN_BREED);
-        }
-    }
-
-    /**
-     * Initializes the dinoActor with the standard behaviour that they should have.
-     */
-    private void initializeDinoBehaviour(){
-//        behaviour = new ArrayList<>();
-//        behaviour.add(new PregnancyBehaviour());
-//        behaviour.add(new FollowMateBehaviour());
-//        behaviour.add(new FollowVictimBehaviour());
-//        behaviour.add(new WanderBehaviour());
     }
 
     /**
@@ -102,7 +145,7 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    public void setAge(int newAge){
+    private void setAge(int newAge){
         if (newAge > 0){
             age =  newAge;
         }
@@ -151,6 +194,14 @@ public abstract class DinoActor extends Actor {
 
     public boolean canBeAttacked(){
         return hasCapability(DinoCapabilities.CAN_BE_ATTACKED);
+    }
+
+    public boolean isCarnivorous() {
+        return hasCapability(DinoCapabilities.CARNIVORE);
+    }
+
+    public boolean isHerbivorous() {
+        return hasCapability(DinoCapabilities.HERBIVORE);
     }
 
     /**
@@ -240,7 +291,7 @@ public abstract class DinoActor extends Actor {
     public void setPregnant(boolean status){
         if (status){
             addCapability(DinoCapabilities.PREGNANT);
-            System.out.println(hasCapability(DinoCapabilities.PREGNANT));
+//            System.out.println(hasCapability(DinoCapabilities.PREGNANT));
             initializePregnancyPeriod();
             if (hasCapability(DinoCapabilities.CAN_BREED)){
                 removeCapability(DinoCapabilities.CAN_BREED);
@@ -269,15 +320,15 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    public void initializeUnconsciousPeriod() {
+    private void initializeUnconsciousPeriod() {
         unconsciousPeriod = dinoType.getInitialUnconsciousPeriod();
     }
 
-    public int getUnconsciousPeriod() {
+    private int getUnconsciousPeriod() {
         return unconsciousPeriod;
     }
 
-    public void decrementUnconsciousPeriod(){
+    private void decrementUnconsciousPeriod(){
         unconsciousPeriod--;
     }
 
@@ -289,21 +340,20 @@ public abstract class DinoActor extends Actor {
 
         for (Behaviour b : adjacentActorBehaviour){
             Action resultingAction = b.getAction(otherActor, map);
-            System.out.println(resultingAction);
             if (resultingAction != null){
                 validActions.add(resultingAction);
             }
         }
+
+        validActions.add(new PlayerFeedAction(this));
 
         return validActions;
     }
 
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        if (this.isConscious()) {
-            if (this.hitPoints <= 0) {
+        if (this.isConscious() && this.hitPoints == 0) {
                 this.setUnconscious(true);
-            }
         }
 
         if (!checkUnconsciousPeriod(map)) {
@@ -312,60 +362,37 @@ public abstract class DinoActor extends Actor {
             roarIfHungry(map);
             adjustBreedingCapability();
 
-            Action actionToExecute = new DoNothingAction();
+            Action actionToExecute = null;
 
-//            Location here = map.locationOf(this);
-//            for (Exit exit : here.getExits()) {
-//                Location destination = exit.getDestination();
-//
-//            }
-//            // if the actor has been determined to perform an Action with another Actor previously
-//            // it should always return that Action
-//            if (actionInMotion != null) {
-//                actionToExecute = actionInMotion;
-//                actionInMotion = null;
-//            }
-//
-//            // calling getAction for every behaviour can help us to do some necessary processing
-//            // as well even if it returns null in the end
-//            for (Behaviour b : behaviour) {
-//                Action resultingAction = b.getAction(this, map);
-//                if (resultingAction != null && actionToExecute == null) {
-//                    actionToExecute = resultingAction;
-//                }
-//            }
+            // if the actor has been determined to perform an Action with another Actor previously
+            // it should always return that Action
+            if (actionInMotion != null) {
+                actionToExecute = actionInMotion;
+                actionInMotion = null;
+            }
 
-
-            //        for (Action a : actions){
-            //            if (a instanceof LayEggAction){
-            //                return a;
-            //            }
-            //        }
-            //
+            // calling getAction for every behaviour can help us to do some necessary processing
+            // as well even if it returns null in the end
+            for (Behaviour b : behaviour) {
+                Action resultingAction = b.getAction(this, map);
+                if (resultingAction != null && actionToExecute == null) {
+                    actionToExecute = resultingAction;
+                }
+            }
 
             return actionToExecute;
         }
-        else {
-            return new DoNothingAction();
-        }
+        return null;
     }
 
-    /**
-     * Checks if dinosaur is still unconscious
-     * @param map map of the game
-     * @return boolean if dinosaur is still unconscious or dead
-     */
     public boolean checkUnconsciousPeriod(GameMap map ) {
         Location dinoLocation = map.locationOf(this);
         if (!this.isConscious()){
             if (this.getUnconsciousPeriod() > 0){
                 this.decrementUnconsciousPeriod();
-                System.out.println(this.dinoType.getName() + " at " + "("+(map.locationOf(this).x()) + ", " + (map.locationOf(this).y()) + ")" + " is unconscious!")  ;
-
             }
             else {
-                this.setUnconscious(false);
-                System.out.println(this.dinoType.getName() + " at " + "("+(map.locationOf(this).x()) + ", " + (map.locationOf(this).y()) + ")" + " is dead!")  ;
+                System.out.println("Dinosaur at " + dinoLocation.x() + " " + dinoLocation.y() + " is dead!")  ;
                 map.removeActor(this);
                 Corpse corpseDino = new Corpse(dinoType);
                 dinoLocation.addItem(corpseDino);
