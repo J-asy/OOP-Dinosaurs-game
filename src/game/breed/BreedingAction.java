@@ -48,8 +48,6 @@ public class BreedingAction extends Action {
                 breedingDescription += String.format("\n%s at (%d, %d) is pregnant!", actorAsDino, dinoLocation.x(),
                         dinoLocation.y());
             }
-            System.out.println("actor aim: " + actorAsDino.actionInMotion);
-            System.out.println("target aim: " + target.actionInMotion);
         }
         return breedingDescription;
     }

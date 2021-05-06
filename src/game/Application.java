@@ -67,10 +67,10 @@ public class Application {
 
 
 		gameMap.at(1,3).addActor(new Stegosaur(false));
-//		DinoActor b = new Brachiosaur(DinoCapabilities.FEMALE, true);
-//		gameMap.at(1,1).addActor(b);
-//		DinoActor a = new Allosaur(true);
-//		gameMap.at(1,5).addActor(a);
+		DinoActor b = new Brachiosaur(DinoCapabilities.FEMALE, true);
+		gameMap.at(1,1).addActor(b);
+		DinoActor a = new Allosaur(true);
+		gameMap.at(1,5).addActor(a);
 
 //		gameMap.at(35, 13).addItem(new Fruit());
 

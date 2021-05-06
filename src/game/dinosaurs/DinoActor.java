@@ -197,7 +197,7 @@ public abstract class DinoActor extends Actor {
             maxHitPoints = newMaxHitPoints;
         }
     }
-    
+
     public int getHitPoints() {
         return hitPoints;
     }
@@ -403,21 +403,21 @@ public abstract class DinoActor extends Actor {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action actionToExecute = new DoNothingAction();
         aging();
+        decrementFoodLevel();
         System.out.println("");
 
         if (isConscious() && hitPoints == 0) {
                 setUnconscious(true);
         }
 
-        System.out.println("unconscious period: " + unconsciousPeriod);
+//        System.out.println("unconscious period: " + unconsciousPeriod);
         if (!checkUnconsciousPeriod(map)) {
-            System.out.println("age: " + age);
-            decrementFoodLevel();
+//            System.out.println("age: " + age);
             System.out.println("food level: " + hitPoints);
             roarIfHungry(map);
             adjustBreedingCapability();
-            System.out.println("can breed: " + hasCapability(DinoCapabilities.CAN_BREED));
-            System.out.println("pregnancy period: " + pregnancyPeriod);
+//            System.out.println("can breed: " + hasCapability(DinoCapabilities.CAN_BREED));
+//            System.out.println("pregnancy period: " + pregnancyPeriod);
 
             // calling getAction for every behaviour can help us to do some necessary processing
             // as well even if it returns null in the end
@@ -441,7 +441,8 @@ public abstract class DinoActor extends Actor {
 
         }
         System.out.println(actionToExecute);
-        return actionToExecute;
+//        return actionToExecute;
+        return new DoNothingAction();
     }
 
 }
