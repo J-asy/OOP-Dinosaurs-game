@@ -50,6 +50,7 @@ public class Bush extends CapableGround {
                 if (Probability.generateProbability(0.1f)) {
                     Fruit fruit = new Fruit();
                     EcoPoints.incrementEcoPoints(1);
+                    displayChar = '^';
                     bushFruits.add(fruit);
                 }
             }
@@ -85,6 +86,12 @@ public class Bush extends CapableGround {
     public void removeBushItem(){
         if (bushFruits.size()>0)
             bushFruits.remove(0);
+    }
+
+    public boolean hasBushFruits(){
+        if (bushFruits.size() > 0)
+            return true;
+        return false;
     }
 
 }

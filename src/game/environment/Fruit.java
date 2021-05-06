@@ -38,4 +38,6 @@ public class Fruit extends PortableItem {
         groundTime++;
 
     }
+
+//    public void setDisplayChar(Character displayChar){this.displayChar = displayChar;}
 }
