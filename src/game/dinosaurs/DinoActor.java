@@ -392,8 +392,6 @@ public abstract class DinoActor extends Actor {
             validActions.add(new PlayerFeedAction(this));
         }
 
-//        System.out.println("num valid actions: " + validActions.size());
-
         return validActions;
     }
 
@@ -413,7 +411,7 @@ public abstract class DinoActor extends Actor {
         decrementFoodLevel();
         adjustConsciousness();
 //        System.out.println("");
-        System.out.println("food level: " + hitPoints);
+//        System.out.println("food level: " + hitPoints);
 
 
 
