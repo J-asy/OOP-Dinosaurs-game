@@ -38,18 +38,6 @@ public class Tree extends CapableGround {
 
 		if (displayChar == 'T' && currentAge > 20){
 
-			//get the list of items at the current location
-			//if the item is a Fruit, get the groundTime, if > 15, remove from location(rots)
-			List<Item> itemAtLocation = location.getItems();
-			for (int i = 0; i < itemAtLocation.size(); i++) {
-				if (itemAtLocation.get(i) instanceof Fruit){
-					int groundTime = ((Fruit) itemAtLocation.get(i)).getGroundTime();
-					if (groundTime == 15){
-						location.removeItem(itemAtLocation.get(i));
-					}
-				}
-			}
-
 			if (Probability.generateProbability(0.5f)){
 				displayChar = '&';
 				EcoPoints.incrementEcoPoints(1);
