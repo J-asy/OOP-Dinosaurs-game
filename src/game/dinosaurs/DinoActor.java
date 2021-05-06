@@ -57,7 +57,7 @@ public abstract class DinoActor extends Actor {
      * An Action that should be returned in the playTurn method
      * as the DinoActor is interacting with another Actor and their actions need to be in sync.
      */
-    private Action actionInMotion;
+    public Action actionInMotion;
 
     /**
      * Constructor.
@@ -358,6 +358,8 @@ public abstract class DinoActor extends Actor {
             validActions.add(new PlayerFeedAction(this));
         }
 
+        System.out.println("num valid actions: " + validActions.size());
+
         return validActions;
     }
 
@@ -374,13 +376,21 @@ public abstract class DinoActor extends Actor {
             adjustBreedingCapability();
 
             Action actionToExecute = new DoNothingAction();
+            System.out.println("aim in: " + actionInMotion);
+
 
             // if the actor has been determined to perform an Action with another Actor previously
             // it should always return that Action
             if (actionInMotion != null) {
                 actionToExecute = actionInMotion;
-                actionInMotion = null;
             }
+            System.out.println("aim: " + actionInMotion);
+            System.out.println("1: " + actionToExecute);
+
+            if (actionToExecute instanceof DoNothingAction && actions.size() > 0){
+                actionToExecute = actions.get(0);
+            }
+            System.out.println("2: " + actionToExecute);
 
             // calling getAction for every behaviour can help us to do some necessary processing
             // as well even if it returns null in the end
@@ -390,7 +400,9 @@ public abstract class DinoActor extends Actor {
                     actionToExecute = resultingAction;
                 }
             }
-
+            System.out.println("3: " + actionToExecute);
+            actionInMotion = null;
+            System.out.println("Res aim: " + actionInMotion);
             return actionToExecute;
         }
         return new DoNothingAction();

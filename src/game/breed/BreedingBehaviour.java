@@ -35,7 +35,6 @@ public class BreedingBehaviour implements Behaviour {
             boolean differentSex = target.getSex() != actorAsDino.getSex();
             boolean sameSpecies = target.getDinoType() == actorAsDino.getDinoType();
             boolean bothAbleToBreed = target.canBreed() && actorAsDino.canBreed();
-            System.out.println("both can breed: " + bothAbleToBreed);
 
             if (differentSex && sameSpecies && bothAbleToBreed) {
                 target.setActionInMotion(new BreedingAction(actorAsDino));
