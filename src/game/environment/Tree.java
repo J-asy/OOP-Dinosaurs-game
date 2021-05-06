@@ -37,11 +37,14 @@ public class Tree extends CapableGround {
 			displayChar = 'T';
 
 		if (displayChar == 'T' && currentAge > 20){
-
 			if (Probability.generateProbability(0.5f)){
 				displayChar = '&';
 				EcoPoints.incrementEcoPoints(1);
 				addFruit();
+			}
+
+			if (getNumberOfFruits() < 0){
+				displayChar = 'T';
 			}
 
 			//check if the fruit will fall and set the item as portable and add to location, removed from treeFruits

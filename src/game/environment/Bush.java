@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 public class Bush extends CapableGround {
 
+
     /**
      * Constructor.
      */
@@ -44,6 +45,11 @@ public class Bush extends CapableGround {
                    addFruit();
                    displayChar = '^';
                 }
+
+                if (getNumberOfFruits() < 0){
+                    displayChar = '*';
+                }
+
             }
             else {
                 // main reason why this part if in the else block is cuz it will be more efficient to only

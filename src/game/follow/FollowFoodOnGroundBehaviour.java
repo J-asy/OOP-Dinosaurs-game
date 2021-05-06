@@ -10,7 +10,7 @@ public class FollowFoodOnGroundBehaviour extends FollowBehaviour {
 
     private static final String DESCRIPTION = "find food on ground";
     private static final int MIN_RADIUS = 1;
-    private static final int MAX_RADIUS = 5;
+    private static final int MAX_RADIUS = 10;
 
     public FollowFoodOnGroundBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
@@ -22,6 +22,7 @@ public class FollowFoodOnGroundBehaviour extends FollowBehaviour {
         if (actor instanceof DinoActor){
             if (((DinoActor) actor).isHungry()){
                 actionToReturn = super.getAction(actor, map);
+                System.out.println(actionToReturn);
             }
         }
         return actionToReturn;

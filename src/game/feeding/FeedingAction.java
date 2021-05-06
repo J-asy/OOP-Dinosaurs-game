@@ -108,7 +108,7 @@ public class FeedingAction extends Action {
                         if (noOfTreeFruits > 0) {
                             for (int i = 0; i < noOfTreeFruits; i++) {
                                 if (Probability.generateProbability(0.5f)) {
-                                    ((Tree) map.at(x, y).getGround()).getFruit();
+                                    capableGround.removeFruit();
                                     actor.heal(10);
                                 }
                             }
@@ -116,7 +116,9 @@ public class FeedingAction extends Action {
                         }
 
                     } else if (capableGround.isBush()) {
-                        if (capableGround.getFruit() != null) {
+                        System.out.println("no of bush fruits: " + capableGround.getNumberOfFruits() );
+                        if (capableGround.getNumberOfFruits() > 0) {
+                            capableGround.removeFruit();
                             actor.heal(10);
                             foodName = "Fruit";
                         }

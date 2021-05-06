@@ -8,7 +8,7 @@ public class FollowFoodOnPlantBehaviour extends FollowBehaviour {
 
     private static final String DESCRIPTION = "find food on plants";
     private static final int MIN_RADIUS = 1;
-    private static final int MAX_RADIUS = 5;
+    private static final int MAX_RADIUS = 10;
 
     public FollowFoodOnPlantBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
