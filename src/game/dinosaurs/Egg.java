@@ -1,9 +1,11 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.Location;
+import game.EcoPoints;
 import game.FoodType;
 import game.PortableItem;
 
+import java.util.Arrays;
 import java.util.Map;
 import static java.util.Map.entry;
 
@@ -20,11 +22,14 @@ public class Egg extends PortableItem {
 //            entry(DinoEncyclopedia.BRACHIOSAUR, 30),
 //            entry(DinoEncyclopedia.ALLOSAUR, 50)
 //    );
+    private final static int[] STEGOVALUE = {3,100};
+    private final static int[] BRACHIOVALUE = {2,1000};
+    private final static int[] ALLOVALUE = {1,1000};
 
-    private final static Map<DinoEncyclopedia, Integer> DINO_EGG_DICTIONARY = Map.ofEntries(
-            entry(DinoEncyclopedia.STEGOSAUR, 3),
-            entry(DinoEncyclopedia.BRACHIOSAUR, 2),
-            entry(DinoEncyclopedia.ALLOSAUR, 1)
+    private final static Map<DinoEncyclopedia, int[]> DINO_EGG_DICTIONARY = Map.ofEntries(
+            entry(DinoEncyclopedia.STEGOSAUR, STEGOVALUE),
+            entry(DinoEncyclopedia.BRACHIOSAUR, BRACHIOVALUE),
+            entry(DinoEncyclopedia.ALLOSAUR, ALLOVALUE)
     );
 
     /**
@@ -44,7 +49,7 @@ public class Egg extends PortableItem {
      */
     public Egg(DinoEncyclopedia parent){
         super("Egg", 'o');
-        initializeWaitTurns(DINO_EGG_DICTIONARY.get(parent));
+        initializeWaitTurns((DINO_EGG_DICTIONARY.get(parent))[0]);
         setParent(parent);
         addCapability(FoodType.CARNIVORE);
     }
@@ -76,6 +81,7 @@ public class Egg extends PortableItem {
      */
     public void tick(Location currentLocation) {
         DinoActor newDino;
+
         if (waitTurns == 0) {
 
             newDino = switch (parent) {
@@ -84,6 +90,7 @@ public class Egg extends PortableItem {
                 case ALLOSAUR -> new Allosaur(false);
             };
 
+            EcoPoints.incrementEcoPoints((DINO_EGG_DICTIONARY.get(parent))[1]);
             currentLocation.removeItem(this);
             currentLocation.addActor(newDino);
         }
