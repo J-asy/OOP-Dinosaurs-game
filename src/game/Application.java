@@ -8,11 +8,9 @@ import edu.monash.fit2099.engine.Display;
 import edu.monash.fit2099.engine.FancyGroundFactory;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.World;
+import game.attack.Corpse;
 import game.dinosaurs.*;
-import game.environment.Dirt;
-import game.environment.Floor;
-import game.environment.Tree;
-import game.environment.Wall;
+import game.environment.*;
 import game.player.Player;
 import game.player.VendingMachine;
 
@@ -63,9 +61,9 @@ public class Application {
 //		gameMap.at(30, 12).addActor(new Stegosaur(Sex.FEMALE));
 
 		DinoActor s1 = new Stegosaur(DinoCapabilities.MALE, true);
-		gameMap.at(32, 12).addActor(s1);
-		DinoActor s2 = new Stegosaur(DinoCapabilities.FEMALE, true);
-		gameMap.at(32, 11).addActor(s2);
+		gameMap.at(35, 13).addActor(s1);
+//		DinoActor s2 = new Allosaur(DinoCapabilities.MALE, true);
+//		gameMap.at(32, 13).addActor(s2);
 
 
 //		gameMap.at(1,3).addActor(new Stegosaur(true));
@@ -73,6 +71,8 @@ public class Application {
 //		gameMap.at(1,1).addActor(b);
 //		DinoActor a = new Allosaur(true);
 //		gameMap.at(1,5).addActor(a);
+
+//		gameMap.at(33, 13).addItem(new Egg(DinoEncyclopedia.BRACHIOSAUR));
 
 //		gameMap.at(1, 11).addItem(new Egg(DinoEncyclopedia.STEGOSAUR));
 //		gameMap.at(1, 15).addItem(new Egg(DinoEncyclopedia.BRACHIOSAUR));

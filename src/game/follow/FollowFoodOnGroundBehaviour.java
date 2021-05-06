@@ -19,12 +19,12 @@ public class FollowFoodOnGroundBehaviour extends FollowBehaviour {
     @Override
      Location follow(GameMap map, Location destination, DinoActor actorAsDino){
         Location returnDestination = null;
-        List<Item> groundItems = map.locationOf(actorAsDino).getItems();
+        List<Item> groundItems = destination.getItems();
 
         for (Item item : groundItems){
             if (item instanceof PortableItem) {
                 PortableItem currentItem = (PortableItem) item;
-                if (actorAsDino.isHerbivorous() && currentItem.edibleByHerbivores() ||
+                if (actorAsDino.isHerbivorous() && currentItem.edibleByHerbivores() && !actorAsDino.canReachTree()||
                         actorAsDino.isCarnivorous() && currentItem.edibleByCarnivores()) {
                     returnDestination = destination;
                     break;

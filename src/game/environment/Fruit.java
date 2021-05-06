@@ -13,7 +13,6 @@ public class Fruit extends PortableItem {
     /**
      * Constructor
      *
-     * @param displayChar the character to use to represent Fruit if it is on the ground
      */
     public Fruit(){
         super("Fruit",'F');

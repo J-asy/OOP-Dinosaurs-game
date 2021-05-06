@@ -102,8 +102,8 @@ public abstract class DinoActor extends Actor {
 //        behaviour.add(new FeedingBehaviour());
 //        behaviour.add(new FollowMateBehaviour());
 //        behaviour.add(new FollowVictimBehaviour());
-        behaviour.add(new FollowFoodOnGroundBehaviour());
-//        behaviour.add(new FollowFoodOnTreeBehaviour());
+//        behaviour.add(new FollowFoodOnGroundBehaviour());
+        behaviour.add(new FollowFoodOnTreeBehaviour());
 //        behaviour.add(new WanderBehaviour());
     }
 
@@ -197,6 +197,8 @@ public abstract class DinoActor extends Actor {
             super.hurt(1);
         }
     }
+
+    public boolean canReachTree(){return hasCapability(DinoCapabilities.CAN_REACH_TREE);}
 
     public boolean canAttack(){return hasCapability(DinoCapabilities.CAN_ATTACK); }
 
@@ -344,8 +346,8 @@ public abstract class DinoActor extends Actor {
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
         Actions validActions = new Actions();
         ArrayList<Behaviour> adjacentActorBehaviour = new ArrayList<>();
-        adjacentActorBehaviour.add(new BreedingBehaviour(this));
-        adjacentActorBehaviour.add(new AttackBehaviour(this));
+//        adjacentActorBehaviour.add(new BreedingBehaviour(this));
+//        adjacentActorBehaviour.add(new AttackBehaviour(this));
 
         for (Behaviour b : adjacentActorBehaviour){
             Action resultingAction = b.getAction(otherActor, map);
@@ -381,28 +383,24 @@ public abstract class DinoActor extends Actor {
 
             // if the actor has been determined to perform an Action with another Actor previously
             // it should always return that Action
-            if (actionInMotion != null) {
-                actionToExecute = actionInMotion;
-            }
-            System.out.println("aim: " + actionInMotion);
-            System.out.println("1: " + actionToExecute);
+//            if (actionInMotion != null) {
+//                actionToExecute = actionInMotion;
+//                actionInMotion = null;
+//            }
 
-            if (actionToExecute instanceof DoNothingAction && actions.size() > 0){
-                actionToExecute = actions.get(0);
-            }
-            System.out.println("2: " + actionToExecute);
+//            if (actionToExecute instanceof DoNothingAction && actions.size() > 0){
+//                actionToExecute = actions.get(0);
+//            }
 
             // calling getAction for every behaviour can help us to do some necessary processing
             // as well even if it returns null in the end
             for (Behaviour b : behaviour) {
+                System.out.println(b);
                 Action resultingAction = b.getAction(this, map);
                 if (resultingAction != null && actionToExecute instanceof DoNothingAction) {
                     actionToExecute = resultingAction;
                 }
             }
-            System.out.println("3: " + actionToExecute);
-            actionInMotion = null;
-            System.out.println("Res aim: " + actionInMotion);
             return actionToExecute;
         }
         return new DoNothingAction();
