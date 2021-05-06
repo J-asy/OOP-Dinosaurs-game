@@ -8,9 +8,9 @@ package game.dinosaurs;
 
 
 public enum DinoEncyclopedia {
-    STEGOSAUR('S', "Stegosaur", 11, 100, 10, 5, 2, 10, 20),
-    BRACHIOSAUR('B', "Brachiosaur", 11, 160, 10, 8, 2, 30, 15),
-    ALLOSAUR('A', "Allosaur", 11, 100, 10, 10, 2, 20, 20);
+    STEGOSAUR('S', "Stegosaur", 50, 100, 10, 5, 2, 10, 20),
+    BRACHIOSAUR('B', "Brachiosaur", 100, 160, 10, 8, 2, 30, 15),
+    ALLOSAUR('A', "Allosaur", 20, 100, 10, 10, 2, 20, 20);
 
     //    STEGOSAUR('S', "Stegosaur", 50, 100, 90, 30, 50, 10, 20);
     //    BRACHIOSAUR('B', "Brachiosaur", 100, 160, 140, 50, 70, 30, 15),
