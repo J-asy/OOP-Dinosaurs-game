@@ -198,10 +198,6 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    public int getHitPoints() {
-        return this.hitPoints;
-    }
-
     /**
      * Decrements the dinoActor's food level, which is equivalent to its hitPoints.
      */
@@ -355,24 +351,20 @@ public abstract class DinoActor extends Actor {
     }
 
     private void decrementUnconsciousPeriod(){
-        if (this.unconsciousPeriod > 0)
+        if (unconsciousPeriod > 0) {
             unconsciousPeriod--;
+        }
     }
 
-    /**
-     * Checks if dinoActor is unconscious or not.
-     * Does this by checking capability containing conscious or unconscius capability
-     * @param map the map that contains dinoActor's location
-     * @return true if dinoActor is unconscious, false otherwise
-     */
-    public boolean checkUnconsciousPeriod(GameMap map ) {
+    public boolean checkUnconsciousPeriod(GameMap map) {
         Location dinoLocation = map.locationOf(this);
         if (!this.isConscious()){
             if (this.getUnconsciousPeriod() > 0){
                 this.decrementUnconsciousPeriod();
+                System.out.println("Dinosaur at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is unconscious!");
             }
             else {
-                System.out.println("Dinosaur at " + dinoLocation.x() + " " + dinoLocation.y() + " is dead!")  ;
+                System.out.println("Dinosaur at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is dead!")  ;
                 map.removeActor(this);
                 Corpse corpseDino = new Corpse(dinoType);
                 dinoLocation.addItem(corpseDino);
@@ -406,17 +398,22 @@ public abstract class DinoActor extends Actor {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action actionToExecute = new DoNothingAction();
+        aging();
         System.out.println("");
 
         if (isConscious() && hitPoints == 0) {
-            setUnconscious(true);
+                setUnconscious(true);
         }
 
+        System.out.println("unconscious period: " + unconsciousPeriod);
         if (!checkUnconsciousPeriod(map)) {
-            aging();
+            System.out.println("age: " + age);
             decrementFoodLevel();
+            System.out.println("food level: " + hitPoints);
             roarIfHungry(map);
             adjustBreedingCapability();
+            System.out.println("can breed: " + hasCapability(DinoCapabilities.CAN_BREED));
+            System.out.println("pregnancy period: " + pregnancyPeriod);
 
             // calling getAction for every behaviour can help us to do some necessary processing
             // as well even if it returns null in the end
@@ -446,14 +443,14 @@ public abstract class DinoActor extends Actor {
 }
 
 
-// Precedence
-// layEgg - pregnancy behaviour
-// breeding - actions
-// attack for food - actions
-// feeding on its own - behaviour
-// follow mate - behaviour
-// follow food on tree - behaviour
-// follow food on plant - behaviour
+    // Precedence
+    // layEgg - pregnancy behaviour
+    // breeding - actions
+    // attack for food - actions
+    // feeding on its own - behaviour
+    // follow mate - behaviour
+    // follow food on tree - behaviour
+    // follow food on plant - behaviour
 
 
 // if the actor has been determined to perform an Action with another Actor previously
@@ -462,5 +459,11 @@ public abstract class DinoActor extends Actor {
 //                actionToExecute = actionInMotion;
 //                actionInMotion = null;
 //            }
+
+
+
+
+
+
 
 

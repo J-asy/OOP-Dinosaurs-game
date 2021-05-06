@@ -60,20 +60,19 @@ public class Application {
 		// Place a pair of stegosaurs in the middle of the map
 //		gameMap.at(30, 12).addActor(new Stegosaur(Sex.FEMALE));
 
-//		DinoActor s1 = new Brachiosaur(DinoCapabilities.MALE, true);
+//		DinoActor s1 = new Allosaur(DinoCapabilities.MALE, false);
 //		gameMap.at(35, 13).addActor(s1);
-//		DinoActor s2 = new Allosaur(DinoCapabilities.MALE, true);
-//		gameMap.at(32, 13).addActor(s2);
+//		DinoActor s2 = new Allosaur(DinoCapabilities.FEMALE, false);
+//		gameMap.at(36, 13).addActor(s2);
 
-		DinoActor a1 = new Stegosaur(DinoCapabilities.MALE, true);
-		gameMap.at(32,13).addActor(a1);
-//		gameMap.at(1,3).addActor(new Stegosaur(true));
+
+		gameMap.at(1,3).addActor(new Stegosaur(false));
 //		DinoActor b = new Brachiosaur(DinoCapabilities.FEMALE, true);
 //		gameMap.at(1,1).addActor(b);
-		DinoActor a = new Allosaur(true);
-		gameMap.at(32,12).addActor(a);
+//		DinoActor a = new Allosaur(true);
+//		gameMap.at(1,5).addActor(a);
 
-//		gameMap.at(33, 13).addItem(new Egg(DinoEncyclopedia.BRACHIOSAUR));
+//		gameMap.at(35, 13).addItem(new Fruit());
 
 //		gameMap.at(1, 11).addItem(new Egg(DinoEncyclopedia.STEGOSAUR));
 //		gameMap.at(1, 15).addItem(new Egg(DinoEncyclopedia.BRACHIOSAUR));
