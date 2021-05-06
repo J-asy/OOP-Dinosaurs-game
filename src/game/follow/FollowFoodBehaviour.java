@@ -3,18 +3,15 @@ package game.follow;
 import edu.monash.fit2099.engine.*;
 import game.PortableItem;
 import game.dinosaurs.DinoActor;
-import game.dinosaurs.DinoCapabilities;
 
 import java.util.List;
 
 public class FollowFoodBehaviour extends FollowBehaviour {
 
     private static final String DESCRIPTION = "find food";
-    private final DinoCapabilities diet;
 
-    public FollowFoodBehaviour(DinoCapabilities diet) {
-        super(diet, DESCRIPTION);
-        this.diet = diet;
+    public FollowFoodBehaviour() {
+        super(DESCRIPTION);
     }
 
 //    @Override
@@ -36,8 +33,8 @@ public class FollowFoodBehaviour extends FollowBehaviour {
         for (Item item : groundItems){
             if (item instanceof PortableItem) {
                 PortableItem currentItem = (PortableItem) item;
-                if (tryToEatFruit() && currentItem.edibleByVegetarians() ||
-                        tryToEatMeat() && currentItem.edibleByCarnivores()) {
+                if (actorAsDino.isHerbivorous() && currentItem.edibleByHerbivores() ||
+                        actorAsDino.isCarnivorous() && currentItem.edibleByCarnivores()) {
                     returnDestination = destination;
                     break;
                 }
@@ -46,12 +43,5 @@ public class FollowFoodBehaviour extends FollowBehaviour {
         return returnDestination;
     }
 
-    private boolean tryToEatMeat() {
-        return diet == DinoCapabilities.CARNIVORE;
-    }
-
-    private boolean tryToEatFruit() {
-        return diet == DinoCapabilities.HERBIVORE;
-    }
 
 }

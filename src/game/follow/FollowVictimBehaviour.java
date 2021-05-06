@@ -11,13 +11,13 @@ public class FollowVictimBehaviour extends FollowBehaviour {
     private static final String DESCRIPTION = "find victim to attack";
 
     public FollowVictimBehaviour() {
-        super(DinoCapabilities.CAN_ATTACK, DESCRIPTION);
+        super(DESCRIPTION);
     }
+
     @Override
      Location follow(GameMap map, Location destination, DinoActor actorAsDino){
         Location returnDestination = null;
 
-        // if there is an actor two squares away
         if (map.isAnActorAt(destination)) {
             Actor nearbyActor = destination.getActor();
 

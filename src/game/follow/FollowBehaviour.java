@@ -14,20 +14,15 @@ import java.util.List;
 /**
  * Behaviour class that simulates Actor following another Actor
  */
+
 public abstract class FollowBehaviour implements Behaviour {
 
-    private final DinoCapabilities followPurpose;
     private final String purposeDescription;
     private static final int MIN_RADIUS = 2;
     private static final int MAX_RADIUS = 4;
 
-    public FollowBehaviour(DinoCapabilities purpose, String description) {
-        followPurpose = purpose;
+    public FollowBehaviour(String description) {
         purposeDescription = description;
-    }
-
-     DinoCapabilities getFollowPurpose() {
-            return followPurpose;
     }
 
     @Override
@@ -61,6 +56,19 @@ public abstract class FollowBehaviour implements Behaviour {
 
     abstract Location follow(GameMap map, Location destination, DinoActor actorAsDino);
 
+//    private Location followGround(Location destination) {
+//        Location returnDestination = null;
+//        Ground ground = destination.getGround();
+//
+//        if (ground instanceof CapableGround){
+//            CapableGround currentGround = (CapableGround) ground;
+//            if ((currentGround.isTree() || currentGround.isBush()) && tryToEatFruit()) {
+//                returnDestination = destination;
+//            }
+//        }
+//        return returnDestination;
+//    }
+
 //    private Location followItem(GameMap map, Location destination, DinoActor actorAsDino){
 //        Location returnDestination = null;
 //        List<Item> groundItems = map.locationOf(actorAsDino).getItems();
@@ -73,19 +81,6 @@ public abstract class FollowBehaviour implements Behaviour {
 //                    returnDestination = destination;
 //                    break;
 //                }
-//            }
-//        }
-//        return returnDestination;
-//    }
-
-//    private Location followGround(Location destination) {
-//        Location returnDestination = null;
-//        Ground ground = destination.getGround();
-//
-//        if (ground instanceof CapableGround){
-//            CapableGround currentGround = (CapableGround) ground;
-//            if ((currentGround.isTree() || currentGround.isBush()) && tryToEatFruit()) {
-//                returnDestination = destination;
 //            }
 //        }
 //        return returnDestination;

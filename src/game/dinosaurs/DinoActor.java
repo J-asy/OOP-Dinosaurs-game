@@ -195,6 +195,14 @@ public abstract class DinoActor extends Actor {
         return hasCapability(DinoCapabilities.CAN_BE_ATTACKED);
     }
 
+    public boolean isCarnivorous() {
+        return hasCapability(DinoCapabilities.CARNIVORE);
+    }
+
+    public boolean isHerbivorous() {
+        return hasCapability(DinoCapabilities.HERBIVORE);
+    }
+
     /**
      * Checks if the food level / hit points has reached
      * the point where the dinoActor will get hungry.

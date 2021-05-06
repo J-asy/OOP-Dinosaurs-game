@@ -11,7 +11,7 @@ public class PortableItem extends Item {
 		super(name, displayChar, true);
 	}
 
-	public boolean edibleByVegetarians(){
+	public boolean edibleByHerbivores(){
 		return hasCapability(FoodType.HERBIVORE);
 	}
 
