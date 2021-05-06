@@ -6,7 +6,9 @@ import game.*;
 import game.attack.Corpse;
 import game.breed.BreedingBehaviour;
 import game.Probability;
+import game.environment.TerrainType;
 import game.feeding.FeedingAction;
+import game.wander.WanderBehaviour;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -308,7 +310,7 @@ public abstract class DinoActor extends Actor {
             roarIfHungry(map);
             adjustBreedingCapability();
 
-            Action actionToExecute = new DoNothingAction();
+            Action actionToExecute = new WanderBehaviour().getAction(this,map);
 
 
 //            // if the actor has been determined to perform an Action with another Actor previously
@@ -340,10 +342,8 @@ public abstract class DinoActor extends Actor {
                 Location here = map.locationOf(this);
                 for (Exit exit : here.getExits()) {
                     Location destination = exit.getDestination();
-                    List<Item> items = destination.getItems();
-
-                    for (Item item : items) {
-                        actionToExecute = new FeedingAction(true, item, 32, 11);
+                    if (destination.getGround().hasCapability(TerrainType.BUSH)) {
+                        actionToExecute = new FeedingAction(false, null, destination.x(), destination.y());
                     }
                 }
             }

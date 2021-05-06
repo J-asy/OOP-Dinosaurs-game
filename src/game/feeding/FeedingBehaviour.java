@@ -40,8 +40,7 @@ public class FeedingBehaviour implements Behaviour {
                 }
             }
 
-            if ((exit.getDestination().getGround().hasCapability(TerrainType.TREE)) ||
-                    (exit.getDestination().getGround().hasCapability(TerrainType.BUSH)) && actor.hasCapability(DinoCapabilities.HERBIVORE)) {
+            if (((exit.getDestination().getGround().hasCapability(TerrainType.TREE)) || (exit.getDestination().getGround().hasCapability(TerrainType.BUSH))) && actor.hasCapability(DinoCapabilities.HERBIVORE)) {
                 return new FeedingAction(false,null, destination.x(), destination.y());
 
             }

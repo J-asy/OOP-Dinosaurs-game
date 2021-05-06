@@ -49,16 +49,20 @@ public class FeedingAction extends Action {
                         foodName += item.toString();
                     }
                     else if (item instanceof Corpse) {
-                        if ( ((Corpse) item).getParentChar() == DinoEncyclopedia.ALLOSAUR.getDisplayChar() ||
-                                ((Corpse) item).getParentChar() == DinoEncyclopedia.STEGOSAUR.getDisplayChar()){
+                        if ( ((Corpse) item).getParentChar() == DinoEncyclopedia.ALLOSAUR.getDisplayChar()){
                             actor.heal(50);
                             map.at(x,y).removeItem(item);
-                            foodName += item.toString();
+                            foodName += item.toString() + " Allosaur";
+                        }
+                        else if (((Corpse) item).getParentChar() == DinoEncyclopedia.STEGOSAUR.getDisplayChar()){
+                            actor.heal(50);
+                            map.at(x,y).removeItem(item);
+                            foodName += item.toString() + " Stegosaur";
                         }
                         else if (((Corpse) item).getParentChar() == DinoEncyclopedia.BRACHIOSAUR.getDisplayChar()) {
                             actor.heal(100);
                             map.at(x,y).removeItem(item);
-                            foodName += item.toString();
+                            foodName += item.toString() + " Brachiosaur";
                         }
                     }
                 }
@@ -74,22 +78,22 @@ public class FeedingAction extends Action {
                             if (Probability.generateProbability(0.5f)) {
                                 ((Tree) map.at(x, y).getGround()).decrementTreeItem();
                                 actor.heal(10);
+                                foodName += "Fruits";
                             }
                         }
-                        foodName += "Fruits";
                     }
-
                 }
                 else if (map.at(x,y).getGround().hasCapability(TerrainType.BUSH)) {
-                    if (((Bush) map.at(x,y).getGround()).decrementBushItem() != null) {
+//                    if (((Bush) map.at(x,y).getGround()).decrementBushItem() != null) {
                         actor.heal(10);
                         foodName += "Fruit";
-                    }
+//                    }
                 }
             }
 
         }
-        if (menuDescription(actor).length() == 0) {
+
+        if (foodName.length() == 0) {
             return menuDescription(actor) + " does not eat";
         }
         else{
