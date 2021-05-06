@@ -14,35 +14,28 @@ public class AttackBehaviour implements Behaviour {
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
-        Location here = map.locationOf(actor);
-        for (Exit exit : here.getExits()) {
-            Location destination = exit.getDestination();
-            if (map.getActorAt(destination) == target && target.isConscious()){
-                if (actor instanceof Player && target.canBeAttacked()){
+        if (target.isConscious() && target.canBeAttacked()){
+            if (actor instanceof Player){
+                return new AttackAction(target);
+            }
+            else if (actor instanceof Allosaur){
+                Allosaur actorAsAllosaur = (Allosaur) actor;
+                if (!actorAsAllosaur.hasAttackedVictim(target)) {
                     return new AttackAction(target);
                 }
-                else if (actor instanceof Allosaur){
-                    Allosaur actorAsAllosaur = (Allosaur) actor;
-                    if (actorAsAllosaur.canAttack() && target.canBeAttacked()){
-                        if ( !(actorAsAllosaur.hasAttackedVictim(target))) {
-                            return new AttackAction(target);
-                        }
-                        else
-                        {
-                            if (actorAsAllosaur.getAttackedPeriod(target) > 0) {
-                                actorAsAllosaur.decrementAttackedPeriod(target);
-                                String message = String.format("%s already attacked %s. Wait for %d turns!",
-                                        actorAsAllosaur, target, actorAsAllosaur.getAttackedPeriod(target));
-                                System.out.println(message);
-                            }
-                            else if (actorAsAllosaur.getAttackedPeriod(target) == 0)
-                            {
-                                actorAsAllosaur.removeVictim(target);
-                                return new AttackAction(target);
-                            }
-                        }
+                else {
+                    if (actorAsAllosaur.getAttackedPeriod(target) > 0) {
+                        actorAsAllosaur.decrementAttackedPeriod(target);
+                        String message = String.format("%s already attacked %s. Wait for %d turns!",
+                                actorAsAllosaur, target, actorAsAllosaur.getAttackedPeriod(target));
+                        System.out.println(message);
+                    }
+                    else {
+                        actorAsAllosaur.removeVictim(target);
+                        return new AttackAction(target);
                     }
                 }
+
             }
         }
         return null;
