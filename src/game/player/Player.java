@@ -7,7 +7,6 @@ import edu.monash.fit2099.engine.Display;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Menu;
 import game.EcoPoints;
-import game.player.SearchItemAction;
 import game.environment.TerrainType;
 
 /**

@@ -40,6 +40,10 @@ public class Corpse extends PortableItem {
         }
     }
 
+    public Character getParentChar() {
+        return parent.getDisplayChar();
+    }
+
     public void tick(Location currentLocation) {
         if (waitTurns == 0) {
             currentLocation.removeItem(this);

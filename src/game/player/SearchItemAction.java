@@ -5,8 +5,20 @@ import game.EcoPoints;
 import game.environment.*;
 import game.Probability;
 
+/**
+ * Special Action for Player to search for Fruit on specific terrain (Tree, Bush).
+ */
 public class SearchItemAction extends Action {
 
+    /**
+     * Perform the Action
+     * A probability is generated to see if Player has the luck to find a fruit on the current location. If yes,
+     * the type of the terrain on the current location is checked to ensure that it is either a Bush or a Tree. The
+     * found fruit is then added to the inventory of Player and Player earns some EcoPoints.
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return empty string
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
 
@@ -33,7 +45,6 @@ public class SearchItemAction extends Action {
                 EcoPoints.incrementEcoPoints(earnedPoints);
                 System.out.println("Fruit found from " + groundDescription + "!");
             }
-
         }
 
         else
