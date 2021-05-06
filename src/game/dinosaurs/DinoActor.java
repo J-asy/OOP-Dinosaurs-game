@@ -198,6 +198,10 @@ public abstract class DinoActor extends Actor {
         }
     }
 
+    public int getHitPoints() {
+        return this.hitPoints;
+    }
+
     /**
      * Decrements the dinoActor's food level, which is equivalent to its hitPoints.
      */
@@ -351,9 +355,16 @@ public abstract class DinoActor extends Actor {
     }
 
     private void decrementUnconsciousPeriod(){
-        unconsciousPeriod--;
+        if (this.unconsciousPeriod > 0)
+            unconsciousPeriod--;
     }
 
+    /**
+     * Checks if dinoActor is unconscious or not.
+     * Does this by checking capability containing conscious or unconscius capability
+     * @param map the map that contains dinoActor's location
+     * @return true if dinoActor is unconscious, false otherwise
+     */
     public boolean checkUnconsciousPeriod(GameMap map ) {
         Location dinoLocation = map.locationOf(this);
         if (!this.isConscious()){
@@ -398,7 +409,7 @@ public abstract class DinoActor extends Actor {
         System.out.println("");
 
         if (isConscious() && hitPoints == 0) {
-                setUnconscious(true);
+            setUnconscious(true);
         }
 
         if (!checkUnconsciousPeriod(map)) {
@@ -435,14 +446,14 @@ public abstract class DinoActor extends Actor {
 }
 
 
-    // Precedence
-    // layEgg - pregnancy behaviour
-    // breeding - actions
-    // attack for food - actions
-    // feeding on its own - behaviour
-    // follow mate - behaviour
-    // follow food on tree - behaviour
-    // follow food on plant - behaviour
+// Precedence
+// layEgg - pregnancy behaviour
+// breeding - actions
+// attack for food - actions
+// feeding on its own - behaviour
+// follow mate - behaviour
+// follow food on tree - behaviour
+// follow food on plant - behaviour
 
 
 // if the actor has been determined to perform an Action with another Actor previously
@@ -451,10 +462,5 @@ public abstract class DinoActor extends Actor {
 //                actionToExecute = actionInMotion;
 //                actionInMotion = null;
 //            }
-
-
-
-
-
 
 

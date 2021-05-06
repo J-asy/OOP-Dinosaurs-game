@@ -18,11 +18,10 @@ public class AttackBehaviour implements Behaviour {
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
-
         Location here = map.locationOf(actor);
         for (Exit exit : here.getExits()) {
             Location destination = exit.getDestination();
-            if (map.getActorAt(destination) == target){
+            if (map.getActorAt(destination) == target && target.isConscious()){
                 if (actor instanceof Player && (target.canBeAttacked() || target.canAttack())){
                     return new AttackAction(target);
                 }
@@ -38,8 +37,7 @@ public class AttackBehaviour implements Behaviour {
                                     && (((Allosaur) actor).getAttackedPeriod((Stegosaur) target) <= 20))
                             {
                                 ((Allosaur) actor).decrementAttackedPeriod((Stegosaur) target);
-                                System.out.println("Allosaur already attacked Stegosaur. Wait for " +
-                                        ((Allosaur) actor).getAttackedPeriod((Stegosaur) target)+" turns!");
+                                System.out.println("Allosaur already attacked Stegosaur. Wait for "+ ((Allosaur) actor).getAttackedPeriod((Stegosaur) target)+" turns!");
                             }
                             else if (((Allosaur) actor).getAttackedPeriod((Stegosaur) target) == 0)
                             {

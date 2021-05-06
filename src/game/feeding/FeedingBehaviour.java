@@ -26,29 +26,30 @@ public class FeedingBehaviour implements Behaviour {
 
         if (actor instanceof DinoActor) {
             DinoActor actorAsDino = (DinoActor) actor;
-            Location actorLocation = map.locationOf(actor);
-            Ground ground = actorLocation.getGround();
+            Location here = map.locationOf(actor);
 
-            for (Item item : actorLocation.getItems()) {
-                if (item instanceof PortableItem) {
-                    PortableItem portableItem = (PortableItem) item;
-                    if (portableItem.edibleByHerbivores() && actorAsDino.isHerbivorous()) {
-                        System.out.println("ret1");
-                        return new FeedingAction(true, portableItem);
-                    } else if (portableItem.edibleByCarnivores() && actorAsDino.isCarnivorous()) {
-                        System.out.println("ret2");
-                        return new FeedingAction(true, portableItem);
+            for (Exit exit : here.getExits()) {
+                Location destination = exit.getDestination();
+                Ground ground = destination.getGround();
+                List<Item> items = destination.getItems();
+
+                for (Item item : items) {
+                    if (item instanceof PortableItem) {
+                        PortableItem portableItem = (PortableItem) item;
+                        if (portableItem.edibleByHerbivores() && actorAsDino.isHerbivorous()) {
+                            return new FeedingAction(true, portableItem);
+                        } else if (portableItem.edibleByCarnivores() && actorAsDino.isCarnivorous()) {
+                            return new FeedingAction(true, portableItem);
+                        }
                     }
                 }
 
-
-            if (ground instanceof CapableGround && actorAsDino.isHerbivorous()) {
-                CapableGround capableGround = (CapableGround) ground;
-                if (capableGround.hasFruits() && ((capableGround.isTree() && actorAsDino.canReachTree())
-                        || (capableGround.isBush() && !actorAsDino.canReachTree()))) {
-                    return new FeedingAction(false, null);
+                if (ground instanceof CapableGround) {
+                    CapableGround capableGround = (CapableGround) ground;
+                    if ((capableGround.isTree() || capableGround.isBush()) && actorAsDino.isHerbivorous()) {
+                        return new FeedingAction(false, null);
+                    }
                 }
-            }
             }
         }
         return null;
