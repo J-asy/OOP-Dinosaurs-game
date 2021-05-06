@@ -4,14 +4,23 @@ import edu.monash.fit2099.engine.*;
 import game.*;
 
 import game.attack.AttackAction;
+import game.attack.AttackBehaviour;
 import game.attack.Corpse;
 import game.Probability;
+import game.breed.BreedingAction;
+import game.breed.BreedingBehaviour;
+import game.feeding.FeedingBehaviour;
+import game.follow.FollowFoodOnGroundBehaviour;
 import game.follow.FollowFoodOnPlantBehaviour;
+import game.follow.FollowMateBehaviour;
+import game.follow.FollowVictimBehaviour;
 import game.player.Player;
 import game.player.PlayerFeedAction;
+import game.pregnancy.LayEggAction;
+import game.pregnancy.PregnancyBehaviour;
+import game.wander.WanderBehaviour;
 
 import java.util.ArrayList;
-
 
 /**
  * Base class for Stegosaur, Brachiosaur and Allosaur for representing dinosaur Actors.
@@ -51,7 +60,9 @@ public abstract class DinoActor extends Actor {
      * An Action that should be returned in the playTurn method
      * as the DinoActor is interacting with another Actor and their actions need to be in sync.
      */
-    public Action actionInMotion;
+//    public Action actionInMotion;
+
+    private ArrayList<Behaviour> interactiveBehaviours;
 
     /**
      * Constructor.
@@ -92,13 +103,17 @@ public abstract class DinoActor extends Actor {
      */
     private void initializeDinoBehaviour(){
         behaviour = new ArrayList<>();
-//        behaviour.add(new PregnancyBehaviour());
-//        behaviour.add(new FeedingBehaviour());
-//        behaviour.add(new FollowMateBehaviour());
-//        behaviour.add(new FollowVictimBehaviour());
-//        behaviour.add(new FollowFoodOnGroundBehaviour());
+        behaviour.add(new PregnancyBehaviour());
+        behaviour.add(new FeedingBehaviour());
+        behaviour.add(new FollowMateBehaviour());
+        behaviour.add(new FollowFoodOnGroundBehaviour());
         behaviour.add(new FollowFoodOnPlantBehaviour());
-//        behaviour.add(new WanderBehaviour());
+        behaviour.add(new FollowVictimBehaviour());
+        behaviour.add(new WanderBehaviour());
+
+        interactiveBehaviours = new ArrayList<>();
+        interactiveBehaviours.add(new BreedingBehaviour(this));
+        interactiveBehaviours.add(new AttackBehaviour(this));
     }
 
     void initializeCapabilities(){
@@ -183,10 +198,6 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    /**
-     * Returns hit points of dinosaur
-     * @return hit points of dinosaur
-     */
     public int getHitPoints() {
         return this.hitPoints;
     }
@@ -223,11 +234,15 @@ public abstract class DinoActor extends Actor {
      * @param map GameMap that the actor is currently on
      */
     public void roarIfHungry(GameMap map){
-        if (hitPoints < dinoType.getHungryWhen()) {
+        if (isHungry()) {
             int x = map.locationOf(this).x();
             int y = map.locationOf(this).y();
             System.out.printf("%s at (%d, %d) getting hungry!\n", name, x, y);
         }
+    }
+
+    public boolean isHungry(){
+        return hitPoints < dinoType.getHungryWhen();
     }
 
     /**
@@ -258,11 +273,11 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    public void setActionInMotion(Action newAction){
-        if (actionInMotion == null){
-            actionInMotion = newAction;
-        }
-    }
+//    public void setActionInMotion(Action newAction){
+//        if (actionInMotion == null){
+//            actionInMotion = newAction;
+//        }
+//    }
 
     /**
      * Returns true if the dinoActor is pregnant, false otherwise.
@@ -303,7 +318,6 @@ public abstract class DinoActor extends Actor {
     public void setPregnant(boolean status){
         if (status){
             addCapability(DinoCapabilities.PREGNANT);
-//            System.out.println(hasCapability(DinoCapabilities.PREGNANT));
             initializePregnancyPeriod();
             if (hasCapability(DinoCapabilities.CAN_BREED)){
                 removeCapability(DinoCapabilities.CAN_BREED);
@@ -314,11 +328,7 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    /**
-     * Checks if dinoActor instance is conscious by
-     * checking if it has conscious capability
-     * @return true if dinosaur is conscious, false otherwise
-     */
+    // unconscious
     @Override
     public boolean isConscious(){
         return hasCapability(DinoCapabilities.CONSCIOUS);
@@ -336,98 +346,24 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    /**
-     * Initializes the dinoActor's unconscious period to an
-     * appropriate value.
-     */
     private void initializeUnconsciousPeriod() {
         unconsciousPeriod = dinoType.getInitialUnconsciousPeriod();
     }
-
 
     private int getUnconsciousPeriod() {
         return unconsciousPeriod;
     }
 
-    /**
-     * Decrements the dinoActor's unconscious period if it is greater than 0.
-     */
     private void decrementUnconsciousPeriod(){
-        if(this.unconsciousPeriod > 0) {
+        if (this.unconsciousPeriod > 0)
             unconsciousPeriod--;
-        }
-    }
-
-    @Override
-    public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
-        Actions validActions = new Actions();
-        ArrayList<Behaviour> adjacentActorBehaviour = new ArrayList<>();
-//        adjacentActorBehaviour.add(new BreedingBehaviour(this));
-//        adjacentActorBehaviour.add(new AttackBehaviour(this));
-
-        for (Behaviour b : adjacentActorBehaviour){
-            Action resultingAction = b.getAction(otherActor, map);
-            if (resultingAction != null){
-                validActions.add(resultingAction);
-            }
-        }
-
-        if (otherActor instanceof Player) {
-            validActions.add(new PlayerFeedAction(this));
-        }
-
-        System.out.println("num valid actions: " + validActions.size());
-
-        return validActions;
-    }
-
-    @Override
-    public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        if (this.isConscious() && this.hitPoints == 0) {
-                this.setUnconscious(true);
-        }
-        System.out.println("x: " + map.locationOf(this).x() + "; y: " + map.locationOf(this).y());
-
-        if (!checkUnconsciousPeriod(map)) {
-            aging();
-            decrementFoodLevel();
-            roarIfHungry(map);
-            adjustBreedingCapability();
-
-            Action actionToExecute = new DoNothingAction();
-            System.out.println("aim in: " + actionInMotion);
-
-
-            // if the actor has been determined to perform an Action with another Actor previously
-            // it should always return that Action
-            if (actionInMotion != null) {
-                actionToExecute = actionInMotion;
-                actionInMotion = null;
-            }
-
-            if (actionToExecute instanceof DoNothingAction && actions.size() > 0){
-                actionToExecute = actions.get(0);
-            }
-
-            // calling getAction for every behaviour can help us to do some necessary processing
-            // as well even if it returns null in the end
-            for (Behaviour b : behaviour) {
-                System.out.println(b);
-                Action resultingAction = b.getAction(this, map);
-                if (resultingAction != null && actionToExecute instanceof DoNothingAction) {
-                    actionToExecute = resultingAction;
-                }
-            }
-
-            return actionToExecute;
-        }
-        return new DoNothingAction();
     }
 
     /**
-     * Checks if dinosaur is conscious or not
-     * @param map the map that contains dinosaur's location
-     * @return true if unconscious and false otherwise
+     * Checks if dinoActor is unconscious or not.
+     * Does this by checking capability containing conscious or unconscius capability
+     * @param map the map that contains dinoActor's location
+     * @return true if dinoActor is unconscious, false otherwise
      */
     public boolean checkUnconsciousPeriod(GameMap map ) {
         Location dinoLocation = map.locationOf(this);
@@ -448,35 +384,83 @@ public abstract class DinoActor extends Actor {
         }
     }
 
+    @Override
+    public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
+        Actions validActions = new Actions();
+        for (Behaviour b : interactiveBehaviours){
+            Action resultingAction = b.getAction(otherActor, map);
+            if (resultingAction != null){
+                validActions.add(resultingAction);
+            }
+        }
+
+        if (otherActor instanceof Player) {
+            validActions.add(new PlayerFeedAction(this));
+        }
+
+        System.out.println("num valid actions: " + validActions.size());
+
+        return validActions;
+    }
+
+    @Override
+    public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        Action actionToExecute = new DoNothingAction();
+        System.out.println("");
+
+        if (isConscious() && hitPoints == 0) {
+            setUnconscious(true);
+        }
+
+        if (!checkUnconsciousPeriod(map)) {
+            aging();
+            decrementFoodLevel();
+            roarIfHungry(map);
+            adjustBreedingCapability();
+
+            // calling getAction for every behaviour can help us to do some necessary processing
+            // as well even if it returns null in the end
+            for (Behaviour b : behaviour) {
+                Action resultingAction = b.getAction(this, map);
+                if (resultingAction != null && actionToExecute instanceof DoNothingAction) {
+                    actionToExecute = resultingAction;
+                    System.out.println("here: " + b);
+                }
+            }
+
+            if (!(actionToExecute instanceof LayEggAction) && actions.size() > 0){
+                for (Action a: actions) {
+                    if (a instanceof BreedingAction || a instanceof AttackAction) {
+                        actionToExecute = a;
+                        System.out.println("there: " + actionToExecute);
+                    }
+                }
+            }
 
 
+        }
+        System.out.println(actionToExecute);
+        return actionToExecute;
+    }
 
-
-        // if lastAction has a subsequent action, always return that
-//        if (lastAction != null && lastAction.getNextAction() != null){
-//            actionToExecute = lastAction.getNextAction();
-//        }
-//        else if (actions.size() > 0){
-//            actionToExecute = actions.get(0);
-//        }
-//
-//
-//        return actionToExecute;
 }
 
-//TODO: add player feed action in get allowable (also in child classes) and fix playTurn method
 
-    // Precedence
-    // layEgg
-    // breeding
-    // attack for food
-    // feeding from player
-    // feeding on its own
-    // follow mate
-    // follow food
-
+// Precedence
+// layEgg - pregnancy behaviour
+// breeding - actions
+// attack for food - actions
+// feeding on its own - behaviour
+// follow mate - behaviour
+// follow food on tree - behaviour
+// follow food on plant - behaviour
 
 
-
+// if the actor has been determined to perform an Action with another Actor previously
+// it should always return that Action
+//            if (actionInMotion != null) {
+//                actionToExecute = actionInMotion;
+//                actionInMotion = null;
+//            }
 
 
