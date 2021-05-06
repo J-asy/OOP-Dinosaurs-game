@@ -8,6 +8,7 @@ import game.breed.BreedingBehaviour;
 import game.Probability;
 import game.follow.FollowMateBehaviour;
 import game.follow.FollowVictimBehaviour;
+import game.player.Player;
 import game.player.PlayerFeedAction;
 import game.pregnancy.PregnancyBehaviour;
 import game.wander.WanderBehaviour;
@@ -345,7 +346,8 @@ public abstract class DinoActor extends Actor {
             }
         }
 
-        validActions.add(new PlayerFeedAction(this));
+        if (otherActor instanceof Player)
+            validActions.add(new PlayerFeedAction(this));
 
         return validActions;
     }

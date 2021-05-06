@@ -12,10 +12,11 @@ public class CheckInventoryAction extends Action {
     public String execute(Actor actor, GameMap map) {
         List<Item> inventoryItems = actor.getInventory();
         if (inventoryItems.size() > 0) {
+            System.out.println("Here's your list of Inventory items.");
             for (int i = 0; i < inventoryItems.size(); i++) {
-                System.out.println((i + 1) + ". " + inventoryItems.get(i).toString() + "\n");
+                System.out.println((i + 1) + ". " + inventoryItems.get(i).toString());
             }
-            return "Here's your list of Inventory items.";
+            return "";
         }
         else
             return "Inventory is empty.";

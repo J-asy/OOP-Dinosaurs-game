@@ -42,7 +42,7 @@ public class PlayerFeedAction extends Action {
         if (inventoryItems.size()>0) {
             System.out.println("0. Decided not to feed/No matching food to feed.");
             for (int i = 0; i < inventoryItems.size(); i++) {
-                System.out.println((i + 1) + ". " + inventoryItems.get(i).toString() + "\n");
+                System.out.println((i + 1) + ". " + inventoryItems.get(i).toString());
             }
             Scanner input = new Scanner(System.in);
             System.out.println("Choose an inventory item to feed the dinosaur: ");
