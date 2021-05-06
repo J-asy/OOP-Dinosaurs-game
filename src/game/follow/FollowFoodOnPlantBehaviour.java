@@ -1,8 +1,6 @@
 package game.follow;
 
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.Ground;
-import edu.monash.fit2099.engine.Location;
+import edu.monash.fit2099.engine.*;
 import game.dinosaurs.DinoActor;
 import game.environment.CapableGround;
 
@@ -14,6 +12,17 @@ public class FollowFoodOnPlantBehaviour extends FollowBehaviour {
 
     public FollowFoodOnPlantBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
+    }
+
+    @Override
+    public Action getAction(Actor actor, GameMap map) {
+        Action actionToReturn = null;
+        if (actor instanceof DinoActor){
+            if (((DinoActor) actor).isHungry()){
+                actionToReturn = super.getAction(actor, map);
+            }
+        }
+        return actionToReturn;
     }
 
     @Override
@@ -32,8 +41,6 @@ public class FollowFoodOnPlantBehaviour extends FollowBehaviour {
             }
         }
 
-        if (returnDestination != null)
-            System.out.println("x1: " + returnDestination.x() + "; y1: " + returnDestination.y());
         return returnDestination;
     }
 }

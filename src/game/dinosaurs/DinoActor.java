@@ -103,17 +103,17 @@ public abstract class DinoActor extends Actor {
      */
     private void initializeDinoBehaviour(){
         behaviour = new ArrayList<>();
-        behaviour.add(new PregnancyBehaviour());
-        behaviour.add(new FeedingBehaviour());
-        behaviour.add(new FollowMateBehaviour());
+//        behaviour.add(new PregnancyBehaviour());
+//        behaviour.add(new FeedingBehaviour());
+//        behaviour.add(new FollowMateBehaviour());
         behaviour.add(new FollowFoodOnGroundBehaviour());
-        behaviour.add(new FollowFoodOnPlantBehaviour());
-        behaviour.add(new FollowVictimBehaviour());
-        behaviour.add(new WanderBehaviour());
+//        behaviour.add(new FollowFoodOnPlantBehaviour());
+//        behaviour.add(new FollowVictimBehaviour());
+//        behaviour.add(new WanderBehaviour());
 
         interactiveBehaviours = new ArrayList<>();
-        interactiveBehaviours.add(new BreedingBehaviour(this));
-        interactiveBehaviours.add(new AttackBehaviour(this));
+//        interactiveBehaviours.add(new BreedingBehaviour(this));
+//        interactiveBehaviours.add(new AttackBehaviour(this));
     }
 
     void initializeCapabilities(){
@@ -365,10 +365,10 @@ public abstract class DinoActor extends Actor {
         if (!this.isConscious()){
             if (this.getUnconsciousPeriod() > 0){
                 this.decrementUnconsciousPeriod();
-                System.out.println("Dinosaur at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is unconscious!");
+                System.out.println(this + " at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is unconscious!");
             }
             else {
-                System.out.println("Dinosaur at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is dead!")  ;
+                System.out.println(this + " at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is dead!")  ;
                 map.removeActor(this);
                 Corpse corpseDino = new Corpse(dinoType);
                 dinoLocation.addItem(corpseDino);
@@ -405,6 +405,7 @@ public abstract class DinoActor extends Actor {
         aging();
         decrementFoodLevel();
         System.out.println("");
+        System.out.println("food level: " + hitPoints);
 
         if (isConscious() && hitPoints == 0) {
                 setUnconscious(true);
@@ -413,7 +414,6 @@ public abstract class DinoActor extends Actor {
 //        System.out.println("unconscious period: " + unconsciousPeriod);
         if (!checkUnconsciousPeriod(map)) {
 //            System.out.println("age: " + age);
-            System.out.println("food level: " + hitPoints);
             roarIfHungry(map);
             adjustBreedingCapability();
 //            System.out.println("can breed: " + hasCapability(DinoCapabilities.CAN_BREED));
@@ -422,6 +422,7 @@ public abstract class DinoActor extends Actor {
             // calling getAction for every behaviour can help us to do some necessary processing
             // as well even if it returns null in the end
             for (Behaviour b : behaviour) {
+                System.out.println("!!!: " + b);
                 Action resultingAction = b.getAction(this, map);
                 if (resultingAction != null && actionToExecute instanceof DoNothingAction) {
                     actionToExecute = resultingAction;
@@ -429,20 +430,20 @@ public abstract class DinoActor extends Actor {
                 }
             }
 
-            if (!(actionToExecute instanceof LayEggAction) && actions.size() > 0){
-                for (Action a: actions) {
-                    if (a instanceof BreedingAction || a instanceof AttackAction) {
-                        actionToExecute = a;
-                        System.out.println("there: " + actionToExecute);
-                    }
-                }
-            }
+//            if (!(actionToExecute instanceof LayEggAction) && actions.size() > 0){
+//                for (Action a: actions) {
+//                    if (a instanceof BreedingAction || a instanceof AttackAction) {
+//                        actionToExecute = a;
+//                        System.out.println("there: " + a);
+//                    }
+//                }
+//            }
 
 
         }
         System.out.println(actionToExecute);
-//        return actionToExecute;
-        return new DoNothingAction();
+        return actionToExecute;
+//        return new DoNothingAction();
     }
 
 }
