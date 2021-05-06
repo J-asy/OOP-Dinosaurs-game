@@ -3,6 +3,7 @@ package game.player;
 import edu.monash.fit2099.engine.*;
 import game.EcoPoints;
 import game.FoodType;
+import game.PortableItem;
 import game.dinosaurs.*;
 import java.util.List;
 import java.util.Scanner;
@@ -15,13 +16,13 @@ public class PlayerFeedAction extends Action {
     /**
      * The Actor that is to be fed.
      */
-    private final Actor target;
+    private final DinoActor target;
 
     /**
      * Constructor
      * @param target the Actor (DinoActor) to feed
      */
-    public PlayerFeedAction(Actor target){ this.target=target; }
+    public PlayerFeedAction(DinoActor target){ this.target=target; }
 
     /**
      * Perform the Action.
@@ -39,7 +40,7 @@ public class PlayerFeedAction extends Action {
         List<Item> inventoryItems = actor.getInventory();
 
         if (inventoryItems.size()>0) {
-            System.out.println("0. Decided not to feed/No appropriate food to feed.");
+            System.out.println("0. Decided not to feed/No matching food to feed.");
             for (int i = 0; i < inventoryItems.size(); i++) {
                 System.out.println((i + 1) + ". " + inventoryItems.get(i).toString() + "\n");
             }
@@ -50,7 +51,7 @@ public class PlayerFeedAction extends Action {
                 return "No food chosen.";
             Item chosenItem = inventoryItems.get(choice - 1);
 
-            if (target.hasCapability(DinoCapabilities.HERBIVORE)) {
+            if (target.isHerbivorous()) {
                 if (chosenItem.hasCapability(FoodType.HERBIVORE)) {
                     if (chosenItem.toString().equalsIgnoreCase("Fruit"))
                         EcoPoints.incrementEcoPoints(10);
