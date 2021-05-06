@@ -36,6 +36,10 @@ public class Fruit extends PortableItem {
         super.tick(currentLocation);
         groundTime++;
 
+        if (groundTime > 15){
+            currentLocation.removeItem(this);
+        }
+
     }
 
 //    public void setDisplayChar(Character displayChar){this.displayChar = displayChar;}

@@ -9,7 +9,9 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Weapon;
 import game.PortableItem;
+import game.dinosaurs.Allosaur;
 import game.dinosaurs.DinoActor;
+import game.dinosaurs.Stegosaur;
 
 /**
  * Special Action for attacking other Actors.
@@ -34,6 +36,12 @@ public class AttackAction extends Action {
 		this.target = target;
 	}
 
+	/**
+	 * Performs the action
+	 * @param actor The actor performing the action.
+	 * @param map The map the actor is on.
+	 * @return a message string
+	 */
 	@Override
 	public String execute(Actor actor, GameMap map) {
 
@@ -56,13 +64,20 @@ public class AttackAction extends Action {
 			}
 		}
 
+		// Adds stegosaur to Allosaur's attackedStego HashMap only after attacking it
+		if (! ((Allosaur)actor).hasAttackedStegosaur((Stegosaur) target)) {
+			((Allosaur) actor).addAttackedStego((Stegosaur) target);
+		}
+
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 
+
 		target.hurt(damage);
-		if (!target.isConscious()) {
+		if (((DinoActor)target).getHitPoints() <= 0){
 			Item corpse = new Corpse(((DinoActor)actor).getDinoType());
 			map.locationOf(target).addItem(corpse);
-			
+			map.removeActor(target);
+
 			Actions dropActions = new Actions();
 			for (Item item : target.getInventory())
 				dropActions.add(item.getDropAction());
@@ -75,6 +90,7 @@ public class AttackAction extends Action {
 
 		return result;
 	}
+
 
 	@Override
 	public String menuDescription(Actor actor) {

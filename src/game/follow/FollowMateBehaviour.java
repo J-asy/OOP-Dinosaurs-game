@@ -1,6 +1,5 @@
 package game.follow;
 
-import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
@@ -14,17 +13,6 @@ public class FollowMateBehaviour extends FollowBehaviour {
 
     public FollowMateBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
-    }
-
-    @Override
-    public Action getAction(Actor actor, GameMap map) {
-        Action actionToReturn = null;
-        if (actor instanceof DinoActor){
-            if (((DinoActor) actor).canBreed()){
-                actionToReturn = super.getAction(actor, map);
-            }
-        }
-        return actionToReturn;
     }
 
     @Override

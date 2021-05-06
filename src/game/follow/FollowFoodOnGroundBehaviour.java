@@ -17,17 +17,6 @@ public class FollowFoodOnGroundBehaviour extends FollowBehaviour {
     }
 
     @Override
-    public Action getAction(Actor actor, GameMap map) {
-        Action actionToReturn = null;
-        if (actor instanceof DinoActor){
-            if (((DinoActor) actor).isHungry()){
-                actionToReturn = super.getAction(actor, map);
-            }
-        }
-        return actionToReturn;
-    }
-
-    @Override
      Location follow(GameMap map, Location destination, DinoActor actorAsDino){
         Location returnDestination = null;
         List<Item> groundItems = destination.getItems();
