@@ -3,9 +3,11 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
+import game.attack.AttackAction;
 import game.attack.AttackBehaviour;
 import game.attack.Corpse;
 import game.Probability;
+import game.breed.BreedingAction;
 import game.breed.BreedingBehaviour;
 import game.feeding.FeedingBehaviour;
 import game.follow.FollowFoodOnGroundBehaviour;
@@ -312,7 +314,6 @@ public abstract class DinoActor extends Actor {
     public void setPregnant(boolean status){
         if (status){
             addCapability(DinoCapabilities.PREGNANT);
-//            System.out.println(hasCapability(DinoCapabilities.PREGNANT));
             initializePregnancyPeriod();
             if (hasCapability(DinoCapabilities.CAN_BREED)){
                 removeCapability(DinoCapabilities.CAN_BREED);
@@ -394,6 +395,8 @@ public abstract class DinoActor extends Actor {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action actionToExecute = new DoNothingAction();
+        System.out.println("");
+
         if (isConscious() && hitPoints == 0) {
                 setUnconscious(true);
         }
@@ -410,11 +413,17 @@ public abstract class DinoActor extends Actor {
                 Action resultingAction = b.getAction(this, map);
                 if (resultingAction != null && actionToExecute instanceof DoNothingAction) {
                     actionToExecute = resultingAction;
+                    System.out.println("here: " + b);
                 }
             }
 
             if (!(actionToExecute instanceof LayEggAction) && actions.size() > 0){
-                actionToExecute = actions.get(0);
+                for (Action a: actions) {
+                    if (a instanceof BreedingAction || a instanceof AttackAction) {
+                        actionToExecute = a;
+                        System.out.println("there: " + actionToExecute);
+                    }
+                }
             }
 
 

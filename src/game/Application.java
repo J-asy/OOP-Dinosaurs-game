@@ -62,8 +62,8 @@ public class Application {
 
 		DinoActor s1 = new Allosaur(DinoCapabilities.MALE, true);
 		gameMap.at(35, 13).addActor(s1);
-//		DinoActor s2 = new Allosaur(DinoCapabilities.MALE, true);
-//		gameMap.at(32, 13).addActor(s2);
+		DinoActor s2 = new Allosaur(DinoCapabilities.FEMALE, true);
+		gameMap.at(36, 13).addActor(s2);
 
 
 //		gameMap.at(1,3).addActor(new Stegosaur(true));
@@ -72,7 +72,7 @@ public class Application {
 //		DinoActor a = new Allosaur(true);
 //		gameMap.at(1,5).addActor(a);
 
-		gameMap.at(33, 13).addItem(new Egg(DinoEncyclopedia.BRACHIOSAUR));
+		gameMap.at(35, 13).addItem(new Egg(DinoEncyclopedia.BRACHIOSAUR));
 
 //		gameMap.at(1, 11).addItem(new Egg(DinoEncyclopedia.STEGOSAUR));
 //		gameMap.at(1, 15).addItem(new Egg(DinoEncyclopedia.BRACHIOSAUR));
