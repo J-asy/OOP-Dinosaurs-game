@@ -25,7 +25,7 @@ public class AttackBehaviour implements Behaviour {
                 }
                 else {
                     String message = String.format("%s already attacked %s. Wait for %d turns!",
-                            this, target, actorAsAllosaur.getAttackedPeriod(target));
+                            actor, target, actorAsAllosaur.getAttackedPeriod(target));
                     System.out.println(message);
                 }
             }
