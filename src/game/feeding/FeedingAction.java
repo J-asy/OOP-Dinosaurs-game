@@ -21,7 +21,7 @@ import static java.util.Map.entry;
 public class FeedingAction extends Action {
 
     Boolean foodOnGround;
-    Item item;
+    PortableItem portableItem;
     int x;
     int y;
 //
@@ -31,9 +31,9 @@ public class FeedingAction extends Action {
 //            entry(DinoEncyclopedia.ALLOSAUR, 1)
 //    );
 
-    public FeedingAction (Boolean foodOnGround, Item item) {
+    public FeedingAction (Boolean foodOnGround, PortableItem item) {
         this.foodOnGround = foodOnGround;
-        this.item = item;
+        this.portableItem = item;
     }
 
     @Override
@@ -46,8 +46,7 @@ public class FeedingAction extends Action {
 
         if (actor instanceof DinoActor) {
             DinoActor actorAsDino = (DinoActor) actor;
-            if (foodOnGround && item instanceof PortableItem) {
-                    PortableItem portableItem = (PortableItem) item;
+            if (foodOnGround) {
 
                     if (feedOnFruitPossible(actorAsDino, portableItem)) {
                         feedingPossible = true;
@@ -55,25 +54,25 @@ public class FeedingAction extends Action {
                     } else if (feedOnMeatPossible(actorAsDino, portableItem)) {
                         feedingPossible = true;
 
-                        if (item instanceof Egg) {
+                        if (portableItem instanceof Egg) {
                             healPoints = 10;
 
-                            foodName += item.toString();
-                        } else if (item instanceof Corpse) {
-                            if (((Corpse) item).getParent() == DinoEncyclopedia.ALLOSAUR ||
-                                    ((Corpse) item).getParent() == DinoEncyclopedia.STEGOSAUR) {
+                            foodName += portableItem.toString();
+                        } else if (portableItem instanceof Corpse) {
+                            if (((Corpse) portableItem).getParent() == DinoEncyclopedia.ALLOSAUR ||
+                                    ((Corpse) portableItem).getParent() == DinoEncyclopedia.STEGOSAUR) {
                                 healPoints = 50;
-                                foodName += item.toString();
-                            } else if (((Corpse) item).getParent() == DinoEncyclopedia.BRACHIOSAUR) {
+                                foodName += portableItem.toString();
+                            } else if (((Corpse) portableItem).getParent() == DinoEncyclopedia.BRACHIOSAUR) {
                                 healPoints = 100;
                             }
                         }
                     }
 
                     if (feedingPossible) {
-                        actorLocation.removeItem(item);
+                        actorLocation.removeItem(portableItem);
                         actor.heal(healPoints);
-                        foodName = item.toString();
+                        foodName = portableItem.toString();
 
                     }
 
@@ -84,7 +83,7 @@ public class FeedingAction extends Action {
                 if (actorAsDino.isHerbivorous() && ground instanceof CapableGround) {
                     CapableGround capableGround = (CapableGround) ground;
                     if (capableGround.isTree()) {
-                        int noOfTreeFruits = ((Tree)ground).getTreeFruitsSize();
+                        int noOfTreeFruits = ((Tree)capableGround).getTreeFruitsSize();
                         if (noOfTreeFruits > 0) {
                             for (int i = 0; i < noOfTreeFruits; i++) {
                                 if (Probability.generateProbability(0.5f)) {
@@ -96,7 +95,7 @@ public class FeedingAction extends Action {
                         }
 
                     } else if (capableGround.isBush()) {
-                        if (((Bush) map.at(x, y).getGround()).decrementBushItem() != null) {
+                        if (((Bush)capableGround).decrementBushItem() != null) {
                             actor.heal(10);
                             foodName = "Fruit";
                         }
