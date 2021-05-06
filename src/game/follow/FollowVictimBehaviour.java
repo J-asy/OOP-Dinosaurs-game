@@ -8,9 +8,11 @@ import game.dinosaurs.DinoActor;
 public class FollowVictimBehaviour extends FollowBehaviour {
 
     private static final String DESCRIPTION = "find victim to attack";
+    private static final int MIN_RADIUS = 2;
+    private static final int MAX_RADIUS = 4;
 
     public FollowVictimBehaviour() {
-        super(DESCRIPTION);
+        super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
     @Override
