@@ -90,6 +90,8 @@ public abstract class DinoActor extends Actor {
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
         if (!isMatured) {
+            System.out.println("here!");
+            System.out.println(dinoType.getBabyInitialHitPoints());
             setBabyHitPoints(dinoType.getBabyInitialHitPoints());
         }
         initializeDinoBehaviour();
