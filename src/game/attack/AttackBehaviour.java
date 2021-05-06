@@ -18,7 +18,6 @@ public class AttackBehaviour implements Behaviour {
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
-
         Location here = map.locationOf(actor);
         for (Exit exit : here.getExits()) {
             Location destination = exit.getDestination();

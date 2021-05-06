@@ -57,12 +57,16 @@ public class AttackAction extends Action {
 		}
 
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
+//		if(actor instanceof DinoActor) {
+//
+//		}
 
 		target.hurt(damage);
 		if (!target.isConscious()) {
 			Item corpse = new Corpse(((DinoActor)actor).getDinoType());
 			map.locationOf(target).addItem(corpse);
-			
+			map.removeActor(target);
+
 			Actions dropActions = new Actions();
 			for (Item item : target.getInventory())
 				dropActions.add(item.getDropAction());

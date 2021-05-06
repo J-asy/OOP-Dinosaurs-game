@@ -66,7 +66,8 @@ public class Application {
 //		DinoActor s2 = new Stegosaur(Sex.FEMALE, true);
 //		gameMap.at(32, 10).addActor(s2);
 
-
+		DinoActor a1 = new Allosaur(DinoCapabilities.MALE, false);
+		gameMap.at(32,13).addActor(a1);
 //		gameMap.at(1,3).addActor(new Stegosaur(true));
 //		DinoActor b = new Brachiosaur(Sex.FEMALE, true);
 //		gameMap.at(1,1).addActor(b);

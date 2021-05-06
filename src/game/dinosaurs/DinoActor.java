@@ -3,6 +3,7 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
+import game.attack.AttackAction;
 import game.attack.Corpse;
 import game.breed.BreedingBehaviour;
 import game.Probability;
@@ -354,8 +355,8 @@ public abstract class DinoActor extends Actor {
 
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        if (this.isConscious() && this.hitPoints == 0) {
-                this.setUnconscious(true);
+        if (this.isConscious() && this.hitPoints <= 0) {
+            this.setUnconscious(true);
         }
 
         if (!checkUnconsciousPeriod(map)) {
@@ -364,27 +365,55 @@ public abstract class DinoActor extends Actor {
             roarIfHungry(map);
             adjustBreedingCapability();
 
-            Action actionToExecute = null;
+            Action actionToExecute = new DoNothingAction();
 
             // if the actor has been determined to perform an Action with another Actor previously
             // it should always return that Action
-            if (actionInMotion != null) {
-                actionToExecute = actionInMotion;
-                actionInMotion = null;
-            }
+//            if (actionInMotion != null) {
+//                actionToExecute = actionInMotion;
+//                actionInMotion = null;
+//            }
+//
+//            // calling getAction for every behaviour can help us to do some necessary processing
+//            // as well even if it returns null in the end
+//            for (Behaviour b : behaviour) {
+//                Action resultingAction = b.getAction(this, map);
+//                if (resultingAction != null && actionToExecute == null) {
+//                    actionToExecute = resultingAction;
+//                }
+//            }
 
-            // calling getAction for every behaviour can help us to do some necessary processing
-            // as well even if it returns null in the end
-            for (Behaviour b : behaviour) {
-                Action resultingAction = b.getAction(this, map);
-                if (resultingAction != null && actionToExecute == null) {
-                    actionToExecute = resultingAction;
+            if (this.canAttack()){
+                Stegosaur target = (Stegosaur)map.at(32,12).getActor();
+                if ( !((Allosaur) this).hasAttackedStegosaur((Stegosaur) target)) {
+                    ((Allosaur) this).addAttackedStego((Stegosaur) target);
+                    return new AttackAction(target);
+                }
+                else
+                {
+                    if ((((Allosaur) this).getAttackedPeriod((Stegosaur) target)) > 0
+                            && (((Allosaur) this).getAttackedPeriod((Stegosaur) target) <= 20))
+                    {
+                        ((Allosaur) this).decrementAttackedPeriod((Stegosaur) target);
+                        System.out.println("Allosaur already attacked Stegosaur. Wait for "+ ((Allosaur) this).getAttackedPeriod((Stegosaur) target)+" turns!");
+                    }
+                    else if (((Allosaur) this).getAttackedPeriod((Stegosaur) target) == 0)
+                    {
+                        ((Allosaur) this).removeAttackedStego((Stegosaur) target);
+                        return new AttackAction(target);
+                    }
                 }
             }
+            System.out.println("HP: " +this.hitPoints);
+            System.out.println("Unconscious Period: " + this.getUnconsciousPeriod());
 
             return actionToExecute;
         }
-        return null;
+        else{
+            System.out.println("HP-: " +this.hitPoints);
+            System.out.println("Unconscious Period-: " + this.getUnconsciousPeriod());
+            return new DoNothingAction();
+        }
     }
 
     public boolean checkUnconsciousPeriod(GameMap map ) {
