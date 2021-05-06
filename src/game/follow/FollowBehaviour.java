@@ -17,8 +17,19 @@ import java.util.List;
 
 public abstract class FollowBehaviour implements Behaviour {
 
+    /**
+     * Description to be inform player of the following action.
+     */
     private final String purposeDescription;
+
+    /**
+     * Minimum number of squares from DinoActor to start searching for a target to follow.
+     */
     private static final int MIN_RADIUS = 2;
+
+    /**
+     * Maximum number of squares from DinoActor to search for a target to follow.
+     */
     private static final int MAX_RADIUS = 4;
 
     public FollowBehaviour(String description) {
@@ -28,7 +39,7 @@ public abstract class FollowBehaviour implements Behaviour {
     @Override
     public Action getAction(Actor actor, GameMap map) {
         Action actionToReturn = null;
-        int radius = MIN_RADIUS;
+        int radius = FollowBehaviour.MIN_RADIUS;
         boolean found = false;
         if (actor instanceof DinoActor) {
             Location actorLocation = map.locationOf(actor);

@@ -1,7 +1,7 @@
 package edu.monash.fit2099.demo.mars;
 
 import edu.monash.fit2099.engine.*;
-import game.follow.FollowBehaviourDeleteLater;
+//import game.follow.FollowBehaviourDeleteLater;
 
 import java.util.Arrays;
 import java.util.List;
@@ -52,7 +52,7 @@ public class Application {
         Bug bug = new Bug();
         bug.addItemToInventory(new MartianItem("rock", '*', true));
         bug.actionFactories.add(new SpitBehaviour(player));
-        bug.actionFactories.add(new FollowBehaviourDeleteLater(player));
+//        bug.actionFactories.add(new FollowBehaviourDeleteLater(player));
         gameMap.at(0, 2).addActor(bug);
 
         world.run();

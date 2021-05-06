@@ -6,6 +6,9 @@ import game.*;
 import game.attack.Corpse;
 import game.breed.BreedingBehaviour;
 import game.Probability;
+import game.feeding.FeedingBehaviour;
+import game.follow.FollowFoodOnGroundBehaviour;
+import game.follow.FollowFoodOnTreeBehaviour;
 import game.follow.FollowMateBehaviour;
 import game.follow.FollowVictimBehaviour;
 import game.player.PlayerFeedAction;
@@ -93,10 +96,13 @@ public abstract class DinoActor extends Actor {
      */
     private void initializeDinoBehaviour(){
         behaviour = new ArrayList<>();
-        behaviour.add(new PregnancyBehaviour());
-        behaviour.add(new FollowMateBehaviour());
-        behaviour.add(new FollowVictimBehaviour());
-        behaviour.add(new WanderBehaviour());
+//        behaviour.add(new PregnancyBehaviour());
+//        behaviour.add(new FeedingBehaviour());
+//        behaviour.add(new FollowMateBehaviour());
+//        behaviour.add(new FollowVictimBehaviour());
+        behaviour.add(new FollowFoodOnGroundBehaviour());
+//        behaviour.add(new FollowFoodOnTreeBehaviour());
+//        behaviour.add(new WanderBehaviour());
     }
 
     void initializeCapabilities(){
@@ -362,7 +368,7 @@ public abstract class DinoActor extends Actor {
             roarIfHungry(map);
             adjustBreedingCapability();
 
-            Action actionToExecute = null;
+            Action actionToExecute = new DoNothingAction();
 
             // if the actor has been determined to perform an Action with another Actor previously
             // it should always return that Action
@@ -375,14 +381,14 @@ public abstract class DinoActor extends Actor {
             // as well even if it returns null in the end
             for (Behaviour b : behaviour) {
                 Action resultingAction = b.getAction(this, map);
-                if (resultingAction != null && actionToExecute == null) {
+                if (resultingAction != null && actionToExecute instanceof DoNothingAction) {
                     actionToExecute = resultingAction;
                 }
             }
 
             return actionToExecute;
         }
-        return null;
+        return new DoNothingAction();
     }
 
     public boolean checkUnconsciousPeriod(GameMap map ) {
