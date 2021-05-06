@@ -10,8 +10,6 @@ import java.util.List;
  * Class representing terrain of Tree type.
  */
 public class Tree extends CapableGround {
-	private int age = 0;
-	private ArrayList<Fruit> treeFruits = new ArrayList<>(); //fruits on the tree
 
 	/**
 	 * Constructor
@@ -31,15 +29,14 @@ public class Tree extends CapableGround {
 	 */
 	@Override
 	public void tick(Location location) {
-		super.tick(location);
-
-		age++;
-		if (age == 10)
+		incrementAge();
+		int currentAge = getAge();
+		if (currentAge == 10)
 			displayChar = 't';
-		if (age == 20)
+		if (currentAge == 20)
 			displayChar = 'T';
 
-		if (displayChar == 'T' && age > 20){
+		if (displayChar == 'T' && currentAge > 20){
 
 			//get the list of items at the current location
 			//if the item is a Fruit, get the groundTime, if > 15, remove from location(rots)
@@ -54,56 +51,25 @@ public class Tree extends CapableGround {
 			}
 
 			if (Probability.generateProbability(0.5f)){
-				Fruit fruit = new Fruit();
 				displayChar = '&';
 				EcoPoints.incrementEcoPoints(1);
-				treeFruits.add(fruit);
+				addFruit();
 			}
 
 			//check if the fruit will fall and set the item as portable and add to location, removed from treeFruits
-			if (treeFruits.size() > 0){
-				for (int i = 0; i < treeFruits.size(); i++){
+			if (getNumberOfFruits() > 0){
+				for (int i = 0; i < getNumberOfFruits(); i++){
 					if (Probability.generateProbability(0.05f)) {
-						location.addItem(treeFruits.get(i));
-						treeFruits.remove(i);
+						Fruit fruit = getFruit(i);
+						location.addItem(fruit);
 					}
 				}
 			}
 		}
+
+		adjustHasFruitCapability();
 	}
 
-	/**
-	 * Removes the first Fruit in list.
-	 *
-	 * @return the removed Fruit
-	 */
-	public Fruit decrementTreeItem(){
-		Fruit fruit = null;
-		if (treeFruits.size()>0) {
-			fruit = treeFruits.remove(0);
-		}
-		return fruit;
-	}
 
-	/**
-	 * Removes the first Fruit in the List without returning anything.
-	 */
-	public void removeTreeItem(){
-		if (treeFruits.size()>0)
-			treeFruits.remove(0);
-	}
 
-	/**
-	 * Access the size of the treeFruits ArrayList
-	 * @return the size of the treeFruits ArrayList
-	 */
-	public int getTreeFruitsSize() {
-		return treeFruits.size();
-	}
-
-	public boolean hasTreeFruits(){
-		if (treeFruits.size() >0)
-			return true;
-		return false;
-	}
 }

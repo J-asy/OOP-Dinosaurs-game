@@ -30,12 +30,12 @@ public class SearchItemAction extends Action {
         if (ground instanceof CapableGround && Probability.generateProbability(0.4f)){
             CapableGround capableGround = (CapableGround) ground;
             if (capableGround.isBush()){
-                fruit = ((Bush) ground).decrementBushItem();
+                fruit = ((Bush) ground).getFruit();
                 groundDescription = "bush";
                 earnedPoints = 10;
             }
             else if (capableGround.isTree()){
-                fruit = ((Tree) ground).decrementTreeItem();
+                fruit = ((Tree) ground).getFruit();
                 groundDescription = "tree";
                 earnedPoints = 10;
             }

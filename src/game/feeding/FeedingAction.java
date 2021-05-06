@@ -3,17 +3,11 @@ package game.feeding;
 import edu.monash.fit2099.engine.*;
 import game.PortableItem;
 import game.attack.Corpse;
-import game.FoodType;
 import game.dinosaurs.DinoActor;
-import game.dinosaurs.DinoCapabilities;
 import game.dinosaurs.Egg;
 import game.Probability;
 import game.dinosaurs.DinoEncyclopedia;
 import game.environment.*;
-
-import java.util.Map;
-
-import static java.util.Map.entry;
 //import game.environment.Bush;
 //import game.environment.Fruit;
 //import game.environment.Tree;
@@ -83,11 +77,11 @@ public class FeedingAction extends Action {
                 if (actorAsDino.isHerbivorous() && ground instanceof CapableGround) {
                     CapableGround capableGround = (CapableGround) ground;
                     if (capableGround.isTree()) {
-                        int noOfTreeFruits = ((Tree)capableGround).getTreeFruitsSize();
+                        int noOfTreeFruits = capableGround.getNumberOfFruits();
                         if (noOfTreeFruits > 0) {
                             for (int i = 0; i < noOfTreeFruits; i++) {
                                 if (Probability.generateProbability(0.5f)) {
-                                    ((Tree) map.at(x, y).getGround()).decrementTreeItem();
+                                    ((Tree) map.at(x, y).getGround()).getFruit();
                                     actor.heal(10);
                                 }
                             }
@@ -95,7 +89,7 @@ public class FeedingAction extends Action {
                         }
 
                     } else if (capableGround.isBush()) {
-                        if (((Bush)capableGround).decrementBushItem() != null) {
+                        if (capableGround.getFruit() != null) {
                             actor.heal(10);
                             foodName = "Fruit";
                         }

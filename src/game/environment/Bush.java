@@ -1,8 +1,6 @@
 package game.environment;
 
 import edu.monash.fit2099.engine.Location;
-import game.*;
-import game.dinosaurs.Brachiosaur;
 import game.Probability;
 import game.dinosaurs.DinoCapabilities;
 
@@ -12,9 +10,6 @@ import java.util.ArrayList;
  * Class representing terrain of Bush type.
  */
 public class Bush extends CapableGround {
-
-    private int age = 0;  //the age of the bush
-    private ArrayList<Fruit> bushFruits = new ArrayList<>(); //arrayList of the fruits that have grown on the bush
 
     /**
      * Constructor.
@@ -36,61 +31,32 @@ public class Bush extends CapableGround {
 
     @Override
     public void tick(Location location){
-        super.tick(location);
 
         // If a Brachiosaur steps on the bush, 50% chance ground reverts back to dirt :(
-
         if (location.getActor() != null && location.getActor().hasCapability(DinoCapabilities.BUSH_DESTROYER) &&
                 Probability.generateProbability(0.5f)){
             location.setGround(new Dirt());
         }
         else {
             // If it's a fully grown bush, it can grow fruits, if a fruit grown then add to the fruits list
-            if (age > 10){
+            if (getAge() > 10){
                 if (Probability.generateProbability(0.1f)) {
-                    Fruit fruit = new Fruit();
-                    displayChar = '^';
-                    bushFruits.add(fruit);
+                   addFruit();
+                   displayChar = '^';
                 }
             }
             else {
                 // main reason why this part if in the else block is cuz it will be more efficient to only
                 // keep incrementing the age until it matures - age hits 10
                 // we change the displayChar then we never need to bother about age again
-                age++;
-                if (age == 10){
+                incrementAge();
+                if (getAge() == 10){
                     displayChar = '*';
                 }
             }
         }
-    }
 
-    /**
-     * Removes the first Fruit in list.
-     *
-     * @return the removed Fruit
-     */
-    public Fruit decrementBushItem(){
-        Fruit fruit = null;
-        if (bushFruits.size()>0) {
-            fruit = bushFruits.remove(0);
-        }
-        return fruit;
-    }
-
-    //is this necessary??
-    /**
-     * Removes the first Fruit in the List without returning anything.
-     */
-    public void removeBushItem(){
-        if (bushFruits.size()>0)
-            bushFruits.remove(0);
-    }
-
-    public boolean hasBushFruits(){
-        if (bushFruits.size() > 0)
-            return true;
-        return false;
+        adjustHasFruitCapability();
     }
 
 }

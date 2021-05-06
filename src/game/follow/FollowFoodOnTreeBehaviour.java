@@ -22,12 +22,12 @@ public class FollowFoodOnTreeBehaviour extends FollowBehaviour {
 
         Ground ground = destination.getGround();
 
-        if (ground instanceof CapableGround){
+        if (ground instanceof CapableGround && actorAsDino.isHerbivorous()){
             CapableGround currentGround = (CapableGround) ground;
-            if (currentGround.isTree() && actorAsDino.isHerbivorous() && actorAsDino.canReachTree()){
+            if (currentGround.isTree() && actorAsDino.canReachTree() && currentGround.hasFruits()){
                 returnDestination = destination;
             }
-            else if (currentGround.isBush() && actorAsDino.isHerbivorous() && !actorAsDino.canReachTree()) {
+            else if (currentGround.isBush() && !actorAsDino.canReachTree() && currentGround.hasFruits()) {
                 returnDestination = destination;
             }
         }
