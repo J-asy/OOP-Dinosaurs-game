@@ -43,7 +43,7 @@ public class Tree extends CapableGround {
 				addFruit();
 			}
 
-			if (getNumberOfFruits() < 0){
+			if (getNumberOfFruits() <= 0){
 				displayChar = 'T';
 			}
 

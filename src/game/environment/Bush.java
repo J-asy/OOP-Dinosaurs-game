@@ -46,7 +46,7 @@ public class Bush extends CapableGround {
                    displayChar = '^';
                 }
 
-                if (getNumberOfFruits() < 0){
+                if (getNumberOfFruits() <= 0){
                     displayChar = '*';
                 }
 
