@@ -6,8 +6,10 @@ import game.*;
 import game.attack.Corpse;
 import game.breed.BreedingBehaviour;
 import game.Probability;
+import game.feeding.FeedingAction;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base class for Stegosaur, Brachiosaur and Allosaur for representing dinosaur Actors.
@@ -306,23 +308,25 @@ public abstract class DinoActor extends Actor {
             roarIfHungry(map);
             adjustBreedingCapability();
 
-            Action actionToExecute = null;
+            Action actionToExecute = new DoNothingAction();
 
-            // if the actor has been determined to perform an Action with another Actor previously
-            // it should always return that Action
-            if (actionInMotion != null) {
-                actionToExecute = actionInMotion;
-                actionInMotion = null;
-            }
 
-            // calling getAction for every behaviour can help us to do some necessary processing
-            // as well even if it returns null in the end
-            for (Behaviour b : behaviour) {
-                Action resultingAction = b.getAction(this, map);
-                if (resultingAction != null && actionToExecute == null) {
-                    actionToExecute = resultingAction;
-                }
-            }
+//            // if the actor has been determined to perform an Action with another Actor previously
+//            // it should always return that Action
+//            if (actionInMotion != null) {
+//                actionToExecute = actionInMotion;
+//                actionInMotion = null;
+//            }
+//
+//            // calling getAction for every behaviour can help us to do some necessary processing
+//            // as well even if it returns null in the end
+//            for (Behaviour b : behaviour) {
+//                Action resultingAction = b.getAction(this, map);
+//                if (resultingAction != null && actionToExecute == null) {
+//                    actionToExecute = resultingAction;
+//                }
+//            }
+
 
 
             //        for (Action a : actions){
@@ -332,9 +336,26 @@ public abstract class DinoActor extends Actor {
             //        }
             //
 
+            if (this.hitPoints <= this.dinoType.getHungryWhen()){
+                Location here = map.locationOf(this);
+                for (Exit exit : here.getExits()) {
+                    Location destination = exit.getDestination();
+                    List<Item> items = destination.getItems();
+
+                    for (Item item : items) {
+                        actionToExecute = new FeedingAction(true, item, 32, 11);
+                    }
+                }
+            }
+            System.out.println("Hit Points : " + this.hitPoints);
+            System.out.println("Unconscious for : " + this.unconsciousPeriod);
             return actionToExecute;
         }
-        return null;
+        else {
+            System.out.println("Hit Points : " + this.hitPoints);
+            System.out.println("Unconscious for : " + this.unconsciousPeriod);
+            return new DoNothingAction();
+        }
     }
 
     public boolean checkUnconsciousPeriod(GameMap map ) {

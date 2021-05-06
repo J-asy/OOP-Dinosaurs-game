@@ -3,14 +3,11 @@ package game;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Display;
-import edu.monash.fit2099.engine.FancyGroundFactory;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.World;
+import edu.monash.fit2099.engine.*;
 import game.dinosaurs.*;
 import game.environment.Dirt;
 import game.environment.Floor;
+import game.environment.Fruit;
 import game.environment.Tree;
 import game.environment.Wall;
 import game.player.Player;
@@ -63,6 +60,8 @@ public class Application {
 
 		DinoActor s1 = new Stegosaur(DinoCapabilities.MALE, true);
 		gameMap.at(32, 12).addActor(s1);
+
+		gameMap.at(32,11).addItem(new Fruit());
 //		DinoActor s2 = new Stegosaur(Sex.FEMALE, true);
 //		gameMap.at(32, 10).addActor(s2);
 
