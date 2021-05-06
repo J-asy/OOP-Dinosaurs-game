@@ -11,11 +11,16 @@ import java.util.List;
  */
 public class Tree extends CapableGround {
 
+	private static final char SMALL = '+';
+	private static final char MEDIUM = 't';
+	private static final char BIG = 'T';
+	private static final char FRUITY_TREE = '&';
+
 	/**
 	 * Constructor
 	 */
 	public Tree() {
-		super('+');
+		super(SMALL);
 		addCapability(TerrainType.TREE);
 	}
 
@@ -32,19 +37,19 @@ public class Tree extends CapableGround {
 		incrementAge();
 		int currentAge = getAge();
 		if (currentAge == 10)
-			displayChar = 't';
+			displayChar = MEDIUM;
 		if (currentAge == 20)
-			displayChar = 'T';
+			displayChar = BIG;
 
-		if (displayChar == 'T' && currentAge > 20){
+		if (displayChar == BIG && currentAge > 20){
 			if (Probability.generateProbability(0.5f)){
-				displayChar = '&';
+				displayChar = FRUITY_TREE;
 				EcoPoints.incrementEcoPoints(1);
 				addFruit();
 			}
 
 			if (getNumberOfFruits() <= 0){
-				displayChar = 'T';
+				displayChar = BIG;
 			}
 
 			//check if the fruit will fall and set the item as portable and add to location, removed from treeFruits

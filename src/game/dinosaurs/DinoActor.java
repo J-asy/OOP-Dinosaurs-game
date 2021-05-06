@@ -399,17 +399,25 @@ public abstract class DinoActor extends Actor {
         return validActions;
     }
 
+    private void adjustConsciousness(){
+        if (isConscious() && hitPoints == 0) {
+            setUnconscious(true);
+        }
+        else if (!isConscious() && hitPoints > 0) {
+            setUnconscious(false);
+        }
+    }
+
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action actionToExecute = new DoNothingAction();
         aging();
         decrementFoodLevel();
-        System.out.println("");
-        System.out.println("food level: " + hitPoints);
+        adjustConsciousness();
+//        System.out.println("");
+//        System.out.println("food level: " + hitPoints);
 
-        if (isConscious() && hitPoints == 0) {
-                setUnconscious(true);
-        }
+
 
 //        System.out.println("unconscious period: " + unconsciousPeriod);
         if (!checkUnconsciousPeriod(map)) {
@@ -422,11 +430,11 @@ public abstract class DinoActor extends Actor {
             // calling getAction for every behaviour can help us to do some necessary processing
             // as well even if it returns null in the end
             for (Behaviour b : behaviour) {
-                System.out.println("!!!: " + b);
+//                System.out.println("!!!: " + b);
                 Action resultingAction = b.getAction(this, map);
                 if (resultingAction != null && actionToExecute instanceof DoNothingAction) {
                     actionToExecute = resultingAction;
-                    System.out.println("here: " + b);
+//                    System.out.println("here: " + b);
                 }
             }
 
@@ -441,12 +449,12 @@ public abstract class DinoActor extends Actor {
 
 
         }
-        System.out.println(actionToExecute);
+//        System.out.println(actionToExecute);
 
 
 
-        return actionToExecute;
-//        return new DoNothingAction();
+//        return actionToExecute;
+        return new DoNothingAction();
     }
 
 }

@@ -25,31 +25,25 @@ public class FeedingBehaviour implements Behaviour {
     public Action getAction(Actor actor, GameMap map) {
 
         if (actor instanceof DinoActor) {
-            System.out.println("print3");
             DinoActor actorAsDino = (DinoActor) actor;
             Location actorLocation = map.locationOf(actor);
             Ground ground = actorLocation.getGround();
 
             for (Item item : actorLocation.getItems()) {
-//                System.out.println("???");
                 if (item instanceof PortableItem) {
                     PortableItem portableItem = (PortableItem) item;
                     if (portableItem.edibleByHerbivores() && actorAsDino.isHerbivorous()) {
-//                        System.out.println("ener1");
                         return new FeedingAction(true, portableItem);
                     } else if (portableItem.edibleByCarnivores() && actorAsDino.isCarnivorous()) {
-//                        System.out.println("enter 2");
                         return new FeedingAction(true, portableItem);
                     }
                 }
             }
 
-            System.out.println("print2!!!");
             if (ground instanceof CapableGround && actorAsDino.isHerbivorous()) {
                 CapableGround capableGround = (CapableGround) ground;
                 if (capableGround.hasFruits() && ((capableGround.isTree() && actorAsDino.canReachTree())
                         || (capableGround.isBush() && !actorAsDino.canReachTree()))) {
-                    System.out.println("print!!");
                     return new FeedingAction(false, null);
                 }
             }

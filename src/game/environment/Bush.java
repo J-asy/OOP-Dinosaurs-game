@@ -11,12 +11,16 @@ import java.util.ArrayList;
  */
 public class Bush extends CapableGround {
 
+    private static final char SMALL = '~';
+    private static final char BIG = '*';
+    private static final char FRUITY_BUSH = '^';
+
 
     /**
      * Constructor.
      */
     public Bush() {
-        super('~');
+        super(SMALL);
         addCapability(TerrainType.BUSH);
     }
 
@@ -43,11 +47,11 @@ public class Bush extends CapableGround {
             if (getAge() > 10){
                 if (Probability.generateProbability(0.1f)) {
                    addFruit();
-                   displayChar = '^';
+                   displayChar = FRUITY_BUSH;
                 }
 
                 if (getNumberOfFruits() <= 0){
-                    displayChar = '*';
+                    displayChar = BIG;
                 }
 
             }
@@ -57,7 +61,7 @@ public class Bush extends CapableGround {
                 // we change the displayChar then we never need to bother about age again
                 incrementAge();
                 if (getAge() == 10){
-                    displayChar = '*';
+                    displayChar = BIG;
                 }
             }
         }
