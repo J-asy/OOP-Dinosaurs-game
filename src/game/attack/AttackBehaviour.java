@@ -23,6 +23,11 @@ public class AttackBehaviour implements Behaviour {
                 if (!actorAsAllosaur.hasAttackedVictim(target)) {
                     return new AttackAction(target);
                 }
+                else {
+                    String message = String.format("%s already attacked %s. Wait for %d turns!",
+                            this, target, actorAsAllosaur.getAttackedPeriod(target));
+                    System.out.println(message);
+                }
             }
         }
         return null;

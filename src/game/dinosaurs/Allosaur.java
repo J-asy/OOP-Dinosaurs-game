@@ -65,9 +65,6 @@ public class Allosaur extends DinoActor {
         for (DinoActor victim : victims.keySet()) {
             if (getAttackedPeriod(victim) > 0) {
                 decrementAttackedPeriod(victim);
-                String message = String.format("%s already attacked %s. Wait for %d turns!",
-                        this, victim, getAttackedPeriod(victim));
-                System.out.println(message);
             }
             else {
                 removeVictim(victim);
