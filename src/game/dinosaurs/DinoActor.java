@@ -12,6 +12,7 @@ import game.player.PlayerFeedAction;
 
 import java.util.ArrayList;
 
+
 /**
  * Base class for Stegosaur, Brachiosaur and Allosaur for representing dinosaur Actors.
  */
