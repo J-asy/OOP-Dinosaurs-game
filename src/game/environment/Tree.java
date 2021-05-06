@@ -41,10 +41,9 @@ public class Tree extends CapableGround {
 		if (currentAge == 20)
 			displayChar = BIG;
 
-		if (displayChar == BIG && currentAge > 20){
+		if ((displayChar == BIG || displayChar == FRUITY_TREE) && currentAge > 20){
 			if (Probability.generateProbability(0.5f)){
 				displayChar = FRUITY_TREE;
-				EcoPoints.incrementEcoPoints(1);
 				addFruit();
 			}
 

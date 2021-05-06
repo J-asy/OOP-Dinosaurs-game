@@ -22,7 +22,7 @@ public class AttackBehaviour implements Behaviour {
         for (Exit exit : here.getExits()) {
             Location destination = exit.getDestination();
             if (map.getActorAt(destination) == target && target.isConscious()){
-                if (actor instanceof Player && (target.canBeAttacked() || target.canAttack())){
+                if (actor instanceof Player && (target.canBeAttacked())){
                     return new AttackAction(target);
                 }
                 else if (actor instanceof DinoActor){
