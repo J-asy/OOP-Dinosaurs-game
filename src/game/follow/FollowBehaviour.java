@@ -25,28 +25,30 @@ public abstract class FollowBehaviour implements Behaviour {
     /**
      * Minimum number of squares from DinoActor to start searching for a target to follow.
      */
-    private static final int MIN_RADIUS = 2;
+    private final int MIN_RADIUS;
 
     /**
      * Maximum number of squares from DinoActor to search for a target to follow.
      */
-    private static final int MAX_RADIUS = 4;
+    private final int MAX_RADIUS;
 
-    public FollowBehaviour(String description) {
+    public FollowBehaviour(String description, int min_radius, int max_radius) {
         purposeDescription = description;
+        MIN_RADIUS = min_radius;
+        MAX_RADIUS = max_radius;
     }
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
         Action actionToReturn = null;
-        int radius = FollowBehaviour.MIN_RADIUS;
+        int radius = MIN_RADIUS;
         boolean found = false;
         if (actor instanceof DinoActor) {
             Location actorLocation = map.locationOf(actor);
             DinoActor actorAsDino = (DinoActor) actor;
 
             Location actualDestination;
-            while (!found && radius <= FollowBehaviour.MAX_RADIUS) {
+            while (!found && radius <= MAX_RADIUS) {
                 List<Location> locationsInSight = lookAround(map, actor, radius);
 
                 for (Location destination : locationsInSight) {

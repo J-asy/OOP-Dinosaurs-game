@@ -3,6 +3,7 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
+import game.attack.AttackBehaviour;
 import game.attack.Corpse;
 import game.breed.BreedingBehaviour;
 import game.Probability;
@@ -344,6 +345,7 @@ public abstract class DinoActor extends Actor {
         Actions validActions = new Actions();
         ArrayList<Behaviour> adjacentActorBehaviour = new ArrayList<>();
         adjacentActorBehaviour.add(new BreedingBehaviour(this));
+        adjacentActorBehaviour.add(new AttackBehaviour(this));
 
         for (Behaviour b : adjacentActorBehaviour){
             Action resultingAction = b.getAction(otherActor, map);
@@ -352,8 +354,9 @@ public abstract class DinoActor extends Actor {
             }
         }
 
-        if (otherActor instanceof Player)
+        if (otherActor instanceof Player) {
             validActions.add(new PlayerFeedAction(this));
+        }
 
         return validActions;
     }

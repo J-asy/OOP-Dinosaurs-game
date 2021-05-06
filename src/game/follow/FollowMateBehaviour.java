@@ -8,9 +8,11 @@ import game.dinosaurs.DinoActor;
 public class FollowMateBehaviour extends FollowBehaviour {
 
     private static final String DESCRIPTION = "find mate";
+    private static final int MIN_RADIUS = 2;
+    private static final int MAX_RADIUS = 4;
 
     public FollowMateBehaviour() {
-        super(DESCRIPTION);
+        super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
     @Override

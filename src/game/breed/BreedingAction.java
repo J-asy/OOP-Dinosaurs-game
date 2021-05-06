@@ -41,7 +41,6 @@ public class BreedingAction extends Action {
         if (actor instanceof DinoActor) {
             breedingDescription = menuDescription(actor);
             DinoActor actorAsDino = (DinoActor) actor;
-            target.setActionInMotion(new BreedingAction(actorAsDino));
 
             if (actorAsDino.getSex() == DinoCapabilities.FEMALE && Probability.generateProbability(0.5F)) {
                 actorAsDino.setPregnant(true);
