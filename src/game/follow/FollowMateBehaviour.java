@@ -15,12 +15,13 @@ public class FollowMateBehaviour extends FollowBehaviour {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
-    public boolean followPossible(DinoActor actor) {
+    @Override
+    public boolean motivatedToFollow(DinoActor actor) {
         return actor.canBreed();
     }
 
     @Override
-     Location follow(GameMap map, Location destination, DinoActor actorAsDino){
+     Location findTarget(GameMap map, Location destination, DinoActor actorAsDino){
         Location returnDestination = null;
 
         // if there is an actor two squares away

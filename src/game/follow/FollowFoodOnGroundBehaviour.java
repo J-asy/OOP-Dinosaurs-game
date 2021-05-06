@@ -16,24 +16,13 @@ public class FollowFoodOnGroundBehaviour extends FollowBehaviour {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
-    public boolean followPossible(DinoActor actor) {
+    @Override
+    public boolean motivatedToFollow(DinoActor actor) {
         return actor.isHungry();
     }
 
-//    @Override
-//    public Action getAction(Actor actor, GameMap map) {
-//        Action actionToReturn = null;
-//        if (actor instanceof DinoActor){
-//            if (((DinoActor) actor).isHungry()){
-//                actionToReturn = super.getAction(actor, map);
-//                System.out.println(actionToReturn);
-//            }
-//        }
-//        return actionToReturn;
-//    }
-
     @Override
-     Location follow(GameMap map, Location destination, DinoActor actorAsDino){
+     Location findTarget(GameMap map, Location destination, DinoActor actorAsDino){
         Location returnDestination = null;
         List<Item> groundItems = destination.getItems();
 

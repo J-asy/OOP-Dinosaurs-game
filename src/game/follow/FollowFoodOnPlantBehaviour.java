@@ -14,12 +14,13 @@ public class FollowFoodOnPlantBehaviour extends FollowBehaviour {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
-    public boolean followPossible(DinoActor actor) {
+    @Override
+    public boolean motivatedToFollow(DinoActor actor) {
         return actor.isHungry();
     }
 
     @Override
-    Location follow(GameMap map, Location destination, DinoActor actorAsDino){
+    Location findTarget(GameMap map, Location destination, DinoActor actorAsDino){
         Location returnDestination = null;
 
         Ground ground = destination.getGround();

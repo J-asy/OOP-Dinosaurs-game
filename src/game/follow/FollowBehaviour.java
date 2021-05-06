@@ -2,10 +2,7 @@ package game.follow;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
-import game.PortableItem;
 import game.dinosaurs.DinoActor;
-import game.dinosaurs.DinoCapabilities;
-import game.environment.CapableGround;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +35,7 @@ public abstract class FollowBehaviour implements Behaviour {
         MAX_RADIUS = max_radius;
     }
 
-    abstract boolean followPossible(DinoActor actor);
+    abstract boolean motivatedToFollow(DinoActor actor);
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
@@ -46,32 +43,32 @@ public abstract class FollowBehaviour implements Behaviour {
         int radius = MIN_RADIUS;
         boolean found = false;
         if (actor instanceof DinoActor) {
-            Location actorLocation = map.locationOf(actor);
             DinoActor actorAsDino = (DinoActor) actor;
+            if (motivatedToFollow(actorAsDino)) {
+                Location actorLocation = map.locationOf(actor);
+                Location actualDestination;
+                while (!found && radius <= MAX_RADIUS) {
+                    List<Location> locationsInSight = lookAround(map, actor, radius);
 
-            Location actualDestination;
-            while (!found && radius <= MAX_RADIUS) {
-                List<Location> locationsInSight = lookAround(map, actor, radius);
+                    for (Location destination : locationsInSight) {
+                        actualDestination = findTarget(map, destination, actorAsDino);
 
-                for (Location destination : locationsInSight) {
-                        actualDestination = follow(map, destination, actorAsDino);
+                        if (actualDestination != null) {
+                            actionToReturn = moveCloser(actorLocation, actualDestination, actor);
+                            found = true;
+                            break;
+                        }
 
-                    if (actualDestination != null) {
-                        actionToReturn = moveCloser(actorLocation, actualDestination, actor);
-                        found = true;
-                        break;
                     }
-
+                    radius += 1;
                 }
-                radius += 1;
             }
-
         }
             return actionToReturn;
     }
 
 
-    abstract Location follow(GameMap map, Location destination, DinoActor actorAsDino);
+    abstract Location findTarget(GameMap map, Location destination, DinoActor actorAsDino);
 
     /**
      *  Returns the MoveActorAction that leads actor closer to target destination.
