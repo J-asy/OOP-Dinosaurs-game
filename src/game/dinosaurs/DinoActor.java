@@ -326,7 +326,6 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    // unconscious
     @Override
     public boolean isConscious(){
         return hasCapability(DinoCapabilities.CONSCIOUS);
@@ -410,6 +409,7 @@ public abstract class DinoActor extends Actor {
         aging();
         decrementFoodLevel();
         adjustConsciousness();
+        System.out.println("pregnancy period: " + pregnancyPeriod);
 
         if (!checkUnconsciousPeriod(map)) {
             roarIfHungry(map);
@@ -421,6 +421,7 @@ public abstract class DinoActor extends Actor {
                 Action resultingAction = b.getAction(this, map);
                 if (resultingAction != null && actionToExecute instanceof DoNothingAction) {
                     actionToExecute = resultingAction;
+//                    System.out.println("b: " + b);
                 }
             }
 
@@ -428,6 +429,8 @@ public abstract class DinoActor extends Actor {
                 for (Action a: actions) {
                     if (a instanceof BreedingAction || a instanceof AttackAction) {
                         actionToExecute = a;
+                        break;
+//                        System.out.println("a: " + a);
                     }
                 }
             }

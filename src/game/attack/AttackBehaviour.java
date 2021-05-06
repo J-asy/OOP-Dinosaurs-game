@@ -21,25 +21,23 @@ public class AttackBehaviour implements Behaviour {
                 if (actor instanceof Player && target.canBeAttacked()){
                     return new AttackAction(target);
                 }
-                else if (actor instanceof DinoActor){
-                    DinoActor actorAsDino = (DinoActor) actor;
-                    if (actorAsDino.canAttack() && target.canBeAttacked()){
-                        if ( !((Allosaur) actor).hasAttackedVictim(target)) {
-                            ((Allosaur) actor).addAttackedStego(target);
+                else if (actor instanceof Allosaur){
+                    Allosaur actorAsAllosaur = (Allosaur) actor;
+                    if (actorAsAllosaur.canAttack() && target.canBeAttacked()){
+                        if ( !(actorAsAllosaur.hasAttackedVictim(target))) {
                             return new AttackAction(target);
                         }
                         else
                         {
-                            if ((((Allosaur) actor).getAttackedPeriod(target)) > 0
-                                    && (((Allosaur) actor).getAttackedPeriod(target) <= 20))
-                            {
-                                ((Allosaur) actor).decrementAttackedPeriod(target);
-                                System.out.println("Allosaur already attacked Stegosaur. Wait for " +
-                                        ((Allosaur) actor).getAttackedPeriod(target)+" turns!");
+                            if (actorAsAllosaur.getAttackedPeriod(target) > 0) {
+                                actorAsAllosaur.decrementAttackedPeriod(target);
+                                String message = String.format("%s already attacked %s. Wait for %d turns!",
+                                        actorAsAllosaur, target, actorAsAllosaur.getAttackedPeriod(target));
+                                System.out.println(message);
                             }
-                            else if (((Allosaur) actor).getAttackedPeriod(target) == 0)
+                            else if (actorAsAllosaur.getAttackedPeriod(target) == 0)
                             {
-                                ((Allosaur) actor).removeVictim(target);
+                                actorAsAllosaur.removeVictim(target);
                                 return new AttackAction(target);
                             }
                         }
@@ -49,8 +47,6 @@ public class AttackBehaviour implements Behaviour {
         }
         return null;
     }
-
-
 
 }
 
