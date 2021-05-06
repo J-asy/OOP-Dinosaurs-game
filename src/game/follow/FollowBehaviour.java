@@ -54,99 +54,8 @@ public abstract class FollowBehaviour implements Behaviour {
             return actionToReturn;
     }
 
+
     abstract Location follow(GameMap map, Location destination, DinoActor actorAsDino);
-
-//    private Location followGround(Location destination) {
-//        Location returnDestination = null;
-//        Ground ground = destination.getGround();
-//
-//        if (ground instanceof CapableGround){
-//            CapableGround currentGround = (CapableGround) ground;
-//            if ((currentGround.isTree() || currentGround.isBush()) && tryToEatFruit()) {
-//                returnDestination = destination;
-//            }
-//        }
-//        return returnDestination;
-//    }
-
-//    private Location followItem(GameMap map, Location destination, DinoActor actorAsDino){
-//        Location returnDestination = null;
-//        List<Item> groundItems = map.locationOf(actorAsDino).getItems();
-//
-//        for (Item item : groundItems){
-//            if (item instanceof PortableItem) {
-//                PortableItem currentItem = (PortableItem) item;
-//                if (tryToEatFruit() && currentItem.edibleByVegetarians() ||
-//                        tryToEatMeat() && currentItem.edibleByCarnivores()) {
-//                    returnDestination = destination;
-//                    break;
-//                }
-//            }
-//        }
-//        return returnDestination;
-//    }
-
-//    private boolean tryToAttack() {
-//        return followPurpose == DinoCapabilities.CAN_ATTACK;
-//    }
-//
-//    private boolean tryToBreed() {
-//        return followPurpose == DinoCapabilities.CAN_BREED;
-//    }
-//
-//    private boolean tryToEatMeat() {
-//        return followPurpose == DinoCapabilities.CARNIVORE;
-//    }
-//
-//    private boolean tryToEatFruit() {
-//        return followPurpose == DinoCapabilities.HERBIVORE;
-//    }
-
-//    private boolean shouldFollowActor(){
-//        return tryToBreed() || tryToAttack();
-//    }
-//
-//    private boolean shouldFollowItem(){
-//        return tryToEatFruit() || tryToEatMeat();
-//    }
-//
-//    private static boolean breedingPossible(DinoActor actorAsDino, DinoActor targetAsDino){
-//        boolean differentSex = targetAsDino.getSex() != actorAsDino.getSex();
-//        boolean sameSpecies = actorAsDino.getDinoType() == targetAsDino.getDinoType();
-//        boolean bothCanBreed = targetAsDino.canBreed() && actorAsDino.canBreed();
-//        return differentSex && sameSpecies && bothCanBreed;
-//    }
-
-//    private static boolean attackingPossible(DinoActor actorAsDino, DinoActor nearbyActor){
-//        boolean canAttack = actorAsDino.canAttack();
-//        boolean canBeAttacked = nearbyActor.canBeAttacked();
-//        return canAttack && canBeAttacked;
-//    }
-
-//    private static boolean feedingPossible(DinoActor actorAsDino, Item foodItem){
-//        boolean canFeed = actorAsDino.isCarnivorous() &&
-//
-//    }
-
-    //    private Location followActor(GameMap map, Location destination, DinoActor actorAsDino){
-//        Location returnDestination = null;
-//
-//        // if there is an actor two squares away
-//        if (map.isAnActorAt(destination)) {
-//            Actor nearbyActor = destination.getActor();
-//
-//            if (nearbyActor instanceof DinoActor) {
-//                DinoActor targetAsDino = (DinoActor) nearbyActor;
-//
-//                if (tryToBreed() && breedingPossible(actorAsDino, targetAsDino) ||
-//                        tryToAttack() && attackingPossible(actorAsDino, targetAsDino)) {
-//                    returnDestination = destination;
-//                }
-//
-//            }
-//        }
-//        return returnDestination;
-//    }
 
     /**
      *  Returns the MoveActorAction that leads actor closer to target destination.
@@ -172,15 +81,14 @@ public abstract class FollowBehaviour implements Behaviour {
         return null;
     }
 
-
-    private static List<Location> getSpottedLocations(GameMap map, Location actorLocation, NumberRange range,
+    private static List<Location> getSpottedLocations(GameMap map, Location actorLocation, NumberRange numRange,
                                                       int offset, boolean forHorizontal) {
         List<Location> allLocations = new ArrayList<>();
 
         Location newLocation;
         int xOffset, yOffset, xValue, yValue;
 
-        for (int i : range) {
+        for (int i : numRange) {
             if (forHorizontal){
                 xOffset = i;
                 yOffset = offset;
@@ -202,22 +110,28 @@ public abstract class FollowBehaviour implements Behaviour {
         return allLocations;
     }
 
-
+    /**
+     * Get all locations from radius number of squares away from the Actor's location.
+     * @param map GameMap that the Actor is currently on
+     * @param actor Actor that is looking around for something to follow
+     * @param radius The distance in number of squares away from the actor that needs to be returned.
+     * @return all locations from radius number of squares away from the Actor's location
+     */
     public static List<Location> lookAround(GameMap map, Actor actor, int radius) {
         Location actorLocation = map.locationOf(actor);
-        List<Location> locationsInSight = new ArrayList<>();
+        List<Location> spottedLocations = new ArrayList<>();
         NumberRange horizontalRange = new NumberRange(-1*radius, 2*radius + 1);
         NumberRange verticalRange = new NumberRange(-1*radius + 1, 2*radius - 1);
 
         // get the horizontal locations
-        locationsInSight.addAll(getSpottedLocations(map, actorLocation, horizontalRange, horizontalRange.min(), true));
-        locationsInSight.addAll(getSpottedLocations(map, actorLocation, horizontalRange, horizontalRange.max(), true));
+        spottedLocations.addAll(getSpottedLocations(map, actorLocation, horizontalRange, horizontalRange.min(), true));
+        spottedLocations.addAll(getSpottedLocations(map, actorLocation, horizontalRange, horizontalRange.max(), true));
 
         // get the vertical locations
-        locationsInSight.addAll(getSpottedLocations(map, actorLocation, verticalRange, horizontalRange.min(), false));
-        locationsInSight.addAll(getSpottedLocations(map, actorLocation, verticalRange, horizontalRange.max(), false));
+        spottedLocations.addAll(getSpottedLocations(map, actorLocation, verticalRange, horizontalRange.min(), false));
+        spottedLocations.addAll(getSpottedLocations(map, actorLocation, verticalRange, horizontalRange.max(), false));
 
-        return locationsInSight;
+        return spottedLocations;
     }
 
 

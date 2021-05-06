@@ -6,24 +6,13 @@ import game.dinosaurs.DinoActor;
 
 import java.util.List;
 
-public class FollowFoodBehaviour extends FollowBehaviour {
+public class FollowFoodOnGroundBehaviour extends FollowBehaviour {
 
-    private static final String DESCRIPTION = "find food";
+    private static final String DESCRIPTION = "find food on ground";
 
-    public FollowFoodBehaviour() {
+    public FollowFoodOnGroundBehaviour() {
         super(DESCRIPTION);
     }
-
-//    @Override
-//    public Action getAction(Actor actor, GameMap map) {
-//        if (actor instanceof DinoActor){
-//            DinoCapabilities followPurpose = super.getFollowPurpose();
-//            if (followPurpose == DinoCapabilities.HERBIVORE || followPurpose == DinoCapabilities.CARNIVORE){
-//                super.getAction(actor, map);
-//            }
-//        }
-//        return null;
-//    }
 
     @Override
      Location follow(GameMap map, Location destination, DinoActor actorAsDino){

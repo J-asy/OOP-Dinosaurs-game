@@ -4,7 +4,6 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 import game.dinosaurs.DinoActor;
-import game.dinosaurs.DinoCapabilities;
 
 public class FollowVictimBehaviour extends FollowBehaviour {
 
@@ -24,19 +23,13 @@ public class FollowVictimBehaviour extends FollowBehaviour {
             if (nearbyActor instanceof DinoActor) {
                 DinoActor targetAsDino = (DinoActor) nearbyActor;
 
-                if (attackingPossible(actorAsDino, targetAsDino)) {
+                if (actorAsDino.canAttack() && targetAsDino.canBeAttacked()) {
                     returnDestination = destination;
                 }
 
             }
         }
         return returnDestination;
-    }
-
-    private static boolean attackingPossible(DinoActor actorAsDino, DinoActor nearbyActor){
-        boolean canAttack = actorAsDino.canAttack();
-        boolean canBeAttacked = nearbyActor.canBeAttacked();
-        return canAttack && canBeAttacked;
     }
 
 }
