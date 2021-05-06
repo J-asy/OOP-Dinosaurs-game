@@ -33,10 +33,8 @@ public class FeedingBehaviour implements Behaviour {
                 if (item instanceof PortableItem) {
                     PortableItem portableItem = (PortableItem) item;
                     if (portableItem.edibleByHerbivores() && actorAsDino.isHerbivorous()) {
-                        System.out.println("ret1");
                         return new FeedingAction(true, portableItem);
                     } else if (portableItem.edibleByCarnivores() && actorAsDino.isCarnivorous()) {
-                        System.out.println("ret2");
                         return new FeedingAction(true, portableItem);
                     }
                 }

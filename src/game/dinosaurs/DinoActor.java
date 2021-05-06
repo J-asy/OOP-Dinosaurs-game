@@ -351,14 +351,17 @@ public abstract class DinoActor extends Actor {
     }
 
     private void decrementUnconsciousPeriod(){
-        unconsciousPeriod--;
+        if (unconsciousPeriod > 0) {
+            unconsciousPeriod--;
+        }
     }
 
-    public boolean checkUnconsciousPeriod(GameMap map ) {
+    public boolean checkUnconsciousPeriod(GameMap map) {
         Location dinoLocation = map.locationOf(this);
         if (!this.isConscious()){
             if (this.getUnconsciousPeriod() > 0){
                 this.decrementUnconsciousPeriod();
+                System.out.println("here");
             }
             else {
                 System.out.println("Dinosaur at " + dinoLocation.x() + " " + dinoLocation.y() + " is dead!")  ;
@@ -395,17 +398,22 @@ public abstract class DinoActor extends Actor {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action actionToExecute = new DoNothingAction();
+        aging();
         System.out.println("");
 
         if (isConscious() && hitPoints == 0) {
                 setUnconscious(true);
         }
 
+        System.out.println("unconscious period: " + unconsciousPeriod);
         if (!checkUnconsciousPeriod(map)) {
-            aging();
+            System.out.println("age: " + age);
             decrementFoodLevel();
+            System.out.println("food level: " + hitPoints);
             roarIfHungry(map);
             adjustBreedingCapability();
+            System.out.println("can breed: " + hasCapability(DinoCapabilities.CAN_BREED));
+            System.out.println("pregnancy period: " + pregnancyPeriod);
 
             // calling getAction for every behaviour can help us to do some necessary processing
             // as well even if it returns null in the end
@@ -451,6 +459,7 @@ public abstract class DinoActor extends Actor {
 //                actionToExecute = actionInMotion;
 //                actionInMotion = null;
 //            }
+
 
 
 
