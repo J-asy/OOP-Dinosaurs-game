@@ -89,6 +89,9 @@ public abstract class DinoActor extends Actor {
     private void initialization(boolean isMatured){
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
+        if (!isMatured) {
+            setBabyHitPoints(dinoType.getBabyInitialHitPoints());
+        }
         initializeDinoBehaviour();
         initializeCapabilities();
     }
@@ -190,6 +193,12 @@ public abstract class DinoActor extends Actor {
     private void setMaxHitPoints(int newMaxHitPoints) {
         if (newMaxHitPoints >= hitPoints) {
             maxHitPoints = newMaxHitPoints;
+        }
+    }
+
+    private void setBabyHitPoints(int newHitPoints) {
+        if (newHitPoints > 0 && newHitPoints <= maxHitPoints) {
+            hitPoints = newHitPoints;
         }
     }
 

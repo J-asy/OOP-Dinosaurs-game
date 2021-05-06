@@ -8,17 +8,18 @@ package game.dinosaurs;
 
 
 public enum DinoEncyclopedia {
-    STEGOSAUR('S', "Stegosaur", 50, 100, 48, 5, 40, 10, 5),
-    BRACHIOSAUR('B', "Brachiosaur", 50, 160, 10, 8, 40, 11, 4),
-    ALLOSAUR('A', "Allosaur", 50, 100, 10, 10, 40, 12, 3);
+    STEGOSAUR('S', "Stegosaur", 39, 10,100,  48, 5, 40, 10, 5),
+    BRACHIOSAUR('B', "Brachiosaur", 39, 10,160, 10, 8, 40, 11, 4),
+    ALLOSAUR('A', "Allosaur", 39, 20,100, 10, 10, 40, 12, 3);
 
-    //    STEGOSAUR('S', "Stegosaur", 50, 100, 90, 30, 50, 10, 20);
-    //    BRACHIOSAUR('B', "Brachiosaur", 100, 160, 140, 50, 70, 30, 15),
-//    ALLOSAUR('A', "Allosaur", 20, 100, 90, 50, 50, 20, 20);
+    //    STEGOSAUR('S', "Stegosaur", 50, 10, 100, 90, 30, 50, 10, 20);
+    //    BRACHIOSAUR('B', "Brachiosaur", 100, 10, 160, 140, 50, 70, 30, 15),
+//    ALLOSAUR('A', "Allosaur", 20, 20, 100, 90, 50, 50, 20, 20);
 
     final char DISPLAY_CHAR;
     final String NAME;
     final int INITIAL_HIT_POINTS;
+    final int BABY_INITIAL_HIT_POINTS;
     final int MAX_HIT_POINTS;
     final int HUNGRY_WHEN;
     final int MATURE_WHEN;
@@ -26,11 +27,12 @@ public enum DinoEncyclopedia {
     final int PREGNANCY_PERIOD;
     final int UNCONSCIOUS_PERIOD;
 
-    DinoEncyclopedia(char displayChar, String name, int initialHitPoints, int maxHitPoints, int hungryWhen,
-                     int matureWhen, int breedingMinFoodLevel, int pregnancyPeriod, int unconsciousPeriod) {
+    DinoEncyclopedia(char displayChar, String name, int initialHitPoints, int babyInitialHitPoints, int maxHitPoints,
+                     int hungryWhen, int matureWhen, int breedingMinFoodLevel, int pregnancyPeriod, int unconsciousPeriod) {
         DISPLAY_CHAR = displayChar;
         NAME = name;
         INITIAL_HIT_POINTS = initialHitPoints;
+        BABY_INITIAL_HIT_POINTS = babyInitialHitPoints;
         MAX_HIT_POINTS = maxHitPoints;
         HUNGRY_WHEN = hungryWhen;
         MATURE_WHEN = matureWhen;
@@ -73,6 +75,10 @@ public enum DinoEncyclopedia {
 
     public int getInitialUnconsciousPeriod(){
         return UNCONSCIOUS_PERIOD;
+    }
+
+    public int getBabyInitialHitPoints() {
+        return BABY_INITIAL_HIT_POINTS;
     }
 
 }
