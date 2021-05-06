@@ -197,6 +197,10 @@ public abstract class DinoActor extends Actor {
             maxHitPoints = newMaxHitPoints;
         }
     }
+    
+    public int getHitPoints() {
+        return hitPoints;
+    }
 
     /**
      * Decrements the dinoActor's food level, which is equivalent to its hitPoints.
