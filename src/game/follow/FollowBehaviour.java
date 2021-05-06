@@ -2,9 +2,10 @@ package game.follow;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
-import game.FoodType;
+import game.PortableItem;
 import game.dinosaurs.DinoActor;
 import game.dinosaurs.DinoCapabilities;
+import game.environment.CapableGround;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public abstract class FollowBehaviour implements Behaviour {
 
     private final DinoCapabilities followPurpose;
     private final String purposeDescription;
+    private static final int MIN_RADIUS = 2;
     private static final int MAX_RADIUS = 4;
 
     public FollowBehaviour(DinoCapabilities purpose, String description) {
@@ -31,27 +33,22 @@ public abstract class FollowBehaviour implements Behaviour {
     @Override
     public Action getAction(Actor actor, GameMap map) {
         Action actionToReturn = null;
-        int radius = 2;
+        int radius = MIN_RADIUS;
         boolean found = false;
         if (actor instanceof DinoActor) {
             Location actorLocation = map.locationOf(actor);
             DinoActor actorAsDino = (DinoActor) actor;
 
-            Location actualDestination = null;
+            Location actualDestination;
             while (!found && radius <= FollowBehaviour.MAX_RADIUS) {
-                List<Location> visibleExits = lookAround(map, actor, radius);
-                for (Location destination : visibleExits) {
+                List<Location> locationsInSight = lookAround(map, actor, radius);
 
-                    if (shouldFollowActor()) {
-                        actualDestination = followActor(map, destination, actorAsDino);
-                    } else if (shouldFollowItem()) {
-                        actualDestination = followItem(map, destination, actorAsDino);
-                    }
+                for (Location destination : locationsInSight) {
+                        actualDestination = follow(map, destination, actorAsDino);
 
                     if (actualDestination != null) {
                         actionToReturn = moveCloser(actorLocation, actualDestination, actor);
                         found = true;
-                        break;
                     }
 
                 }
@@ -62,86 +59,98 @@ public abstract class FollowBehaviour implements Behaviour {
             return actionToReturn;
     }
 
-    private Location followItem(GameMap map, Location destination, DinoActor actorAsDino){
-        Location returnDestination = null;
-        List<Item> groundItems = map.locationOf(actorAsDino).getItems();
+    abstract Location follow(GameMap map, Location destination, DinoActor actorAsDino);
 
-        for (Item currentItem : groundItems){
-//            if (tryingToEatVegetables() && currentItem){
-//                // find fruit, tree or bush
-//            }
-//            else if (tryingToEatMeat() && currentItem.hasCapability(FoodType.HERBIVORE))
-//            {
+//    private Location followItem(GameMap map, Location destination, DinoActor actorAsDino){
+//        Location returnDestination = null;
+//        List<Item> groundItems = map.locationOf(actorAsDino).getItems();
 //
+//        for (Item item : groundItems){
+//            if (item instanceof PortableItem) {
+//                PortableItem currentItem = (PortableItem) item;
+//                if (tryToEatFruit() && currentItem.edibleByVegetarians() ||
+//                        tryToEatMeat() && currentItem.edibleByCarnivores()) {
+//                    returnDestination = destination;
+//                    break;
+//                }
 //            }
+//        }
+//        return returnDestination;
+//    }
 
-        }
+//    private Location followGround(Location destination) {
+//        Location returnDestination = null;
+//        Ground ground = destination.getGround();
+//
+//        if (ground instanceof CapableGround){
+//            CapableGround currentGround = (CapableGround) ground;
+//            if ((currentGround.isTree() || currentGround.isBush()) && tryToEatFruit()) {
+//                returnDestination = destination;
+//            }
+//        }
+//        return returnDestination;
+//    }
 
-        return returnDestination;
-    }
+//    private boolean tryToAttack() {
+//        return followPurpose == DinoCapabilities.CAN_ATTACK;
+//    }
+//
+//    private boolean tryToBreed() {
+//        return followPurpose == DinoCapabilities.CAN_BREED;
+//    }
+//
+//    private boolean tryToEatMeat() {
+//        return followPurpose == DinoCapabilities.CARNIVORE;
+//    }
+//
+//    private boolean tryToEatFruit() {
+//        return followPurpose == DinoCapabilities.HERBIVORE;
+//    }
 
-    private Location followActor(GameMap map, Location destination, DinoActor actorAsDino){
-        Location returnDestination = null;
+//    private boolean shouldFollowActor(){
+//        return tryToBreed() || tryToAttack();
+//    }
+//
+//    private boolean shouldFollowItem(){
+//        return tryToEatFruit() || tryToEatMeat();
+//    }
+//
+//    private static boolean breedingPossible(DinoActor actorAsDino, DinoActor targetAsDino){
+//        boolean differentSex = targetAsDino.getSex() != actorAsDino.getSex();
+//        boolean sameSpecies = actorAsDino.getDinoType() == targetAsDino.getDinoType();
+//        boolean bothCanBreed = targetAsDino.canBreed() && actorAsDino.canBreed();
+//        return differentSex && sameSpecies && bothCanBreed;
+//    }
 
-        // if there is an actor two squares away
-        if (map.isAnActorAt(destination)) {
-            Actor nearbyActor = destination.getActor();
-
-            if (nearbyActor instanceof DinoActor) {
-                DinoActor targetAsDino = (DinoActor) nearbyActor;
-
-                if (tryingToBreed() && breedingPossible(actorAsDino, targetAsDino)) {
-                    returnDestination = destination;
-                }
-                else if (tryingToAttack() && attackingPossible(actorAsDino, targetAsDino)){
-                    returnDestination = destination;
-                }
-
-            }
-        }
-        return returnDestination;
-    }
-
-    private boolean tryingToAttack() {
-        return followPurpose == DinoCapabilities.CAN_ATTACK;
-    }
-
-    private boolean tryingToBreed() {
-        return followPurpose == DinoCapabilities.CAN_BREED;
-    }
-
-    private boolean tryingToEatMeat() {
-        return followPurpose == DinoCapabilities.CARNIVORE;
-    }
-
-    private boolean tryingToEatVegetables() {
-        return followPurpose == DinoCapabilities.HERBIVORE;
-    }
-
-    private boolean shouldFollowActor(){
-        return tryingToBreed() || tryingToAttack();
-    }
-
-    private boolean shouldFollowItem(){
-        return tryingToEatVegetables() || tryingToEatMeat();
-    }
-
-    private static boolean breedingPossible(DinoActor actorAsDino, DinoActor targetAsDino){
-        boolean differentSex = targetAsDino.getSex() != actorAsDino.getSex();
-        boolean sameSpecies = actorAsDino.getDinoType() == targetAsDino.getDinoType();
-        boolean bothCanBreed = targetAsDino.canBreed() && actorAsDino.canBreed();
-        return differentSex && sameSpecies && bothCanBreed;
-    }
-
-    private static boolean attackingPossible(DinoActor actorAsDino, DinoActor nearbyActor){
-        boolean canAttack = actorAsDino.canAttack();
-        boolean canBeAttacked = nearbyActor.canBeAttacked();
-        return canAttack && canBeAttacked;
-    }
+//    private static boolean attackingPossible(DinoActor actorAsDino, DinoActor nearbyActor){
+//        boolean canAttack = actorAsDino.canAttack();
+//        boolean canBeAttacked = nearbyActor.canBeAttacked();
+//        return canAttack && canBeAttacked;
+//    }
 
 //    private static boolean feedingPossible(DinoActor actorAsDino, Item foodItem){
 //        boolean canFeed = actorAsDino.isCarnivorous() &&
 //
+//    }
+
+    //    private Location followActor(GameMap map, Location destination, DinoActor actorAsDino){
+//        Location returnDestination = null;
+//
+//        // if there is an actor two squares away
+//        if (map.isAnActorAt(destination)) {
+//            Actor nearbyActor = destination.getActor();
+//
+//            if (nearbyActor instanceof DinoActor) {
+//                DinoActor targetAsDino = (DinoActor) nearbyActor;
+//
+//                if (tryToBreed() && breedingPossible(actorAsDino, targetAsDino) ||
+//                        tryToAttack() && attackingPossible(actorAsDino, targetAsDino)) {
+//                    returnDestination = destination;
+//                }
+//
+//            }
+//        }
+//        return returnDestination;
 //    }
 
     /**
@@ -170,14 +179,14 @@ public abstract class FollowBehaviour implements Behaviour {
 
 
     private static List<Location> getSpottedLocations(GameMap map, Location actorLocation, NumberRange range,
-                                                      int offset, boolean isHorizontal) {
+                                                      int offset, boolean forHorizontal) {
         List<Location> allLocations = new ArrayList<>();
 
         Location newLocation;
-        int xOffset, yOffset;
+        int xOffset, yOffset, xValue, yValue;
 
         for (int i : range) {
-            if (isHorizontal){
+            if (forHorizontal){
                 xOffset = i;
                 yOffset = offset;
             }
@@ -186,8 +195,8 @@ public abstract class FollowBehaviour implements Behaviour {
                 yOffset = i;
             }
 
-            int xValue = actorLocation.x() + xOffset;
-            int yValue = actorLocation.y() + yOffset;
+            xValue = actorLocation.x() + xOffset;
+            yValue = actorLocation.y() + yOffset;
 
             if (map.getXRange().contains(xValue) && map.getYRange().contains(yValue)) {
                 newLocation = map.at(xValue, yValue);
