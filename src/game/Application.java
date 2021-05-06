@@ -63,7 +63,7 @@ public class Application {
 
 		DinoActor s1 = new Allosaur(DinoCapabilities.FEMALE, true);
 		gameMap.at(36, 11).addActor(s1);
-		DinoActor s2 = new Allosaur(DinoCapabilities.MALE, true);
+		DinoActor s2 = new Stegosaur(DinoCapabilities.MALE, true);
 //		System.out.println("hp: " + s2.getHitPoints());
 		gameMap.at(35, 11).addActor(s2);
 

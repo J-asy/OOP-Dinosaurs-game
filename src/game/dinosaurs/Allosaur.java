@@ -1,7 +1,8 @@
 package game.dinosaurs;
 
-import edu.monash.fit2099.engine.IntrinsicWeapon;
+import edu.monash.fit2099.engine.*;
 
+import java.security.Key;
 import java.util.HashMap;
 
 public class Allosaur extends DinoActor {
@@ -59,5 +60,21 @@ public class Allosaur extends DinoActor {
             damage = BABY_ATTACK_DAMAGE;
         }
         return new IntrinsicWeapon(damage, "bites");
+    }
+
+    @Override
+    public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        for (DinoActor victim : victims.keySet()) {
+            if (getAttackedPeriod(victim) > 0) {
+                decrementAttackedPeriod(victim);
+                String message = String.format("%s already attacked %s. Wait for %d turns!",
+                        this, victim, getAttackedPeriod(victim));
+                System.out.println(message);
+            }
+            else {
+                removeVictim(victim);
+            }
+        }
+        return super.playTurn(actions, lastAction, map, display);
     }
 }
