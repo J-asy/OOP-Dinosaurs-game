@@ -90,8 +90,6 @@ public abstract class DinoActor extends Actor {
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
         if (!isMatured) {
-            System.out.println("here!");
-            System.out.println(dinoType.getBabyInitialHitPoints());
             setBabyHitPoints(dinoType.getBabyInitialHitPoints());
         }
         initializeDinoBehaviour();
@@ -113,7 +111,7 @@ public abstract class DinoActor extends Actor {
 
         interactiveBehaviours = new ArrayList<>();
 //        interactiveBehaviours.add(new BreedingBehaviour(this));
-//        interactiveBehaviours.add(new AttackBehaviour(this));
+        interactiveBehaviours.add(new AttackBehaviour(this));
     }
 
     void initializeCapabilities(){
@@ -278,12 +276,6 @@ public abstract class DinoActor extends Actor {
             }
         }
     }
-
-//    public void setActionInMotion(Action newAction){
-//        if (actionInMotion == null){
-//            actionInMotion = newAction;
-//        }
-//    }
 
     /**
      * Returns true if the dinoActor is pregnant, false otherwise.

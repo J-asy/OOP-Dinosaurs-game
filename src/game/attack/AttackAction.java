@@ -52,32 +52,19 @@ public class AttackAction extends Action {
 
 		int damage = weapon.damage();
 
-		if (actor instanceof DinoActor){
-			DinoActor actorAsDino = (DinoActor) actor;
-			if (!((DinoActor)actor).isMatured()){
-				damage = 10;
-				actor.heal(10);
-			}
-			else{
-				damage = 20;
-				actor.heal(20);
-			}
-
-
-			// Adds stegosaur to Allosaur's attackedStego HashMap only after attacking it
-			if (actor instanceof Allosaur) {
-				Allosaur actorAsAllosaur = (Allosaur) actor;
-				if (!actorAsAllosaur.hasAttackedVictim(target)) {
-					actorAsAllosaur.addAttackedStego(target);
-				}
+		// Adds stegosaur to Allosaur's attackedStego HashMap only after attacking it
+		if (actor instanceof Allosaur) {
+			Allosaur actorAsAllosaur = (Allosaur) actor;
+			if (!actorAsAllosaur.hasAttackedVictim(target)) {
+				actorAsAllosaur.addAttackedStego(target);
 			}
 		}
 
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 
-
+		actor.heal(damage);
 		target.hurt(damage);
-		if ((target).getHitPoints() <= 0){
+		if (target.getHitPoints() <= 0){
 			Item corpse = new Corpse(target.getDinoType());
 			map.locationOf(target).addItem(corpse);
 			map.removeActor(target);
