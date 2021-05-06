@@ -44,6 +44,18 @@ public class AttackAction extends Action {
 		}
 
 		int damage = weapon.damage();
+
+		if (actor instanceof DinoActor){
+			if (!((DinoActor)actor).isMatured()){
+				damage = 10;
+				actor.heal(10);
+			}
+			else{
+				damage = 20;
+				actor.heal(20);
+			}
+		}
+
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 
 		target.hurt(damage);

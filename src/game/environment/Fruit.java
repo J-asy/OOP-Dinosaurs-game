@@ -15,8 +15,8 @@ public class Fruit extends PortableItem {
      *
      * @param displayChar the character to use to represent Fruit if it is on the ground
      */
-    public Fruit(Character displayChar){
-        super("Fruit",displayChar);
+    public Fruit(){
+        super("Fruit",'F');
         groundTime = 0;
         addCapability(FoodType.HERBIVORE);
     }
@@ -38,4 +38,6 @@ public class Fruit extends PortableItem {
         groundTime++;
 
     }
+
+//    public void setDisplayChar(Character displayChar){this.displayChar = displayChar;}
 }

@@ -36,22 +36,20 @@ public class VendingMachine extends CapableGround {
         int ecoPoints = EcoPoints.getEcoPoints();
 
         if (choice == 1 && ecoPoints >= 30){
-            Fruit fruit = new Fruit('F');
+            Fruit fruit = new Fruit();
             actor.addItemToInventory(fruit);
             EcoPoints.decrementEcoPoints(30);
             System.out.println("Fruit Get!");
         }
         else if (choice == 2 && ecoPoints >= 100){
-            MealKitsItem vegeMealKit = new MealKitsItem("VegetarianMealKit",
-                    '=');
+            MealKitsItem vegeMealKit = new MealKitsItem("VegetarianMealKit");
             vegeMealKit.addCapability(FoodType.HERBIVORE);
             actor.addItemToInventory(vegeMealKit);
             EcoPoints.decrementEcoPoints(100);
             System.out.println("Vege meal kit Get!");
         }
         else if (choice == 3 && ecoPoints >= 500){
-            MealKitsItem meatMealKit = new MealKitsItem("CarnivoreMealKit",
-                    '=');
+            MealKitsItem meatMealKit = new MealKitsItem("CarnivoreMealKit");
             meatMealKit.addCapability(FoodType.CARNIVORE);
             actor.addItemToInventory(meatMealKit);
             EcoPoints.decrementEcoPoints(500);

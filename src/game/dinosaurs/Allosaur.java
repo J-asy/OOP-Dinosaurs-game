@@ -32,6 +32,9 @@ public class Allosaur extends DinoActor {
         addCapability(DinoCapabilities.CAN_ATTACK);
     }
 
+    public void addAttackedStego(Stegosaur stegosaur) {
+        attackedStegos.put(stegosaur, 20);
+    }
 
     public boolean hasAttackedStegosaur(Stegosaur stegosaur) {
         return attackedStegos.containsKey(stegosaur);

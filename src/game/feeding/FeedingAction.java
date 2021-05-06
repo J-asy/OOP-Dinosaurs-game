@@ -11,17 +11,39 @@ import game.dinosaurs.Egg;
 import game.Probability;
 import game.dinosaurs.DinoEncyclopedia;
 import game.environment.*;
-//import game.environment.Bush;
-//import game.environment.Fruit;
-//import game.environment.Tree;
 
+/**
+ * Simulates feeding action of Actors
+ */
 public class FeedingAction extends Action {
 
+    /**
+     * Identifies whether food is on the ground or is a tree/bush.
+     */
     Boolean foodOnGround;
+
+    /**
+     * An item found by the dinosaur
+     */
     Item item;
+
+    /**
+     * x-coordinate of item location.
+     */
     int x;
+
+    /**
+     * y-coordinate of item location.
+     */
     int y;
 
+    /**
+     * Constructor
+     * @param foodOnGround true if item is on the ground, null otherwise
+     * @param item item that the dinasaur has found
+     * @param x x-coordinate of item location
+     * @param y y-coordinate of item location
+     */
     public FeedingAction (Boolean foodOnGround, Item item, int x, int y) {
         this.foodOnGround = foodOnGround;
         this.item = item;
@@ -29,6 +51,12 @@ public class FeedingAction extends Action {
         this.y = y;
     }
 
+    /**
+     *
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return String displaying whether the dinosaur has eaten and what it has eaten
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         String foodName = "";
@@ -49,16 +77,20 @@ public class FeedingAction extends Action {
                         foodName += item.toString();
                     }
                     else if (item instanceof Corpse) {
-                        if ( ((Corpse) item).getParentChar() == DinoEncyclopedia.ALLOSAUR.getDisplayChar() ||
-                                ((Corpse) item).getParentChar() == DinoEncyclopedia.STEGOSAUR.getDisplayChar()){
+                        if ( ((Corpse) item).getParentChar() == DinoEncyclopedia.ALLOSAUR.getDisplayChar()){
                             actor.heal(50);
                             map.at(x,y).removeItem(item);
-                            foodName += item.toString();
+                            foodName += item.toString() + " Allosaur";
+                        }
+                        else if (((Corpse) item).getParentChar() == DinoEncyclopedia.STEGOSAUR.getDisplayChar()){
+                            actor.heal(50);
+                            map.at(x,y).removeItem(item);
+                            foodName += item.toString() + " Stegosaur";
                         }
                         else if (((Corpse) item).getParentChar() == DinoEncyclopedia.BRACHIOSAUR.getDisplayChar()) {
                             actor.heal(100);
                             map.at(x,y).removeItem(item);
-                            foodName += item.toString();
+                            foodName += item.toString() + " Brachiosaur";
                         }
                     }
                 }
@@ -74,11 +106,10 @@ public class FeedingAction extends Action {
                             if (Probability.generateProbability(0.5f)) {
                                 ((Tree) map.at(x, y).getGround()).decrementTreeItem();
                                 actor.heal(10);
+                                foodName += "Fruits";
                             }
                         }
-                        foodName += "Fruits";
                     }
-
                 }
                 else if (map.at(x,y).getGround().hasCapability(TerrainType.BUSH)) {
                     if (((Bush) map.at(x,y).getGround()).decrementBushItem() != null) {
@@ -89,7 +120,8 @@ public class FeedingAction extends Action {
             }
 
         }
-        if (menuDescription(actor).length() == 0) {
+
+        if (foodName.length() == 0) {
             return menuDescription(actor) + " does not eat";
         }
         else{
@@ -97,6 +129,11 @@ public class FeedingAction extends Action {
         }
     }
 
+    /**
+     * Start of the string to display
+     * @param actor The actor performing the action.
+     * @return actor name
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor.toString();

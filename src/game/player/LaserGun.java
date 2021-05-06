@@ -10,6 +10,6 @@ public class LaserGun extends WeaponItem {
      * Constructor.
      */
     public LaserGun() {
-        super("laserGun", 'z', 50, "zaps");
+        super("LaserGun", 'z', 50, "zaps");
     }
 }

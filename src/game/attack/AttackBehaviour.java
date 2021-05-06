@@ -23,30 +23,29 @@ public class AttackBehaviour implements Behaviour {
         for (Exit exit : here.getExits()) {
             Location destination = exit.getDestination();
             if (map.getActorAt(destination) == target){
-                if (target.canBeAttacked() && actor instanceof Player) {
-                        return new AttackAction(target);
-                }
-                else if (target.canAttack() && actor instanceof Player) {
+                if (actor instanceof Player && (target.canBeAttacked() || target.canAttack())){
                     return new AttackAction(target);
                 }
-                else if (((DinoActor) actor).canAttack() && target.canBeAttacked()) {
-
-                    if (!((Allosaur) actor).hasAttackedStegosaur((Stegosaur) target)) {
-
-                        if (!((DinoActor) actor).isMatured()) {
-                            return new AttackAction(target);
-                        } else if (((DinoActor) actor).isMatured() || !target.isConscious()) {
+                else if (actor instanceof DinoActor){
+                    if ( (((DinoActor) actor).canAttack()) && (target.canBeAttacked()) ){
+                        if ( !((Allosaur) actor).hasAttackedStegosaur((Stegosaur) target)) {
+                            ((Allosaur) actor).addAttackedStego((Stegosaur) target);
                             return new AttackAction(target);
                         }
-                    } else {
-                        if (((Allosaur) actor).getAttackedPeriod((Stegosaur) target) > 0 &&
-                                ((Allosaur) actor).getAttackedPeriod((Stegosaur) target) <= 20) {
-                            ((Allosaur) actor).decrementAttackedPeriod((Stegosaur) target);
-                        } else if (((Allosaur) actor).getAttackedPeriod((Stegosaur) target) == 0) {
-                            ((Allosaur) actor).removeAttackedStego((Stegosaur) target);
-                            return new AttackAction(target);
+                        else
+                        {
+                            if ((((Allosaur) actor).getAttackedPeriod((Stegosaur) target)) > 0
+                                    && (((Allosaur) actor).getAttackedPeriod((Stegosaur) target) <= 20))
+                            {
+                                ((Allosaur) actor).decrementAttackedPeriod((Stegosaur) target);
+                                System.out.println("Allosaur already attacked Stegosaur. Wait for "+ ((Allosaur) actor).getAttackedPeriod((Stegosaur) target)+" turns!");
+                            }
+                            else if (((Allosaur) actor).getAttackedPeriod((Stegosaur) target) == 0)
+                            {
+                                ((Allosaur) actor).removeAttackedStego((Stegosaur) target);
+                                return new AttackAction(target);
+                            }
                         }
-
                     }
                 }
             }

@@ -1,12 +1,8 @@
 package game.player;
 
-import edu.monash.fit2099.engine.Action;
-import edu.monash.fit2099.engine.Actions;
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Display;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.Menu;
+import edu.monash.fit2099.engine.*;
 import game.EcoPoints;
+import game.environment.CapableGround;
 import game.environment.TerrainType;
 
 /**
@@ -33,10 +29,15 @@ public class Player extends Actor {
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
 
-		if (map.locationOf(this).getGround().hasCapability(TerrainType.TREE)||
-				map.locationOf(this).getGround().hasCapability(TerrainType.BUSH))
-			actions.add(new SearchItemAction());
+		actions.add(new CheckInventoryAction());
 
+		Ground ground = map.locationOf(this).getGround();
+
+		if (ground instanceof CapableGround) {
+			CapableGround capableGround = (CapableGround) ground;
+			if (capableGround.isTree() || capableGround.isBush())
+				actions.add(new SearchItemAction());
+		}
 		System.out.println("ECO points: " + EcoPoints.getEcoPoints());
 
 		return menu.showMenu(this, actions, display);
