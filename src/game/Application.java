@@ -61,15 +61,15 @@ public class Application {
 		// Place a pair of stegosaurs in the middle of the map
 //		gameMap.at(30, 12).addActor(new Stegosaur(Sex.FEMALE));
 
-//		DinoActor s1 = new Allosaur(DinoCapabilities.FEMALE, true);
-//		gameMap.at(36, 15).addActor(s1);
-//		DinoActor s2 = new Stegosaur(DinoCapabilities.MALE, false);
+		DinoActor s1 = new Allosaur(DinoCapabilities.FEMALE, true);
+		gameMap.at(36, 15).addActor(s1);
+		DinoActor s2 = new Stegosaur(DinoCapabilities.MALE, false);
 //		System.out.println("hp: " + s2.getHitPoints());
-//		gameMap.at(31, 15).addActor(s2);
+		gameMap.at(35, 15).addActor(s2);
 
 
-		gameMap.at(30,3).addActor(new Brachiosaur(false));
-		gameMap.at(30,2).addActor(new Stegosaur(true));
+//		gameMap.at(40,3).addActor(new Brachiosaur(true));
+//		gameMap.at(30,2).addActor(new Stegosaur(true));
 //		DinoActor b = new Brachiosaur(DinoCapabilities.FEMALE, true);
 //		gameMap.at(1,1).addActor(b);
 //		DinoActor a = new Allosaur(true);

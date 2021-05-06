@@ -104,12 +104,12 @@ public abstract class DinoActor extends Actor {
     private void initializeDinoBehaviour(){
         behaviour = new ArrayList<>();
 //        behaviour.add(new PregnancyBehaviour());
-        behaviour.add(new FeedingBehaviour());
+//        behaviour.add(new FeedingBehaviour());
 //        behaviour.add(new FollowMateBehaviour());
-        behaviour.add(new FollowFoodOnGroundBehaviour());
-        behaviour.add(new FollowFoodOnPlantBehaviour());
+//        behaviour.add(new FollowFoodOnGroundBehaviour());
+//        behaviour.add(new FollowFoodOnPlantBehaviour());
         behaviour.add(new FollowVictimBehaviour());
-        behaviour.add(new WanderBehaviour());
+//        behaviour.add(new WanderBehaviour());
 
         interactiveBehaviours = new ArrayList<>();
 //        interactiveBehaviours.add(new BreedingBehaviour(this));

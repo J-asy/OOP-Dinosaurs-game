@@ -38,6 +38,8 @@ public abstract class FollowBehaviour implements Behaviour {
         MAX_RADIUS = max_radius;
     }
 
+    abstract boolean followPossible(DinoActor actor);
+
     @Override
     public Action getAction(Actor actor, GameMap map) {
         Action actionToReturn = null;
@@ -55,8 +57,6 @@ public abstract class FollowBehaviour implements Behaviour {
                         actualDestination = follow(map, destination, actorAsDino);
 
                     if (actualDestination != null) {
-                        System.out.println("found rad: " + radius);
-                        System.out.println("x: " + actualDestination.x() + "; y: " + actualDestination.y());
                         actionToReturn = moveCloser(actorLocation, actualDestination, actor);
                         found = true;
                         break;

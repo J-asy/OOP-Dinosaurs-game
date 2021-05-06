@@ -14,15 +14,8 @@ public class FollowFoodOnPlantBehaviour extends FollowBehaviour {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
-    @Override
-    public Action getAction(Actor actor, GameMap map) {
-        Action actionToReturn = null;
-        if (actor instanceof DinoActor){
-            if (((DinoActor) actor).isHungry()){
-                actionToReturn = super.getAction(actor, map);
-            }
-        }
-        return actionToReturn;
+    public boolean followPossible(DinoActor actor) {
+        return actor.isHungry();
     }
 
     @Override
