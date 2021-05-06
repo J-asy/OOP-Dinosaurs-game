@@ -14,9 +14,24 @@ import game.environment.*;
 
 public class FeedingAction extends Action {
 
+    /**
+     * Identifier if food is on ground or in plant
+     */
     Boolean foodOnGround;
+
+    /**
+     * portable item that can be eaten
+     */
     PortableItem portableItem;
+
+    /**
+     * x-coordinate of item
+     */
     int x;
+
+    /**
+     * y-coordinate of item
+     */
     int y;
 //
 //    private final static Map<DinoEncyclopedia, Integer> FOOD_POINTS_DICTIONARY = Map.ofEntries(
@@ -25,11 +40,23 @@ public class FeedingAction extends Action {
 //            entry(DinoEncyclopedia.ALLOSAUR, 1)
 //    );
 
+    /**
+     * Constructor
+     *
+     * @param foodOnGround true if food is on the ground, false if on tree or in bush
+     * @param item edible portable item
+     */
     public FeedingAction (Boolean foodOnGround, PortableItem item) {
         this.foodOnGround = foodOnGround;
         this.portableItem = item;
     }
 
+    /**
+     * Performs the action
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return a message string
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         String foodName = null;
@@ -105,18 +132,41 @@ public class FeedingAction extends Action {
         }
     }
 
+    /**
+     * Is dino a herbivore and is item edible by only herbivores?
+     * @param actorAsDino DinoActor doing the action
+     * @param item edible portable item
+     * @return true if dinosaur is a herbivore and item is edible by herbivores, false otherwise
+     */
     private boolean feedOnFruitPossible(DinoActor actorAsDino, PortableItem item) {
         return actorAsDino.isHerbivorous() && item.edibleByHerbivores();
     }
 
+    /**
+     * Is dino a herbivore and is the ground contains a tree?
+     * @param actorAsDino DinoActor doing the action
+     * @param ground ground that contains item
+     * @return true if dinosaur is a herbivore and ground contains a tree, otherwise false
+     */
     private boolean feedOnFruitPossible(DinoActor actorAsDino, CapableGround ground) {
         return actorAsDino.isHerbivorous() && ground.isTree();
     }
 
+    /**
+     * Is dino a carnivore and is item edible by carnivores?
+     * @param actorAsDino DinoActor doing the action
+     * @param item edible portable item
+     * @return true if dinosaur is a carnivore and item is edible by carnivores, false otherwise
+     */
     private boolean feedOnMeatPossible(DinoActor actorAsDino, PortableItem item) {
         return actorAsDino.isCarnivorous() && item.edibleByCarnivores();
     }
 
+    /**
+     * Returns the string format of actor's name
+     * @param actor The actor performing the action.
+     * @return String of actor's name
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor.toString();
