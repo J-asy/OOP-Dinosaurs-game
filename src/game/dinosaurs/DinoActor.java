@@ -365,10 +365,10 @@ public abstract class DinoActor extends Actor {
                 System.out.println(this + " at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is unconscious!");
             }
             else {
-                System.out.println(this + " at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is dead!")  ;
                 map.removeActor(this);
                 Corpse corpseDino = new Corpse(dinoType);
                 dinoLocation.addItem(corpseDino);
+                System.out.println(this + " at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is dead!")  ;
             }
             return true;
         }
@@ -409,7 +409,6 @@ public abstract class DinoActor extends Actor {
         aging();
         decrementFoodLevel();
         adjustConsciousness();
-        System.out.println("pregnancy period: " + pregnancyPeriod);
 
         if (!checkUnconsciousPeriod(map)) {
             roarIfHungry(map);
@@ -421,7 +420,6 @@ public abstract class DinoActor extends Actor {
                 Action resultingAction = b.getAction(this, map);
                 if (resultingAction != null && actionToExecute instanceof DoNothingAction) {
                     actionToExecute = resultingAction;
-//                    System.out.println("b: " + b);
                 }
             }
 
@@ -430,7 +428,6 @@ public abstract class DinoActor extends Actor {
                     if (a instanceof BreedingAction || a instanceof AttackAction) {
                         actionToExecute = a;
                         break;
-//                        System.out.println("a: " + a);
                     }
                 }
             }

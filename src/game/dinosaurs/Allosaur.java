@@ -28,7 +28,7 @@ public class Allosaur extends DinoActor {
         addCapability(DinoCapabilities.CAN_ATTACK);
     }
 
-    public void addAttackedStego(DinoActor victim) {
+    public void addAttackedVictims(DinoActor victim) {
         victims.put(victim, 20);
     }
 

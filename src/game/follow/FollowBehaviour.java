@@ -37,6 +37,8 @@ public abstract class FollowBehaviour implements Behaviour {
 
     abstract boolean motivatedToFollow(DinoActor actor);
 
+    abstract Location findTarget(GameMap map, Location destination, DinoActor actorAsDino);
+
     @Override
     public Action getAction(Actor actor, GameMap map) {
         Action actionToReturn = null;
@@ -66,9 +68,6 @@ public abstract class FollowBehaviour implements Behaviour {
         }
             return actionToReturn;
     }
-
-
-    abstract Location findTarget(GameMap map, Location destination, DinoActor actorAsDino);
 
     /**
      *  Returns the MoveActorAction that leads actor closer to target destination.

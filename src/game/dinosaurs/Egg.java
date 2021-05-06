@@ -5,7 +5,6 @@ import game.EcoPoints;
 import game.FoodType;
 import game.PortableItem;
 
-import java.util.Arrays;
 import java.util.Map;
 import static java.util.Map.entry;
 
@@ -17,19 +16,14 @@ public class Egg extends PortableItem {
     /**
      * Stores constants representing the total number of turns to wait till hatching for each dinosaur.
      */
-//    private final static Map<DinoEncyclopedia, Integer> DINO_EGG_DICTIONARY = Map.ofEntries(
-//            entry(DinoEncyclopedia.STEGOSAUR, 30),
-//            entry(DinoEncyclopedia.BRACHIOSAUR, 30),
-//            entry(DinoEncyclopedia.ALLOSAUR, 50)
-//    );
-    private final static int[] STEGOVALUE = {10,100};
-    private final static int[] BRACHIOVALUE = {10,1000};
-    private final static int[] ALLOVALUE = {10,1000};
+    private final static int[] STEGOSAUR_VALUE = {30,100};
+    private final static int[] BRACHIOSAUR_VALUE = {30,1000};
+    private final static int[] ALLOSAUR_VALUE = {50,1000};
 
     private final static Map<DinoEncyclopedia, int[]> DINO_EGG_DICTIONARY = Map.ofEntries(
-            entry(DinoEncyclopedia.STEGOSAUR, STEGOVALUE),
-            entry(DinoEncyclopedia.BRACHIOSAUR, BRACHIOVALUE),
-            entry(DinoEncyclopedia.ALLOSAUR, ALLOVALUE)
+            entry(DinoEncyclopedia.STEGOSAUR, STEGOSAUR_VALUE),
+            entry(DinoEncyclopedia.BRACHIOSAUR, BRACHIOSAUR_VALUE),
+            entry(DinoEncyclopedia.ALLOSAUR, ALLOSAUR_VALUE)
     );
 
     /**
@@ -80,9 +74,7 @@ public class Egg extends PortableItem {
      * @param currentLocation The location of the ground on which we lie.
      */
     public void tick(Location currentLocation) {
-        System.out.println("wait turn: " + waitTurns);
         DinoActor newDino;
-
         if (waitTurns == 0) {
 
             newDino = switch (parent) {

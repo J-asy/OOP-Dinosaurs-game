@@ -10,7 +10,6 @@ import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Weapon;
 import game.dinosaurs.Allosaur;
 import game.dinosaurs.DinoActor;
-import game.dinosaurs.Stegosaur;
 
 /**
  * Special Action for attacking other Actors.
@@ -56,7 +55,7 @@ public class AttackAction extends Action {
 		if (actor instanceof Allosaur) {
 			Allosaur actorAsAllosaur = (Allosaur) actor;
 			if (!actorAsAllosaur.hasAttackedVictim(target)) {
-				actorAsAllosaur.addAttackedStego(target);
+				actorAsAllosaur.addAttackedVictims(target);
 			}
 		}
 
