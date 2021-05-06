@@ -361,10 +361,10 @@ public abstract class DinoActor extends Actor {
         if (!this.isConscious()){
             if (this.getUnconsciousPeriod() > 0){
                 this.decrementUnconsciousPeriod();
-                System.out.println("here");
+                System.out.println("Dinosaur at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is unconscious!");
             }
             else {
-                System.out.println("Dinosaur at " + dinoLocation.x() + " " + dinoLocation.y() + " is dead!")  ;
+                System.out.println("Dinosaur at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is dead!")  ;
                 map.removeActor(this);
                 Corpse corpseDino = new Corpse(dinoType);
                 dinoLocation.addItem(corpseDino);
