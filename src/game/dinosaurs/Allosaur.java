@@ -1,8 +1,6 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
-
-import java.security.Key;
 import java.util.HashMap;
 
 public class Allosaur extends DinoActor {
