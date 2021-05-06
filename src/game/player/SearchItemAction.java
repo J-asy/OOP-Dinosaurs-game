@@ -28,25 +28,26 @@ public class SearchItemAction extends Action {
         int earnedPoints = 0;
         String groundDescription = null;
         if (ground instanceof CapableGround && Probability.generateProbability(0.4f)){
+
             CapableGround capableGround = (CapableGround) ground;
             if (capableGround.isBush()){
-                fruit = ((Bush) ground).getFruit();
+                fruit = capableGround.getFruit();
                 groundDescription = "bush";
+                System.out.println(groundDescription);
                 earnedPoints = 10;
             }
             else if (capableGround.isTree()){
-                fruit = ((Tree) ground).getFruit();
+                fruit = capableGround.getFruit();
                 groundDescription = "tree";
                 earnedPoints = 10;
             }
-
-            if (fruit != null){
-                actor.addItemToInventory(fruit);
-                EcoPoints.incrementEcoPoints(earnedPoints);
-                System.out.println("Fruit found from " + groundDescription + "!");
-            }
         }
 
+        if (fruit != null){
+            actor.addItemToInventory(fruit);
+            EcoPoints.incrementEcoPoints(earnedPoints);
+            System.out.println("Fruit found from " + groundDescription + "!");
+        }
         else
             System.out.println("Oops! No fruit found. Better luck next time ~");
 
