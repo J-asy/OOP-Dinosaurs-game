@@ -1,5 +1,8 @@
 package game.dinosaurs;
 
+/**
+ * Enum class for common Capabilities that DinoActors may possess.
+ */
 public enum DinoCapabilities {
     MALE,
     FEMALE,

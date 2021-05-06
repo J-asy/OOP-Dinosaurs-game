@@ -10,13 +10,17 @@ public class Stegosaur extends DinoActor {
 
 
     private static final DinoEncyclopedia DINO_TYPE = DinoEncyclopedia.STEGOSAUR;
+    public static int nextId = 1;
+
 
     public Stegosaur(DinoCapabilities sex, Boolean isMatured) {
-        super(DINO_TYPE, sex, isMatured);
+        super(DINO_TYPE, sex, isMatured, nextId);
+        nextId += 1;
     }
 
     public Stegosaur(Boolean isMatured) {
-        super(DINO_TYPE, isMatured);
+        super(DINO_TYPE, isMatured, nextId);
+        nextId += 1;
     }
 
     @Override
@@ -25,6 +29,8 @@ public class Stegosaur extends DinoActor {
         addCapability(DinoCapabilities.HERBIVORE);
         addCapability(DinoCapabilities.CAN_BE_ATTACKED);
     }
+
+
 
 //    @Override
 //    public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
