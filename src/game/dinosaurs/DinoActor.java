@@ -3,6 +3,7 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.*;
 
+import game.attack.AttackAction;
 import game.attack.Corpse;
 import game.Probability;
 import game.follow.FollowFoodOnPlantBehaviour;
@@ -182,6 +183,14 @@ public abstract class DinoActor extends Actor {
     }
 
     /**
+     * Returns hit points of dinosaur
+     * @return hit points of dinosaur
+     */
+    public int getHitPoints() {
+        return this.hitPoints;
+    }
+
+    /**
      * Decrements the dinoActor's food level, which is equivalent to its hitPoints.
      */
     private void decrementFoodLevel(){
@@ -304,7 +313,11 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    // unconscious
+    /**
+     * Checks if dinoActor instance is conscious by
+     * checking if it has conscious capability
+     * @return true if dinosaur is conscious, false otherwise
+     */
     @Override
     public boolean isConscious(){
         return hasCapability(DinoCapabilities.CONSCIOUS);
@@ -322,16 +335,26 @@ public abstract class DinoActor extends Actor {
         }
     }
 
+    /**
+     * Initializes the dinoActor's unconscious period to an
+     * appropriate value.
+     */
     private void initializeUnconsciousPeriod() {
         unconsciousPeriod = dinoType.getInitialUnconsciousPeriod();
     }
+
 
     private int getUnconsciousPeriod() {
         return unconsciousPeriod;
     }
 
+    /**
+     * Decrements the dinoActor's unconscious period if it is greater than 0.
+     */
     private void decrementUnconsciousPeriod(){
-        unconsciousPeriod--;
+        if(this.unconsciousPeriod > 0) {
+            unconsciousPeriod--;
+        }
     }
 
     @Override
@@ -376,14 +399,14 @@ public abstract class DinoActor extends Actor {
 
             // if the actor has been determined to perform an Action with another Actor previously
             // it should always return that Action
-//            if (actionInMotion != null) {
-//                actionToExecute = actionInMotion;
-//                actionInMotion = null;
-//            }
+            if (actionInMotion != null) {
+                actionToExecute = actionInMotion;
+                actionInMotion = null;
+            }
 
-//            if (actionToExecute instanceof DoNothingAction && actions.size() > 0){
-//                actionToExecute = actions.get(0);
-//            }
+            if (actionToExecute instanceof DoNothingAction && actions.size() > 0){
+                actionToExecute = actions.get(0);
+            }
 
             // calling getAction for every behaviour can help us to do some necessary processing
             // as well even if it returns null in the end
@@ -394,11 +417,17 @@ public abstract class DinoActor extends Actor {
                     actionToExecute = resultingAction;
                 }
             }
+
             return actionToExecute;
         }
         return new DoNothingAction();
     }
 
+    /**
+     * Checks if dinosaur is conscious or not
+     * @param map the map that contains dinosaur's location
+     * @return true if unconscious and false otherwise
+     */
     public boolean checkUnconsciousPeriod(GameMap map ) {
         Location dinoLocation = map.locationOf(this);
         if (!this.isConscious()){

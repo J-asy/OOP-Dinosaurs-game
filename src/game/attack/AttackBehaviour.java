@@ -21,7 +21,7 @@ public class AttackBehaviour implements Behaviour {
         Location here = map.locationOf(actor);
         for (Exit exit : here.getExits()) {
             Location destination = exit.getDestination();
-            if (map.getActorAt(destination) == target){
+            if (map.getActorAt(destination) == target && target.isConscious()){
                 if (actor instanceof Player && (target.canBeAttacked() || target.canAttack())){
                     return new AttackAction(target);
                 }
