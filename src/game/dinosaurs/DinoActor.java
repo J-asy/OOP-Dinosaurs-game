@@ -347,10 +347,6 @@ public abstract class DinoActor extends Actor {
         unconsciousPeriod = dinoType.getInitialUnconsciousPeriod();
     }
 
-    private int getUnconsciousPeriod() {
-        return unconsciousPeriod;
-    }
-
     private void decrementUnconsciousPeriod(){
         if (unconsciousPeriod > 0) {
             unconsciousPeriod--;
@@ -360,7 +356,7 @@ public abstract class DinoActor extends Actor {
     public boolean checkUnconsciousPeriod(GameMap map) {
         Location dinoLocation = map.locationOf(this);
         if (!this.isConscious()){
-            if (this.getUnconsciousPeriod() > 0){
+            if (unconsciousPeriod > 0){
                 this.decrementUnconsciousPeriod();
                 System.out.println(this + " at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is unconscious!");
             }

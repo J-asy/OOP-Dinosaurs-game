@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class FeedingBehaviour implements Behaviour {
 
-    public FeedingBehaviour () { }
+    public FeedingBehaviour() {}
 
     /***
      * Checks if the Actor fulfills the following conditions:

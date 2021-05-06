@@ -8,9 +8,6 @@ import game.dinosaurs.Egg;
 import game.Probability;
 import game.dinosaurs.DinoEncyclopedia;
 import game.environment.*;
-//import game.environment.Bush;
-//import game.environment.Fruit;
-//import game.environment.Tree;
 
 public class FeedingAction extends Action {
 
@@ -24,21 +21,6 @@ public class FeedingAction extends Action {
      */
     PortableItem portableItem;
 
-    /**
-     * x-coordinate of item
-     */
-    int x;
-
-    /**
-     * y-coordinate of item
-     */
-    int y;
-//
-//    private final static Map<DinoEncyclopedia, Integer> FOOD_POINTS_DICTIONARY = Map.ofEntries(
-//            entry(DinoEncyclopedia.STEGOSAUR, 3),
-//            entry(DinoEncyclopedia.BRACHIOSAUR, 2),
-//            entry(DinoEncyclopedia.ALLOSAUR, 1)
-//    );
 
     /**
      * Constructor
@@ -89,7 +71,6 @@ public class FeedingAction extends Action {
 
                     if (feedingPossible) {
                         foodName = portableItem.toString();
-                        System.out.println(foodName);
                         actorLocation.removeItem(portableItem);
                         actor.heal(healPoints);
                     }
@@ -111,7 +92,6 @@ public class FeedingAction extends Action {
                         }
 
                     } else if (capableGround.isBush()) {
-                        System.out.println("no of bush fruits: " + capableGround.getNumberOfFruits() );
                         if (capableGround.getNumberOfFruits() > 0) {
                             capableGround.removeFruit();
                             actor.heal(10);
@@ -135,18 +115,8 @@ public class FeedingAction extends Action {
      * @param item edible portable item
      * @return true if dinosaur is a herbivore and item is edible by herbivores, false otherwise
      */
-    private boolean feedOnFruitPossible(DinoActor actorAsDino, PortableItem item) {
+    private static boolean feedOnFruitPossible(DinoActor actorAsDino, PortableItem item) {
         return actorAsDino.isHerbivorous() && item.edibleByHerbivores();
-    }
-
-    /**
-     * Is dino a herbivore and is the ground contains a tree?
-     * @param actorAsDino DinoActor doing the action
-     * @param ground ground that contains item
-     * @return true if dinosaur is a herbivore and ground contains a tree, otherwise false
-     */
-    private boolean feedOnFruitPossible(DinoActor actorAsDino, CapableGround ground) {
-        return actorAsDino.isHerbivorous() && ground.isTree();
     }
 
     /**
@@ -155,7 +125,7 @@ public class FeedingAction extends Action {
      * @param item edible portable item
      * @return true if dinosaur is a carnivore and item is edible by carnivores, false otherwise
      */
-    private boolean feedOnMeatPossible(DinoActor actorAsDino, PortableItem item) {
+    private static boolean feedOnMeatPossible(DinoActor actorAsDino, PortableItem item) {
         return actorAsDino.isCarnivorous() && item.edibleByCarnivores();
     }
 
