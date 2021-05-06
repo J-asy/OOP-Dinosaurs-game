@@ -4,6 +4,8 @@ import edu.monash.fit2099.engine.Location;
 import game.*;
 import game.dinosaurs.Brachiosaur;
 import game.Probability;
+import game.dinosaurs.DinoCapabilities;
+
 import java.util.ArrayList;
 
 /**
@@ -37,7 +39,7 @@ public class Bush extends CapableGround {
         super.tick(location);
 
         // If a Brachiosaur steps on the bush, 50% chance ground reverts back to dirt :(
-        if (location.getActor() instanceof Brachiosaur && Probability.generateProbability(0.5f)){
+        if (location.getActor().hasCapability(DinoCapabilities.BUSH_DESTROYER) && Probability.generateProbability(0.5f)){
             location.setGround(new Dirt());
         }
         else {
@@ -45,7 +47,6 @@ public class Bush extends CapableGround {
             if (age > 10){
                 if (Probability.generateProbability(0.1f)) {
                     Fruit fruit = new Fruit(displayChar);
-//                    fruit.addCapability(FoodType.HERBIVORE);
                     EcoPoints.incrementEcoPoints(1);
                     bushFruits.add(fruit);
                 }

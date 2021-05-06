@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.Display;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Menu;
 import game.EcoPoints;
+import game.environment.CapableGround;
 import game.environment.TerrainType;
 
 /**
@@ -33,8 +34,8 @@ public class Player extends Actor {
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
 
-		if (map.locationOf(this).getGround().hasCapability(TerrainType.TREE)||
-				map.locationOf(this).getGround().hasCapability(TerrainType.BUSH))
+		if (((CapableGround) map.locationOf(this).getGround()).isTree()||
+				((CapableGround) map.locationOf(this).getGround()).isBush())
 			actions.add(new SearchItemAction());
 
 		System.out.println("ECO points: " + EcoPoints.getEcoPoints());
