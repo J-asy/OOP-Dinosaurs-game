@@ -24,7 +24,7 @@ public class Egg extends PortableItem {
 //    );
     private final static int[] STEGOVALUE = {3,100};
     private final static int[] BRACHIOVALUE = {2,1000};
-    private final static int[] ALLOVALUE = {1,1000};
+    private final static int[] ALLOVALUE = {2,1000};
 
     private final static Map<DinoEncyclopedia, int[]> DINO_EGG_DICTIONARY = Map.ofEntries(
             entry(DinoEncyclopedia.STEGOSAUR, STEGOVALUE),
@@ -80,6 +80,7 @@ public class Egg extends PortableItem {
      * @param currentLocation The location of the ground on which we lie.
      */
     public void tick(Location currentLocation) {
+        System.out.println("wait turn: " + waitTurns);
         DinoActor newDino;
 
         if (waitTurns == 0) {

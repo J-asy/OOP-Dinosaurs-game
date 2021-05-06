@@ -56,11 +56,6 @@ public abstract class DinoActor extends Actor {
      */
     private int unconsciousPeriod;
 
-    /**
-     * An Action that should be returned in the playTurn method
-     * as the DinoActor is interacting with another Actor and their actions need to be in sync.
-     */
-//    public Action actionInMotion;
 
     private ArrayList<Behaviour> interactiveBehaviours;
 
@@ -103,16 +98,16 @@ public abstract class DinoActor extends Actor {
      */
     private void initializeDinoBehaviour(){
         behaviour = new ArrayList<>();
-//        behaviour.add(new PregnancyBehaviour());
-        behaviour.add(new FeedingBehaviour());
-//        behaviour.add(new FollowMateBehaviour());
+        behaviour.add(new PregnancyBehaviour());
+//        behaviour.add(new FeedingBehaviour());
+        behaviour.add(new FollowMateBehaviour());
 //        behaviour.add(new FollowFoodOnGroundBehaviour());
-        behaviour.add(new FollowFoodOnPlantBehaviour());
+//        behaviour.add(new FollowFoodOnPlantBehaviour());
 //        behaviour.add(new FollowVictimBehaviour());
         behaviour.add(new WanderBehaviour());
 
         interactiveBehaviours = new ArrayList<>();
-//        interactiveBehaviours.add(new BreedingBehaviour(this));
+        interactiveBehaviours.add(new BreedingBehaviour(this));
 //        interactiveBehaviours.add(new AttackBehaviour(this));
     }
 
@@ -394,7 +389,7 @@ public abstract class DinoActor extends Actor {
             validActions.add(new PlayerFeedAction(this));
         }
 
-        System.out.println("num valid actions: " + validActions.size());
+//        System.out.println("num valid actions: " + validActions.size());
 
         return validActions;
     }
@@ -415,7 +410,7 @@ public abstract class DinoActor extends Actor {
         decrementFoodLevel();
         adjustConsciousness();
 //        System.out.println("");
-//        System.out.println("food level: " + hitPoints);
+        System.out.println("food level: " + hitPoints);
 
 
 
@@ -424,8 +419,8 @@ public abstract class DinoActor extends Actor {
 //            System.out.println("age: " + age);
             roarIfHungry(map);
             adjustBreedingCapability();
-//            System.out.println("can breed: " + hasCapability(DinoCapabilities.CAN_BREED));
-//            System.out.println("pregnancy period: " + pregnancyPeriod);
+            System.out.println("can breed: " + hasCapability(DinoCapabilities.CAN_BREED));
+            System.out.println("pregnancy period: " + pregnancyPeriod);
 
             // calling getAction for every behaviour can help us to do some necessary processing
             // as well even if it returns null in the end
@@ -438,14 +433,14 @@ public abstract class DinoActor extends Actor {
                 }
             }
 
-//            if (!(actionToExecute instanceof LayEggAction) && actions.size() > 0){
-//                for (Action a: actions) {
-//                    if (a instanceof BreedingAction || a instanceof AttackAction) {
-//                        actionToExecute = a;
+            if (!(actionToExecute instanceof LayEggAction) && actions.size() > 0){
+                for (Action a: actions) {
+                    if (a instanceof BreedingAction || a instanceof AttackAction) {
+                        actionToExecute = a;
 //                        System.out.println("there: " + a);
-//                    }
-//                }
-//            }
+                    }
+                }
+            }
 
 
         }
@@ -453,8 +448,8 @@ public abstract class DinoActor extends Actor {
 
 
 
-//        return actionToExecute;
-        return new DoNothingAction();
+        return actionToExecute;
+//        return new DoNothingAction();
     }
 
 }
@@ -470,12 +465,6 @@ public abstract class DinoActor extends Actor {
     // follow food on plant - behaviour
 
 
-// if the actor has been determined to perform an Action with another Actor previously
-// it should always return that Action
-//            if (actionInMotion != null) {
-//                actionToExecute = actionInMotion;
-//                actionInMotion = null;
-//            }
 
 
 
