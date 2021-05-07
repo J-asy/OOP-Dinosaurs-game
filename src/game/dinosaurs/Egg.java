@@ -85,7 +85,9 @@ public class Egg extends PortableItem {
 
             EcoPoints.incrementEcoPoints((DINO_EGG_DICTIONARY.get(parent))[1]);
             currentLocation.removeItem(this);
-            currentLocation.addActor(newDino);
+            if (!currentLocation.containsAnActor()) {
+                currentLocation.addActor(newDino);
+            }
         }
         else {
             decrementWaitTurn();

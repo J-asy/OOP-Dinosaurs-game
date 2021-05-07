@@ -1,6 +1,8 @@
 package game.follow;
 
-import edu.monash.fit2099.engine.*;
+import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Ground;
+import edu.monash.fit2099.engine.Location;
 import game.dinosaurs.DinoActor;
 import game.environment.CapableGround;
 

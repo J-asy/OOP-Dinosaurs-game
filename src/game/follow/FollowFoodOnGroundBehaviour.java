@@ -1,6 +1,8 @@
 package game.follow;
 
-import edu.monash.fit2099.engine.*;
+import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Item;
+import edu.monash.fit2099.engine.Location;
 import game.PortableItem;
 import game.dinosaurs.DinoActor;
 
@@ -22,7 +24,7 @@ public class FollowFoodOnGroundBehaviour extends FollowBehaviour {
     }
 
     @Override
-     Location findTarget(GameMap map, Location destination, DinoActor actorAsDino){
+    Location findTarget(GameMap map, Location destination, DinoActor actorAsDino){
         Location returnDestination = null;
         List<Item> groundItems = destination.getItems();
 
