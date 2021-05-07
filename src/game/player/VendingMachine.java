@@ -57,21 +57,18 @@ public class VendingMachine extends CapableGround {
         }
         else if (choice == 4 && ecoPoints >= 200){
             Egg stegosaurEgg = new Egg(DinoEncyclopedia.STEGOSAUR);
-            stegosaurEgg.addCapability(FoodType.CARNIVORE);
             actor.addItemToInventory(stegosaurEgg);
             EcoPoints.decrementEcoPoints(200);
             System.out.println("Stego egg Get!");
         }
         else if (choice == 5 && ecoPoints >= 500){
             Egg brachiosaurEgg = new Egg(DinoEncyclopedia.BRACHIOSAUR);
-            brachiosaurEgg.addCapability(FoodType.CARNIVORE);
             actor.addItemToInventory(brachiosaurEgg);
             EcoPoints.decrementEcoPoints(500);
             System.out.println("Brachio egg Get!");
         }
         else if (choice == 6 && ecoPoints >= 1000){
             Egg allosaurEgg = new Egg(DinoEncyclopedia.ALLOSAUR);
-            allosaurEgg.addCapability(FoodType.CARNIVORE);
             actor.addItemToInventory(allosaurEgg);
             EcoPoints.decrementEcoPoints(1000);
             System.out.println("Allo egg Get!");
