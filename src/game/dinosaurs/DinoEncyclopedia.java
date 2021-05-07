@@ -1,7 +1,7 @@
 package game.dinosaurs;
 
 /**
- * Enum class used to store all constants of dinosaur attributes, mainly utilized by DinoActor.
+ * Enum class used to store all constants for dinosaur attributes, mainly utilized by DinoActor.
  * The purpose of this class is to have a standardized set of values that can be accessed
  * by other classes we needed. This ensures a single point of change, making code more maintainable.
  */

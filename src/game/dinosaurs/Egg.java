@@ -14,10 +14,27 @@ import static java.util.Map.entry;
 public class Egg extends PortableItem {
 
 
+    /**
+     * An integer list which first value is the Stegosaur egg's number of turns to wait
+     * till it hatches, and second value if the amount of EcoPoints awarded when it hatches.
+     */
     private final static int[] STEGOSAUR_VALUE = {30,100};
+
+    /**
+     * An integer list which first value is the Brachiosaur egg's number of turns to wait
+     * till it hatches, and second value if the amount of EcoPoints awarded when it hatches.
+     */
     private final static int[] BRACHIOSAUR_VALUE = {30,1000};
+
+    /**
+     * An integer list which first value is the Allosaur egg's number of turns to wait
+     * till it hatches, and second value if the amount of EcoPoints awarded when it hatches.
+     */
     private final static int[] ALLOSAUR_VALUE = {50,1000};
 
+    /**
+     * Map that stores useful constants for the Egg object according to different dinosaur species.
+     */
     private final static Map<DinoEncyclopedia, int[]> DINO_EGG_DICTIONARY = Map.ofEntries(
             entry(DinoEncyclopedia.STEGOSAUR, STEGOSAUR_VALUE),
             entry(DinoEncyclopedia.BRACHIOSAUR, BRACHIOSAUR_VALUE),
@@ -31,7 +48,7 @@ public class Egg extends PortableItem {
 
     /**
      * Uniquely identifies the species of the Egg's parent,
-     * baby dinosaur hatched out of the Egg will be of the same species
+     * baby dinosaur hatched out of the Egg will be of the same species.
      */
     private DinoEncyclopedia parent;
 
