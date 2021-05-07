@@ -26,7 +26,4 @@ public class Brachiosaur extends DinoActor {
         addCapability(DinoCapabilities.BUSH_DESTROYER);
     }
 
-    // don't need to override getAllowableActions, cuz can only breed - dealt with by DinoActor
-    // don't need attack action, since brachiosaur cannot be attacked
-
 }

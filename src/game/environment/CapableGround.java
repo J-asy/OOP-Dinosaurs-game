@@ -70,7 +70,6 @@ public abstract class CapableGround extends Ground {
         return fruit;
     }
 
-    //is this necessary?? not sure yet ... if dont need i'll remove it later
     /**
      * Removes the first Fruit in the List without returning anything.
      */

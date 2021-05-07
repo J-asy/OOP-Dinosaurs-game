@@ -21,12 +21,6 @@ public class Fruit extends PortableItem {
     }
 
     /**
-     * Used to access the groundTime.
-     * @return the time the Fruit has spent on the ground
-     */
-    public int getGroundTime() { return groundTime; }
-
-    /**
      * Informs the item on the ground about the passage of time.
      * The time where the Fruit is on the ground is being keep track of,
      * @param currentLocation the location of the ground on which the Fruit lies.
