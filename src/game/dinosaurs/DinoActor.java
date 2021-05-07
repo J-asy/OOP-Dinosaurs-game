@@ -51,11 +51,14 @@ public abstract class DinoActor extends Actor {
     private int pregnancyPeriod;
 
     /**
-     * Indicates the number of turns since the DinoActor first became unconscious.
+     * Indicates the number of turns till an unconscious DinoActor
+     * has till it dies
      */
     private int unconsciousPeriod;
 
-
+    /**
+     * ArrayList of Behaviours that requires two Actors to be in adjacent squares.
+     */
     private ArrayList<Behaviour> interactiveBehaviours;
 
     /**
@@ -84,7 +87,12 @@ public abstract class DinoActor extends Actor {
         setSex();
     }
 
-
+    /**
+     * Initialize maturity, max hit points, behaviours and capabilities
+     * of a DinoActor
+     * @param isMatured true if DinoActor should be a grown up DinoActor,
+     *                  false otherwise
+     */
     private void initialization(boolean isMatured){
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
@@ -99,6 +107,7 @@ public abstract class DinoActor extends Actor {
      * Initializes the dinoActor with the standard behaviour that they should have.
      */
     private void initializeDinoBehaviour(){
+        // all behaviours that the DinoActor can perform alone
         behaviour = new ArrayList<>();
         behaviour.add(new PregnancyBehaviour());
         behaviour.add(new FeedingBehaviour());
@@ -108,12 +117,17 @@ public abstract class DinoActor extends Actor {
         behaviour.add(new FollowVictimBehaviour());
         behaviour.add(new WanderBehaviour());
 
+        // all behaviours that the DinoActor can perform with another
+        // Actor on adjacent squares
         interactiveBehaviours = new ArrayList<>();
         interactiveBehaviours.add(new BreedingBehaviour(this));
         interactiveBehaviours.add(new AttackBehaviour(this));
         interactiveBehaviours.add(new FedByPlayerBehaviour(this));
     }
 
+    /**
+     * Initialize capabilities that are common to all dinosaurs.
+     */
     void initializeCapabilities(){
         addCapability(DinoCapabilities.CONSCIOUS);
     }
@@ -122,6 +136,9 @@ public abstract class DinoActor extends Actor {
         return dinoType;
     }
 
+    /**
+     * Randomly assigns a sex for the DinoActor
+     */
     private void setSex(){
         if (Probability.generateProbability(0.5F)){
             addCapability(DinoCapabilities.MALE);
@@ -166,6 +183,12 @@ public abstract class DinoActor extends Actor {
         }
     }
 
+    /**
+     * Update the DinoActor's age and display character depending on the
+     * argument passed in. Then, adjusts its breeding capability accordingly.
+     * @param maturityStatus true if intend to set DinoActor as matured,
+     *                       false otherwise.
+     */
     private void setMaturity(boolean maturityStatus){
         if (maturityStatus) {
             setAge(dinoType.getMatureWhen());
@@ -177,19 +200,10 @@ public abstract class DinoActor extends Actor {
         adjustBreedingCapability();
     }
 
-    /**
-     * Returns true if the dinoActor is matured, false otherwise.
-     * @return true if the dinoActor is matured, false otherwise
-     */
     public boolean isMatured(){
         return age >= dinoType.getMatureWhen();
     }
 
-    /**
-     * Initializes the maxHitPoints of the dinoActor if the argument
-     * passed in is greater than its hitPoints.
-     * @param newMaxHitPoints maximum food level of the dinoActor
-     */
     private void setMaxHitPoints(int newMaxHitPoints) {
         if (newMaxHitPoints >= hitPoints) {
             maxHitPoints = newMaxHitPoints;
@@ -215,22 +229,6 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    public boolean canReachTree(){return hasCapability(DinoCapabilities.CAN_REACH_TREE);}
-
-    public boolean canAttack(){return hasCapability(DinoCapabilities.CAN_ATTACK); }
-
-    public boolean canBeAttacked(){
-        return hasCapability(DinoCapabilities.CAN_BE_ATTACKED);
-    }
-
-    public boolean isCarnivorous() {
-        return hasCapability(DinoCapabilities.CARNIVORE);
-    }
-
-    public boolean isHerbivorous() {
-        return hasCapability(DinoCapabilities.HERBIVORE);
-    }
-
     /**
      * Checks if the food level / hit points has reached
      * the point where the dinoActor will get hungry.
@@ -249,15 +247,24 @@ public abstract class DinoActor extends Actor {
         return hitPoints < dinoType.getHungryWhen();
     }
 
-    /**
-     * Returns true if the dinoActor has the capability to breed, false otherwise.
-     * A dinoActor should only be able to breed if:
-     * - it is matured
-     * - it is not pregnant
-     * @return true if the dinoActor can breed, false otherwise
-     */
+    public boolean isCarnivorous() {
+        return hasCapability(DinoCapabilities.CARNIVORE);
+    }
+
+    public boolean isHerbivorous() {
+        return hasCapability(DinoCapabilities.HERBIVORE);
+    }
+
     public boolean canBreed() {
         return hasCapability(DinoCapabilities.CAN_BREED);
+    }
+
+    public boolean canReachTree(){return hasCapability(DinoCapabilities.CAN_REACH_TREE);}
+
+    public boolean canAttack(){return hasCapability(DinoCapabilities.CAN_ATTACK); }
+
+    public boolean canBeAttacked(){
+        return hasCapability(DinoCapabilities.CAN_BE_ATTACKED);
     }
 
     /**
@@ -297,7 +304,7 @@ public abstract class DinoActor extends Actor {
     public int getPregnancyPeriod(){
         return pregnancyPeriod;
     }
-    
+
     public void decrementPregnancyPeriod(){
         if (pregnancyPeriod > 0){
             pregnancyPeriod--;
@@ -328,6 +335,11 @@ public abstract class DinoActor extends Actor {
         return hasCapability(DinoCapabilities.CONSCIOUS);
     }
 
+    /**
+     * Sets the DinoActor to unconscious if the argument passed in is true,
+     * otherwise the DinoActor is set to be conscious.
+     * @param status true if the DinoActor should be unconscious, false otherwise
+     */
     public void setUnconscious(boolean status){
         if (status){
             removeCapability(DinoCapabilities.CONSCIOUS);
@@ -337,6 +349,19 @@ public abstract class DinoActor extends Actor {
         else {
             removeCapability(DinoCapabilities.UNCONSCIOUS);
             addCapability(DinoCapabilities.CONSCIOUS);
+        }
+    }
+
+    /**
+     * Adjust the consciousness of the DinoActor appropriately,
+     * according to its current hitPoints.
+     */
+    private void adjustConsciousness(){
+        if (isConscious() && hitPoints == 0) {
+            setUnconscious(true);
+        }
+        else if (!isConscious() && hitPoints > 0) {
+            setUnconscious(false);
         }
     }
 
@@ -350,6 +375,16 @@ public abstract class DinoActor extends Actor {
         }
     }
 
+    /**
+     * Checks whether the DinoActor is unconscious. If it is, checks
+     * whether it is time for it to die yet. If it should be dead, a Corpse
+     * will replace the unconscious DinoActor, otherwise the unconsciousPeriod
+     * is decremented. Finally, returns true if the DinoActor is unconscious and
+     * false otherwise.
+     *
+     * @param map GameMap that the DinoActor is currently on
+     * @return false if the DinoActor is conscious, true otherwise
+     */
     public boolean checkUnconsciousPeriod(GameMap map) {
         Location dinoLocation = map.locationOf(this);
         if (!this.isConscious()){
@@ -371,7 +406,8 @@ public abstract class DinoActor extends Actor {
     }
 
     /**
-     * Returns a collection of the Actions that the otherActor can do to the current Actor.
+     * Returns a collection of the Actions that the otherActor can do to the current Actor
+     * by going through the interactiveBehaviours array list and calling getAction.
      *
      * @param otherActor the Actor that might be performing attack
      * @param direction  String representing the direction of the other Actor
@@ -391,15 +427,6 @@ public abstract class DinoActor extends Actor {
         return validActions;
     }
 
-    private void adjustConsciousness(){
-        if (isConscious() && hitPoints == 0) {
-            setUnconscious(true);
-        }
-        else if (!isConscious() && hitPoints > 0) {
-            setUnconscious(false);
-        }
-    }
-
     /**
      * Select and return an action to perform on the current turn.
      *
@@ -412,11 +439,14 @@ public abstract class DinoActor extends Actor {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action actionToExecute = new DoNothingAction();
+
+        // do any necessary processing first
         aging();
         decrementFoodLevel();
         adjustConsciousness();
 
         if (!checkUnconsciousPeriod(map)) {
+            // do any necessary processing first
             roarIfHungry(map);
             adjustBreedingCapability();
 

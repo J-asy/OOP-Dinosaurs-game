@@ -51,20 +51,25 @@ public class Application {
 		".........................................................................++++...",
 		"..........................................................................++....",
 		"................................................................................");
-		GameMap gameMap = new GameMap(groundFactory, map );
+		GameMap gameMap = new GameMap(groundFactory, map);
 		world.addGameMap(gameMap);
 		
 		Actor player = new Player("Player", '@', 100);
-		world.addPlayer(player, gameMap.at(7, 5));
-		player.addItemToInventory(new Fruit());
+		world.addPlayer(player, gameMap.at(10, 4));
 
-		DinoActor s1 = new Stegosaur(DinoCapabilities.FEMALE, true);
+		// A small herd of Stegosaur added at the start of the game
+		gameMap.at(48,11).addActor(new Stegosaur(true));
+		gameMap.at(20,18).addActor(new Stegosaur(true));
+		gameMap.at(58,20).addActor(new Stegosaur(true));
+		gameMap.at(58,9).addActor(new Stegosaur(true));
+		gameMap.at(1,11).addActor(new Stegosaur(true));
+
+		// A pair of Brachiosaur, male and female added at the start of the game
+		DinoActor s1 = new Brachiosaur(DinoCapabilities.FEMALE, true);
 		gameMap.at(36, 11).addActor(s1);
-		DinoActor s2 = new Stegosaur(DinoCapabilities.MALE, true);
+		DinoActor s2 = new Brachiosaur(DinoCapabilities.MALE, true);
 		gameMap.at(35, 11).addActor(s2);
 
-
-		gameMap.at(34,11).addActor(new Stegosaur(true));
 		world.run();
 	}
 }
