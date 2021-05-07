@@ -16,7 +16,7 @@ public class BreedingAction extends Action {
     /**
      * The dinosaur that another DinoActor will breed with.
      */
-    protected DinoActor target;
+     DinoActor target;
 
     /**
      * Constructor.

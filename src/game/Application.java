@@ -58,7 +58,7 @@ public class Application {
 		world.addPlayer(player, gameMap.at(7, 5));
 		player.addItemToInventory(new Fruit());
 
-		DinoActor s1 = new Allosaur(DinoCapabilities.FEMALE, true);
+		DinoActor s1 = new Stegosaur(DinoCapabilities.FEMALE, true);
 		gameMap.at(36, 11).addActor(s1);
 		DinoActor s2 = new Stegosaur(DinoCapabilities.MALE, true);
 		gameMap.at(35, 11).addActor(s2);

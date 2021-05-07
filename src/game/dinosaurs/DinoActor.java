@@ -15,8 +15,6 @@ import game.follow.FollowFoodOnPlantBehaviour;
 import game.follow.FollowMateBehaviour;
 import game.follow.FollowVictimBehaviour;
 import game.player.FedByPlayerBehaviour;
-import game.player.Player;
-import game.player.PlayerFeedAction;
 import game.pregnancy.LayEggAction;
 import game.pregnancy.PregnancyBehaviour;
 import game.wander.WanderBehaviour;
