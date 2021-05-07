@@ -9,36 +9,68 @@ import java.util.List;
 
 
 /**
- * Behaviour class that simulates Actor following another Actor
+ * Behaviour class that simulates Actor moving towards another Actor, Item or Ground.
  */
 
 public abstract class FollowBehaviour implements Behaviour {
 
     /**
-     * Description to be inform player of the following action.
+     * Description to be display on console of the purpose for the following action.
      */
     private final String purposeDescription;
 
     /**
-     * Minimum number of squares from DinoActor to start searching for a target to follow.
+     * Minimum number of squares from DinoActor to start searching for something to follow.
      */
     private final int MIN_RADIUS;
 
     /**
-     * Maximum number of squares from DinoActor to search for a target to follow.
+     * Maximum number of squares from DinoActor to search for something to follow.
      */
     private final int MAX_RADIUS;
 
+    /**
+     * Constructor.
+     * @param description purpose description of the motivation to perform following action
+     * @param min_radius minimum number of squares from DinoActor too start searching for
+     *                   something to follow
+     * @param max_radius maximum number of squares from DinoActor to search for something
+     *                   to follow
+     */
     public FollowBehaviour(String description, int min_radius, int max_radius) {
         purposeDescription = description;
         MIN_RADIUS = min_radius;
         MAX_RADIUS = max_radius;
     }
 
-    abstract boolean motivatedToFollow(DinoActor actor);
+    /**
+     * Returns true if the DinoActor has a reason / fulfills certain criteria
+     * to be able to follow something
+     * @param dinoActor DinoActor that is acting
+     * @return true if the DinoActor should attempt to follow, false otherwise.
+     */
+    abstract boolean motivatedToFollow(DinoActor dinoActor);
 
+    /**
+     * Checks whether the Location destination has a target that the DinoActor
+     * is trying to find and returns it if true, otherwise null is returned.
+     * @param map GameMap that the DinoActor is on
+     * @param destination Location that is checked for target
+     * @param actorAsDino DinoActor that is finding its target to follow
+     * @return a Location if the target is found on it, null otherwise.
+     */
     abstract Location findTarget(GameMap map, Location destination, DinoActor actorAsDino);
 
+    /**
+     * Checks all locations that are within MIN_RADIUS and MAX_RADIUS away from the
+     * actor's location. If there is something that the actor wants to follow on a location,
+     * returns a MoveActorAction to that location immediately. If after searching through
+     * all locations within the range and no suitable target to follow is found, return null.
+     * @param actor the Actor acting
+     * @param map the GameMap containing the Actor
+     * @return a MoveActorAction if the actor found a target to follow within range MIN_RADIUS
+     * and MAX_RADIUS squares away from Actor's location, null otherwise.
+     */
     @Override
     public Action getAction(Actor actor, GameMap map) {
         Action actionToReturn = null;
@@ -70,7 +102,7 @@ public abstract class FollowBehaviour implements Behaviour {
     }
 
     /**
-     *  Returns the MoveActorAction that leads actor closer to target destination.
+     * Returns the MoveActorAction that leads actor closer to target destination.
      * @param actorLocation location of the actor
      * @param destination location of the destination that the actor wants to reach
      * @param actor actor that is trying to move closer to the target destination
@@ -93,6 +125,19 @@ public abstract class FollowBehaviour implements Behaviour {
         return null;
     }
 
+    /**
+     * Gets locations that are in one cardinal direction of the actor and is
+     * offset number of squares away from the actor's location.
+     * @param map GameMap that the Actor is currently on
+     * @param actorLocation Current location of the Actor
+     * @param numRange NumberRange object to iterate through to get Locations needed
+     * @param offset distance that the locations to be returned should be from the actor's location
+     * @param forHorizontal true if want to retrieve horizontal locations (along x-axis of North or South
+     *                      of actor's location), false if want to retrieve vertical locations
+     *                      (along y-axis of East or West of actor's location)
+     * @return A list of locations in one cardinal direction of the Actor that are offset number of squares
+     * away
+     */
     private static List<Location> getSpottedLocations(GameMap map, Location actorLocation, NumberRange numRange,
                                                       int offset, boolean forHorizontal) {
         List<Location> allLocations = new ArrayList<>();
@@ -123,9 +168,9 @@ public abstract class FollowBehaviour implements Behaviour {
     }
 
     /**
-     * Get all locations from radius number of squares away from the Actor's location.
+     * Get all locations from radius number of squares away from the Actor's location for all four cardinal directions.
      * @param map GameMap that the Actor is currently on
-     * @param actor Actor that is looking around for something to follow
+     * @param actor Actor that is acting
      * @param radius The distance in number of squares away from the actor that needs to be returned.
      * @return all locations from radius number of squares away from the Actor's location
      */

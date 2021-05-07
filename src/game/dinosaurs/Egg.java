@@ -13,9 +13,7 @@ import static java.util.Map.entry;
  */
 public class Egg extends PortableItem {
 
-    /**
-     * Stores constants representing the total number of turns to wait till hatching for each dinosaur.
-     */
+
     private final static int[] STEGOSAUR_VALUE = {30,100};
     private final static int[] BRACHIOSAUR_VALUE = {30,1000};
     private final static int[] ALLOSAUR_VALUE = {50,1000};

@@ -20,7 +20,7 @@ public class LayEggAction extends Action {
     /**
      * Creates and places an Egg object at the location of the actor
      * to simulate the actor laying an egg, and returns a description
-     * of the process
+     * of the process.
      *
      * @param actor The actor performing the action.
      * @param map The map the actor is on.
