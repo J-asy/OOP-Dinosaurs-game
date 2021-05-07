@@ -14,6 +14,7 @@ import game.follow.FollowFoodOnGroundBehaviour;
 import game.follow.FollowFoodOnPlantBehaviour;
 import game.follow.FollowMateBehaviour;
 import game.follow.FollowVictimBehaviour;
+import game.player.FedByPlayerBehaviour;
 import game.player.Player;
 import game.player.PlayerFeedAction;
 import game.pregnancy.LayEggAction;
@@ -112,6 +113,7 @@ public abstract class DinoActor extends Actor {
         interactiveBehaviours = new ArrayList<>();
         interactiveBehaviours.add(new BreedingBehaviour(this));
         interactiveBehaviours.add(new AttackBehaviour(this));
+        interactiveBehaviours.add(new FedByPlayerBehaviour(this));
     }
 
     void initializeCapabilities(){
@@ -381,10 +383,6 @@ public abstract class DinoActor extends Actor {
             if (resultingAction != null){
                 validActions.add(resultingAction);
             }
-        }
-
-        if (otherActor instanceof Player) {
-            validActions.add(new PlayerFeedAction(this));
         }
 
         return validActions;
