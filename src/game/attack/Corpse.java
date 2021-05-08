@@ -12,7 +12,9 @@ import static java.util.Map.entry;
  */
 public class Corpse extends PortableItem {
 
-    // dictionary to refer to for the total number of turns to wait till corpse is removed from map
+    /** dictionary to refer to for the total number of turns to wait till corpse is removed from map
+     *
+     */
     private final static Map<DinoEncyclopedia, Integer> DINO_CORPSE_DICTIONARY = Map.ofEntries(
             entry(DinoEncyclopedia.STEGOSAUR, 20),
             entry(DinoEncyclopedia.BRACHIOSAUR, 40),
