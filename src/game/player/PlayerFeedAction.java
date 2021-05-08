@@ -92,6 +92,11 @@ public class PlayerFeedAction extends Action {
         return actor + " feeds " + target;
     }
 
+    /**
+     * Validate the user input to ensure that it is an Integer and within a certain range.
+     * @param max the maximum number that is considered valid
+     * @return a valid Integer from user input
+     */
     private int getIntegerInput(int max){
         Scanner scanner = new Scanner(System.in);
         int userInput = -1;
