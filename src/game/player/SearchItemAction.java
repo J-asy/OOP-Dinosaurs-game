@@ -46,12 +46,10 @@ public class SearchItemAction extends Action {
         if (fruit != null){
             actor.addItemToInventory(fruit);
             EcoPoints.incrementEcoPoints(earnedPoints);
-            System.out.println("Fruit found from " + groundDescription + "!");
+            return "Fruit found from " + groundDescription + "!";
         }
         else
-            System.out.println("Oops! No fruit found. Better luck next time ~");
-
-        return "";
+            return "Oops! No fruit found. Better luck next time ~";
     }
 
 
