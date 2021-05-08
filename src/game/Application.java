@@ -64,11 +64,15 @@ public class Application {
 		gameMap.at(58,9).addActor(new Stegosaur(true));
 		gameMap.at(1,11).addActor(new Stegosaur(true));
 
-		// A pair of Brachiosaur, male and female added at the start of the game
-		DinoActor s1 = new Brachiosaur(DinoCapabilities.FEMALE, true);
-		gameMap.at(36, 11).addActor(s1);
-		DinoActor s2 = new Brachiosaur(DinoCapabilities.MALE, true);
-		gameMap.at(35, 11).addActor(s2);
+		// Two pairs of Brachiosaur, male and female added at the start of the game
+		DinoActor b1 = new Brachiosaur(DinoCapabilities.FEMALE, true);
+		gameMap.at(36, 11).addActor(b1);
+		DinoActor b2 = new Brachiosaur(DinoCapabilities.MALE, true);
+		gameMap.at(35, 11).addActor(b2);
+		DinoActor b3 = new Brachiosaur(DinoCapabilities.FEMALE, true);
+		gameMap.at(10, 20).addActor(b3);
+		DinoActor b4 = new Brachiosaur(DinoCapabilities.MALE, true);
+		gameMap.at(30, 10).addActor(b4);
 
 		world.run();
 	}
