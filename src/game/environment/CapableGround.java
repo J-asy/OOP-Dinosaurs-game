@@ -2,7 +2,6 @@ package game.environment;
 
 import edu.monash.fit2099.engine.Ground;
 import game.EcoPoints;
-
 import java.util.ArrayList;
 
 /**
@@ -38,13 +37,23 @@ public abstract class CapableGround extends Ground {
         return hasCapability(TerrainType.BUSH);
     }
 
-
+    /**
+     * Checks if current Location has fruits.
+     * @return true or false
+     */
     public boolean hasFruits() {return hasCapability(TerrainType.HAS_FRUITS); }
 
+    /**
+     * Access the age of the CapableGround (Tree/Bush) growing on the current Location.
+     * @return age of the CapableGround
+     */
     int getAge() {
         return age;
     }
 
+    /**
+     * Increments the age of the ground by one.
+     */
     void incrementAge() {
         age++;
     }
@@ -62,6 +71,11 @@ public abstract class CapableGround extends Ground {
         return fruit;
     }
 
+    /**
+     * Removes the fruit in position i.
+     * @param i the index of the fruit that is to be removed
+     * @return fruit at index i
+     */
     public Fruit getFruit(int i){
         Fruit fruit = null;
         if (i >= 0 && i < getNumberOfFruits()) {
@@ -78,12 +92,19 @@ public abstract class CapableGround extends Ground {
             fruitArrayList.remove(0);
     }
 
+    /**
+     * Adds a new Fruit instance to list (simulate the growing of fruits).
+     * 1 EcoPoint added each time this method is called.
+     */
     void addFruit(){
         fruitArrayList.add(new Fruit());
         EcoPoints.incrementEcoPoints(1);
     }
 
-     void adjustHasFruitCapability(){
+    /**
+     * Adjusts the capability that the CapableGround should have when necessary.
+     */
+    void adjustHasFruitCapability(){
         if (getNumberOfFruits() > 0 && !hasFruits()) {
             addCapability(TerrainType.HAS_FRUITS);
         }

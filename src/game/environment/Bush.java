@@ -4,8 +4,6 @@ import edu.monash.fit2099.engine.Location;
 import game.Probability;
 import game.dinosaurs.DinoCapabilities;
 
-import java.util.ArrayList;
-
 /**
  * Class representing terrain of Bush type.
  */
@@ -43,7 +41,6 @@ public class Bush extends CapableGround {
             location.setGround(new Dirt());
         }
         else {
-            // If it's a fully grown bush, it can grow fruits, if a fruit grown then add to the fruits list
             if (getAge() > 10){
                 if (Probability.generateProbability(0.1f)) {
                    addFruit();

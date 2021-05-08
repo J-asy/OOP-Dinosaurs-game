@@ -10,6 +10,10 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 import game.Behaviour;
 
+/**
+ * Simulated the wandering behaviour of DinoActors - wandering may or may not
+ * occur depending on whether certain criteria is met.
+ */
 public class WanderBehaviour implements Behaviour {
 	
 	private Random random = new Random();

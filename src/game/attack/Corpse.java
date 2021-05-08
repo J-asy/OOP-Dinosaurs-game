@@ -3,7 +3,6 @@ package game.attack;
 import edu.monash.fit2099.engine.Location;
 import game.FoodType;
 import game.PortableItem;
-import game.dinosaurs.DinoActor;
 import game.dinosaurs.DinoEncyclopedia;
 import java.util.Map;
 import static java.util.Map.entry;
@@ -43,7 +42,7 @@ public class Corpse extends PortableItem {
 
     /**
      * Initializes number of turns until corpse is removed from map
-     * @param newWaitTurn
+     * @param newWaitTurn new number of wait turns
      */
     public void initializeWaitTurns(int newWaitTurn){
         if (newWaitTurn >= 0){

@@ -2,7 +2,6 @@ package game.player;
 
 import edu.monash.fit2099.engine.*;
 import game.EcoPoints;
-import game.FoodType;
 import game.PortableItem;
 import game.dinosaurs.*;
 import java.util.List;
@@ -28,7 +27,7 @@ public class PlayerFeedAction extends Action {
      * Perform the Action.
      * A list of items from the Player inventory will be shown to the user. User can choose the item they want to feed
      * to the target. Checking is done to ensure that the correct food type (food for Herbivore or Carnivore) is fed to
-     * the correct dinosaur.
+     * the correct DinoActor.
      *
      * @param actor The actor performing the action.
      * @param map The map the actor (Player) is on.

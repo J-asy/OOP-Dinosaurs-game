@@ -6,7 +6,6 @@ import game.PortableItem;
 import game.dinosaurs.DinoActor;
 import game.environment.*;
 
-import java.util.List;
 
 /**
  * Simulates the feeding behaviour of an Actor.
