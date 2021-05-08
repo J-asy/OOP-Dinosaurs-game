@@ -22,7 +22,7 @@ public class BuyAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        Scanner input = new Scanner(System.in);
+
         String strFormat = "%-2s %-20s %-19s|\n";
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("Welcome to the Vending Machine.");
@@ -41,7 +41,8 @@ public class BuyAction extends Action {
         System.out.println("===========================================|");
         System.out.println("You currently have " + EcoPoints.getEcoPoints() + " Eco Points.");
         System.out.println("What would you like? Please enter a number from 1 to 7. (Enter 0 to Exit)");
-        int choice = input.nextInt();
+
+        int choice = getIntegerInput();
         boolean boughtItem = VendingMachine.choose(choice,actor);
 
         if (choice >= 1 && choice <= 7 && boughtItem)
@@ -53,4 +54,22 @@ public class BuyAction extends Action {
     public String menuDescription(Actor actor) {
         return actor + " chooses an item to buy from Vending Machine.";
     }
+
+    private int getIntegerInput(){
+        Scanner scanner = new Scanner(System.in);
+        int userInput = -1;
+        boolean errorOccured = true;
+        do{
+            try{
+                userInput = Integer.parseInt(scanner.nextLine());
+                errorOccured = false;
+            }
+            catch (NumberFormatException e){
+                System.out.println("Please enter a number.");
+            }
+        } while (errorOccured);
+        return userInput;
+    }
 }
+
+

@@ -43,9 +43,9 @@ public class PlayerFeedAction extends Action {
             for (int i = 0; i < inventoryItems.size(); i++) {
                 System.out.println((i + 1) + ". " + inventoryItems.get(i).toString());
             }
-            Scanner input = new Scanner(System.in);
+
             System.out.println("Choose an inventory item to feed the dinosaur: ");
-            int choice = input.nextInt();
+            int choice = getIntegerInput(inventoryItems.size());
             if (choice == 0)
                 return "No food chosen.";
             Item item = inventoryItems.get(choice - 1);
@@ -90,6 +90,24 @@ public class PlayerFeedAction extends Action {
     @Override
     public String menuDescription(Actor actor) {
         return actor + " feeds " + target;
+    }
+
+    private int getIntegerInput(int max){
+        Scanner scanner = new Scanner(System.in);
+        int userInput = -1;
+        boolean errorOccured = true;
+        do{
+            try{
+                userInput = Integer.parseInt(scanner.nextLine());
+                errorOccured = userInput < 0 || userInput > max;
+                if (errorOccured)
+                    System.out.println("Please enter a number within 0 to " + max + ".");
+            }
+            catch (NumberFormatException e){
+                System.out.println("Please enter a number within 0 to " + max +".");
+            }
+        } while (errorOccured);
+        return userInput;
     }
 }
 
