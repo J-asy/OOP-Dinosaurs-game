@@ -6,6 +6,10 @@ import edu.monash.fit2099.engine.GameMap;
 import game.Behaviour;
 import game.dinosaurs.DinoActor;
 
+/**
+ * Simulates breeding behaviour of DinoActors - breeding might or might not
+ * occur depending on whether certain criteria is met.
+ */
 public class BreedingBehaviour implements Behaviour {
 
     /**
