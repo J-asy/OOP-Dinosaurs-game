@@ -1,10 +1,8 @@
 package game.environment;
 
 import edu.monash.fit2099.engine.*;
-import game.EcoPoints;
 import game.Probability;
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * Class representing terrain of Tree type.

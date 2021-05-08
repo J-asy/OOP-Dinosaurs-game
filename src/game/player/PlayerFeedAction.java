@@ -2,7 +2,6 @@ package game.player;
 
 import edu.monash.fit2099.engine.*;
 import game.EcoPoints;
-import game.FoodType;
 import game.PortableItem;
 import game.dinosaurs.*;
 import java.util.List;
@@ -28,7 +27,7 @@ public class PlayerFeedAction extends Action {
      * Perform the Action.
      * A list of items from the Player inventory will be shown to the user. User can choose the item they want to feed
      * to the target. Checking is done to ensure that the correct food type (food for Herbivore or Carnivore) is fed to
-     * the correct dinosaur.
+     * the correct DinoActor.
      *
      * @param actor The actor performing the action.
      * @param map The map the actor (Player) is on.
@@ -44,9 +43,9 @@ public class PlayerFeedAction extends Action {
             for (int i = 0; i < inventoryItems.size(); i++) {
                 System.out.println((i + 1) + ". " + inventoryItems.get(i).toString());
             }
-            Scanner input = new Scanner(System.in);
+
             System.out.println("Choose an inventory item to feed the dinosaur: ");
-            int choice = input.nextInt();
+            int choice = getIntegerInput(inventoryItems.size());
             if (choice == 0)
                 return "No food chosen.";
             Item item = inventoryItems.get(choice - 1);
@@ -91,6 +90,29 @@ public class PlayerFeedAction extends Action {
     @Override
     public String menuDescription(Actor actor) {
         return actor + " feeds " + target;
+    }
+
+    /**
+     * Validate the user input to ensure that it is an Integer and within a certain range.
+     * @param max the maximum number that is considered valid
+     * @return a valid Integer from user input
+     */
+    private int getIntegerInput(int max){
+        Scanner scanner = new Scanner(System.in);
+        int userInput = -1;
+        boolean errorOccured = true;
+        do{
+            try{
+                userInput = Integer.parseInt(scanner.nextLine());
+                errorOccured = userInput < 0 || userInput > max;
+                if (errorOccured)
+                    System.out.println("Please enter a number within 0 to " + max + ".");
+            }
+            catch (NumberFormatException e){
+                System.out.println("Please enter a number within 0 to " + max +".");
+            }
+        } while (errorOccured);
+        return userInput;
     }
 }
 
