@@ -7,6 +7,9 @@ import edu.monash.fit2099.engine.Item;
 
 import java.util.List;
 
+/**
+ * Special Action for user to check their Player's inventory when needed.
+ */
 public class CheckInventoryAction extends Action {
     @Override
     public String execute(Actor actor, GameMap map) {

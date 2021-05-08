@@ -9,7 +9,7 @@ import game.dinosaurs.DinoActor;
 import game.Probability;
 
 /**
- * Simulates breeding action of DinoActors
+ * Special Action for breeding between DinoActors.
  */
 public class BreedingAction extends Action {
 
