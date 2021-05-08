@@ -174,7 +174,7 @@ public abstract class FollowBehaviour implements Behaviour {
      * @param radius The distance in number of squares away from the actor that needs to be returned.
      * @return all locations from radius number of squares away from the Actor's location
      */
-    public static List<Location> lookAround(GameMap map, Actor actor, int radius) {
+    private static List<Location> lookAround(GameMap map, Actor actor, int radius) {
         Location actorLocation = map.locationOf(actor);
         List<Location> spottedLocations = new ArrayList<>();
         NumberRange horizontalRange = new NumberRange(-1*radius, 2*radius + 1);

@@ -48,7 +48,7 @@ public class FollowFoodOnGroundBehaviour extends FollowBehaviour {
      * @return true if DinoActor is hungry, false otherwise
      */
     @Override
-    public boolean motivatedToFollow(DinoActor dinoActor) {
+     boolean motivatedToFollow(DinoActor dinoActor) {
         return dinoActor.isHungry();
     }
 

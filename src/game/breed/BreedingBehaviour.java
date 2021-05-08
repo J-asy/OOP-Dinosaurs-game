@@ -11,7 +11,7 @@ public class BreedingBehaviour implements Behaviour {
     /**
      * Target dinoActor that another dinoActor might breed with.
      */
-    protected DinoActor target;
+     private DinoActor target;
 
     /**
      * Constructor.

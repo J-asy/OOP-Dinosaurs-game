@@ -24,7 +24,7 @@ public class Egg extends PortableItem {
      * An integer list which first value is the Brachiosaur egg's number of turns to wait
      * till it hatches, and second value if the amount of EcoPoints awarded when it hatches.
      */
-    private final static int[] BRACHIOSAUR_VALUE = {30,1000};
+    private final static int[] BRACHIOSAUR_VALUE = {60,1000};
 
     /**
      * An integer list which first value is the Allosaur egg's number of turns to wait

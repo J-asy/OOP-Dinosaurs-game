@@ -297,7 +297,7 @@ public abstract class DinoActor extends Actor {
      * Initializes the dinoActor's pregnancy period to an
      * appropriate value.
      */
-    public void initializePregnancyPeriod(){
+    private void initializePregnancyPeriod(){
         pregnancyPeriod = dinoType.getPregnancyPeriod();
     }
 
@@ -385,7 +385,7 @@ public abstract class DinoActor extends Actor {
      * @param map GameMap that the DinoActor is currently on
      * @return false if the DinoActor is conscious, true otherwise
      */
-    public boolean checkUnconsciousPeriod(GameMap map) {
+    private boolean checkUnconsciousPeriod(GameMap map) {
         Location dinoLocation = map.locationOf(this);
         if (!this.isConscious()){
             if (unconsciousPeriod > 0){

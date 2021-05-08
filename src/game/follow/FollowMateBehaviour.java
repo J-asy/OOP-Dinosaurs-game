@@ -43,7 +43,7 @@ public class FollowMateBehaviour extends FollowBehaviour {
      * @return true if DinoActor can breed, false otherwise
      */
     @Override
-    public boolean motivatedToFollow(DinoActor dinoActor) {
+     boolean motivatedToFollow(DinoActor dinoActor) {
         return dinoActor.canBreed();
     }
 
