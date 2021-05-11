@@ -10,4 +10,13 @@ public class PortableItem extends Item {
 	public PortableItem(String name, char displayChar) {
 		super(name, displayChar, true);
 	}
+
+	public boolean edibleByHerbivores(){
+		return hasCapability(FoodType.HERBIVORE);
+	}
+
+	public boolean edibleByCarnivores(){
+		return hasCapability(FoodType.CARNIVORE);
+	}
+
 }

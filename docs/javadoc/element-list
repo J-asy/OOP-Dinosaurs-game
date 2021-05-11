@@ -1,0 +1,12 @@
+edu.monash.fit2099.engine
+edu.monash.fit2099.interfaces
+game
+game.attack
+game.breed
+game.dinosaurs
+game.environment
+game.feeding
+game.follow
+game.player
+game.pregnancy
+game.wander

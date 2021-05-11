@@ -1,6 +1,7 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.Location;
+import game.EcoPoints;
 import game.FoodType;
 import game.PortableItem;
 
@@ -12,19 +13,32 @@ import static java.util.Map.entry;
  */
 public class Egg extends PortableItem {
 
-    /**
-     * Stores constants representing the total number of turns to wait till hatching for each dinosaur.
-     */
-//    private final static Map<DinoEncyclopedia, Integer> DINO_EGG_DICTIONARY = Map.ofEntries(
-//            entry(DinoEncyclopedia.STEGOSAUR, 30),
-//            entry(DinoEncyclopedia.BRACHIOSAUR, 30),
-//            entry(DinoEncyclopedia.ALLOSAUR, 50)
-//    );
 
-    private final static Map<DinoEncyclopedia, Integer> DINO_EGG_DICTIONARY = Map.ofEntries(
-            entry(DinoEncyclopedia.STEGOSAUR, 3),
-            entry(DinoEncyclopedia.BRACHIOSAUR, 2),
-            entry(DinoEncyclopedia.ALLOSAUR, 1)
+    /**
+     * An integer list which first value is the Stegosaur egg's number of turns to wait
+     * till it hatches, and second value if the amount of EcoPoints awarded when it hatches.
+     */
+    private final static int[] STEGOSAUR_VALUE = {30,100};
+
+    /**
+     * An integer list which first value is the Brachiosaur egg's number of turns to wait
+     * till it hatches, and second value if the amount of EcoPoints awarded when it hatches.
+     */
+    private final static int[] BRACHIOSAUR_VALUE = {60,1000};
+
+    /**
+     * An integer list which first value is the Allosaur egg's number of turns to wait
+     * till it hatches, and second value if the amount of EcoPoints awarded when it hatches.
+     */
+    private final static int[] ALLOSAUR_VALUE = {50,1000};
+
+    /**
+     * Map that stores useful constants for the Egg object according to different dinosaur species.
+     */
+    private final static Map<DinoEncyclopedia, int[]> DINO_EGG_DICTIONARY = Map.ofEntries(
+            entry(DinoEncyclopedia.STEGOSAUR, STEGOSAUR_VALUE),
+            entry(DinoEncyclopedia.BRACHIOSAUR, BRACHIOSAUR_VALUE),
+            entry(DinoEncyclopedia.ALLOSAUR, ALLOSAUR_VALUE)
     );
 
     /**
@@ -34,7 +48,7 @@ public class Egg extends PortableItem {
 
     /**
      * Uniquely identifies the species of the Egg's parent,
-     * baby dinosaur hatched out of the Egg will be of the same species
+     * baby dinosaur hatched out of the Egg will be of the same species.
      */
     private DinoEncyclopedia parent;
 
@@ -44,7 +58,7 @@ public class Egg extends PortableItem {
      */
     public Egg(DinoEncyclopedia parent){
         super("Egg", 'o');
-        initializeWaitTurns(DINO_EGG_DICTIONARY.get(parent));
+        initializeWaitTurns((DINO_EGG_DICTIONARY.get(parent))[0]);
         setParent(parent);
         addCapability(FoodType.CARNIVORE);
     }
@@ -75,7 +89,6 @@ public class Egg extends PortableItem {
      * @param currentLocation The location of the ground on which we lie.
      */
     public void tick(Location currentLocation) {
-        System.out.println("Wait: " + waitTurns);
         DinoActor newDino;
         if (waitTurns == 0) {
 
@@ -85,8 +98,11 @@ public class Egg extends PortableItem {
                 case ALLOSAUR -> new Allosaur(false);
             };
 
+            EcoPoints.incrementEcoPoints((DINO_EGG_DICTIONARY.get(parent))[1]);
             currentLocation.removeItem(this);
-            currentLocation.addActor(newDino);
+            if (!currentLocation.containsAnActor()) {
+                currentLocation.addActor(newDino);
+            }
         }
         else {
             decrementWaitTurn();

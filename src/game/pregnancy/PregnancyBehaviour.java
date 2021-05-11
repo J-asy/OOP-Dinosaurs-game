@@ -12,10 +12,12 @@ import game.dinosaurs.DinoActor;
 public class PregnancyBehaviour implements Behaviour {
 
     /**
-     * Checks if the Actor fulfills the following conditions:
+     * Determines whether it is time for a pregnant DinoActor to lay an egg yet.
+     * If yes, LayEggAction is returned, otherwise the pregnancy period of the
+     * DinoActor is updated to the number of turns left for it to lay an egg.
      * @param actor the Actor acting
      * @param map the GameMap containing the Actor
-     * @return a new DropItemAction if it is time for a pregnant actor to lay an egg, null otherwise.
+     * @return LayEggAction if it is time for a pregnant actor to lay an egg, null otherwise.
      */
     @Override
     public Action getAction(Actor actor, GameMap map) {

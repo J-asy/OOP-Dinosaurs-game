@@ -8,7 +8,8 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Weapon;
-import game.PortableItem;
+import game.dinosaurs.Allosaur;
+import game.dinosaurs.DinoActor;
 
 /**
  * Special Action for attacking other Actors.
@@ -18,7 +19,7 @@ public class AttackAction extends Action {
 	/**
 	 * The Actor that is to be attacked
 	 */
-	protected Actor target;
+	private DinoActor target;
 	/**
 	 * Random number generator
 	 */
@@ -29,10 +30,16 @@ public class AttackAction extends Action {
 	 * 
 	 * @param target the Actor to attack
 	 */
-	public AttackAction(Actor target) {
+	public AttackAction(DinoActor target) {
 		this.target = target;
 	}
 
+	/**
+	 * Performs the action
+	 * @param actor The actor performing the action.
+	 * @param map The map the actor is on.
+	 * @return a message string
+	 */
 	@Override
 	public String execute(Actor actor, GameMap map) {
 
@@ -43,13 +50,24 @@ public class AttackAction extends Action {
 		}
 
 		int damage = weapon.damage();
+
+		// Adds stegosaur to Allosaur's attackedStego HashMap only after attacking it
+		if (actor instanceof Allosaur) {
+			Allosaur actorAsAllosaur = (Allosaur) actor;
+			if (!actorAsAllosaur.hasAttackedVictim(target)) {
+				actorAsAllosaur.addAttackedVictims(target);
+			}
+		}
+
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 
+		actor.heal(damage);
 		target.hurt(damage);
-		if (!target.isConscious()) {
-			Item corpse = new PortableItem("dead " + target, '%');
+		if (target.getHitPoints() <= 0){
+			Item corpse = new Corpse(target.getDinoType());
 			map.locationOf(target).addItem(corpse);
-			
+			map.removeActor(target);
+
 			Actions dropActions = new Actions();
 			for (Item item : target.getInventory())
 				dropActions.add(item.getDropAction());
@@ -62,6 +80,7 @@ public class AttackAction extends Action {
 
 		return result;
 	}
+
 
 	@Override
 	public String menuDescription(Actor actor) {
