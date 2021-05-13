@@ -11,8 +11,8 @@ public enum DinoEncyclopedia {
 
     STEGOSAUR('S', "Stegosaur", 50, 10, 100, 60, 100, 90, 30, 50, 10, 20),
     BRACHIOSAUR('B', "Brachiosaur", 100, 10, 160, 60, 200,140, 50, 70, 30, 15),
-    ALLOSAUR('A', "Allosaur", 20, 20, 100, 60, 100, 90, 50, 50, 20, 20);
-//    PTERODACTYL('P', "Pterodactyl", );
+    ALLOSAUR('A', "Allosaur", 20, 20, 100, 60, 100, 90, 50, 50, 20, 20),
+    PTERODACTYL('P', "Pterodactyl", 50, 10, 100, 60, 100, 90, 30, 50, 10, 20);
 
     final char DISPLAY_CHAR;
     final String NAME;
