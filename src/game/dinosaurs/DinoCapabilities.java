@@ -13,7 +13,6 @@ public enum DinoCapabilities {
     CAN_BREED,
     HERBIVORE,
     CARNIVORE,
-    UNCONSCIOUS,
     CONSCIOUS,
     CAN_REACH_TREE
 }

@@ -12,13 +12,25 @@ import static java.util.Map.entry;
  */
 public class Corpse extends PortableItem {
 
+
+    private final static int[] STEGOSAUR_VALUE = {20,50};
+
+
+    private final static int[] BRACHIOSAUR_VALUE = {40,100};
+
+    /**
+     * first int number of turns to wait till corpse removed,
+     * second int healPoints
+     */
+    private final static int[] ALLOSAUR_VALUE = {20,50};
+
     /** dictionary to refer to for the total number of turns to wait till corpse is removed from map
      *
      */
-    private final static Map<DinoEncyclopedia, Integer> DINO_CORPSE_DICTIONARY = Map.ofEntries(
-            entry(DinoEncyclopedia.STEGOSAUR, 20),
-            entry(DinoEncyclopedia.BRACHIOSAUR, 40),
-            entry(DinoEncyclopedia.ALLOSAUR, 20)
+    private final static Map<DinoEncyclopedia, int[]> DINO_CORPSE_DICTIONARY = Map.ofEntries(
+            entry(DinoEncyclopedia.STEGOSAUR, STEGOSAUR_VALUE),
+            entry(DinoEncyclopedia.BRACHIOSAUR, BRACHIOSAUR_VALUE),
+            entry(DinoEncyclopedia.ALLOSAUR, ALLOSAUR_VALUE)
     );
 
     /**
@@ -38,8 +50,9 @@ public class Corpse extends PortableItem {
     public Corpse(DinoEncyclopedia newParent) {
         super("Corpse",'%');
         parent = newParent;
-        initializeWaitTurns(DINO_CORPSE_DICTIONARY.get(newParent));
         addCapability(FoodType.CARNIVORE);
+        initializeWaitTurns(getInitialWaitTurns());
+        setHealPoints(getInitialHealPoints());
     }
 
     /**
@@ -67,6 +80,14 @@ public class Corpse extends PortableItem {
      */
     public DinoEncyclopedia getParent() {
         return parent;
+    }
+
+    private int getInitialWaitTurns(){
+        return DINO_CORPSE_DICTIONARY.get(parent)[0];
+    }
+
+    private int getInitialHealPoints(){
+        return DINO_CORPSE_DICTIONARY.get(parent)[1];
     }
 
     /**

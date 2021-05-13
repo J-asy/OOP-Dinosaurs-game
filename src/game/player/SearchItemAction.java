@@ -33,7 +33,6 @@ public class SearchItemAction extends Action {
             if (capableGround.isBush()){
                 fruit = capableGround.getFruit();
                 groundDescription = "bush";
-                System.out.println(groundDescription);
                 earnedPoints = 10;
             }
             else if (capableGround.isTree()){

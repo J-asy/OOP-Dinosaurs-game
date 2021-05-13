@@ -41,6 +41,8 @@ public class Egg extends PortableItem {
             entry(DinoEncyclopedia.ALLOSAUR, ALLOSAUR_VALUE)
     );
 
+
+
     /**
      * Turns left to wait till the egg hatches.
      */
@@ -52,6 +54,8 @@ public class Egg extends PortableItem {
      */
     private DinoEncyclopedia parent;
 
+    private final static int HEAL_POINTS = 10;
+
     /**
      * Constructor.
      * @param parent DinoEncyclopedia enum value of the parent dinosaur to identify its species
@@ -61,6 +65,7 @@ public class Egg extends PortableItem {
         initializeWaitTurns((DINO_EGG_DICTIONARY.get(parent))[0]);
         setParent(parent);
         addCapability(FoodType.CARNIVORE);
+        setHealPoints(HEAL_POINTS);
     }
 
     private void setParent(DinoEncyclopedia newParent){

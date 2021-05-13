@@ -9,15 +9,18 @@ package game.dinosaurs;
 
 public enum DinoEncyclopedia {
 
-    STEGOSAUR('S', "Stegosaur", 50, 10, 100, 90, 30, 50, 10, 20),
-    BRACHIOSAUR('B', "Brachiosaur", 100, 10, 160, 140, 50, 70, 30, 15),
-    ALLOSAUR('A', "Allosaur", 20, 20, 100, 90, 50, 50, 20, 20);
+    STEGOSAUR('S', "Stegosaur", 50, 10, 100, 60, 100, 90, 30, 50, 10, 20),
+    BRACHIOSAUR('B', "Brachiosaur", 100, 10, 160, 60, 200,140, 50, 70, 30, 15),
+    ALLOSAUR('A', "Allosaur", 20, 20, 100, 60, 100, 90, 50, 50, 20, 20);
+//    PTERODACTYL('P', "Pterodactyl", );
 
     final char DISPLAY_CHAR;
     final String NAME;
     final int INITIAL_HIT_POINTS;
     final int BABY_INITIAL_HIT_POINTS;
     final int MAX_HIT_POINTS;
+    final int INITIAL_WATER_LEVEL;
+    final int MAX_WATER_LEVEL;
     final int HUNGRY_WHEN;
     final int MATURE_WHEN;
     final int BREEDING_MIN_FOOD_LEVEL;
@@ -25,12 +28,15 @@ public enum DinoEncyclopedia {
     final int UNCONSCIOUS_PERIOD;
 
     DinoEncyclopedia(char displayChar, String name, int initialHitPoints, int babyInitialHitPoints, int maxHitPoints,
-                     int hungryWhen, int matureWhen, int breedingMinFoodLevel, int pregnancyPeriod, int unconsciousPeriod) {
+                     int initialWaterLevel, int maxWaterLevel, int hungryWhen, int matureWhen, int breedingMinFoodLevel,
+                     int pregnancyPeriod, int unconsciousPeriod) {
         DISPLAY_CHAR = displayChar;
         NAME = name;
         INITIAL_HIT_POINTS = initialHitPoints;
         BABY_INITIAL_HIT_POINTS = babyInitialHitPoints;
         MAX_HIT_POINTS = maxHitPoints;
+        INITIAL_WATER_LEVEL = initialWaterLevel;
+        MAX_WATER_LEVEL = maxWaterLevel;
         HUNGRY_WHEN = hungryWhen;
         MATURE_WHEN = matureWhen;
         BREEDING_MIN_FOOD_LEVEL = breedingMinFoodLevel;
@@ -50,8 +56,20 @@ public enum DinoEncyclopedia {
         return INITIAL_HIT_POINTS;
     }
 
+    public int getBabyInitialHitPoints() {
+        return BABY_INITIAL_HIT_POINTS;
+    }
+
     public int getMaxHitPoints(){
         return MAX_HIT_POINTS;
+    }
+
+    public int getInitialWaterLevel() {
+        return INITIAL_WATER_LEVEL;
+    }
+
+    public int getMaxWaterLevel(){
+        return MAX_WATER_LEVEL;
     }
 
     public int getHungryWhen(){
@@ -72,10 +90,6 @@ public enum DinoEncyclopedia {
 
     public int getInitialUnconsciousPeriod(){
         return UNCONSCIOUS_PERIOD;
-    }
-
-    public int getBabyInitialHitPoints() {
-        return BABY_INITIAL_HIT_POINTS;
     }
 
 }

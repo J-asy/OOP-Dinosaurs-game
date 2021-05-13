@@ -2,6 +2,8 @@ package game.environment;
 
 import edu.monash.fit2099.engine.Ground;
 import game.EcoPoints;
+import game.Probability;
+
 import java.util.ArrayList;
 
 /**
@@ -84,13 +86,6 @@ public abstract class CapableGround extends Ground {
         return fruit;
     }
 
-    /**
-     * Removes the first Fruit in the List without returning anything.
-     */
-    public void removeFruit(){
-        if (getNumberOfFruits() > 0)
-            fruitArrayList.remove(0);
-    }
 
     /**
      * Adds a new Fruit instance to list (simulate the growing of fruits).
@@ -120,6 +115,33 @@ public abstract class CapableGround extends Ground {
     public int getNumberOfFruits() {
         return fruitArrayList.size();
     }
+
+    private int removeFruit(){
+        int healPoints = 0;
+        if (getNumberOfFruits() > 0) {
+            fruitArrayList.remove(0);
+            healPoints = new Fruit().getHealPoints();
+        }
+        return healPoints;
+    }
+
+    public int eatFruit() {
+        int healPoints = 0;
+
+        if (isBush()){
+            healPoints = removeFruit();
+        }
+        else if (isTree()) {
+            for (int i = 0; i < getNumberOfFruits(); i++) {
+                if (Probability.generateProbability(0.5f)) {
+                    healPoints += removeFruit();
+                }
+            }
+        }
+
+        return healPoints;
+    }
+
 
 
 }

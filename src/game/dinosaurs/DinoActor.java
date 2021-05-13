@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * Base class for Stegosaur, Brachiosaur and Allosaur for representing dinosaur Actors.
  */
 
-public abstract class DinoActor extends Actor {
+public abstract class DinoActor extends CapableActor {
 
     /**
      * An ArrayList of standard behaviours that the DinoActor should have.
@@ -154,22 +154,17 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    public DinoCapabilities getSex(){
-        DinoCapabilities sex;
-        if (hasCapability(DinoCapabilities.MALE)){
-            sex = DinoCapabilities.MALE;
-        }
-        else  {
-            sex = DinoCapabilities.FEMALE;
-        }
-        return sex;
+    public DinoCapabilities getSex() {
+        if (isMale()) return DinoCapabilities.MALE;
+        if (isFemale()) return DinoCapabilities.FEMALE;
+        return null;
     }
 
     /**
      * Increments the age of the dinosaur and simulates the action of the dinosaur growing up
      */
     private void aging(){
-        if (age >= dinoType.getMatureWhen()){
+        if (isMatured()){
             displayChar = Character.toUpperCase(getDisplayChar());
         }
         else {
@@ -247,26 +242,6 @@ public abstract class DinoActor extends Actor {
         return hitPoints < dinoType.getHungryWhen();
     }
 
-    public boolean isCarnivorous() {
-        return hasCapability(DinoCapabilities.CARNIVORE);
-    }
-
-    public boolean isHerbivorous() {
-        return hasCapability(DinoCapabilities.HERBIVORE);
-    }
-
-    public boolean canBreed() {
-        return hasCapability(DinoCapabilities.CAN_BREED);
-    }
-
-    public boolean canReachTree(){return hasCapability(DinoCapabilities.CAN_REACH_TREE);}
-
-    public boolean canAttack(){return hasCapability(DinoCapabilities.CAN_ATTACK); }
-
-    public boolean canBeAttacked(){
-        return hasCapability(DinoCapabilities.CAN_BE_ATTACKED);
-    }
-
     /**
      * Determines whether the dinoActor should have the Capability to breed and
      * add or remove the capability accordingly.
@@ -282,15 +257,6 @@ public abstract class DinoActor extends Actor {
                 removeCapability(DinoCapabilities.CAN_BREED);
             }
         }
-    }
-
-    /**
-     * Returns true if the dinoActor is pregnant, false otherwise.
-     * A dinoActor only has a chance to be pregnant after breeding.
-     * @return true if the dinoActor is pregnant, false otherwise
-     */
-    public boolean isPregnant(){
-        return hasCapability(DinoCapabilities.PREGNANT);
     }
 
     /**
@@ -330,11 +296,6 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    @Override
-    public boolean isConscious(){
-        return hasCapability(DinoCapabilities.CONSCIOUS);
-    }
-
     /**
      * Sets the DinoActor to unconscious if the argument passed in is true,
      * otherwise the DinoActor is set to be conscious.
@@ -343,11 +304,9 @@ public abstract class DinoActor extends Actor {
     public void setUnconscious(boolean status){
         if (status){
             removeCapability(DinoCapabilities.CONSCIOUS);
-            addCapability(DinoCapabilities.UNCONSCIOUS);
             initializeUnconsciousPeriod();
         }
         else {
-            removeCapability(DinoCapabilities.UNCONSCIOUS);
             addCapability(DinoCapabilities.CONSCIOUS);
         }
     }
@@ -387,15 +346,14 @@ public abstract class DinoActor extends Actor {
      */
     private boolean checkUnconsciousPeriod(GameMap map) {
         Location dinoLocation = map.locationOf(this);
-        if (!this.isConscious()){
+        if (!isConscious()){
             if (unconsciousPeriod > 0){
-                this.decrementUnconsciousPeriod();
+                decrementUnconsciousPeriod();
                 System.out.println(this + " at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is unconscious!");
             }
             else {
                 map.removeActor(this);
-                Corpse corpseDino = new Corpse(dinoType);
-                dinoLocation.addItem(corpseDino);
+                dinoLocation.addItem(new Corpse(dinoType));
                 System.out.println(this + " at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is dead!")  ;
             }
             return true;

@@ -7,6 +7,8 @@ import edu.monash.fit2099.engine.Item;
  */
 public class PortableItem extends Item {
 
+	private int healPoints;
+
 	public PortableItem(String name, char displayChar) {
 		super(name, displayChar, true);
 	}
@@ -17,6 +19,16 @@ public class PortableItem extends Item {
 
 	public boolean edibleByCarnivores(){
 		return hasCapability(FoodType.CARNIVORE);
+	}
+
+	public void setHealPoints(int newHealPoints) {
+		if (newHealPoints > 0){
+			healPoints = newHealPoints;
+		}
+	}
+
+	 public int getHealPoints(){
+		return healPoints;
 	}
 
 }

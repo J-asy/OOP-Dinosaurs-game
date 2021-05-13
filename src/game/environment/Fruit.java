@@ -9,6 +9,7 @@ import game.PortableItem;
  */
 public class Fruit extends PortableItem {
     private int groundTime;
+    private final static int HEAL_POINTS = 10;
 
     /**
      * Constructor
@@ -18,6 +19,7 @@ public class Fruit extends PortableItem {
         super("Fruit",'F');
         groundTime = 0;
         addCapability(FoodType.HERBIVORE);
+        setHealPoints(HEAL_POINTS);
     }
 
     /**
