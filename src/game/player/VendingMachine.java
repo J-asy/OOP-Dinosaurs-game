@@ -4,12 +4,10 @@ import edu.monash.fit2099.engine.Actions;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
-import game.*;
+import game.EcoPoints;
 import game.dinosaurs.DinoEncyclopedia;
 import game.dinosaurs.Egg;
-import game.environment.FertileGround;
 import game.environment.Fruit;
-import game.environment.TerrainType;
 
 /**
  * Class to represent the Vending Machine.
