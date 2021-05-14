@@ -1,8 +1,8 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
-import game.*;
 
+import game.Behaviour;
 import game.attack.AttackAction;
 import game.attack.AttackBehaviour;
 import game.attack.Corpse;
@@ -60,6 +60,8 @@ public abstract class DinoActor extends CapableActor {
      * ArrayList of Behaviours that requires two Actors to be in adjacent squares.
      */
     private ArrayList<Behaviour> interactiveBehaviours;
+
+    private int waterLevel;
 
     /**
      * Constructor.
@@ -179,8 +181,8 @@ public abstract class DinoActor extends CapableActor {
     }
 
     /**
-     * Update the DinoActor's age and display character depending on the
-     * argument passed in. Then, adjusts its breeding capability accordingly.
+     * Updates the DinoActor's age and display character depending on the
+     * argument passed in.
      * @param maturityStatus true if intend to set DinoActor as matured,
      *                       false otherwise.
      */
@@ -192,7 +194,6 @@ public abstract class DinoActor extends CapableActor {
         else {
             displayChar = Character.toLowerCase(displayChar);
         }
-        adjustBreedingCapability();
     }
 
     public boolean isMatured(){
@@ -242,18 +243,31 @@ public abstract class DinoActor extends CapableActor {
         return hitPoints < dinoType.getHungryWhen();
     }
 
+    public boolean isThirsty(){
+        return waterLevel < dinoType.getThirstyWhen();
+    }
+
+    public boolean canLayEggHere(Ground ground){
+        return true;
+    }
+
+    public boolean canBreedHere(Ground ground){
+        return true;
+    }
+
     /**
      * Determines whether the dinoActor should have the Capability to breed and
      * add or remove the capability accordingly.
      */
-    public void adjustBreedingCapability() {
+    public void adjustBreedingCapability(Ground ground) {
         if (!canBreed()){
-            if (hitPoints >= dinoType.getBreedingMinFoodLevel() && !isPregnant() && isMatured()){
+            if (hitPoints >= dinoType.getBreedingMinFoodLevel() && !isPregnant() &&
+                    isMatured() && canBreedHere(ground)){
                 addCapability(DinoCapabilities.CAN_BREED);
             }
         }
         else {
-            if (hitPoints < dinoType.getBreedingMinFoodLevel()){
+            if (hitPoints < dinoType.getBreedingMinFoodLevel() || !canBreedHere(ground)){
                 removeCapability(DinoCapabilities.CAN_BREED);
             }
         }
@@ -287,9 +301,7 @@ public abstract class DinoActor extends CapableActor {
         if (status){
             addCapability(DinoCapabilities.PREGNANT);
             initializePregnancyPeriod();
-            if (hasCapability(DinoCapabilities.CAN_BREED)){
-                removeCapability(DinoCapabilities.CAN_BREED);
-            }
+            removeCapability(DinoCapabilities.CAN_BREED);
         }
         else {
             removeCapability(DinoCapabilities.PREGNANT);
@@ -406,7 +418,7 @@ public abstract class DinoActor extends CapableActor {
         if (!checkUnconsciousPeriod(map)) {
             // do any necessary processing first
             roarIfHungry(map);
-            adjustBreedingCapability();
+            adjustBreedingCapability(map.locationOf(this).getGround());
 
             // calling getAction for every behaviour can help us to do some necessary processing
             // as well even if it returns null in the end

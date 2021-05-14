@@ -9,10 +9,10 @@ package game.dinosaurs;
 
 public enum DinoEncyclopedia {
 
-    STEGOSAUR('S', "Stegosaur", 50, 10, 100, 60, 100, 90, 30, 50, 10, 20),
-    BRACHIOSAUR('B', "Brachiosaur", 100, 10, 160, 60, 200,140, 50, 70, 30, 15),
-    ALLOSAUR('A', "Allosaur", 20, 20, 100, 60, 100, 90, 50, 50, 20, 20),
-    PTERODACTYL('P', "Pterodactyl", 50, 10, 100, 60, 100, 90, 30, 50, 10, 20);
+    STEGOSAUR('S', "Stegosaur", 50, 10, 100, 60, 100, 90, 40,30, 50, 10, 20),
+    BRACHIOSAUR('B', "Brachiosaur", 100, 10, 160, 60, 200,140, 40,50, 70, 30, 15),
+    ALLOSAUR('A', "Allosaur", 20, 20, 100, 60, 100, 90, 40,50, 50, 20, 20),
+    PTERODACTYL('P', "Pterodactyl", 50, 10, 100, 60, 100, 90, 40,30, 50, 10, 20);
 
     final char DISPLAY_CHAR;
     final String NAME;
@@ -22,14 +22,15 @@ public enum DinoEncyclopedia {
     final int INITIAL_WATER_LEVEL;
     final int MAX_WATER_LEVEL;
     final int HUNGRY_WHEN;
+    final int THIRSTY_WHEN;
     final int MATURE_WHEN;
     final int BREEDING_MIN_FOOD_LEVEL;
     final int PREGNANCY_PERIOD;
     final int UNCONSCIOUS_PERIOD;
 
     DinoEncyclopedia(char displayChar, String name, int initialHitPoints, int babyInitialHitPoints, int maxHitPoints,
-                     int initialWaterLevel, int maxWaterLevel, int hungryWhen, int matureWhen, int breedingMinFoodLevel,
-                     int pregnancyPeriod, int unconsciousPeriod) {
+                     int initialWaterLevel, int maxWaterLevel, int hungryWhen, int thirstyWhen, int matureWhen,
+                     int breedingMinFoodLevel, int pregnancyPeriod, int unconsciousPeriod) {
         DISPLAY_CHAR = displayChar;
         NAME = name;
         INITIAL_HIT_POINTS = initialHitPoints;
@@ -38,6 +39,7 @@ public enum DinoEncyclopedia {
         INITIAL_WATER_LEVEL = initialWaterLevel;
         MAX_WATER_LEVEL = maxWaterLevel;
         HUNGRY_WHEN = hungryWhen;
+        THIRSTY_WHEN = thirstyWhen;
         MATURE_WHEN = matureWhen;
         BREEDING_MIN_FOOD_LEVEL = breedingMinFoodLevel;
         PREGNANCY_PERIOD = pregnancyPeriod;
@@ -74,6 +76,10 @@ public enum DinoEncyclopedia {
 
     public int getHungryWhen(){
         return HUNGRY_WHEN;
+    }
+
+    public int getThirstyWhen(){
+        return THIRSTY_WHEN;
     }
 
     public int getMatureWhen(){
