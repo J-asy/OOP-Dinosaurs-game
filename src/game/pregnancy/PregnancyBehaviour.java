@@ -3,6 +3,7 @@ package game.pregnancy;
 import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Ground;
 import game.Behaviour;
 import game.dinosaurs.DinoActor;
 
@@ -30,8 +31,11 @@ public class PregnancyBehaviour implements Behaviour {
                     actorAsDino.decrementPregnancyPeriod();
                 }
                 else {
-                    actorAsDino.setPregnant(false);
-                    return new LayEggAction();
+                    Ground ground = map.locationOf(actor).getGround();
+                    if (actorAsDino.canLayEggHere(ground)) {
+                        actorAsDino.setPregnant(false);
+                        return new LayEggAction();
+                    }
                 }
             }
         }

@@ -3,7 +3,6 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.Location;
 import game.EcoPoints;
 import game.FoodItem;
-import game.PortableItem;
 
 import java.util.Map;
 import static java.util.Map.entry;
