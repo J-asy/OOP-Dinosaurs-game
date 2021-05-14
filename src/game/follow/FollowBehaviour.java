@@ -56,10 +56,10 @@ public abstract class FollowBehaviour implements Behaviour {
      * is trying to find and returns it if true, otherwise null is returned.
      * @param map GameMap that the DinoActor is on
      * @param destination Location that is checked for target
-     * @param actorAsDino DinoActor that is finding its target to follow
+     * @param dinoActor DinoActor that is finding its target to follow
      * @return a Location if the target is found on it, null otherwise.
      */
-    abstract Location findTarget(GameMap map, Location destination, DinoActor actorAsDino);
+    abstract Location findTarget(GameMap map, Location destination, DinoActor dinoActor);
 
     /**
      * Checks all locations that are within MIN_RADIUS and MAX_RADIUS away from the

@@ -4,7 +4,7 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.dinosaurs.DinoActor;
-import game.environment.CapableGround;
+import game.environment.FertileGround;
 
 /**
  * Special class that simulates behaviour of a herbivorous DinoActor
@@ -57,21 +57,21 @@ public class FollowFoodOnPlantBehaviour extends FollowBehaviour {
      * null will be returned otherwise.
      * @param map GameMap that the Actor is currently on
      * @param destination Location that is checked for a plant with fruits that DinoActor can eat from
-     * @param actorAsDino DinoActor that is trying to find plants with fruits
+     * @param dinoActor DinoActor that is trying to find plants with fruits
      * @return A location if there is a plant with fruits that DinoActor can eat from, null otherwise
      */
     @Override
-    Location findTarget(GameMap map, Location destination, DinoActor actorAsDino){
+    Location findTarget(GameMap map, Location destination, DinoActor dinoActor){
         Location returnDestination = null;
 
         Ground ground = destination.getGround();
 
-        if (ground instanceof CapableGround){
-            CapableGround currentGround = (CapableGround) ground;
-            if (currentGround.isTree() && currentGround.hasFruits() && actorAsDino.canReachTree()){
+        if (ground instanceof FertileGround){
+            FertileGround currentGround = (FertileGround) ground;
+            if (currentGround.isTree() && currentGround.hasFruits() && dinoActor.canReachTree()){
                 returnDestination = destination;
             }
-            else if (currentGround.isBush() && currentGround.hasFruits() && !actorAsDino.canReachTree()) {
+            else if (currentGround.isBush() && currentGround.hasFruits() && !dinoActor.canReachTree()) {
                 returnDestination = destination;
             }
         }

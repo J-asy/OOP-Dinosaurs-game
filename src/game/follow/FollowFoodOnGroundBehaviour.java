@@ -59,19 +59,19 @@ public class FollowFoodOnGroundBehaviour extends FollowBehaviour {
      * null will be returned otherwise.
      * @param map GameMap that the Actor is currently on
      * @param destination Location that is checked for food on the ground that the DinoActor can eat
-     * @param actorAsDino DinoActor that is trying to find plants with fruits
+     * @param dinoActor DinoActor that is trying to find plants with fruits
      * @return A location if there is food on the ground that DinoActor can eat, null otherwise
      */
     @Override
-    Location findTarget(GameMap map, Location destination, DinoActor actorAsDino){
+    Location findTarget(GameMap map, Location destination, DinoActor dinoActor){
         Location returnDestination = null;
         List<Item> groundItems = destination.getItems();
 
         for (Item item : groundItems){
             if (item instanceof PortableItem) {
                 PortableItem currentItem = (PortableItem) item;
-                if (actorAsDino.isHerbivorous() && currentItem.edibleByHerbivores() && !actorAsDino.canReachTree()||
-                        actorAsDino.isCarnivorous() && currentItem.edibleByCarnivores()) {
+                if (dinoActor.isHerbivorous() && currentItem.edibleByHerbivores() && !dinoActor.canReachTree()||
+                        dinoActor.isCarnivorous() && currentItem.edibleByCarnivores()) {
                     returnDestination = destination;
                     break;
                 }

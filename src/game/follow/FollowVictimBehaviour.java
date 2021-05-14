@@ -54,11 +54,11 @@ public class FollowVictimBehaviour extends FollowBehaviour {
      * null will be returned otherwise.
      * @param map GameMap that the Actor is currently on
      * @param destination Location that is checked for a potential victim
-     * @param actorAsDino DinoActor that is trying to follow a victim
+     * @param dinoActor DinoActor that is trying to follow a victim
      * @return A location if a potential victim to follow is on it, null otherwise
      */
     @Override
-     Location findTarget(GameMap map, Location destination, DinoActor actorAsDino){
+     Location findTarget(GameMap map, Location destination, DinoActor dinoActor){
         Location returnDestination = null;
 
         if (map.isAnActorAt(destination)) {
@@ -67,7 +67,7 @@ public class FollowVictimBehaviour extends FollowBehaviour {
             if (nearbyActor instanceof DinoActor) {
                 DinoActor targetAsDino = (DinoActor) nearbyActor;
 
-                if (actorAsDino.canAttack() && targetAsDino.canBeAttacked()) {
+                if (dinoActor.canAttack() && targetAsDino.canBeAttacked()) {
                     returnDestination = destination;
                 }
 

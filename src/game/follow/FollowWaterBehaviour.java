@@ -1,8 +1,10 @@
 package game.follow;
 
 import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.dinosaurs.DinoActor;
+import game.environment.FertileGround;
 
 public class FollowWaterBehaviour extends FollowBehaviour{
 
@@ -37,11 +39,19 @@ public class FollowWaterBehaviour extends FollowBehaviour{
 
     @Override
     boolean motivatedToFollow(DinoActor dinoActor) {
-        return false;
+        return dinoActor.isThirsty();
     }
 
     @Override
-    Location findTarget(GameMap map, Location destination, DinoActor actorAsDino) {
-        return null;
+    Location findTarget(GameMap map, Location destination, DinoActor dinoActor) {
+        Location returnDestination = null;
+        Ground ground = destination.getGround();
+        if (ground instanceof FertileGround) {
+            FertileGround currentGround = (FertileGround) ground;
+            if (currentGround.isLake()){
+                returnDestination = destination;
+            }
+        }
+        return returnDestination;
     }
 }
