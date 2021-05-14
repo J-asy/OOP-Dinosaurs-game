@@ -1,7 +1,6 @@
 package game.environment;
 
 import game.EcoPoints;
-import game.Probability;
 
 import java.util.ArrayList;
 

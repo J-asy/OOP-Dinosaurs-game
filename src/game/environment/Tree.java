@@ -1,6 +1,6 @@
 package game.environment;
 
-import edu.monash.fit2099.engine.*;
+import edu.monash.fit2099.engine.Location;
 import game.FoodItem;
 import game.Probability;
 import game.dinosaurs.CapableActor;

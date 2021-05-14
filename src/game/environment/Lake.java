@@ -4,7 +4,6 @@ import edu.monash.fit2099.engine.Actor;
 import game.FoodItem;
 import game.Probability;
 import game.dinosaurs.CapableActor;
-import game.dinosaurs.DinoActor;
 
 public class Lake extends CapableGround implements FeedingGround {
 
@@ -21,8 +20,8 @@ public class Lake extends CapableGround implements FeedingGround {
 
     @Override
     public boolean canActorEnter(Actor actor) {
-        if (actor instanceof DinoActor){
-            return ((DinoActor)actor).canEnterWater();
+        if (actor instanceof CapableActor){
+            return ((CapableActor)actor).canEnterWater();
         }
         return false;
     }
