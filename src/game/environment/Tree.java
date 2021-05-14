@@ -1,7 +1,9 @@
 package game.environment;
 
 import edu.monash.fit2099.engine.*;
+import game.FoodItem;
 import game.Probability;
+import game.dinosaurs.CapableActor;
 
 
 /**
@@ -61,6 +63,27 @@ public class Tree extends FertileGround {
 		}
 
 		adjustHasFruitCapability();
+	}
+
+	@Override
+	public boolean canEat(CapableActor capableActor) {
+		return capableActor.isHerbivorous() && capableActor.canReachTree() && hasFruits();
+	}
+
+	@Override
+	public int eat() {
+		int healPoints = 0;
+		for (int i = 0; i < getNumberOfFruits(); i++) {
+			if (Probability.generateProbability(0.5f)) {
+				healPoints += eatFruit();
+			}
+		}
+		return healPoints;
+	}
+
+	@Override
+	public FoodItem foodToEat() {
+		return new Fruit();
 	}
 
 

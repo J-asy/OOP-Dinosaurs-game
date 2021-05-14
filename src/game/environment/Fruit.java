@@ -1,12 +1,12 @@
 package game.environment;
 
 import edu.monash.fit2099.engine.Location;
-import game.PortableItem;
+import game.FoodItem;
 
 /**
  * Class that represents the Fruit object.
  */
-public class Fruit extends PortableItem {
+public class Fruit extends FoodItem {
     private int groundTime;
     private final static int HEAL_POINTS = 10;
 

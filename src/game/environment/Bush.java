@@ -1,7 +1,9 @@
 package game.environment;
 
 import edu.monash.fit2099.engine.Location;
+import game.FoodItem;
 import game.Probability;
+import game.dinosaurs.CapableActor;
 import game.dinosaurs.DinoCapabilities;
 
 /**
@@ -66,4 +68,18 @@ public class Bush extends FertileGround {
         adjustHasFruitCapability();
     }
 
+    @Override
+    public int eat() {
+        return eatFruit();
+    }
+
+    @Override
+    public boolean canEat(CapableActor capableActor) {
+        return capableActor.isHerbivorous() && !capableActor.canReachTree() && hasFruits();
+    }
+
+    @Override
+    public FoodItem foodToEat() {
+        return new Fruit();
+    }
 }

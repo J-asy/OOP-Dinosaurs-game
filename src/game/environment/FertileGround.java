@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * A class to add all the necessary capabilities to different terrain.
  */
-public abstract class FertileGround extends CapableGround {
+public abstract class FertileGround extends CapableGround implements FeedingGround{
 
     private int age = 0;  // the age of the plant
     private ArrayList<Fruit> fruitArrayList = new ArrayList<>(); //arrayList of the fruits that have grown on the plant
@@ -99,32 +99,14 @@ public abstract class FertileGround extends CapableGround {
         return fruitArrayList.size();
     }
 
-    private int removeFruit(){
+    int eatFruit(){
         int healPoints = 0;
         if (getNumberOfFruits() > 0) {
-            fruitArrayList.remove(0);
-            healPoints = new Fruit().getHealPoints();
+            Fruit fruit = fruitArrayList.remove(0);
+            healPoints = fruit.getHealPoints();
         }
         return healPoints;
     }
-
-    public int eatFruit() {
-        int healPoints = 0;
-
-        if (isBush()){
-            healPoints = removeFruit();
-        }
-        else if (isTree()) {
-            for (int i = 0; i < getNumberOfFruits(); i++) {
-                if (Probability.generateProbability(0.5f)) {
-                    healPoints += removeFruit();
-                }
-            }
-        }
-
-        return healPoints;
-    }
-
 
 
 }
