@@ -15,6 +15,5 @@ public enum DinoCapabilities {
     CARNIVORE,
     CONSCIOUS,
     CAN_REACH_TREE,
-    CAN_FLY,
     CAN_TRAVERSE_WATER,
 }

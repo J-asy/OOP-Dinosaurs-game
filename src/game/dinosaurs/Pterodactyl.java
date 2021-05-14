@@ -1,5 +1,8 @@
 package game.dinosaurs;
 
+import edu.monash.fit2099.engine.Ground;
+import game.environment.CapableGround;
+
 public class Pterodactyl extends DinoActor {
 
     /**
@@ -34,6 +37,23 @@ public class Pterodactyl extends DinoActor {
         nextId += 1;
     }
 
+    private boolean isOnTree(Ground ground){
+        if (ground instanceof CapableGround){
+            return ((CapableGround) ground).isTree();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean canLayEggHere(Ground ground) {
+        return isOnTree(ground);
+    }
+
+    @Override
+    public boolean canBreedHere(Ground ground) {
+        return isOnTree(ground);
+    }
+
     /**
      * Initialize necessary capabilities of a Pterodactyl.
      */
@@ -41,8 +61,9 @@ public class Pterodactyl extends DinoActor {
     void initializeCapabilities(){
         super.initializeCapabilities();
         addCapability(DinoCapabilities.CARNIVORE);
+        addCapability(DinoCapabilities.CAN_BE_ATTACKED);
         addCapability(DinoCapabilities.CAN_REACH_TREE);
-        addCapability(DinoCapabilities.CAN_FLY);
+        addCapability(DinoCapabilities.CAN_TRAVERSE_WATER);
     }
 
 }
