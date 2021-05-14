@@ -7,7 +7,7 @@ import game.Probability;
 /**
  * Class representing terrain of Tree type.
  */
-public class Tree extends CapableGround {
+public class Tree extends FertileGround {
 
 	private static final char SMALL = '+';
 	private static final char MEDIUM = 't';
@@ -19,7 +19,7 @@ public class Tree extends CapableGround {
 	 */
 	public Tree() {
 		super(SMALL);
-		addCapability(TerrainType.TREE);
+		setTree();
 	}
 
 	/**

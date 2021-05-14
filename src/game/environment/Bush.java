@@ -7,9 +7,9 @@ import game.dinosaurs.DinoCapabilities;
 /**
  * Class representing terrain of Bush type.
  */
-public class Bush extends CapableGround {
+public class Bush extends FertileGround {
 
-    private static final char SMALL = '~';
+    private static final char SMALL = '?';
     private static final char BIG = '*';
     private static final char FRUITY_BUSH = '^';
 
@@ -19,7 +19,7 @@ public class Bush extends CapableGround {
      */
     public Bush() {
         super(SMALL);
-        addCapability(TerrainType.BUSH);
+        setBush();
     }
 
     /**

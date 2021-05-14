@@ -1,7 +1,6 @@
 package game.environment;
 
 import edu.monash.fit2099.engine.Location;
-import game.FoodType;
 import game.PortableItem;
 
 /**
@@ -18,7 +17,7 @@ public class Fruit extends PortableItem {
     public Fruit(){
         super("Fruit",'F');
         groundTime = 0;
-        addCapability(FoodType.HERBIVORE);
+        setForHerbivores();
         setHealPoints(HEAL_POINTS);
     }
 

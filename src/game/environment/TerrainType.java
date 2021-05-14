@@ -7,5 +7,6 @@ public enum TerrainType {
     BUSH,
     TREE,
     VENDING_MACHINE,
-    HAS_FRUITS
+    HAS_FRUITS,
+    LAKE
 }

@@ -29,13 +29,14 @@ public class Dirt extends Ground {
 		// Checks the ground around it (up, down, left, right, diagonal) to count the surrounding trees and bushes
 		for (Exit elem : location.getExits()) {
 			Ground groundType = elem.getDestination().getGround();
-
-			if (groundType.hasCapability(TerrainType.BUSH)) {
-				surroundingBushes++;
-			}
-			else if (groundType.hasCapability(TerrainType.TREE)) {
-				adjacentTree = true;
-				break;
+			if (groundType instanceof FertileGround) {
+				FertileGround fertileGround = (FertileGround) groundType;
+				if (fertileGround.isBush()) {
+					surroundingBushes++;
+				} else if (fertileGround.isTree()) {
+					adjacentTree = true;
+					break;
+				}
 			}
 		}
 
