@@ -1,7 +1,7 @@
 package game.attack;
 
 import edu.monash.fit2099.engine.Location;
-import game.FoodType;
+import game.FoodItem;
 import game.PortableItem;
 import game.dinosaurs.DinoEncyclopedia;
 import java.util.Map;
@@ -10,7 +10,7 @@ import static java.util.Map.entry;
 /**
  * A dead dinosaur
  */
-public class Corpse extends PortableItem {
+public class Corpse extends FoodItem {
 
 
     private final static int[] STEGOSAUR_VALUE = {20,50};
@@ -24,19 +24,23 @@ public class Corpse extends PortableItem {
      */
     private final static int[] ALLOSAUR_VALUE = {20,50};
 
+    private final static int[] PTERODACTYL_VALUE = {20,30};
+
     /** dictionary to refer to for the total number of turns to wait till corpse is removed from map
      *
      */
     private final static Map<DinoEncyclopedia, int[]> DINO_CORPSE_DICTIONARY = Map.ofEntries(
             entry(DinoEncyclopedia.STEGOSAUR, STEGOSAUR_VALUE),
             entry(DinoEncyclopedia.BRACHIOSAUR, BRACHIOSAUR_VALUE),
-            entry(DinoEncyclopedia.ALLOSAUR, ALLOSAUR_VALUE)
+            entry(DinoEncyclopedia.ALLOSAUR, ALLOSAUR_VALUE),
+            entry(DinoEncyclopedia.PTERODACTYL, PTERODACTYL_VALUE)
     );
 
     /**
      * number of turns until corpse is removed from map
      */
     private int waitTurns;
+
 
     /**
      * Basic state of corpse's parent class instance
@@ -50,7 +54,7 @@ public class Corpse extends PortableItem {
     public Corpse(DinoEncyclopedia newParent) {
         super("Corpse",'%');
         parent = newParent;
-        addCapability(FoodType.CARNIVORE);
+        setForCarnivores();
         initializeWaitTurns(getInitialWaitTurns());
         setHealPoints(getInitialHealPoints());
     }

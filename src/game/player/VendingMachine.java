@@ -2,25 +2,25 @@ package game.player;
 
 import edu.monash.fit2099.engine.Actions;
 import edu.monash.fit2099.engine.Actor;
+import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.*;
 import game.dinosaurs.DinoEncyclopedia;
 import game.dinosaurs.Egg;
-import game.environment.CapableGround;
+import game.environment.FertileGround;
 import game.environment.Fruit;
 import game.environment.TerrainType;
 
 /**
  * Class to represent the Vending Machine.
  */
-public class VendingMachine extends CapableGround {
+public class VendingMachine extends Ground {
 
     /**
      * Constructor.
      */
     public VendingMachine() {
         super('X');
-        addCapability(TerrainType.VENDING_MACHINE);
     }
 
     /**
@@ -43,14 +43,14 @@ public class VendingMachine extends CapableGround {
         }
         else if (choice == 2 && ecoPoints >= 100){
             MealKitsItem vegeMealKit = new MealKitsItem("VegetarianMealKit");
-            vegeMealKit.addCapability(FoodType.HERBIVORE);
+            vegeMealKit.setForHerbivores();
             actor.addItemToInventory(vegeMealKit);
             EcoPoints.decrementEcoPoints(100);
             System.out.println("Vege meal kit Get!");
         }
         else if (choice == 3 && ecoPoints >= 500){
             MealKitsItem meatMealKit = new MealKitsItem("CarnivoreMealKit");
-            meatMealKit.addCapability(FoodType.CARNIVORE);
+            meatMealKit.setForCarnivores();
             actor.addItemToInventory(meatMealKit);
             EcoPoints.decrementEcoPoints(500);
             System.out.println("Carnivore meal kit Get!");
@@ -73,7 +73,13 @@ public class VendingMachine extends CapableGround {
             EcoPoints.decrementEcoPoints(1000);
             System.out.println("Allo egg Get!");
         }
-        else if (choice == 7 && ecoPoints >= 500){
+        else if (choice == 7 && ecoPoints >= 1000){
+            Egg allosaurEgg = new Egg(DinoEncyclopedia.PTERODACTYL);
+            actor.addItemToInventory(allosaurEgg);
+            EcoPoints.decrementEcoPoints(1000);
+            System.out.println("Ptero egg Get!");
+        }
+        else if (choice == 8 && ecoPoints >= 500){
             actor.addItemToInventory(new LaserGun());
             EcoPoints.decrementEcoPoints(500);
             System.out.println("Laser gun Get!");
@@ -83,7 +89,7 @@ public class VendingMachine extends CapableGround {
             return false;
         }
         else{
-            System.out.println("Please check if your eco points are enough and if your input is from 1-7 or 0 to Exit.\nThank you.");
+            System.out.println("Please check if your eco points are enough and if your input is from 1-8 or 0 to Exit.\nThank you.");
             return false;
         }
         return true;

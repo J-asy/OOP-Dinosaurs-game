@@ -1,11 +1,13 @@
 package game.player;
 
+import game.FoodItem;
+import game.FoodType;
 import game.PortableItem;
 
 /**
  * Class represent Meal Kits that can be fed to the dinosaurs.
  */
-public class MealKitsItem extends PortableItem {
+public class MealKitsItem extends FoodItem {
     /***
      * Constructor.
      *  @param name the name of this Item
@@ -13,4 +15,5 @@ public class MealKitsItem extends PortableItem {
     public MealKitsItem(String name) {
         super(name, '=');
     }
+
 }

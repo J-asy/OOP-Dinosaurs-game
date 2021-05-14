@@ -2,7 +2,7 @@ package game.dinosaurs;
 
 import edu.monash.fit2099.engine.Location;
 import game.EcoPoints;
-import game.FoodType;
+import game.FoodItem;
 import game.PortableItem;
 
 import java.util.Map;
@@ -11,7 +11,7 @@ import static java.util.Map.entry;
 /**
  * Represents an egg of a DinoActor.
  */
-public class Egg extends PortableItem {
+public class Egg extends FoodItem {
 
 
     /**
@@ -32,13 +32,16 @@ public class Egg extends PortableItem {
      */
     private final static int[] ALLOSAUR_VALUE = {50,1000};
 
+    private final static int[] PTERODACTYL_VALUE = {30,100};
+
     /**
      * Map that stores useful constants for the Egg object according to different dinosaur species.
      */
     private final static Map<DinoEncyclopedia, int[]> DINO_EGG_DICTIONARY = Map.ofEntries(
             entry(DinoEncyclopedia.STEGOSAUR, STEGOSAUR_VALUE),
             entry(DinoEncyclopedia.BRACHIOSAUR, BRACHIOSAUR_VALUE),
-            entry(DinoEncyclopedia.ALLOSAUR, ALLOSAUR_VALUE)
+            entry(DinoEncyclopedia.ALLOSAUR, ALLOSAUR_VALUE),
+            entry(DinoEncyclopedia.PTERODACTYL, PTERODACTYL_VALUE)
     );
 
 
@@ -61,10 +64,10 @@ public class Egg extends PortableItem {
      * @param parent DinoEncyclopedia enum value of the parent dinosaur to identify its species
      */
     public Egg(DinoEncyclopedia parent){
-        super("Egg", 'o');
+        super(parent.getName() + " Egg", 'o');
         initializeWaitTurns((DINO_EGG_DICTIONARY.get(parent))[0]);
         setParent(parent);
-        addCapability(FoodType.CARNIVORE);
+        setForCarnivores();
         setHealPoints(HEAL_POINTS);
     }
 
@@ -101,6 +104,7 @@ public class Egg extends PortableItem {
                 case STEGOSAUR -> new Stegosaur(false);
                 case BRACHIOSAUR -> new Brachiosaur(false);
                 case ALLOSAUR -> new Allosaur(false);
+                case PTERODACTYL -> new Pterodactyl(false);
             };
 
             EcoPoints.incrementEcoPoints((DINO_EGG_DICTIONARY.get(parent))[1]);
