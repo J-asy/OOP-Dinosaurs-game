@@ -60,5 +60,7 @@ public abstract class CapableActor extends Actor {
         return hasCapability(DinoCapabilities.BUSH_DESTROYER);
     }
 
+    public boolean canFly(){ return hasCapability(DinoCapabilities.CAN_FLY); }
+
 
 }

@@ -14,5 +14,6 @@ public enum DinoCapabilities {
     HERBIVORE,
     CARNIVORE,
     CONSCIOUS,
-    CAN_REACH_TREE
+    CAN_REACH_TREE,
+    CAN_FLY
 }

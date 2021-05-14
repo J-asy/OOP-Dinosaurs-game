@@ -40,8 +40,9 @@ public class Pterodactyl extends DinoActor {
     @Override
     void initializeCapabilities(){
         super.initializeCapabilities();
-        addCapability(DinoCapabilities.HERBIVORE);
+        addCapability(DinoCapabilities.CARNIVORE);
         addCapability(DinoCapabilities.CAN_REACH_TREE);
+        addCapability(DinoCapabilities.CAN_FLY);
     }
 
 }
