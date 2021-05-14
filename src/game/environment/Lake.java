@@ -21,7 +21,7 @@ public class Lake extends CapableGround implements FeedingGround {
     @Override
     public boolean canActorEnter(Actor actor) {
         if (actor instanceof CapableActor){
-            return ((CapableActor)actor).canEnterWater();
+            return ((CapableActor)actor).canTraverseWater();
         }
         return false;
     }

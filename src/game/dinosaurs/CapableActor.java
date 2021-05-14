@@ -62,5 +62,7 @@ public abstract class CapableActor extends Actor {
 
     public boolean canFly(){ return hasCapability(DinoCapabilities.CAN_FLY); }
 
+    public boolean canTraverseWater(){ return hasCapability(DinoCapabilities.CAN_TRAVERSE_WATER); }
+
 
 }
