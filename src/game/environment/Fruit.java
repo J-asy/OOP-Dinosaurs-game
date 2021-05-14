@@ -28,7 +28,6 @@ public class Fruit extends PortableItem {
      */
     @Override
     public void tick(Location currentLocation) {
-        super.tick(currentLocation);
         groundTime++;
 
         if (groundTime > 15){

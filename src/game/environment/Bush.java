@@ -9,7 +9,7 @@ import game.dinosaurs.DinoCapabilities;
  */
 public class Bush extends FertileGround {
 
-    private static final char SMALL = '?';
+    private static final char SMALL = '"';
     private static final char BIG = '*';
     private static final char FRUITY_BUSH = '^';
 
