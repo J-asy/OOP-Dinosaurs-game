@@ -4,7 +4,6 @@ import edu.monash.fit2099.engine.Location;
 import game.FoodItem;
 import game.Probability;
 import game.dinosaurs.CapableActor;
-import game.dinosaurs.DinoCapabilities;
 
 /**
  * Class representing terrain of Bush type.
@@ -38,9 +37,11 @@ public class Bush extends FertileGround {
     public void tick(Location location){
 
         // If a Brachiosaur steps on the bush, 50% chance ground reverts back to dirt :(
-        if (location.getActor() != null && location.getActor().hasCapability(DinoCapabilities.BUSH_DESTROYER) &&
-                Probability.generateProbability(0.5f)){
-            location.setGround(new Dirt());
+        if (location.getActor() != null && location.getActor() instanceof CapableActor) {
+            CapableActor capableActor = (CapableActor) location.getActor();
+            if (capableActor.canDestroyBush() && Probability.generateProbability(0.5f)) {
+                location.setGround(new Dirt());
+            }
         }
         else {
             if (getAge() > 10){
