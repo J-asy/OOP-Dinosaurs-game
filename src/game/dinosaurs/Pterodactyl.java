@@ -1,9 +1,10 @@
 package game.dinosaurs;
 
-import edu.monash.fit2099.engine.Ground;
+import edu.monash.fit2099.engine.*;
+import game.DynamicMovement;
 import game.environment.CapableGround;
 
-public class Pterodactyl extends DinoActor {
+public class Pterodactyl extends DinoActor implements DynamicMovement {
 
     /**
      * Enum type that can be referenced for a lot of useful constants
@@ -16,6 +17,10 @@ public class Pterodactyl extends DinoActor {
      * different Pterodactyls.
      */
     private static int nextId = 1;
+
+    private static final int INITIAL_FLYING_ENERGY = 2;
+
+    private int flyingEnergy = INITIAL_FLYING_ENERGY;
 
     /**
      * Constructor.
@@ -37,13 +42,6 @@ public class Pterodactyl extends DinoActor {
         nextId += 1;
     }
 
-    private boolean isOnTree(Ground ground){
-        if (ground instanceof CapableGround){
-            return ((CapableGround) ground).isTree();
-        }
-        return false;
-    }
-
     /**
      * Initialize necessary capabilities of a Pterodactyl.
      */
@@ -55,6 +53,34 @@ public class Pterodactyl extends DinoActor {
         addCapability(DinoCapabilities.CAN_REACH_TREE);
         addCapability(DinoCapabilities.CAN_TRAVERSE_WATER);
         addCapability(DinoCapabilities.ARBOREAL);
+    }
+
+    @Override
+    public String getMovement() {
+        String movementType = "walks";
+        if (useSpecialMovement()){
+            movementType = "flies";
+        }
+        return movementType;
+    }
+
+    @Override
+    public void depleteEnergy() {
+        flyingEnergy = Math.max(flyingEnergy - 1, 0);
+    }
+
+    @Override
+    public boolean useSpecialMovement() {
+        return flyingEnergy > 0;
+    }
+
+    @Override
+    public void rechargeEnergy(Ground ground){
+        if (ground instanceof CapableGround){
+            if (((CapableGround)ground).isTree()){
+                flyingEnergy = INITIAL_FLYING_ENERGY;
+            }
+        }
     }
 
 }

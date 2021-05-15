@@ -67,4 +67,6 @@ public abstract class CapableActor extends Actor {
     public boolean isArboreal(){
         return hasCapability(DinoCapabilities.ARBOREAL);
     }
+
 }
+

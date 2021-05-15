@@ -9,6 +9,7 @@ import edu.monash.fit2099.engine.Exit;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 import game.Behaviour;
+import game.DynamicMoveAction;
 
 /**
  * Simulated the wandering behaviour of DinoActors - wandering may or may not
@@ -34,7 +35,7 @@ public class WanderBehaviour implements Behaviour {
 		for (Exit exit : map.locationOf(actor).getExits()) {
             Location destination = exit.getDestination();
             if (destination.canActorEnter(actor)) {
-            	actions.add(exit.getDestination().getMoveAction(actor, "around", exit.getHotKey()));
+            	actions.add(new DynamicMoveAction(destination, "around"));
             }
         }
 		
