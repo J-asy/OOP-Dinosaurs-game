@@ -152,4 +152,5 @@ public class Allosaur extends DinoActor {
         }
         return super.playTurn(actions, lastAction, map, display);
     }
+
 }
