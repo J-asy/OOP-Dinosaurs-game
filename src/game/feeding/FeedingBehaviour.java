@@ -2,6 +2,7 @@ package game.feeding;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
+import game.FoodItem;
 import game.PortableItem;
 import game.dinosaurs.DinoActor;
 import game.environment.*;
@@ -29,23 +30,22 @@ public class FeedingBehaviour implements Behaviour {
             Ground ground = actorLocation.getGround();
 
             for (Item item : actorLocation.getItems()) {
-                if (item instanceof PortableItem) {
-                    PortableItem portableItem = (PortableItem) item;
-                    if (eatFruitOnGround(dinoActor, portableItem) || eatMeatOnGround(dinoActor, portableItem)) {
-                        return new FeedingAction(true, portableItem);
+                if (item instanceof FoodItem) {
+                    FoodItem foodItem = (FoodItem) item;
+                    if (eatFruitOnGround(dinoActor, foodItem) || eatMeatOnGround(dinoActor, foodItem)) {
+                        return new FeedingAction(true, foodItem);
                     }
                 }
             }
 
-            if (ground instanceof CapableGround && dinoActor.isHerbivorous()) {
-                CapableGround capableGround = (CapableGround) ground;
-                if (capableGround.hasFruits() && ((capableGround.isTree() && dinoActor.canReachTree())
-                        || (capableGround.isBush() && !dinoActor.canReachTree()))) {
-                    return new FeedingAction(false, new Fruit());
+            if (ground instanceof FeedingGround){
+                FeedingGround feedingGround = (FeedingGround) ground;
+                if (feedingGround.canEat(dinoActor)){
+                    return new FeedingAction(false, feedingGround.foodToEat());
                 }
             }
-        }
 
+        }
         return null;
     }
 
@@ -55,7 +55,7 @@ public class FeedingBehaviour implements Behaviour {
      * @param item edible portable item
      * @return true if dinosaur is a herbivore and item is edible by herbivores, false otherwise
      */
-    private static boolean eatFruitOnGround(DinoActor dinoActor, PortableItem item) {
+    private static boolean eatFruitOnGround(DinoActor dinoActor, FoodItem item) {
         return dinoActor.isHerbivorous() && item.edibleByHerbivores();
     }
 
@@ -65,7 +65,7 @@ public class FeedingBehaviour implements Behaviour {
      * @param item edible portable item
      * @return true if dinosaur is a carnivore and item is edible by carnivores, false otherwise
      */
-    private static boolean eatMeatOnGround(DinoActor dinoActor, PortableItem item) {
+    private static boolean eatMeatOnGround(DinoActor dinoActor, FoodItem item) {
         return dinoActor.isCarnivorous() && item.edibleByCarnivores();
     }
 

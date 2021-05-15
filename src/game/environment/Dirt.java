@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.Exit;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.Probability;
+import game.dinosaurs.CapableActor;
 
 
 /**
@@ -47,6 +48,16 @@ public class Dirt extends Ground {
 				location.setGround(new Bush());
 			}
 		}
+	}
+
+	@Override
+	public boolean canLayEggHere(CapableActor capableActor){
+		return !capableActor.isArboreal();
+	}
+
+	@Override
+	public boolean canBreedHere(CapableActor capableActor){
+		return !capableActor.isArboreal();
 	}
 
 

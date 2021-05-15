@@ -58,5 +58,15 @@ public class Lake extends CapableGround implements FeedingGround {
         return new Fish();
     }
 
+    @Override
+    public boolean canLayEggHere(CapableActor capableActor){
+        return false;
+    }
+
+    @Override
+    public boolean canBreedHere(CapableActor capableActor){
+        return false;
+    }
+
 
 }

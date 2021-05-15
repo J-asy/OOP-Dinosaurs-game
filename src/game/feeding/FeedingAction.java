@@ -1,21 +1,21 @@
 package game.feeding;
 
 import edu.monash.fit2099.engine.*;
-import game.PortableItem;
+import game.FoodItem;
 import game.dinosaurs.DinoActor;
-import game.environment.*;
+import game.environment.FeedingGround;
 
 public class FeedingAction extends Action {
 
     /**
      * Identifier if food is on ground or in plant
      */
-    private Boolean isFoodOnGround;
+    private final Boolean isFoodOnGround;
 
     /**
      * portable item that can be eaten
      */
-    private PortableItem foodItem;
+    private final FoodItem foodItem;
 
 
     /**
@@ -24,7 +24,7 @@ public class FeedingAction extends Action {
      * @param foodOnGround true if food is on the ground, false if on tree or in bush
      * @param item         edible portable item
      */
-    public FeedingAction(Boolean foodOnGround, PortableItem item) {
+    public FeedingAction(Boolean foodOnGround, FoodItem item) {
         this.isFoodOnGround = foodOnGround;
         this.foodItem = item;
     }
@@ -48,9 +48,11 @@ public class FeedingAction extends Action {
             }
             else {
                 Ground ground = actorLocation.getGround();
-                if (ground instanceof CapableGround) {
-                    CapableGround capableGround = (CapableGround) ground;
-                    healPoints = findFoodOnPlant(dinoActor, capableGround);
+                if (ground instanceof FeedingGround) {
+                    FeedingGround feedingGround = (FeedingGround) ground;
+                    if (feedingGround.canEat(dinoActor)){
+                        healPoints = feedingGround.eat();
+                    }
                 }
             }
 
@@ -61,16 +63,6 @@ public class FeedingAction extends Action {
         }
 
         return menuDescription(actor);
-    }
-
-    public int findFoodOnPlant(DinoActor dinoActor, CapableGround capableGround){
-        int healPoints = 0;
-        if (dinoActor.isHerbivorous()){
-            if (capableGround.isBush() || capableGround.isTree()){
-                healPoints = capableGround.eatFruit();
-            }
-        }
-        return healPoints;
     }
 
     /**

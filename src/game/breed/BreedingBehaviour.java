@@ -3,6 +3,7 @@ package game.breed;
 import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Ground;
 import game.Behaviour;
 import game.dinosaurs.DinoActor;
 
@@ -35,12 +36,15 @@ public class BreedingBehaviour implements Behaviour {
     @Override
     public Action getAction(Actor actor, GameMap map) {
         if (actor instanceof DinoActor) {
-            DinoActor actorAsDino = (DinoActor) actor;
-            boolean differentSex = target.getSex() != actorAsDino.getSex();
-            boolean sameSpecies = target.getDinoType() == actorAsDino.getDinoType();
-            boolean bothAbleToBreed = target.canBreed() && actorAsDino.canBreed();
+            DinoActor dinoActor = (DinoActor) actor;
+            Ground actorGround = map.locationOf(dinoActor).getGround();
+            Ground targetGround = map.locationOf(target).getGround();
+            boolean differentSex = target.getSex() != dinoActor.getSex();
+            boolean sameSpecies = target.getDinoType() == dinoActor.getDinoType();
+            boolean bothAbleToBreed = target.canBreed() && dinoActor.canBreed();
+            boolean canBreedHere = actorGround.canBreedHere(dinoActor) && targetGround.canBreedHere(target);
 
-            if (differentSex && sameSpecies && bothAbleToBreed) {
+            if (differentSex && sameSpecies && bothAbleToBreed && canBreedHere) {
                 return new BreedingAction(target);
             }
 

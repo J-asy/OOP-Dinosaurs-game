@@ -24,16 +24,16 @@ public class PregnancyBehaviour implements Behaviour {
     public Action getAction(Actor actor, GameMap map) {
 
         if (actor instanceof DinoActor){
-            DinoActor actorAsDino = (DinoActor) actor;
+            DinoActor dinoActor = (DinoActor) actor;
 
-            if (actorAsDino.isPregnant()){
-                if (actorAsDino.getPregnancyPeriod() > 0){
-                    actorAsDino.decrementPregnancyPeriod();
+            if (dinoActor.isPregnant()){
+                if (dinoActor.getPregnancyPeriod() > 0){
+                    dinoActor.decrementPregnancyPeriod();
                 }
                 else {
                     Ground ground = map.locationOf(actor).getGround();
-                    if (actorAsDino.canLayEggHere(ground)) {
-                        actorAsDino.setPregnant(false);
+                    if (ground.canLayEggHere(dinoActor)) {
+                        dinoActor.setPregnant(false);
                         return new LayEggAction();
                     }
                 }

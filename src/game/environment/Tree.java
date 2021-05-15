@@ -86,6 +86,16 @@ public class Tree extends FertileGround {
 		return new Fruit();
 	}
 
+	@Override
+	public boolean canLayEggHere(CapableActor capableActor){
+		return capableActor.isArboreal();
+	}
+
+	@Override
+	public boolean canBreedHere(CapableActor capableActor){
+		return capableActor.isArboreal();
+	}
+
 
 
 }
