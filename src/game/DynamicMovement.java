@@ -8,8 +8,8 @@ public interface DynamicMovement {
 
     void depleteEnergy();
 
-    void rechargeEnergy(Ground ground);
-
     boolean useSpecialMovement();
+
+    void activityDuringSpecialMovement(Ground ground);
 
 }
