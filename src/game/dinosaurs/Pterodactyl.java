@@ -44,16 +44,6 @@ public class Pterodactyl extends DinoActor {
         return false;
     }
 
-    @Override
-    public boolean canLayEggHere(Ground ground) {
-        return isOnTree(ground);
-    }
-
-    @Override
-    public boolean canBreedHere(Ground ground) {
-        return isOnTree(ground);
-    }
-
     /**
      * Initialize necessary capabilities of a Pterodactyl.
      */
@@ -64,6 +54,7 @@ public class Pterodactyl extends DinoActor {
         addCapability(DinoCapabilities.CAN_BE_ATTACKED);
         addCapability(DinoCapabilities.CAN_REACH_TREE);
         addCapability(DinoCapabilities.CAN_TRAVERSE_WATER);
+        addCapability(DinoCapabilities.ARBOREAL);
     }
 
 }

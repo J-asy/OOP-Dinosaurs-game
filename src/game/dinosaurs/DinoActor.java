@@ -33,6 +33,11 @@ public abstract class DinoActor extends CapableActor {
     private ArrayList<Behaviour> behaviour;
 
     /**
+     * ArrayList of Behaviours that requires two Actors to be in adjacent squares.
+     */
+    private ArrayList<Behaviour> interactiveBehaviours;
+
+    /**
      * A reference to DinoEncyclopedia Enum class that indicates the species
      * of the DinoActor and contains many useful constants for initialization or comparison etc
      */
@@ -55,11 +60,6 @@ public abstract class DinoActor extends CapableActor {
      * has till it dies
      */
     private int unconsciousPeriod;
-
-    /**
-     * ArrayList of Behaviours that requires two Actors to be in adjacent squares.
-     */
-    private ArrayList<Behaviour> interactiveBehaviours;
 
     private int waterLevel;
 
@@ -247,27 +247,18 @@ public abstract class DinoActor extends CapableActor {
         return waterLevel < dinoType.getThirstyWhen();
     }
 
-    public boolean canLayEggHere(Ground ground){
-        return true;
-    }
-
-    public boolean canBreedHere(Ground ground){
-        return true;
-    }
-
     /**
      * Determines whether the dinoActor should have the Capability to breed and
      * add or remove the capability accordingly.
      */
-    public void adjustBreedingCapability(Ground ground) {
+    public void adjustBreedingCapability() {
         if (!canBreed()){
-            if (hitPoints >= dinoType.getBreedingMinFoodLevel() && !isPregnant() &&
-                    isMatured() && canBreedHere(ground)){
+            if (hitPoints >= dinoType.getBreedingMinFoodLevel() && !isPregnant() && isMatured()){
                 addCapability(DinoCapabilities.CAN_BREED);
             }
         }
         else {
-            if (hitPoints < dinoType.getBreedingMinFoodLevel() || !canBreedHere(ground)){
+            if (hitPoints < dinoType.getBreedingMinFoodLevel()){
                 removeCapability(DinoCapabilities.CAN_BREED);
             }
         }
@@ -418,7 +409,7 @@ public abstract class DinoActor extends CapableActor {
         if (!checkUnconsciousPeriod(map)) {
             // do any necessary processing first
             roarIfHungry(map);
-            adjustBreedingCapability(map.locationOf(this).getGround());
+            adjustBreedingCapability();
 
             // calling getAction for every behaviour can help us to do some necessary processing
             // as well even if it returns null in the end

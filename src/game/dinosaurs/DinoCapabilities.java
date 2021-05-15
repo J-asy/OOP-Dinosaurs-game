@@ -16,4 +16,5 @@ public enum DinoCapabilities {
     CONSCIOUS,
     CAN_REACH_TREE,
     CAN_TRAVERSE_WATER,
+    ARBOREAL
 }

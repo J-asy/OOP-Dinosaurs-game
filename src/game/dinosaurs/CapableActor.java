@@ -60,7 +60,11 @@ public abstract class CapableActor extends Actor {
         return hasCapability(DinoCapabilities.BUSH_DESTROYER);
     }
 
-    public boolean canTraverseWater(){ return hasCapability(DinoCapabilities.CAN_TRAVERSE_WATER); }
+    public boolean canTraverseWater(){
+        return hasCapability(DinoCapabilities.CAN_TRAVERSE_WATER);
+    }
 
-
+    public boolean isArboreal(){
+        return hasCapability(DinoCapabilities.ARBOREAL);
+    }
 }
