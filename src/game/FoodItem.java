@@ -4,14 +4,13 @@ package game;
 /**
  * Base class for any item that can be picked up and dropped.
  */
-public class FoodItem extends PortableItem {
+public abstract class FoodItem extends PortableItem {
 
 	private int healPoints;
 
 	public FoodItem(String name, char displayChar) {
 		super(name, displayChar);
 	}
-
 	public boolean edibleByHerbivores(){
 		return hasCapability(FoodType.HERBIVORE);
 	}
@@ -47,5 +46,6 @@ public class FoodItem extends PortableItem {
 	public void decrementHealPoints(int decrementBy) {
 		healPoints = Math.max(healPoints - decrementBy, 0);
 	}
+
 
 }
