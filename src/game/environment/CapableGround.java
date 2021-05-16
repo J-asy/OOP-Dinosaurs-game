@@ -28,10 +28,6 @@ public abstract class CapableGround extends Ground {
         return hasCapability(TerrainType.BUSH);
     }
 
-    public boolean isLake(){
-        return hasCapability(TerrainType.LAKE);
-    }
-
     void setBush(){
         addCapability(TerrainType.BUSH);
     }

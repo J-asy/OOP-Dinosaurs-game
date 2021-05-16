@@ -1,13 +1,16 @@
 package game.environment;
 
 import edu.monash.fit2099.engine.Actor;
-import game.FoodItem;
+import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Location;
+import game.Food;
 import game.Probability;
 import game.dinosaurs.CapableActor;
 
-public class Lake extends CapableGround implements FeedingGround {
+public class Lake extends CapableGround implements Food, DrinkingGround {
 
     private int numberOfFish;
+    private int waterLevel;
 
 
     /**
@@ -37,25 +40,25 @@ public class Lake extends CapableGround implements FeedingGround {
     }
 
     @Override
-    public boolean canEat(CapableActor capableActor) {
+    public boolean canEat(CapableActor capableActor, Location location) {
         return capableActor.isCarnivorous();
     }
 
     @Override
-    public int eat() {
+    public int eat(GameMap map, Location location, int biteSize) {
         int healPoints = 0;
         for (int i = 0; i < 2; i++) {
             if (hasFish() && Probability.generateProbability(0.5f)) {
                 decrementNumberOfFish();
-                healPoints += foodToEat().getHealPoints();
+                healPoints += new Fish().getHealPoints();
             }
         }
         return healPoints;
     }
 
     @Override
-    public FoodItem foodToEat(){
-        return new Fish();
+    public String foodName(){
+        return new Fish().foodName();
     }
 
     @Override
@@ -68,5 +71,8 @@ public class Lake extends CapableGround implements FeedingGround {
         return false;
     }
 
-
+    @Override
+    public boolean hasWater() {
+        return waterLevel > 0;
+    }
 }

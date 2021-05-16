@@ -5,6 +5,7 @@ import game.DynamicMovement;
 import game.Food;
 import game.environment.CapableGround;
 import game.environment.DrinkingGround;
+import game.environment.Lake;
 
 public class Pterodactyl extends DinoActor implements DynamicMovement, Food {
 
@@ -57,6 +58,32 @@ public class Pterodactyl extends DinoActor implements DynamicMovement, Food {
     }
 
     @Override
+    public boolean canEat(CapableActor capableActor, Location location) {
+        return capableActor.isCarnivorous() && capableActor.canAttack() && !isOnTree(location.getGround());
+    }
+
+    @Override
+    public int eat(GameMap map, Location location, int biteSize) {
+        decrementHitPoints(biteSize);
+        if (getHitPoints() == 0) {
+            map.removeActor(this);
+        }
+        return biteSize;
+    }
+
+    @Override
+    public String foodName() {
+        return this.name;
+    }
+
+    private boolean isOnTree(Ground ground){
+        if (ground instanceof CapableGround){
+            return ((CapableGround)ground).isTree();
+        }
+        return false;
+    }
+
+    @Override
     public String getMovement() {
         String movementType = "walks";
         if (useSpecialMovement()){
@@ -76,26 +103,22 @@ public class Pterodactyl extends DinoActor implements DynamicMovement, Food {
     }
 
     @Override
-    public void activityDuringSpecialMovement(GameMap map, Location location) {
+    public void activityDuringSpecialMovement(GameMap map, Location location){
         Ground ground = location.getGround();
-        if (ground instanceof Food){
-            Food feedingGround = (Food) ground;
-            if (feedingGround.canEat(this, location)){
-                int healPoints = feedingGround.eat(map, location, getBiteSize());
+        if (ground instanceof Lake){
+            Lake lake = (Lake) ground;
+            if (lake.canEat(this, location)){
+                int healPoints = lake.eat(map, location, getBiteSize());
                 if (healPoints > 0) {
                     heal(healPoints);
-                    System.out.printf("%s eats %s.%n", name, feedingGround.foodName());
+                    System.out.printf("%s eats %s.%n", name, lake.foodName());
                 }
             }
-        }
 
-        if (ground instanceof DrinkingGround){
-            DrinkingGround drinkingGround = (DrinkingGround)ground;
-            if (drinkingGround.hasWater()){
+            if (lake.hasWater()){
                 drinkWater();
             }
         }
-
     }
 
     public void rechargeEnergy(Ground ground){
@@ -104,38 +127,11 @@ public class Pterodactyl extends DinoActor implements DynamicMovement, Food {
         }
     }
 
-    private boolean isOnTree(Ground ground){
-        if (ground instanceof CapableGround){
-            return ((CapableGround)ground).isTree();
-        }
-        return false;
-    }
-
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Ground ground = map.locationOf(this).getGround();
         rechargeEnergy(ground);
         return super.playTurn(actions, lastAction, map, display);
     }
-
-    @Override
-    public boolean canEat(CapableActor capableActor, Location location) {
-        return capableActor.isCarnivorous() && isOnTree(location.getGround());
-    }
-
-    @Override
-    public int eat(GameMap map, Location location, int biteSize) {
-        decrementHitPoints(biteSize);
-        if (getHitPoints() == 0) {
-            map.removeActor(this);
-        }
-        return biteSize;
-    }
-
-    @Override
-    public String foodName() {
-        return this.name;
-    }
-
 
 }
