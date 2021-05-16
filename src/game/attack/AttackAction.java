@@ -51,7 +51,7 @@ public class AttackAction extends Action {
 
 		int damage = weapon.damage();
 
-		// Adds stegosaur to Allosaur's victim HashMap only after attacking it
+		// Adds stegosaur to Allosaur 's victim HashMap only after attacking it
 		if (actor instanceof Allosaur) {
 			Allosaur actorAsAllosaur = (Allosaur) actor;
 			if (!actorAsAllosaur.hasAttackedVictim(target)) {
