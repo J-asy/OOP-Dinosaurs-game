@@ -27,30 +27,29 @@ public abstract class CapableActor extends Actor {
         return hasCapability(DinoCapabilities.CONSCIOUS);
     }
 
-    public boolean isCarnivorous() {
-        return hasCapability(DinoCapabilities.CARNIVORE);
-    }
-
     public boolean isHerbivorous() {
         return hasCapability(DinoCapabilities.HERBIVORE);
+    }
+
+    public boolean isCarnivorous() {
+        return hasCapability(DinoCapabilities.CARNIVORE);
     }
 
     public boolean canBreed() {
         return hasCapability(DinoCapabilities.CAN_BREED);
     }
 
-    /**
-     * Returns true if the dinoActor is pregnant, false otherwise.
-     * A dinoActor only has a chance to be pregnant after breeding.
-     * @return true if the dinoActor is pregnant, false otherwise
-     */
     public boolean isPregnant(){
         return hasCapability(DinoCapabilities.PREGNANT);
     }
 
-    public boolean canReachTree(){return hasCapability(DinoCapabilities.CAN_REACH_TREE);}
+    public boolean canReachTree(){
+        return hasCapability(DinoCapabilities.CAN_REACH_TREE);
+    }
 
-    public boolean canAttack(){return hasCapability(DinoCapabilities.CAN_ATTACK); }
+    public boolean canAttack(){
+        return hasCapability(DinoCapabilities.CAN_ATTACK);
+    }
 
     public boolean canBeAttacked(){
         return hasCapability(DinoCapabilities.CAN_BE_ATTACKED);
@@ -67,6 +66,7 @@ public abstract class CapableActor extends Actor {
     public boolean isArboreal(){
         return hasCapability(DinoCapabilities.ARBOREAL);
     }
+
 
 }
 
