@@ -1,9 +1,12 @@
 package game.player;
 
-import edu.monash.fit2099.engine.*;
+import edu.monash.fit2099.engine.Action;
+import edu.monash.fit2099.engine.Actor;
+import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Item;
 import game.EcoPoints;
-import game.PortableItem;
-import game.dinosaurs.*;
+import game.FoodItem;
+import game.dinosaurs.DinoActor;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,7 +24,9 @@ public class PlayerFeedAction extends Action {
      * Constructor
      * @param target the Actor (DinoActor) to feed
      */
-    public PlayerFeedAction(DinoActor target){ this.target=target; }
+    public PlayerFeedAction(DinoActor target){
+        this.target = target;
+    }
 
     /**
      * Perform the Action.
@@ -50,9 +55,9 @@ public class PlayerFeedAction extends Action {
                 return "No food chosen.";
             Item item = inventoryItems.get(choice - 1);
 
-            if (item instanceof PortableItem) {
+            if (item instanceof FoodItem) {
 
-                PortableItem chosenItem = (PortableItem) item;
+                FoodItem chosenItem = (FoodItem) item;
 
                 if (target.isHerbivorous()) {
                     if (chosenItem.edibleByHerbivores()) {
@@ -100,18 +105,18 @@ public class PlayerFeedAction extends Action {
     private int getIntegerInput(int max){
         Scanner scanner = new Scanner(System.in);
         int userInput = -1;
-        boolean errorOccured = true;
+        boolean errorOccurred = true;
         do{
             try{
                 userInput = Integer.parseInt(scanner.nextLine());
-                errorOccured = userInput < 0 || userInput > max;
-                if (errorOccured)
+                errorOccurred = userInput < 0 || userInput > max;
+                if (errorOccurred)
                     System.out.println("Please enter a number within 0 to " + max + ".");
             }
             catch (NumberFormatException e){
                 System.out.println("Please enter a number within 0 to " + max +".");
             }
-        } while (errorOccured);
+        } while (errorOccurred);
         return userInput;
     }
 }

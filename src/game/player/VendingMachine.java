@@ -5,6 +5,7 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.EcoPoints;
+import game.dinosaurs.CapableActor;
 import game.dinosaurs.DinoEncyclopedia;
 import game.dinosaurs.Egg;
 import game.environment.Fruit;
@@ -91,6 +92,16 @@ public class VendingMachine extends Ground {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean canLayEggHere(CapableActor capableActor){
+        return false;
+    }
+
+    @Override
+    public boolean canBreedHere(CapableActor capableActor){
+        return false;
     }
 
 
