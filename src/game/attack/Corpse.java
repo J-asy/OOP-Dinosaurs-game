@@ -2,7 +2,7 @@ package game.attack;
 
 import edu.monash.fit2099.engine.Location;
 import game.FoodItem;
-import game.PortableItem;
+import game.dinosaurs.CapableActor;
 import game.dinosaurs.DinoEncyclopedia;
 import java.util.Map;
 import static java.util.Map.entry;
@@ -55,24 +55,21 @@ public class Corpse extends FoodItem {
         super("Corpse",'%');
         parent = newParent;
         setForCarnivores();
-        initializeWaitTurns(getInitialWaitTurns());
+        initializeWaitTurns();
         setHealPoints(getInitialHealPoints());
     }
 
     /**
      * Initializes number of turns until corpse is removed from map
-     * @param newWaitTurn new number of wait turns
      */
-    public void initializeWaitTurns(int newWaitTurn){
-        if (newWaitTurn >= 0){
-            waitTurns = newWaitTurn;
-        }
+    private void initializeWaitTurns(){
+        waitTurns = DINO_CORPSE_DICTIONARY.get(parent)[0];
     }
 
     /**
      * Decrements corpse's number of turns
      */
-    public void decrementWaitTurn(){
+    private void decrementWaitTurn(){
         if (waitTurns > 0){
             waitTurns--;
         }
@@ -84,10 +81,6 @@ public class Corpse extends FoodItem {
      */
     public DinoEncyclopedia getParent() {
         return parent;
-    }
-
-    private int getInitialWaitTurns(){
-        return DINO_CORPSE_DICTIONARY.get(parent)[0];
     }
 
     private int getInitialHealPoints(){
@@ -107,5 +100,8 @@ public class Corpse extends FoodItem {
         }
     }
 
-
+    @Override
+    public boolean canEat(CapableActor capableActor, Location location) {
+        return capableActor.isCarnivorous();
+    }
 }

@@ -56,7 +56,7 @@ public class Egg extends FoodItem {
      */
     private DinoEncyclopedia parent;
 
-    private final static int HEAL_POINTS = 10;
+    private final static int EGG_HEAL_POINTS = 10;
 
     /**
      * Constructor.
@@ -67,7 +67,7 @@ public class Egg extends FoodItem {
         initializeWaitTurns((DINO_EGG_DICTIONARY.get(parent))[0]);
         setParent(parent);
         setForCarnivores();
-        setHealPoints(HEAL_POINTS);
+        setHealPoints(EGG_HEAL_POINTS);
     }
 
     private void setParent(DinoEncyclopedia newParent){
@@ -84,6 +84,11 @@ public class Egg extends FoodItem {
         if (waitTurns > 0){
             waitTurns--;
         }
+    }
+
+    @Override
+    public boolean canEat(CapableActor capableActor, Location location) {
+        return capableActor.isCarnivorous();
     }
 
     /**

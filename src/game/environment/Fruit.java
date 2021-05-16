@@ -2,13 +2,14 @@ package game.environment;
 
 import edu.monash.fit2099.engine.Location;
 import game.FoodItem;
+import game.dinosaurs.CapableActor;
 
 /**
  * Class that represents the Fruit object.
  */
 public class Fruit extends FoodItem {
     private int groundTime;
-    private final static int HEAL_POINTS = 10;
+    private final static int FRUIT_HEAL_POINTS = 10;
 
     /**
      * Constructor
@@ -18,7 +19,7 @@ public class Fruit extends FoodItem {
         super("Fruit",'F');
         groundTime = 0;
         setForHerbivores();
-        setHealPoints(HEAL_POINTS);
+        setHealPoints(FRUIT_HEAL_POINTS);
     }
 
     /**
@@ -35,4 +36,10 @@ public class Fruit extends FoodItem {
         }
 
     }
+
+    @Override
+    public boolean canEat(CapableActor capableActor, Location location) {
+        return capableActor.isHerbivorous() && !capableActor.canReachTree();
+    }
+
 }
