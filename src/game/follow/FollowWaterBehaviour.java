@@ -4,7 +4,7 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.dinosaurs.DinoActor;
-import game.environment.FertileGround;
+import game.environment.DrinkingGround;
 
 public class FollowWaterBehaviour extends FollowBehaviour{
 
@@ -46,11 +46,8 @@ public class FollowWaterBehaviour extends FollowBehaviour{
     Location findTarget(GameMap map, Location destination, DinoActor dinoActor) {
         Location returnDestination = null;
         Ground ground = destination.getGround();
-        if (ground instanceof FertileGround) {
-            FertileGround currentGround = (FertileGround) ground;
-            if (currentGround.isLake()){
-                returnDestination = destination;
-            }
+        if (ground instanceof DrinkingGround) {
+            returnDestination = destination;
         }
         return returnDestination;
     }
