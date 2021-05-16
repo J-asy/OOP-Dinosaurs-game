@@ -6,13 +6,23 @@ package game.dinosaurs;
  * by other classes we needed. This ensures a single point of change, making code more maintainable.
  */
 
-
 public enum DinoEncyclopedia {
 
-    STEGOSAUR('S', "Stegosaur", 50, 10, 100, 60, 100, 90, 40,30, 50, 10, 20),
-    BRACHIOSAUR('B', "Brachiosaur", 100, 10, 160, 60, 200,140, 40,50, 70, 30, 15),
-    ALLOSAUR('A', "Allosaur", 20, 20, 100, 60, 100, 90, 40,50, 50, 20, 20),
-    PTERODACTYL('P', "Pterodactyl", 50, 10, 100, 60, 100, 90, 40,30, 50, 10, 20);
+    STEGOSAUR('S', "Stegosaur", 50, 10, 100, 60,
+            100, 90, 40,30, 50, 10,
+            20, (int)Double.POSITIVE_INFINITY),
+
+    BRACHIOSAUR('B', "Brachiosaur", 100, 10, 160, 60,
+            200,140, 40,50, 70, 30,
+            15, (int)Double.POSITIVE_INFINITY),
+
+    ALLOSAUR('A', "Allosaur", 20, 20, 100, 60,
+            100, 90, 40,50, 50, 20,
+            20, (int)Double.POSITIVE_INFINITY),
+
+    PTERODACTYL('P', "Pterodactyl", 50, 10, 100, 60,
+            100, 90, 40,30, 50, 10,
+            20, 10);
 
     final char DISPLAY_CHAR;
     final String NAME;
@@ -27,10 +37,11 @@ public enum DinoEncyclopedia {
     final int BREEDING_MIN_FOOD_LEVEL;
     final int PREGNANCY_PERIOD;
     final int UNCONSCIOUS_PERIOD;
+    final int BITE_SIZE;
 
     DinoEncyclopedia(char displayChar, String name, int initialHitPoints, int babyInitialHitPoints, int maxHitPoints,
                      int initialWaterLevel, int maxWaterLevel, int hungryWhen, int thirstyWhen, int matureWhen,
-                     int breedingMinFoodLevel, int pregnancyPeriod, int unconsciousPeriod) {
+                     int breedingMinFoodLevel, int pregnancyPeriod, int unconsciousPeriod, int biteSize) {
         DISPLAY_CHAR = displayChar;
         NAME = name;
         INITIAL_HIT_POINTS = initialHitPoints;
@@ -44,6 +55,7 @@ public enum DinoEncyclopedia {
         BREEDING_MIN_FOOD_LEVEL = breedingMinFoodLevel;
         PREGNANCY_PERIOD = pregnancyPeriod;
         UNCONSCIOUS_PERIOD = unconsciousPeriod;
+        BITE_SIZE = biteSize;
     }
 
     public char getDisplayChar(){
