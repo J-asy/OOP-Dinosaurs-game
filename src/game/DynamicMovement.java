@@ -1,6 +1,7 @@
 package game;
 
-import edu.monash.fit2099.engine.Ground;
+import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Location;
 
 public interface DynamicMovement {
 
@@ -10,6 +11,6 @@ public interface DynamicMovement {
 
     boolean useSpecialMovement();
 
-    void activityDuringSpecialMovement(Ground ground);
+    void activityDuringSpecialMovement(GameMap map, Location location);
 
 }

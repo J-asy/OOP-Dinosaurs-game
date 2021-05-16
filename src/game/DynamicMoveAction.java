@@ -1,6 +1,10 @@
 package game;
 
-import edu.monash.fit2099.engine.*;
+import edu.monash.fit2099.engine.Actor;
+import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Location;
+import edu.monash.fit2099.engine.MoveActorAction;
+
 
 public class DynamicMoveAction extends MoveActorAction {
 
@@ -16,10 +20,9 @@ public class DynamicMoveAction extends MoveActorAction {
         if (actor instanceof DynamicMovement){
             DynamicMovement dynamicMover = (DynamicMovement)actor;
             movementType = dynamicMover.getMovement();
-            Ground ground = map.locationOf(actor).getGround();
 
             if (dynamicMover.useSpecialMovement()) {
-                dynamicMover.activityDuringSpecialMovement(ground);
+                dynamicMover.activityDuringSpecialMovement(map, moveToLocation);
                 dynamicMover.depleteEnergy();
             }
 

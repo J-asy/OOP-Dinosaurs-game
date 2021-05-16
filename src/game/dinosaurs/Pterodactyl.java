@@ -2,11 +2,11 @@ package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
 import game.DynamicMovement;
+import game.Food;
 import game.environment.CapableGround;
 import game.environment.DrinkingGround;
-import game.environment.FeedingGround;
 
-public class Pterodactyl extends DinoActor implements DynamicMovement {
+public class Pterodactyl extends DinoActor implements DynamicMovement, Food {
 
     /**
      * Enum type that can be referenced for a lot of useful constants
@@ -76,11 +76,16 @@ public class Pterodactyl extends DinoActor implements DynamicMovement {
     }
 
     @Override
-    public void activityDuringSpecialMovement(Ground ground) {
-        if (ground instanceof FeedingGround){
-            FeedingGround feedingGround = (FeedingGround)ground;
-            if (feedingGround.canEatHere(this)){
-                feedingGround.eat();
+    public void activityDuringSpecialMovement(GameMap map, Location location) {
+        Ground ground = location.getGround();
+        if (ground instanceof Food){
+            Food feedingGround = (Food) ground;
+            if (feedingGround.canEat(this, location)){
+                int healPoints = feedingGround.eat(map, location, getBiteSize());
+                if (healPoints > 0) {
+                    heal(healPoints);
+                    System.out.printf("%s eats %s.%n", name, feedingGround.foodName());
+                }
             }
         }
 
@@ -94,11 +99,16 @@ public class Pterodactyl extends DinoActor implements DynamicMovement {
     }
 
     public void rechargeEnergy(Ground ground){
-        if (ground instanceof CapableGround){
-            if (((CapableGround)ground).isTree() && flyingEnergy == 0){
-                flyingEnergy = INITIAL_FLYING_ENERGY;
-            }
+        if (flyingEnergy == 0 && isOnTree(ground)){
+            flyingEnergy = INITIAL_FLYING_ENERGY;
         }
+    }
+
+    private boolean isOnTree(Ground ground){
+        if (ground instanceof CapableGround){
+            return ((CapableGround)ground).isTree();
+        }
+        return false;
     }
 
     @Override
@@ -107,5 +117,25 @@ public class Pterodactyl extends DinoActor implements DynamicMovement {
         rechargeEnergy(ground);
         return super.playTurn(actions, lastAction, map, display);
     }
+
+    @Override
+    public boolean canEat(CapableActor capableActor, Location location) {
+        return capableActor.isCarnivorous() && isOnTree(location.getGround());
+    }
+
+    @Override
+    public int eat(GameMap map, Location location, int biteSize) {
+        decrementHitPoints(biteSize);
+        if (getHitPoints() == 0) {
+            map.removeActor(this);
+        }
+        return biteSize;
+    }
+
+    @Override
+    public String foodName() {
+        return this.name;
+    }
+
 
 }
