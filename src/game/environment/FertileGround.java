@@ -1,13 +1,14 @@
 package game.environment;
 
 import game.EcoPoints;
+import game.Food;
 
 import java.util.ArrayList;
 
 /**
  * A class to add all the necessary capabilities to different terrain.
  */
-public abstract class FertileGround extends CapableGround implements FeedingGround{
+public abstract class FertileGround extends CapableGround implements Food {
 
     private int age = 0;  // the age of the plant
     private ArrayList<Fruit> fruitArrayList = new ArrayList<>(); //arrayList of the fruits that have grown on the plant
@@ -90,6 +91,8 @@ public abstract class FertileGround extends CapableGround implements FeedingGrou
         }
     }
 
+    abstract int getHealPoints();
+
     /**
      * Access the size of the treeFruits ArrayList
      * @return the size of the treeFruits ArrayList
@@ -101,10 +104,15 @@ public abstract class FertileGround extends CapableGround implements FeedingGrou
     int eatFruit(){
         int healPoints = 0;
         if (getNumberOfFruits() > 0) {
-            Fruit fruit = fruitArrayList.remove(0);
-            healPoints = fruit.getHealPoints();
+            fruitArrayList.remove(0);
+            healPoints = getHealPoints();
         }
         return healPoints;
+    }
+
+    @Override
+    public String foodName () {
+        return new Fruit().foodName();
     }
 
 

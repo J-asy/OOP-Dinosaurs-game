@@ -1,7 +1,7 @@
 package game.environment;
 
+import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
-import game.FoodItem;
 import game.Probability;
 import game.dinosaurs.CapableActor;
 
@@ -13,7 +13,7 @@ public class Bush extends FertileGround {
     private static final char SMALL = '"';
     private static final char BIG = '*';
     private static final char FRUITY_BUSH = '^';
-
+    private static final int FRUIT_HEAL_POINTS = 10;
 
     /**
      * Constructor.
@@ -70,18 +70,18 @@ public class Bush extends FertileGround {
     }
 
     @Override
-    public int eat() {
-        return eatFruit();
+    int getHealPoints(){
+        return FRUIT_HEAL_POINTS;
     }
 
     @Override
-    public boolean canEat(CapableActor capableActor) {
+    public boolean canEat(CapableActor capableActor, Location location) {
         return capableActor.isHerbivorous() && !capableActor.canReachTree() && hasFruits();
     }
 
     @Override
-    public FoodItem foodToEat() {
-        return new Fruit();
+    public int eat(GameMap map, Location location, int biteSize) {
+        return eatFruit();
     }
 
     @Override
