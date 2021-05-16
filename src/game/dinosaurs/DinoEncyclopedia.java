@@ -10,15 +10,15 @@ public enum DinoEncyclopedia {
 
     STEGOSAUR('S', "Stegosaur", 50, 10, 100, 60,
             100, 90, 40,30, 50, 10,
-            20, (int)Double.POSITIVE_INFINITY),
+            20, 100),
 
     BRACHIOSAUR('B', "Brachiosaur", 100, 10, 160, 60,
             200,140, 40,50, 70, 30,
-            15, (int)Double.POSITIVE_INFINITY),
+            15, 160),
 
     ALLOSAUR('A', "Allosaur", 20, 20, 100, 60,
             100, 90, 40,50, 50, 20,
-            20, (int)Double.POSITIVE_INFINITY),
+            20, 100),
 
     PTERODACTYL('P', "Pterodactyl", 50, 10, 100, 60,
             100, 90, 40,30, 50, 10,

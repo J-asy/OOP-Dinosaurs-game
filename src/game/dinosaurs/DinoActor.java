@@ -9,7 +9,9 @@ import game.attack.Corpse;
 import game.Probability;
 import game.breed.BreedingAction;
 import game.breed.BreedingBehaviour;
-import game.feeding.FeedingBehaviour;
+import game.feeding.FeedOnActorBehaviour;
+import game.feeding.FeedOnItemBehaviour;
+import game.feeding.FeedingAction;
 import game.follow.FollowFoodOnGroundBehaviour;
 import game.follow.FollowFoodOnPlantBehaviour;
 import game.follow.FollowMateBehaviour;
@@ -63,6 +65,8 @@ public abstract class DinoActor extends CapableActor {
 
     private int waterLevel;
 
+    private int biteSize;
+
     /**
      * Constructor.
      * @param dinoType DinoEncyclopedia value that indicates species of the DinoActor
@@ -96,6 +100,7 @@ public abstract class DinoActor extends CapableActor {
      *                  false otherwise
      */
     private void initialization(boolean isMatured){
+        setBiteSize();
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
         if (!isMatured) {
@@ -105,14 +110,19 @@ public abstract class DinoActor extends CapableActor {
         initializeCapabilities();
     }
 
+    private void setBiteSize(){
+        biteSize = dinoType.BITE_SIZE;
+    }
+
     /**
      * Initializes the dinoActor with the standard behaviour that they should have.
      */
     private void initializeDinoBehaviour(){
         // all behaviours that the DinoActor can perform alone
         behaviour = new ArrayList<>();
+
         behaviour.add(new PregnancyBehaviour());
-        behaviour.add(new FeedingBehaviour());
+        behaviour.add(new FeedOnItemBehaviour());
         behaviour.add(new FollowMateBehaviour());
         behaviour.add(new FollowFoodOnGroundBehaviour());
         behaviour.add(new FollowFoodOnPlantBehaviour());
@@ -122,6 +132,8 @@ public abstract class DinoActor extends CapableActor {
         // all behaviours that the DinoActor can perform with another
         // Actor on adjacent squares
         interactiveBehaviours = new ArrayList<>();
+        interactiveBehaviours.add(new FeedOnActorBehaviour(this));
+
         interactiveBehaviours.add(new BreedingBehaviour(this));
         interactiveBehaviours.add(new AttackBehaviour(this));
         interactiveBehaviours.add(new FedByPlayerBehaviour(this));
@@ -219,10 +231,12 @@ public abstract class DinoActor extends CapableActor {
     /**
      * Decrements the dinoActor's food level, which is equivalent to its hitPoints.
      */
-    private void decrementFoodLevel(){
-        if (hitPoints > 0){
-            super.hurt(1);
+     void decrementHitPoints(int decrementBy){
+        int hurtPoints = decrementBy;
+        if (hitPoints - decrementBy < 0){
+            hurtPoints = hitPoints;
         }
+        super.hurt(hurtPoints);
     }
 
     /**
@@ -262,6 +276,15 @@ public abstract class DinoActor extends CapableActor {
                 removeCapability(DinoCapabilities.CAN_BREED);
             }
         }
+    }
+
+    //FIXME: empty method you should implement for dinoActor to drink water
+    public void drinkWater(){
+        System.out.println(name + " drinks water.");
+    }
+
+    public int getBiteSize(){
+        return biteSize;
     }
 
     /**
@@ -378,7 +401,9 @@ public abstract class DinoActor extends CapableActor {
     @Override
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
         Actions validActions = new Actions();
+
         for (Behaviour b : interactiveBehaviours){
+            System.out.println(b);
             Action resultingAction = b.getAction(otherActor, map);
             if (resultingAction != null){
                 validActions.add(resultingAction);
@@ -400,10 +425,12 @@ public abstract class DinoActor extends CapableActor {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action actionToExecute = new DoNothingAction();
+        System.out.println();
+        System.out.println(hitPoints);
 
         // do any necessary processing first
         aging();
-        decrementFoodLevel();
+        decrementHitPoints(1);
         adjustConsciousness();
 
         if (!checkUnconsciousPeriod(map)) {
