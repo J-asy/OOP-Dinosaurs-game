@@ -3,12 +3,7 @@ package game;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Display;
-import edu.monash.fit2099.engine.FancyGroundFactory;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.World;
-import game.attack.Corpse;
+import edu.monash.fit2099.engine.*;
 import game.dinosaurs.*;
 import game.environment.*;
 import game.player.Player;
