@@ -449,9 +449,9 @@ public abstract class DinoActor extends Actor {
             // do any necessary processing first
             roarIfHungry(map);
             adjustBreedingCapability();
-
-            // calling getAction for every behaviour can help us to do some necessary processing
-            // as well even if it returns null in the end
+//
+//            // calling getAction for every behaviour can help us to do some necessary processing
+//            // as well even if it returns null in the end
             for (Behaviour b : behaviour) {
                 Action resultingAction = b.getAction(this, map);
                 if (resultingAction != null && actionToExecute instanceof DoNothingAction) {

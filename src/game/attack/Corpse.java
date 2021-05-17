@@ -74,6 +74,8 @@ public class Corpse extends PortableItem {
      * @param currentLocation The location of the ground on which we lie.
      */
     public void tick(Location currentLocation) {
+        // Corpse Demo
+        System.out.println(waitTurns);
         if (waitTurns == 0) {
             currentLocation.removeItem(this);
         }
