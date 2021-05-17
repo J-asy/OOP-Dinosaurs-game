@@ -11,7 +11,7 @@ public class Lake extends CapableGround implements Food, DrinkingGround {
 
     private int numberOfFish;
     private int waterLevel;
-
+    private int capacity;
 
     /**
      * Constructor.
@@ -19,7 +19,32 @@ public class Lake extends CapableGround implements Food, DrinkingGround {
     public Lake() {
         super('~');
         setLake();
+        capacity = 25;
+//        for (int i = 0; i < 5; i++){
+//            fishes.add(new Fish());
+//        }
+        numberOfFish = 5;
     }
+
+    @Override
+    public void tick(Location location){
+
+       if (Rain.getStatus().equalsIgnoreCase("Raining")){
+
+           System.out.println("Water ADDED!!!!\n");
+           double min = 0.1;
+           double max = 0.6;
+           double randDouble = Math.random()*(max-min + 1) + min;
+
+           capacity += randDouble*20;
+       }
+
+        if (Probability.generateProbability(0.6f)){
+            numberOfFish++;
+        }
+    }
+
+
 
     @Override
     public boolean canActorEnter(Actor actor) {

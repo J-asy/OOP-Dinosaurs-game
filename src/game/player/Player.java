@@ -1,7 +1,6 @@
 package game.player;
 
 import edu.monash.fit2099.engine.*;
-import game.EcoPoints;
 import game.environment.FertileGround;
 
 /**
@@ -43,7 +42,6 @@ public class Player extends Actor {
 		if (ground instanceof FertileGround) {
 			actions.add(new SearchItemAction());
 		}
-		System.out.println("ECO points: " + EcoPoints.getEcoPoints());
 
 		return menu.showMenu(this, actions, display);
 
