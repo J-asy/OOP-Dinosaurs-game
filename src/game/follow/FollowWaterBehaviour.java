@@ -34,7 +34,7 @@ public class FollowWaterBehaviour extends FollowBehaviour{
      * @param max_radius  maximum number of squares from DinoActor to search for something
      */
     public FollowWaterBehaviour(String description, int min_radius, int max_radius) {
-        super(description, min_radius, max_radius);
+        super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
     @Override

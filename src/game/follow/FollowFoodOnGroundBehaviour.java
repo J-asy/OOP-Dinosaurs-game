@@ -3,6 +3,7 @@ package game.follow;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Location;
+import game.Food;
 import game.FoodItem;
 import game.dinosaurs.DinoActor;
 
@@ -68,14 +69,21 @@ public class FollowFoodOnGroundBehaviour extends FollowBehaviour {
         List<Item> groundItems = destination.getItems();
 
         for (Item item : groundItems){
-            if (item instanceof FoodItem) {
-                FoodItem currentItem = (FoodItem) item;
-                if (dinoActor.isHerbivorous() && currentItem.edibleByHerbivores() && !dinoActor.canReachTree()||
-                        dinoActor.isCarnivorous() && currentItem.edibleByCarnivores()) {
+            if (item instanceof Food) {
+                Food currentItem = (Food) item;
+                if (currentItem.canEat(dinoActor, destination)) {
                     returnDestination = destination;
                     break;
                 }
             }
+//            if (item instanceof FoodItem) {
+//                FoodItem currentItem = (FoodItem) item;
+//                if (dinoActor.isHerbivorous() && currentItem.edibleByHerbivores() && !dinoActor.canReachTree()||
+//                        dinoActor.isCarnivorous() && currentItem.edibleByCarnivores()) {
+//                    returnDestination = destination;
+//                    break;
+//                }
+//            }
         }
         
         return returnDestination;
