@@ -4,4 +4,5 @@ public interface DrinkingGround {
 
     boolean hasWater();
 
+
 }

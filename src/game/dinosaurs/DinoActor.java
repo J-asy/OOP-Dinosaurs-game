@@ -9,13 +9,11 @@ import game.attack.Corpse;
 import game.Probability;
 import game.breed.BreedingAction;
 import game.breed.BreedingBehaviour;
+import game.drinking.DrinkingBehaviour;
 import game.feeding.FeedOnActorBehaviour;
 import game.feeding.FeedOnItemBehaviour;
 import game.feeding.FeedingAction;
-import game.follow.FollowFoodOnGroundBehaviour;
-import game.follow.FollowFoodOnPlantBehaviour;
-import game.follow.FollowMateBehaviour;
-import game.follow.FollowVictimBehaviour;
+import game.follow.*;
 import game.player.FedByPlayerBehaviour;
 import game.pregnancy.LayEggAction;
 import game.pregnancy.PregnancyBehaviour;
@@ -65,6 +63,8 @@ public abstract class DinoActor extends CapableActor {
 
     private int waterLevel;
 
+    private int maxWaterLevel;
+
     private int biteSize;
 
     /**
@@ -76,6 +76,7 @@ public abstract class DinoActor extends CapableActor {
      */
     public DinoActor(DinoEncyclopedia dinoType, DinoCapabilities sex, Boolean isMatured, int nextId){
         super(dinoType.getName() + " " + nextId, dinoType.getDisplayChar(), dinoType.getInitialHitPoints());
+        this.waterLevel = dinoType.getInitialWaterLevel();
         this.dinoType = dinoType;
         initialization(isMatured);
         setSex(sex);
@@ -88,6 +89,7 @@ public abstract class DinoActor extends CapableActor {
      */
     public DinoActor(DinoEncyclopedia dinoType, Boolean isMatured, int nextId){
         super(dinoType.getName() + " " + nextId, dinoType.getDisplayChar(), dinoType.getInitialHitPoints());
+        this.waterLevel = dinoType.getInitialWaterLevel();
         this.dinoType = dinoType;
         initialization(isMatured);
         setSex();
@@ -103,6 +105,7 @@ public abstract class DinoActor extends CapableActor {
         setBiteSize();
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
+        setMaxWaterLevel(dinoType.getMaxWaterLevel());
         if (!isMatured) {
             setBabyHitPoints(dinoType.getBabyInitialHitPoints());
         }
@@ -123,9 +126,11 @@ public abstract class DinoActor extends CapableActor {
 
         behaviour.add(new PregnancyBehaviour());
         behaviour.add(new FeedOnItemBehaviour());
+        behaviour.add(new DrinkingBehaviour());
         behaviour.add(new FollowMateBehaviour());
         behaviour.add(new FollowFoodOnGroundBehaviour());
         behaviour.add(new FollowFoodOnPlantBehaviour());
+        behaviour.add(new FollowWaterBehaviour());
         behaviour.add(new FollowVictimBehaviour());
         behaviour.add(new WanderBehaviour());
 
@@ -218,14 +223,29 @@ public abstract class DinoActor extends CapableActor {
         }
     }
 
+    private void setMaxWaterLevel(int newMaxWaterLevel) {
+        if (newMaxWaterLevel >= waterLevel) {
+            maxWaterLevel = newMaxWaterLevel;
+        }
+    }
+
     private void setBabyHitPoints(int newHitPoints) {
         if (newHitPoints > 0 && newHitPoints <= maxHitPoints) {
             hitPoints = newHitPoints;
         }
     }
 
+    public void quench(int waterPoints){
+        waterLevel += waterPoints;
+        waterLevel = Math.min(waterLevel, dinoType.getMaxWaterLevel());
+    }
+
     public int getHitPoints() {
         return hitPoints;
+    }
+
+    public int getWaterLevel(){
+        return waterLevel;
     }
 
     /**
@@ -239,6 +259,10 @@ public abstract class DinoActor extends CapableActor {
         super.hurt(hurtPoints);
     }
 
+    void decrementWaterLevel(int decrementBy){
+         this.waterLevel--;
+    }
+
     /**
      * Checks if the food level / hit points has reached
      * the point where the dinoActor will get hungry.
@@ -250,6 +274,14 @@ public abstract class DinoActor extends CapableActor {
             int x = map.locationOf(this).x();
             int y = map.locationOf(this).y();
             System.out.printf("%s at (%d, %d) getting hungry!\n", name, x, y);
+        }
+    }
+
+    public void roarIfThirsty(GameMap map){
+        if (isThirsty()){
+            int x = map.locationOf(this).x();
+            int y = map.locationOf(this).y();
+            System.out.printf("%s at (%d, %d) getting thirsty!\n", name, x, y);
         }
     }
 
@@ -276,11 +308,6 @@ public abstract class DinoActor extends CapableActor {
                 removeCapability(DinoCapabilities.CAN_BREED);
             }
         }
-    }
-
-    //FIXME: empty method you should implement for dinoActor to drink water
-    public void drinkWater(){
-        System.out.println(name + " drinks water.");
     }
 
     public int getBiteSize(){
@@ -339,13 +366,13 @@ public abstract class DinoActor extends CapableActor {
 
     /**
      * Adjust the consciousness of the DinoActor appropriately,
-     * according to its current hitPoints.
+     * according to its current hitPoints and/or waterLevel.
      */
     private void adjustConsciousness(){
-        if (isConscious() && hitPoints == 0) {
+        if (isConscious() && (hitPoints <= 0 || waterLevel <= 0)) {
             setUnconscious(true);
         }
-        else if (!isConscious() && hitPoints > 0) {
+        else if (!isConscious() && (hitPoints > 0 && waterLevel > 0)) {
             setUnconscious(false);
         }
     }
@@ -426,16 +453,20 @@ public abstract class DinoActor extends CapableActor {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action actionToExecute = new DoNothingAction();
         System.out.println();
-        System.out.println(hitPoints);
+        System.out.println("HP: " + hitPoints);
+        System.out.println("WL: " + waterLevel);
+
 
         // do any necessary processing first
         aging();
         decrementHitPoints(1);
+        decrementWaterLevel(1);
         adjustConsciousness();
 
         if (!checkUnconsciousPeriod(map)) {
             // do any necessary processing first
             roarIfHungry(map);
+            roarIfThirsty(map);
             adjustBreedingCapability();
 
             // calling getAction for every behaviour can help us to do some necessary processing
@@ -455,7 +486,6 @@ public abstract class DinoActor extends CapableActor {
                     }
                 }
             }
-
         }
         return actionToExecute;
     }

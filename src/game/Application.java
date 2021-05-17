@@ -59,21 +59,28 @@ public class Application {
 		world.addPlayer(player, gameMap.at(10, 4));
 
 		// A small herd of Stegosaur added at the start of the game
-		gameMap.at(48,11).addActor(new Stegosaur(true));
-		gameMap.at(20,18).addActor(new Stegosaur(true));
-		gameMap.at(58,20).addActor(new Stegosaur(true));
-		gameMap.at(58,9).addActor(new Stegosaur(true));
-		gameMap.at(1,11).addActor(new Stegosaur(true));
+//		gameMap.at(48,11).addActor(new Stegosaur(true));
+//		gameMap.at(20,18).addActor(new Stegosaur(true));
+//		gameMap.at(58,20).addActor(new Stegosaur(true));
+//		gameMap.at(58,9).addActor(new Stegosaur(true));
+//		gameMap.at(1,11).addActor(new Stegosaur(true));
 
 		// Two pairs of Brachiosaur, male and female added at the start of the game
-		DinoActor b1 = new Brachiosaur(DinoCapabilities.FEMALE, true);
-		gameMap.at(36, 11).addActor(b1);
-		DinoActor b2 = new Brachiosaur(DinoCapabilities.MALE, true);
-		gameMap.at(35, 11).addActor(b2);
-		DinoActor b3 = new Brachiosaur(DinoCapabilities.FEMALE, true);
-		gameMap.at(10, 20).addActor(b3);
-		DinoActor b4 = new Brachiosaur(DinoCapabilities.MALE, true);
-		gameMap.at(30, 10).addActor(b4);
+//		DinoActor b1 = new Brachiosaur(DinoCapabilities.FEMALE, true);
+//		gameMap.at(36, 11).addActor(b1);
+//		DinoActor b2 = new Brachiosaur(DinoCapabilities.MALE, true);
+//		gameMap.at(35, 11).addActor(b2);
+//		DinoActor b3 = new Brachiosaur(DinoCapabilities.FEMALE, true);
+//		gameMap.at(10, 20).addActor(b3);
+//		DinoActor b4 = new Brachiosaur(DinoCapabilities.MALE, true);
+//		gameMap.at(30, 10).addActor(b4);
+
+//		gameMap.at(62,1).addActor(new Stegosaur(true));
+//		gameMap.at(62,1).addActor(new Pterodactyl(true));
+//		gameMap.at(62,1).addActor(new Allosaur(true));
+		gameMap.at(62,1).addActor(new Brachiosaur(true));
+
+
 
 		world.run();
 

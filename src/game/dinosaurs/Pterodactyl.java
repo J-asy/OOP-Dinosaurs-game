@@ -116,7 +116,7 @@ public class Pterodactyl extends DinoActor implements DynamicMovement, Food {
             }
 
             if (lake.hasWater()){
-                drinkWater();
+                quench(30);
             }
         }
     }

@@ -14,30 +14,42 @@ public abstract class CapableGround extends Ground {
 
     /**
      * Checks if current Location has capability of Tree.
+     *
      * @return true or false
      */
-    public boolean isTree(){
+    public boolean isTree() {
         return hasCapability(TerrainType.TREE);
     }
 
     /**
      * Checks if current Location has capability of Bush.
+     *
      * @return true or false
      */
-    public boolean isBush(){
+    public boolean isBush() {
         return hasCapability(TerrainType.BUSH);
     }
 
-    void setBush(){
+    /**
+     * Checks if current Location has capability of Lake
+     *
+     * @return true or false
+     */
+    public boolean isLake() {
+        return hasCapability(TerrainType.LAKE);
+    }
+
+    void setBush() {
         addCapability(TerrainType.BUSH);
     }
 
-    void setLake(){
+    void setLake() {
         addCapability(TerrainType.LAKE);
     }
 
-    void setTree(){
+    void setTree() {
         addCapability(TerrainType.TREE);
     }
+
 
 }
