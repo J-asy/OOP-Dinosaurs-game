@@ -20,9 +20,6 @@ public class Lake extends CapableGround implements Food, DrinkingGround {
         super('~');
         setLake();
         capacity = 25;
-//        for (int i = 0; i < 5; i++){
-//            fishes.add(new Fish());
-//        }
         numberOfFish = 5;
     }
 
@@ -31,12 +28,14 @@ public class Lake extends CapableGround implements Food, DrinkingGround {
 
        if (Rain.getStatus().equalsIgnoreCase("Raining")){
 
-           System.out.println("Water ADDED!!!!\n");
            double min = 0.1;
            double max = 0.6;
            double randDouble = Math.random()*(max-min + 1) + min;
 
            capacity += randDouble*20;
+
+           System.out.println("\n" + capacity + " sips of water added to lake at (" +
+                   location.x() + ", "+ location.y() + ")");
        }
 
         if (Probability.generateProbability(0.6f)){

@@ -9,7 +9,7 @@ public class Rain {
     public static void rainingOrNot(){
         turns++;
         if (turns == 10) {
-            if(Probability.generateProbability(0.9f)) {
+            if(Probability.generateProbability(0.2f)) {
                 turns = 0;
 
                 for (int i = 0; i < 7; i++) {
