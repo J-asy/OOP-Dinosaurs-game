@@ -38,7 +38,7 @@ public class Lake extends CapableGround implements Food, DrinkingGround {
                    location.x() + ", "+ location.y() + ")");
        }
 
-        if (Probability.generateProbability(0.6f)){
+        if (Probability.generateProbability(0.6f) && numberOfFish <= 25){
             numberOfFish++;
         }
     }
