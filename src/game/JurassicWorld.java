@@ -20,6 +20,10 @@ public class JurassicWorld extends World {
         super(display);
     }
 
+    public GameMap getGameMap(int index){
+        return this.gameMaps.get(index);
+    }
+
     @Override
     public void run(){
         if (player == null)

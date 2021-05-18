@@ -27,13 +27,8 @@ public class FollowWaterBehaviour extends FollowBehaviour{
 
     /**
      * Constructor.
-     *
-     * @param description purpose description of the motivation to perform following action
-     * @param min_radius  minimum number of squares from DinoActor too start searching for
-     *                    something to follow
-     * @param max_radius  maximum number of squares from DinoActor to search for something
      */
-    public FollowWaterBehaviour(String description, int min_radius, int max_radius) {
+    public FollowWaterBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 

@@ -3,11 +3,7 @@ package game.wander;
 import java.util.ArrayList;
 import java.util.Random;
 
-import edu.monash.fit2099.engine.Action;
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Exit;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.Location;
+import edu.monash.fit2099.engine.*;
 import game.Behaviour;
 import game.DynamicMoveAction;
 
