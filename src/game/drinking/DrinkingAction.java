@@ -16,20 +16,17 @@ public class DrinkingAction extends Action {
 
     @Override
     public String execute(Actor actor, GameMap map) {
-        DinoActor dinoAsActor = (DinoActor) actor;
+        if(actor instanceof DinoActor){
+            DinoActor dinoAsActor = (DinoActor) actor;
+            dinoAsActor.quench();
+            drinkingGround.decrementNumberOfSips();
+        }
 
-        if(dinoAsActor.canBeAttacked() || dinoAsActor.canAttack() || dinoAsActor.canTraverseWater()){
-            dinoAsActor.quench(30);
-        }
-        else {
-            dinoAsActor.quench(80);
-        }
-        drinkingGround.decrementNumberOfSips();
         return menuDescription(actor);
     }
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor.toString() + " drinks some water";
+        return actor + " drinks some water";
     }
 }

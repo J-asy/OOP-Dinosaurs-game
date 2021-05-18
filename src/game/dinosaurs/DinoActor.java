@@ -234,8 +234,8 @@ public abstract class DinoActor extends CapableActor {
         }
     }
 
-    public void quench(int waterPoints){
-        waterLevel += waterPoints;
+    public void quench(){
+        waterLevel += dinoType.getGulpSize();
         waterLevel = Math.min(waterLevel, dinoType.getMaxWaterLevel());
     }
 

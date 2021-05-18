@@ -10,19 +10,19 @@ public enum DinoEncyclopedia {
 
     STEGOSAUR('S', "Stegosaur", 50, 10, 100, 60,
             100, 90, 40,30, 50, 10,
-            20, 100),
+            20, 100, 30),
 
     BRACHIOSAUR('B', "Brachiosaur", 100, 10, 160, 60,
             200,140, 40,50, 70, 30,
-            15, 160),
+            15, 160,  80),
 
     ALLOSAUR('A', "Allosaur", 20, 20, 100, 60,
             100, 90, 40,50, 50, 20,
-            20, 100),
+            20, 100, 30),
 
     PTERODACTYL('P', "Pterodactyl", 50, 10, 100, 60,
             100, 90, 40,30, 50, 10,
-            20, 10);
+            20, 10, 30);
 
     final char DISPLAY_CHAR;
     final String NAME;
@@ -38,10 +38,11 @@ public enum DinoEncyclopedia {
     final int PREGNANCY_PERIOD;
     final int UNCONSCIOUS_PERIOD;
     final int BITE_SIZE;
+    final int GULP_SIZE;
 
     DinoEncyclopedia(char displayChar, String name, int initialHitPoints, int babyInitialHitPoints, int maxHitPoints,
                      int initialWaterLevel, int maxWaterLevel, int hungryWhen, int thirstyWhen, int matureWhen,
-                     int breedingMinFoodLevel, int pregnancyPeriod, int unconsciousPeriod, int biteSize) {
+                     int breedingMinFoodLevel, int pregnancyPeriod, int unconsciousPeriod, int biteSize, int gulpSize) {
         DISPLAY_CHAR = displayChar;
         NAME = name;
         INITIAL_HIT_POINTS = initialHitPoints;
@@ -56,6 +57,7 @@ public enum DinoEncyclopedia {
         PREGNANCY_PERIOD = pregnancyPeriod;
         UNCONSCIOUS_PERIOD = unconsciousPeriod;
         BITE_SIZE = biteSize;
+        GULP_SIZE = gulpSize;
     }
 
     public char getDisplayChar(){
@@ -108,6 +110,10 @@ public enum DinoEncyclopedia {
 
     public int getInitialUnconsciousPeriod(){
         return UNCONSCIOUS_PERIOD;
+    }
+
+    public int getGulpSize() {
+        return GULP_SIZE;
     }
 
 }
