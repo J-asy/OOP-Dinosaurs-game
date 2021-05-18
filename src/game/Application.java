@@ -96,23 +96,50 @@ public class Application {
 
 	}
 
-	public static int[] chooseMode(){
+	private static int[] chooseMode(){
+		System.out.println("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		System.out.println(""" 
+							    __
+							   / _) -- WELCOME to JURASSIC WORLD!
+				     _.----._/ /
+				    /         /
+				 __/ (  | (  |
+				/__.- |_|--|_|\s""".indent(1));
 
 		int[] pointsMovesMode = {0,0,0};
-		System.out.println("Instruction");
+		System.out.println("=================================================================");
+		System.out.println("""
+				Instruction
+				This is a game where you'll run a dinosaur park.
+				You must care for the dinosaurs and maintain an ecological balance.
+				
+				There are two modes to choose from:
+				
+				 🔥 Challenge Mode 🔥 \s
+				- You can choose a number of moves and a number of eco points.
+				- You win if you get the specified number of eco points within the specified 
+				  number of moves, and lose if you do not.
+				  
+				 ☀ SandBox Mode ☀ 
+				- You can run the dinosaur park normally until you feel like quitting.
+				  There is no win or lose in this mode.
+				
+				Note: You can quit the game whenever you like. 
+				""");
+		System.out.println("=================================================================");
 
-		Scanner input = new Scanner(System.in);
-		System.out.println("What mode would you like to play?");
-		System.out.println("1. Challenge Mode");
-		System.out.println("2. Sandbox Mode");
-		System.out.println("3. Quit");
-		int mode = input.nextInt();
+//		Scanner input = new Scanner(System.in);
+		System.out.println("So adventurer, what mode would you like to play?");
+		System.out.println("1. Challenge Mode ⚡");
+		System.out.println("2. Sandbox Mode 🌈");
+		System.out.println("3. Quit T.T");
+		int mode = getIntegerInput();
 
 		if (mode == 1){
 			System.out.println("Please enter a target Eco Point:");
-			int targetEcoPoints = input.nextInt();
+			int targetEcoPoints = getIntegerInput();
 			System.out.println("Please enter number of moves:");
-			int numOfMoves = input.nextInt();
+			int numOfMoves = getIntegerInput();
 
 			if (targetEcoPoints >= 0 && numOfMoves > 0) {
 				pointsMovesMode[0] = targetEcoPoints;
@@ -131,5 +158,21 @@ public class Application {
 		}
 
 		return pointsMovesMode;
+	}
+
+	private static int getIntegerInput(){
+		Scanner scanner = new Scanner(System.in);
+		int userInput = -1;
+		boolean errorOccurred = true;
+		do{
+			try{
+				userInput = Integer.parseInt(scanner.nextLine());
+				errorOccurred = false;
+			}
+			catch (NumberFormatException e){
+				System.out.println("Please enter a number.");
+			}
+		} while (errorOccurred);
+		return userInput;
 	}
 }
