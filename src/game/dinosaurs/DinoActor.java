@@ -428,7 +428,6 @@ public abstract class DinoActor extends CapableActor {
         Actions validActions = new Actions();
 
         for (Behaviour b : interactiveBehaviours){
-            System.out.println(b);
             Action resultingAction = b.getAction(otherActor, map);
             if (resultingAction != null){
                 validActions.add(resultingAction);
@@ -450,9 +449,9 @@ public abstract class DinoActor extends CapableActor {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action actionToExecute = new DoNothingAction();
-        System.out.println();
-        System.out.println("HP: " + hitPoints);
-        System.out.println("WL: " + waterLevel);
+//        System.out.println();
+//        System.out.println("HP: " + hitPoints);
+//        System.out.println("WL: " + waterLevel);
 
 
         // do any necessary processing first

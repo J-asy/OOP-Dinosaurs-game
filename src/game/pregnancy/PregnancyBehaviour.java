@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Ground;
 import game.Behaviour;
 import game.dinosaurs.DinoActor;
+import game.follow.FindBirthingSpotBehaviour;
 
 /**
  * Simulates the pregnancy behaviour of an Actor.
@@ -36,6 +37,7 @@ public class PregnancyBehaviour implements Behaviour {
                         dinoActor.setPregnant(false);
                         return new LayEggAction();
                     }
+                    return new FindBirthingSpotBehaviour().getAction(actor, map);
                 }
             }
         }
