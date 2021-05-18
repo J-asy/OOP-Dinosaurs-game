@@ -2,7 +2,6 @@ package game.follow;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
-import game.movement.DynamicMoveAction;
 import game.dinosaurs.DinoActor;
 
 import java.util.ArrayList;

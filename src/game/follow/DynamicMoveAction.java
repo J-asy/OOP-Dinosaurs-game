@@ -1,4 +1,4 @@
-package game.movement;
+package game.follow;
 
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;

@@ -1,7 +1,7 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
-import game.movement.DynamicMovement;
+import game.follow.DynamicMovement;
 import game.Food;
 import game.environment.CapableGround;
 import game.environment.Lake;
