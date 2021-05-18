@@ -127,8 +127,7 @@ public abstract class DinoActor extends CapableActor {
         behaviour.add(new FeedOnItemBehaviour());
         behaviour.add(new DrinkingBehaviour());
         behaviour.add(new FollowMateBehaviour());
-        behaviour.add(new FollowFoodOnGroundBehaviour());
-        behaviour.add(new FollowFoodOnPlantBehaviour());
+        behaviour.add(new FollowFoodBehaviour());
         behaviour.add(new FollowWaterBehaviour());
         behaviour.add(new FollowVictimBehaviour());
         behaviour.add(new WanderBehaviour());

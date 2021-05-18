@@ -2,22 +2,23 @@ package game.follow;
 
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Ground;
+import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Location;
+import game.Food;
 import game.dinosaurs.DinoActor;
-import game.environment.FertileGround;
 
 /**
  * Special class that simulates behaviour of a herbivorous DinoActor
  * moving towards a Tree or Bush to eat its fruits.
  */
-public class FollowFoodOnPlantBehaviour extends FollowBehaviour {
+public class FollowFoodBehaviour extends FollowBehaviour {
 
     /**
      * Description of the motivation of the behaviour to be printed out
      * as a message in the console if the Actor actually moves towards
      * plants that have fruits in the end.
      */
-    private static final String DESCRIPTION = "find food on plants";
+    private static final String DESCRIPTION = "find food";
 
     /**
      * Minimum number of squares from DinoActor to start searching for
@@ -34,7 +35,7 @@ public class FollowFoodOnPlantBehaviour extends FollowBehaviour {
     /**
      * Constructor.
      */
-    public FollowFoodOnPlantBehaviour() {
+    public FollowFoodBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
@@ -47,7 +48,7 @@ public class FollowFoodOnPlantBehaviour extends FollowBehaviour {
      */
     @Override
      boolean motivatedToFollow(DinoActor dinoActor) {
-        return dinoActor.isHungry() && dinoActor.isHerbivorous();
+        return dinoActor.isHungry();
     }
 
     /**
@@ -62,20 +63,40 @@ public class FollowFoodOnPlantBehaviour extends FollowBehaviour {
      */
     @Override
     Location findTarget(GameMap map, Location destination, DinoActor dinoActor){
-        Location returnDestination = null;
 
-        Ground ground = destination.getGround();
-
-        if (ground instanceof FertileGround){
-            FertileGround currentGround = (FertileGround) ground;
-            if (currentGround.isTree() && currentGround.hasFruits() && dinoActor.canReachTree()){
-                returnDestination = destination;
-            }
-            else if (currentGround.isBush() && currentGround.hasFruits() && !dinoActor.canReachTree()) {
-                returnDestination = destination;
+        // check if there is food item on the ground
+        for (Item item : destination.getItems()) {
+            if (item instanceof Food) {
+                Food foodItem = (Food) item;
+                if (foodItem.canEat(dinoActor, destination)) {
+                    return destination;
+                }
             }
         }
 
-        return returnDestination;
+        // check if there is food growing (fruit) / living(fish) on the ground
+        Ground ground = destination.getGround();
+        if (ground instanceof Food){
+            Food foodGround = (Food) ground;
+            if (foodGround.canEat(dinoActor, destination)) {
+                return destination;
+            }
+        }
+
+        // check if there is a food Actor (Pterodactyl)
+        if (map.isAnActorAt(destination)){
+            if (destination.getActor() instanceof Food){
+                Food foodActor = (Food) destination.getActor();
+                if (foodActor.canEat(dinoActor, destination)){
+                    return destination;
+                }
+            }
+        }
+
+        return null;
     }
+
+
 }
+
+
