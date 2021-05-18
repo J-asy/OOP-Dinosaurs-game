@@ -12,7 +12,6 @@ import game.breed.BreedingBehaviour;
 import game.drinking.DrinkingBehaviour;
 import game.feeding.FeedOnActorBehaviour;
 import game.feeding.FeedOnItemBehaviour;
-import game.feeding.FeedingAction;
 import game.follow.*;
 import game.player.FedByPlayerBehaviour;
 import game.pregnancy.LayEggAction;

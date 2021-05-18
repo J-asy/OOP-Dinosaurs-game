@@ -3,16 +3,15 @@ package game.drinking;
 import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.Location;
 import game.dinosaurs.DinoActor;
-import game.environment.Lake;
+import game.environment.DrinkingGround;
 
 public class DrinkingAction extends Action {
 
-    private Location lakeLocation;
+    private DrinkingGround drinkingGround;
 
-    public DrinkingAction(Location newLakeLocation){
-        this.lakeLocation = newLakeLocation;
+    public DrinkingAction(DrinkingGround drinkingGround){
+        this.drinkingGround = drinkingGround;
     }
 
     @Override
@@ -25,7 +24,7 @@ public class DrinkingAction extends Action {
         else {
             dinoAsActor.quench(80);
         }
-        ((Lake)lakeLocation.getGround()).decrementNumberOfSips();
+        drinkingGround.decrementNumberOfSips();
         return menuDescription(actor);
     }
 

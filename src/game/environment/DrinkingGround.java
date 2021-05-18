@@ -4,5 +4,7 @@ public interface DrinkingGround {
 
     boolean hasWater();
 
+    void decrementNumberOfSips();
+
 
 }

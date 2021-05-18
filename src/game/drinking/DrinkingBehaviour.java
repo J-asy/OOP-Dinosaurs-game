@@ -3,8 +3,7 @@ package game.drinking;
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
 import game.dinosaurs.DinoActor;
-import game.environment.CapableGround;
-import game.environment.Lake;
+import game.environment.DrinkingGround;
 
 public class DrinkingBehaviour implements Behaviour {
 
@@ -18,9 +17,10 @@ public class DrinkingBehaviour implements Behaviour {
             if (dinoActor.isThirsty()) {
                 for (Exit exit : actorLocation.getExits()) {
                     Ground ground = exit.getDestination().getGround();
-                    if (ground instanceof CapableGround) {
-                        if (((CapableGround) ground).isLake() && ((Lake)ground).hasWater()) {
-                            return new DrinkingAction(exit.getDestination());
+                    if (ground instanceof DrinkingGround) {
+                        DrinkingGround drinkingGround = (DrinkingGround)ground;
+                        if (drinkingGround.hasWater()) {
+                            return new DrinkingAction(drinkingGround);
                         }
                     }
                 }

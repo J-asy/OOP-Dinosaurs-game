@@ -58,11 +58,6 @@ public class Lake extends CapableGround implements Food, DrinkingGround {
         }
     }
 
-    public void decrementNumberOfSips(){
-        if (hasWater())
-            waterLevel--;
-    }
-
     private boolean hasFish(){
         return numberOfFish > 0;
     }
@@ -103,4 +98,11 @@ public class Lake extends CapableGround implements Food, DrinkingGround {
     public boolean hasWater() {
         return waterLevel > 0;
     }
+
+    @Override
+    public void decrementNumberOfSips(){
+        if (hasWater())
+            waterLevel--;
+    }
+
 }
