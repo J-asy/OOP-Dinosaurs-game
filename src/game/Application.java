@@ -98,14 +98,41 @@ public class Application {
 
 	public static int[] chooseMode(){
 
+		System.out.println("""
+							    __
+							   / _) -- WELCOME to JURASSIC WORLD!
+				     _.----._/ /
+				    /         /
+				 __/ (  | (  |
+				/__.- |_|--|_|\s""".indent(1));
+
 		int[] pointsMovesMode = {0,0,0};
-		System.out.println("Instruction");
+		System.out.println("=================================================================");
+		System.out.println("""
+				Instruction
+				This is a game where you'll run a dinosaur park.
+				You must care for the dinosaurs and maintain an ecological balance.
+				
+				There are two modes to choose from:
+				
+				 🔥 Challenge Mode 🔥 \s
+				- You can choose a number of moves and a number of eco points.
+				- You win if you get the specified number of eco points within the specified 
+				  number of moves, and lose if you do not.
+				  
+				 ☀ SandBox Mode ☀ 
+				- You can run the dinosaur park normally until you feel like quitting.
+				  There is no win or lose in this mode.
+				
+				Note: You can quit the game whenever you like. 
+				""");
+		System.out.println("=================================================================");
 
 		Scanner input = new Scanner(System.in);
-		System.out.println("What mode would you like to play?");
-		System.out.println("1. Challenge Mode");
-		System.out.println("2. Sandbox Mode");
-		System.out.println("3. Quit");
+		System.out.println("So adventurer, what mode would you like to play?");
+		System.out.println("1. Challenge Mode ⚡");
+		System.out.println("2. Sandbox Mode 🌈");
+		System.out.println("3. Quit T.T");
 		int mode = input.nextInt();
 
 		if (mode == 1){
