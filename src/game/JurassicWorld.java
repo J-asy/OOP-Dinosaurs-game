@@ -3,7 +3,14 @@ package game;
 import edu.monash.fit2099.engine.*;
 import game.environment.Rain;
 
+import java.util.Scanner;
+
 public class JurassicWorld extends World {
+
+    private int targetMoves = 0;
+    private int targetEcoPoints = 0;
+    private int mode = 0;
+
     /**
      * Constructor.
      *
@@ -23,9 +30,9 @@ public class JurassicWorld extends World {
             lastActionMap.put(actor, new DoNothingAction());
         }
 
+        int totalMoves = 0;
         // This loop is basically the whole game
         while (stillRunning()) {
-
 
             String clouds = "\n";
             for (int i = 0; i<57; i++){
@@ -53,7 +60,35 @@ public class JurassicWorld extends World {
                 gameMap.tick();
             }
 
+            totalMoves++;
+            if (mode == 1) {
+                if (totalMoves <= targetMoves && EcoPoints.getEcoPoints() >= targetEcoPoints) {
+                    //win
+                    System.out.println("-------------YOU WON!!!-----------------");
+                    actorLocations.remove(player);
+                } else if (totalMoves >= targetMoves && EcoPoints.getEcoPoints()<targetEcoPoints) {
+                    //lose
+                    actorLocations.remove(player);
+                }
+            }
+
         }
         display.println(endGameMessage());
+    }
+
+    public void setTargetMoves(int targetMoves){
+        if (targetMoves > 0){
+            this.targetMoves = targetMoves;
+        }
+    }
+
+    public void setTargetEcoPoints(int targetEcoPoints){
+        if (targetEcoPoints >= 0){
+            this.targetEcoPoints = targetEcoPoints;
+        }
+    }
+
+    public void setMode(int mode){
+        this.mode = mode;
     }
 }

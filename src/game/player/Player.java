@@ -43,6 +43,8 @@ public class Player extends Actor {
 			actions.add(new SearchItemAction());
 		}
 
+		actions.add(new QuitGameAction());
+
 		return menu.showMenu(this, actions, display);
 
 	}
