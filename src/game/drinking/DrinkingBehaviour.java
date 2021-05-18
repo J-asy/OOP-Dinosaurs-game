@@ -10,7 +10,6 @@ public class DrinkingBehaviour implements Behaviour {
     public DrinkingBehaviour(){}
 
     public Action getAction(Actor actor, GameMap map){
-
         if (actor instanceof DinoActor) {
             DinoActor dinoActor = (DinoActor) actor;
             Location actorLocation = map.locationOf(actor);

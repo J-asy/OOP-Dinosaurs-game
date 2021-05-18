@@ -8,7 +8,7 @@ import game.environment.DrinkingGround;
 
 public class DrinkingAction extends Action {
 
-    private DrinkingGround drinkingGround;
+    private final DrinkingGround drinkingGround;
 
     public DrinkingAction(DrinkingGround drinkingGround){
         this.drinkingGround = drinkingGround;
