@@ -88,7 +88,11 @@ public class Egg extends FoodItem {
 
     @Override
     public boolean canEat(CapableActor capableActor, Location location) {
-        return capableActor.isCarnivorous();
+        boolean sameSpecies = false;
+        if (capableActor instanceof DinoActor){
+            sameSpecies = ((DinoActor)capableActor).getDinoType() == parent;
+        }
+        return capableActor.isCarnivorous() && !sameSpecies;
     }
 
     /**
