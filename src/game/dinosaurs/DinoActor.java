@@ -16,7 +16,7 @@ import game.follow.*;
 import game.player.FedByPlayerBehaviour;
 import game.pregnancy.LayEggAction;
 import game.pregnancy.PregnancyBehaviour;
-import game.wander.WanderBehaviour;
+import game.movement.WanderBehaviour;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package game;
+package game.movement;
 
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;

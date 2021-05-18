@@ -1,10 +1,9 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
-import game.DynamicMovement;
+import game.movement.DynamicMovement;
 import game.Food;
 import game.environment.CapableGround;
-import game.environment.DrinkingGround;
 import game.environment.Lake;
 
 public class Pterodactyl extends DinoActor implements DynamicMovement, Food {

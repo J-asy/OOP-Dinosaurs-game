@@ -2,6 +2,7 @@ package game.follow;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
+import game.movement.DynamicMoveAction;
 import game.dinosaurs.DinoActor;
 
 import java.util.ArrayList;
@@ -118,7 +119,7 @@ public abstract class FollowBehaviour implements Behaviour {
                 int newDistance = distance(possibleStep, destination);
                 if (newDistance < currentDistance) {
                     String directionDescription = String.format("%s to %s.", exit.getName(), purposeDescription);
-                    return new MoveActorAction(exit.getDestination(), directionDescription);
+                    return new DynamicMoveAction(exit.getDestination(), directionDescription);
                 }
             }
         }
