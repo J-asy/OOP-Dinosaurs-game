@@ -66,14 +66,20 @@ public class JurassicWorld extends World {
 
             totalMoves++;
             if (mode == 1) {
-                if (totalMoves <= targetMoves && EcoPoints.getEcoPoints() >= targetEcoPoints) {
+                int ecoPoints = EcoPoints.getEcoPoints();
+                if (totalMoves <= targetMoves && ecoPoints >= targetEcoPoints) {
                     //win
-                    System.out.println("-------------YOU WON!!!-----------------");
+                    System.out.println("\n-------------TARGET MET! YOU WIN!!!-----------------");
                     actorLocations.remove(player);
-                } else if (totalMoves >= targetMoves && EcoPoints.getEcoPoints()<targetEcoPoints) {
+                } else if (totalMoves >= targetMoves && ecoPoints < targetEcoPoints) {
                     //lose
+                    System.out.println("\n-------------TARGET NO MET! YOU LOSE!-----------------");
                     actorLocations.remove(player);
                 }
+            }
+
+            if (!stillRunning()){
+                EcoPoints.decrementEcoPoints(EcoPoints.getEcoPoints());
             }
 
         }

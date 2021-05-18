@@ -97,8 +97,8 @@ public class Application {
 	}
 
 	public static int[] chooseMode(){
-
-		System.out.println("""
+		System.out.println("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		System.out.println(""" 
 							    __
 							   / _) -- WELCOME to JURASSIC WORLD!
 				     _.----._/ /
