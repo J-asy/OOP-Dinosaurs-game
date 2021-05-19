@@ -9,7 +9,7 @@ import game.dinosaurs.DinoActor;
  * Special class that simulates behaviour of a DinoActor following another
  * DinoActor to mate with it.
  */
-public class FindMateBehaviour extends FindBehaviour {
+public class FollowMateBehaviour extends FollowBehaviour {
 
     /**
      * Description of the motivation of the behaviour to be printed out
@@ -31,7 +31,7 @@ public class FindMateBehaviour extends FindBehaviour {
     /**
      * Constructor.
      */
-    public FindMateBehaviour() {
+    public FollowMateBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 

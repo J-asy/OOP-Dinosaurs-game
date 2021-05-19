@@ -7,16 +7,19 @@ import edu.monash.fit2099.engine.*;
 import game.Behaviour;
 
 /**
- * Simulated the wandering behaviour of DinoActors - wandering may or may not
+ * Simulates the wandering behaviour of DinoActors - wandering may or may not
  * occur depending on whether certain criteria is met.
  */
 public class WanderBehaviour implements Behaviour {
-	
+
+	/**
+	 * An instance of Random class
+	 */
 	private Random random = new Random();
 
 
 	/**
-	 * Returns a MoveAction to wander to a random location, if possible.  
+	 * Returns a DynamicMoveAction to wander to a random location, if possible.
 	 * If no movement is possible, returns null.
 	 * 
 	 * @param actor the Actor enacting the behaviour

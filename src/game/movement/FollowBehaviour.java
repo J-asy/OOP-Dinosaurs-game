@@ -12,7 +12,7 @@ import java.util.List;
  * Behaviour class that simulates Actor moving towards another Actor, Item or Ground.
  */
 
-public abstract class FindBehaviour implements Behaviour {
+public abstract class FollowBehaviour implements Behaviour {
 
     /**
      * Description to be display on console of the purpose for the following action.
@@ -37,7 +37,7 @@ public abstract class FindBehaviour implements Behaviour {
      * @param max_radius maximum number of squares from DinoActor to search for something
      *                   to follow
      */
-    public FindBehaviour(String description, int min_radius, int max_radius) {
+    public FollowBehaviour(String description, int min_radius, int max_radius) {
         purposeDescription = description;
         MIN_RADIUS = min_radius;
         MAX_RADIUS = max_radius;

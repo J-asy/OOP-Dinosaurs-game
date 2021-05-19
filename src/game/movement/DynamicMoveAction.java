@@ -11,7 +11,8 @@ import edu.monash.fit2099.engine.MoveActorAction;
 public class DynamicMoveAction extends MoveActorAction {
 
     /**
-     * Name of movement that the Actor uses. By default, all Actors walks.
+     * Name of movement that the Actor uses.
+     * The default mode of movement for all Actors is walking.
      */
     private String movementType = "walks";
 
@@ -39,7 +40,7 @@ public class DynamicMoveAction extends MoveActorAction {
             DynamicMovement dynamicMover = (DynamicMovement)actor;
             movementType = dynamicMover.getMovement();
 
-            if (dynamicMover.useSpecialMovement()) {
+            if (dynamicMover.isSpecialMovementUsed()) {
                 dynamicMover.activityDuringSpecialMovement(map, moveToLocation);
                 dynamicMover.depleteEnergy();
             }

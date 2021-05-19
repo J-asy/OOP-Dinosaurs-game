@@ -30,7 +30,7 @@ public interface DynamicMovement {
      * Returns true if special movement should be used, false otherwise.
      * @return true if special movement should be used, false otherwise
      */
-    boolean useSpecialMovement();
+    boolean isSpecialMovementUsed();
 
     /**
      * Executes any special activities the Actor can do while using special movement.

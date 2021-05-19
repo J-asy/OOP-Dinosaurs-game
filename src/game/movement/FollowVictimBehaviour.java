@@ -9,7 +9,7 @@ import game.dinosaurs.DinoActor;
  * Special class that simulates behaviour of a DinoActor following another
  * DinoActor to attack it for food.
  */
-public class FindVictimBehaviour extends FindBehaviour {
+public class FollowVictimBehaviour extends FollowBehaviour {
 
     /**
      * Description of the motivation of the behaviour to be printed out
@@ -31,7 +31,7 @@ public class FindVictimBehaviour extends FindBehaviour {
     /**
      * Constructor.
      */
-    public FindVictimBehaviour() {
+    public FollowVictimBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
