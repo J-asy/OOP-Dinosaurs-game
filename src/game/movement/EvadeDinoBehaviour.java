@@ -29,7 +29,7 @@ public class EvadeDinoBehaviour implements Behaviour {
             for (Exit exit: location.getExits()){
                 if (!(exit.getDestination().containsAnActor())){
                     return new DynamicMoveAction(exit.getDestination(), exit.getName() +
-                            "to evade other dinosaurs.");
+                            " to evade other dinosaurs.");
                 }
             }
 
