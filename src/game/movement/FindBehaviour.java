@@ -1,4 +1,4 @@
-package game.follow;
+package game.movement;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
@@ -12,7 +12,7 @@ import java.util.List;
  * Behaviour class that simulates Actor moving towards another Actor, Item or Ground.
  */
 
-public abstract class FollowBehaviour implements Behaviour {
+public abstract class FindBehaviour implements Behaviour {
 
     /**
      * Description to be display on console of the purpose for the following action.
@@ -37,7 +37,7 @@ public abstract class FollowBehaviour implements Behaviour {
      * @param max_radius maximum number of squares from DinoActor to search for something
      *                   to follow
      */
-    public FollowBehaviour(String description, int min_radius, int max_radius) {
+    public FindBehaviour(String description, int min_radius, int max_radius) {
         purposeDescription = description;
         MIN_RADIUS = min_radius;
         MAX_RADIUS = max_radius;
@@ -49,7 +49,7 @@ public abstract class FollowBehaviour implements Behaviour {
      * @param dinoActor DinoActor that is acting
      * @return true if the DinoActor should attempt to follow, false otherwise.
      */
-    abstract boolean motivatedToFollow(DinoActor dinoActor);
+    abstract boolean motivatedToFind(DinoActor dinoActor);
 
     /**
      * Checks whether the Location destination has a target that the DinoActor
@@ -78,7 +78,7 @@ public abstract class FollowBehaviour implements Behaviour {
         boolean found = false;
         if (actor instanceof DinoActor) {
             DinoActor actorAsDino = (DinoActor) actor;
-            if (motivatedToFollow(actorAsDino)) {
+            if (motivatedToFind(actorAsDino)) {
                 Location actorLocation = map.locationOf(actor);
                 Location actualDestination;
                 while (!found && radius <= MAX_RADIUS) {

@@ -1,4 +1,4 @@
-package game.follow;
+package game.movement;
 
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
@@ -9,7 +9,7 @@ import game.dinosaurs.DinoActor;
  * Special class that simulates behaviour of a DinoActor following another
  * DinoActor to attack it for food.
  */
-public class FollowVictimBehaviour extends FollowBehaviour {
+public class FindVictimBehaviour extends FindBehaviour {
 
     /**
      * Description of the motivation of the behaviour to be printed out
@@ -31,7 +31,7 @@ public class FollowVictimBehaviour extends FollowBehaviour {
     /**
      * Constructor.
      */
-    public FollowVictimBehaviour() {
+    public FindVictimBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
@@ -43,7 +43,7 @@ public class FollowVictimBehaviour extends FollowBehaviour {
      * @return true if DinoActor is hungry, false otherwise
      */
     @Override
-     boolean motivatedToFollow(DinoActor dinoActor) {
+     boolean motivatedToFind(DinoActor dinoActor) {
         return dinoActor.isHungry();
     }
 

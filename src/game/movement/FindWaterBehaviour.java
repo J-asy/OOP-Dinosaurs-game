@@ -1,4 +1,4 @@
-package game.follow;
+package game.movement;
 
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Ground;
@@ -6,7 +6,7 @@ import edu.monash.fit2099.engine.Location;
 import game.dinosaurs.DinoActor;
 import game.environment.DrinkingGround;
 
-public class FollowWaterBehaviour extends FollowBehaviour{
+public class FindWaterBehaviour extends FindBehaviour {
 
     /**
      * Description of the motivation of the behaviour to be printed out
@@ -28,12 +28,12 @@ public class FollowWaterBehaviour extends FollowBehaviour{
     /**
      * Constructor.
      */
-    public FollowWaterBehaviour() {
+    public FindWaterBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
     @Override
-    boolean motivatedToFollow(DinoActor dinoActor) {
+    boolean motivatedToFind(DinoActor dinoActor) {
         return dinoActor.isThirsty();
     }
 

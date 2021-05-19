@@ -6,7 +6,7 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Ground;
 import game.Behaviour;
 import game.dinosaurs.DinoActor;
-import game.follow.FindBirthingSpotBehaviour;
+import game.movement.FindBirthingSpotBehaviour;
 
 /**
  * Simulates the pregnancy behaviour of an Actor.

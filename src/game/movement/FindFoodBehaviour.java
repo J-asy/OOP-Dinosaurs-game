@@ -1,4 +1,4 @@
-package game.follow;
+package game.movement;
 
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Ground;
@@ -11,7 +11,7 @@ import game.dinosaurs.DinoActor;
  * Special class that simulates behaviour of a herbivorous DinoActor
  * moving towards a Tree or Bush to eat its fruits.
  */
-public class FollowFoodBehaviour extends FollowBehaviour {
+public class FindFoodBehaviour extends FindBehaviour {
 
     /**
      * Description of the motivation of the behaviour to be printed out
@@ -35,7 +35,7 @@ public class FollowFoodBehaviour extends FollowBehaviour {
     /**
      * Constructor.
      */
-    public FollowFoodBehaviour() {
+    public FindFoodBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
@@ -47,7 +47,7 @@ public class FollowFoodBehaviour extends FollowBehaviour {
      * @return true if DinoActor is hungry and herbivorous, false otherwise
      */
     @Override
-     boolean motivatedToFollow(DinoActor dinoActor) {
+     boolean motivatedToFind(DinoActor dinoActor) {
         return dinoActor.isHungry();
     }
 

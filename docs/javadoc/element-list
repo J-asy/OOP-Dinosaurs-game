@@ -6,7 +6,7 @@ game.breed
 game.dinosaurs
 game.environment
 game.feeding
-game.follow
+game.movement
 game.player
 game.pregnancy
 game.wander

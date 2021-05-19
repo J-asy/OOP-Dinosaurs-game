@@ -1,10 +1,10 @@
-package game.follow;
+package game.movement;
 
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 import game.dinosaurs.DinoActor;
 
-public class FindBirthingSpotBehaviour extends FollowBehaviour{
+public class FindBirthingSpotBehaviour extends FindBehaviour {
 
     private static final String DESCRIPTION = "find spot to lay egg";
 
@@ -20,7 +20,7 @@ public class FindBirthingSpotBehaviour extends FollowBehaviour{
     }
 
     @Override
-    boolean motivatedToFollow(DinoActor dinoActor) {
+    boolean motivatedToFind(DinoActor dinoActor) {
         return dinoActor.isPregnant();
     }
 

@@ -1,11 +1,10 @@
-package game.follow;
+package game.movement;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
-import game.follow.DynamicMoveAction;
 
 /**
  * Simulated the wandering behaviour of DinoActors - wandering may or may not

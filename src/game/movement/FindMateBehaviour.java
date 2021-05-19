@@ -1,4 +1,4 @@
-package game.follow;
+package game.movement;
 
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
@@ -9,7 +9,7 @@ import game.dinosaurs.DinoActor;
  * Special class that simulates behaviour of a DinoActor following another
  * DinoActor to mate with it.
  */
-public class FollowMateBehaviour extends FollowBehaviour {
+public class FindMateBehaviour extends FindBehaviour {
 
     /**
      * Description of the motivation of the behaviour to be printed out
@@ -31,7 +31,7 @@ public class FollowMateBehaviour extends FollowBehaviour {
     /**
      * Constructor.
      */
-    public FollowMateBehaviour() {
+    public FindMateBehaviour() {
         super(DESCRIPTION, MIN_RADIUS, MAX_RADIUS);
     }
 
@@ -43,7 +43,7 @@ public class FollowMateBehaviour extends FollowBehaviour {
      * @return true if DinoActor can breed, false otherwise
      */
     @Override
-     boolean motivatedToFollow(DinoActor dinoActor) {
+     boolean motivatedToFind(DinoActor dinoActor) {
         return dinoActor.canBreed();
     }
 

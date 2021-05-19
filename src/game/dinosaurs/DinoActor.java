@@ -12,11 +12,11 @@ import game.breed.BreedingBehaviour;
 import game.drinking.DrinkingBehaviour;
 import game.feeding.FeedOnActorBehaviour;
 import game.feeding.FeedOnItemBehaviour;
-import game.follow.*;
+import game.movement.*;
 import game.player.FedByPlayerBehaviour;
 import game.pregnancy.LayEggAction;
 import game.pregnancy.PregnancyBehaviour;
-import game.follow.WanderBehaviour;
+import game.movement.WanderBehaviour;
 
 import java.util.ArrayList;
 
@@ -126,10 +126,10 @@ public abstract class DinoActor extends CapableActor {
         behaviour.add(new PregnancyBehaviour());
         behaviour.add(new FeedOnItemBehaviour());
         behaviour.add(new DrinkingBehaviour());
-        behaviour.add(new FollowMateBehaviour());
-        behaviour.add(new FollowFoodBehaviour());
-        behaviour.add(new FollowWaterBehaviour());
-        behaviour.add(new FollowVictimBehaviour());
+        behaviour.add(new FindMateBehaviour());
+        behaviour.add(new FindFoodBehaviour());
+        behaviour.add(new FindWaterBehaviour());
+        behaviour.add(new FindVictimBehaviour());
         behaviour.add(new WanderBehaviour());
 
         // all behaviours that the DinoActor can perform with another
