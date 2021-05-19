@@ -31,6 +31,10 @@ public class Egg extends FoodItem {
      */
     private final static int[] ALLOSAUR_VALUE = {50,1000};
 
+    /**
+     * An integer list which first value is the Pterodactyl egg's number of turns to wait
+     * till it hatches, and second value if the amount of EcoPoints awarded when it hatches.
+     */
     private final static int[] PTERODACTYL_VALUE = {30,100};
 
     /**
@@ -43,8 +47,6 @@ public class Egg extends FoodItem {
             entry(DinoEncyclopedia.PTERODACTYL, PTERODACTYL_VALUE)
     );
 
-
-
     /**
      * Turns left to wait till the egg hatches.
      */
@@ -56,6 +58,9 @@ public class Egg extends FoodItem {
      */
     private DinoEncyclopedia parent;
 
+    /**
+     * Amount of food points that will be gained by eating the egg.
+     */
     private final static int EGG_HEAL_POINTS = 10;
 
     /**
@@ -86,6 +91,13 @@ public class Egg extends FoodItem {
         }
     }
 
+    /**
+     * Returns true if the CapableActor is a carnivorous DinoActor that is of different
+     * species with the Egg, false otherwise.
+     * @param capableActor a CapableActor
+     * @param location location the Egg is at
+     * @return true if the Egg can be eaten by the CapableActor, false otherwise.
+     */
     @Override
     public boolean canEat(CapableActor capableActor, Location location) {
         boolean sameSpecies = false;

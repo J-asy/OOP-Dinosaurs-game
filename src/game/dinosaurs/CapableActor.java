@@ -2,6 +2,10 @@ package game.dinosaurs;
 
 import edu.monash.fit2099.engine.Actor;
 
+/**
+ * Class to store all methods that involve checking whether an Actor that extends it
+ * has specific capabilities. This is helpful to prevent down casting.
+ */
 public abstract class CapableActor extends Actor {
 
     /**

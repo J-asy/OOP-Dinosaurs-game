@@ -24,20 +24,81 @@ public enum DinoEncyclopedia {
             100, 90, 40,30, 50, 10,
             20, 10, 30);
 
+    /**
+     * Display character of the dinosaur shown on the terminal to represent it.
+     */
     final char DISPLAY_CHAR;
+
+    /**
+     * Name of the dinosaur species.
+     */
     final String NAME;
+
+    /**
+     * Initial food level / health level of an adult dinosaur.
+     */
     final int INITIAL_HIT_POINTS;
+
+    /**
+     * Initial food level / health level of a baby dinosaur.
+     */
     final int BABY_INITIAL_HIT_POINTS;
+
+    /**
+     * Maximum food level / health level.
+     */
     final int MAX_HIT_POINTS;
+
+    /**
+     * Initial water level.
+     */
     final int INITIAL_WATER_LEVEL;
+
+    /**
+     * Maximum water level.
+     */
     final int MAX_WATER_LEVEL;
+
+    /**
+     * Threshold food level that dinosaur starts to get hungry when its food level is below it.
+     */
     final int HUNGRY_WHEN;
+
+    /**
+     * Threshold water level that dinosaur starts to get thirsty when its water level is below it.
+     */
     final int THIRSTY_WHEN;
+
+    /**
+     *  Age that the dinosaur will become an adult.
+     */
     final int MATURE_WHEN;
+
+    /**
+     * Minimum food level for dinosaur to be able to breed.
+     */
     final int BREEDING_MIN_FOOD_LEVEL;
+
+    /**
+     * Initial pregnancy period of pregnant DinoActors.
+     */
     final int PREGNANCY_PERIOD;
+
+    /**
+     * Maximum number of turns that the DinoActor can stay unconscious till it dies.
+     */
     final int UNCONSCIOUS_PERIOD;
+
+    /**
+     * The size of its jaw, which determines how fast it can finish eating a food and
+     * the number of food points it gains with one bite.
+     */
     final int BITE_SIZE;
+
+    /**
+     * The capacity of its mouth, which determines how fast it can drink water and
+     * the number of water points it gains with one sip of water.
+     */
     final int GULP_SIZE;
 
     DinoEncyclopedia(char displayChar, String name, int initialHitPoints, int babyInitialHitPoints, int maxHitPoints,

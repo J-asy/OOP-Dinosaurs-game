@@ -126,17 +126,18 @@ public abstract class DinoActor extends CapableActor {
         behaviour.add(new PregnancyBehaviour());
         behaviour.add(new FeedOnItemBehaviour());
         behaviour.add(new DrinkingBehaviour());
-        behaviour.add(new FindMateBehaviour());
-        behaviour.add(new FindFoodBehaviour());
-        behaviour.add(new FindWaterBehaviour());
-        behaviour.add(new FindVictimBehaviour());
+        behaviour.add(new FollowMateBehaviour());
+        behaviour.add(new FollowFoodBehaviour());
+        behaviour.add(new FollowWaterBehaviour());
+        behaviour.add(new FollowVictimBehaviour());
         behaviour.add(new WanderBehaviour());
+
 
         // all behaviours that the DinoActor can perform with another
         // Actor on adjacent squares
         interactiveBehaviours = new ArrayList<>();
         interactiveBehaviours.add(new FeedOnActorBehaviour(this));
-
+        interactiveBehaviours.add(new EvadeDinoBehaviour());
         interactiveBehaviours.add(new BreedingBehaviour(this));
         interactiveBehaviours.add(new AttackBehaviour(this));
         interactiveBehaviours.add(new FedByPlayerBehaviour(this));
@@ -242,9 +243,6 @@ public abstract class DinoActor extends CapableActor {
         return hitPoints;
     }
 
-    public int getWaterLevel(){
-        return waterLevel;
-    }
 
     /**
      * Decrements the dinoActor's food level, which is equivalent to its hitPoints.
@@ -477,7 +475,7 @@ public abstract class DinoActor extends CapableActor {
 
             if (!(actionToExecute instanceof LayEggAction) && actions.size() > 0){
                 for (Action a: actions) {
-                    if (a instanceof BreedingAction || a instanceof AttackAction) {
+                    if (a instanceof BreedingAction || a instanceof AttackAction || a instanceof DynamicMoveAction) {
                         actionToExecute = a;
                         break;
                     }
