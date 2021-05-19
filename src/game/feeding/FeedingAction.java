@@ -8,8 +8,8 @@ import game.Food;
 import game.dinosaurs.DinoActor;
 
 /**
- * Simulates the DinoActor feeding on a FoodItem that is on the ground
- * or feeding on food that grows on the Ground.
+ * Special action for the DinoActor to feed on a FoodItem that is on the ground
+ * or feed on food that grows on the Ground.
  */
 public class FeedingAction extends Action {
 
@@ -28,7 +28,8 @@ public class FeedingAction extends Action {
     }
 
     /**
-     * Performs the feeding action.
+     * Performs the feeding action, increments the food level of the DinoActor appropriately,
+     * and returns a description of the feeding action.
      *
      * @param actor The actor performing the action.
      * @param map   The map the actor is on.

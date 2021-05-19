@@ -17,8 +17,8 @@ public class FeedOnItemBehaviour implements Behaviour {
 
     /***
      * Returns FeedingAction if it is possible for a dinosaur to feed
-     * on FoodItems and Ground that has food living / growing on it, returns
-     * null otherwise.
+     * on FoodItems and Ground that has food living / growing on it,
+     * returns null otherwise.
      * @param actor the Actor acting
      * @param map the GameMap containing the Actor
      * @return a new FeedingAction if it is possible for a dinosaur to feed, null otherwise.
