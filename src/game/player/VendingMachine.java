@@ -94,11 +94,21 @@ public class VendingMachine extends Ground {
         return true;
     }
 
+    /**
+     * Returns false to indicate CapableActors cannot lay an Egg on this ground.
+     * @param capableActor A capable actor
+     * @return false
+     */
     @Override
     public boolean canLayEggHere(CapableActor capableActor){
         return false;
     }
 
+    /**
+     * Returns false to indication CapableActors cannot breed on this ground.
+     * @param capableActor A capable actor
+     * @return false
+     */
     @Override
     public boolean canBreedHere(CapableActor capableActor){
         return false;
