@@ -2,6 +2,8 @@ package game;
 
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
+import game.dinosaurs.CapableActor;
+import game.dinosaurs.DinoActor;
 
 /**
  * Base class for any item that can be picked up and dropped.
@@ -53,6 +55,11 @@ public abstract class FoodItem extends PortableItem implements Food {
 	@Override
 	public String foodName() {
 		return this.name;
+	}
+
+	public boolean canEat(CapableActor capableActor){
+		return capableActor.isHerbivorous() && edibleByHerbivores() ||
+				capableActor.isCarnivorous() && edibleByCarnivores();
 	}
 
 	@Override
