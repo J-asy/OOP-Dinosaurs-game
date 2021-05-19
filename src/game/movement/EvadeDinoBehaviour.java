@@ -26,24 +26,14 @@ public class EvadeDinoBehaviour implements Behaviour {
                 return null;
             }
 
-            boolean shouldMoveAway = false;
-            Location moveToLocation = null;
             for (Exit exit: location.getExits()){
-                if (location.containsAnActor()){
-                    shouldMoveAway = true;
-                }
-                else {
-                    moveToLocation = exit.getDestination();
-                }
-
-                if (shouldMoveAway && moveToLocation != null){
-                    return new DynamicMoveAction(moveToLocation, exit.getName() + "to evade other dinosaurs.");
+                if (!(exit.getDestination().containsAnActor())){
+                    return new DynamicMoveAction(exit.getDestination(), exit.getName() +
+                            "to evade other dinosaurs.");
                 }
             }
 
-
         }
-
         return null;
     }
 }
