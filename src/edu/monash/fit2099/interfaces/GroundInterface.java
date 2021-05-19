@@ -10,8 +10,18 @@ import game.dinosaurs.CapableActor;
 
 public interface GroundInterface {
 
+    /**
+     * Returns true if the CapableActor can lay an egg on the ground, false otherwise.
+     * @param capableActor A capable actor
+     * @return true if the capable actor can lay an egg on the ground, false otherwise
+     */
     boolean canLayEggHere(CapableActor capableActor);
 
+    /**
+     * Returns true if the CapableActor can breed on the ground, false otherwise.
+     * @param capableActor A capable actor
+     * @return true if the capable actor can breed on the ground, false otherwise
+     */
     boolean canBreedHere(CapableActor capableActor);
 
 }
