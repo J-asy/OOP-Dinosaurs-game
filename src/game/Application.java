@@ -5,11 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Display;
-import edu.monash.fit2099.engine.FancyGroundFactory;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.World;
+import edu.monash.fit2099.engine.*;
 import game.attack.Corpse;
 import game.dinosaurs.*;
 import game.environment.*;
@@ -60,17 +56,79 @@ public class Application {
 			GameMap gameMap = new GameMap(groundFactory, map);
 			world.addGameMap(gameMap);
 
-			Actor player = new Player("Player", '@', 100);
-			world.addPlayer(player, gameMap.at(10, 4));
+			List<String> newMap = Arrays.asList(
+					"................................................................................",
+					"................................................................................",
+					".......+++++.........................................................++++.......",
+					"........+++++...............................................~.......++++........",
+					".......++++........................................................+++++........",
+					"......++++......................................................................",
+					".......++.......................................................................",
+					"................................................................................",
+					"................................................................................",
+					"................................................................................",
+					"................+...............................................................",
+					"...............+++..........................~...................................",
+					"..............+++++.............................................................",
+					"............++++++++...................................................+++......",
+					"...........+++++++++....................................................+++.....",
+					"..........++++++++++++.................................................+++......",
+					"............+++++++++.................................................++++......",
+					"...............++++.............................................................",
+					".................+..................................................#######.....",
+					".............................................++++...................#_____#.....",
+					"...........................................+++++++..................._____#.....",
+					".....~......................................+++++...................#__X__#.....",
+					"............................................++++....................#######.....",
+					"..........................................++++..................................",
+					"................................................................................");
+			GameMap secondMap = new GameMap(groundFactory, newMap);
+			world.addGameMap(secondMap);
 
-			// A small herd of Stegosaur added at the start of the game
+			Actor player = new Player("Player", '@', 100);
+			world.addPlayer(player, gameMap.at(10, 0));
+
+			// Bridges on first map
+			TravelItem bridge1 = new TravelItem("Genesis Bridge", '!');
+			bridge1.addAction(new MoveActorAction(secondMap.at(19,24), "to Acheulian Park" ));
+			gameMap.at(19,0).addItem(bridge1);
+
+			TravelItem bridge2 = new TravelItem("Onyx Bridge", '!');
+			bridge2.addAction(new MoveActorAction(secondMap.at(39,24), "to Acheulian Park" ));
+			gameMap.at(39,0).addItem(bridge2);
+
+			TravelItem bridge3 = new TravelItem("Anzu Bridge", '!');
+			bridge3.addAction(new MoveActorAction(secondMap.at(59,24), "to Acheulian Park" ));
+			gameMap.at(59,0).addItem(bridge3);
+
+			//Bridges on second map
+			TravelItem bridgeA = new TravelItem("Genesis Bridge", '!');
+			bridgeA.addAction(new MoveActorAction(gameMap.at(19, 0), "to Jurassic Park" ));
+			secondMap.at(19,24).addItem(bridgeA);
+
+			TravelItem bridgeB = new TravelItem("Onyx Bridge", '!');
+			bridgeB.addAction(new MoveActorAction(gameMap.at(39, 0), "to Jurassic Park" ));
+			secondMap.at(39,24).addItem(bridgeB);
+
+			TravelItem bridgeC = new TravelItem("Anzu Bridge", '!');
+			bridgeC.addAction(new MoveActorAction(gameMap.at(59, 0), "to Jurassic Park" ));
+			secondMap.at(59,24).addItem(bridgeC);
+
+			// A small herd of Stegosaur added at the start of the game (first map)
 			gameMap.at(48, 11).addActor(new Stegosaur(true));
 			gameMap.at(20, 18).addActor(new Stegosaur(true));
 			gameMap.at(58, 20).addActor(new Stegosaur(true));
 			gameMap.at(58, 9).addActor(new Stegosaur(true));
 			gameMap.at(1, 11).addActor(new Stegosaur(true));
 
-			// Two pairs of Brachiosaur, male and female added at the start of the game
+			// A small herd of Stegosaur added at the start of the game (second map)
+			secondMap.at(48, 11).addActor(new Stegosaur(true));
+			secondMap.at(20, 18).addActor(new Stegosaur(true));
+			secondMap.at(58, 20).addActor(new Stegosaur(true));
+			secondMap.at(58, 9).addActor(new Stegosaur(true));
+			secondMap.at(1, 11).addActor(new Stegosaur(true));
+
+			// Two pairs of Brachiosaur, male and female added at the start of the game (first map)
 			DinoActor b1 = new Brachiosaur(DinoCapabilities.FEMALE, true);
 			gameMap.at(36, 11).addActor(b1);
 			DinoActor b2 = new Brachiosaur(DinoCapabilities.MALE, true);
@@ -79,6 +137,16 @@ public class Application {
 			gameMap.at(10, 20).addActor(b3);
 			DinoActor b4 = new Brachiosaur(DinoCapabilities.MALE, true);
 			gameMap.at(30, 10).addActor(b4);
+
+			// Two pairs of Brachiosaur, male and female added at the start of the game (second map)
+			DinoActor b5 = new Brachiosaur(DinoCapabilities.FEMALE, true);
+			secondMap.at(36, 11).addActor(b5);
+			DinoActor b6 = new Brachiosaur(DinoCapabilities.MALE, true);
+			secondMap.at(35, 11).addActor(b6);
+			DinoActor b7 = new Brachiosaur(DinoCapabilities.FEMALE, true);
+			secondMap.at(10, 20).addActor(b7);
+			DinoActor b8 = new Brachiosaur(DinoCapabilities.MALE, true);
+			secondMap.at(30, 10).addActor(b8);
 
 			pointsMovesMode = chooseMode();
 			if (pointsMovesMode[0] != 0 && pointsMovesMode[1] != 0 && pointsMovesMode[2] == 1) {
