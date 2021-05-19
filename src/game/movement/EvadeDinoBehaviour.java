@@ -37,7 +37,7 @@ public class EvadeDinoBehaviour implements Behaviour {
                 }
 
                 if (shouldMoveAway && moveToLocation != null){
-                    return new DynamicMoveAction(moveToLocation, exit.getName());
+                    return new DynamicMoveAction(moveToLocation, exit.getName() + "to evade other dinosaurs.");
                 }
             }
 
