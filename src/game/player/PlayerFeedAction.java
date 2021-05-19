@@ -76,10 +76,20 @@ public class PlayerFeedAction extends Action {
         return "Chosen item is not suitable to feed.";
     }
 
+    /**
+     * Returns true if the feeding action should increase the EcoPoints, false otherwise
+     * @param foodItem FoodItem to be fed to the DinoActor
+     * @return true if the feeding action should increase the EcoPoints, false otherwise
+     */
     private boolean isEcoPointEvent(FoodItem foodItem){
         return foodItem instanceof Fruit || target instanceof Pterodactyl;
     }
 
+    /**
+     * Returns a description of the actor feeding a DinoActor.
+     * @param actor The actor performing the action.
+     * @return description of the actor feeding a DinoActor
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor + " feeds " + target;
