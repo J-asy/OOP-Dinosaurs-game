@@ -74,6 +74,8 @@ public class PlayerFeedAction extends Action {
                 else if (target.isCarnivorous()) {
 
                     if (chosenItem.edibleByCarnivores()) {
+                        if (target.isArboreal())
+                            EcoPoints.incrementEcoPoints(10);
                         actor.removeItemFromInventory(chosenItem);
                         target.heal(20);
                         return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
