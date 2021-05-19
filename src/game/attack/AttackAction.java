@@ -35,10 +35,10 @@ public class AttackAction extends Action {
 	}
 
 	/**
-	 * Performs the action
-	 * @param actor The actor performing the action.
+	 * Performs the attack action.
+	 * @param actor The actor performing the attack action.
 	 * @param map The map the actor is on.
-	 * @return a message string
+	 * @return Description of the attack action
 	 */
 	@Override
 	public String execute(Actor actor, GameMap map) {
@@ -81,9 +81,9 @@ public class AttackAction extends Action {
 		return result;
 	}
 
-
 	@Override
 	public String menuDescription(Actor actor) {
 		return actor + " attacks " + target;
 	}
+
 }
