@@ -9,17 +9,22 @@ import game.dinosaurs.DinoActor;
 import game.movement.FindBirthingSpotBehaviour;
 
 /**
- * Simulates the pregnancy behaviour of an Actor.
+ * Simulates the behaviour of a pregnant Actor.
  */
 public class PregnancyBehaviour implements Behaviour {
 
     /**
      * Determines whether it is time for a pregnant DinoActor to lay an egg yet.
-     * If yes, LayEggAction is returned, otherwise the pregnancy period of the
-     * DinoActor is updated to the number of turns left for it to lay an egg.
+     * If yes and the DinoActor is on ground that it can lay an egg on, LayEggAction is returned.
+     * If yes but the DinoActor is on ground that it cannot lay an egg on,
+     * a DynamicMoveAction is returned for the DinoActor to find a spot to lay its egg.
+     * If it is not time to lay an egg yet, the pregnancy period is updated.
+     *
      * @param actor the Actor acting
      * @param map the GameMap containing the Actor
-     * @return LayEggAction if it is time for a pregnant actor to lay an egg, null otherwise.
+     * @return LayEggAction if it is time for a pregnant actor to lay an egg and it can do so on the ground it is on,
+     * DynamicMoveAction if it is time for a pregnant actor to lay an egg and it cannot do so on the ground it is on,
+     * null otherwise.
      */
     @Override
     public Action getAction(Actor actor, GameMap map) {
