@@ -20,8 +20,14 @@ public class PlayerFeedAction extends Action {
      */
     private final DinoActor target;
 
+    /**
+     * Increment in food level of the DinoActors after feeding it
+     */
     private final static int INCREMENT_FOOD_LEVEL = 20;
 
+    /**
+     * Increment in eco points after feeding certain DinoActors/ certain FoodItems to DinoActors
+     */
     private final static int INCREMENT_ECO_POINTS = 10;
 
     /**
@@ -85,11 +91,6 @@ public class PlayerFeedAction extends Action {
         return foodItem instanceof Fruit || target instanceof Pterodactyl;
     }
 
-    /**
-     * Returns a description of the actor feeding a DinoActor.
-     * @param actor The actor performing the action.
-     * @return description of the actor feeding a DinoActor
-     */
     @Override
     public String menuDescription(Actor actor) {
         return actor + " feeds " + target;
