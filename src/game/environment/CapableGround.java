@@ -2,6 +2,9 @@ package game.environment;
 
 import edu.monash.fit2099.engine.Ground;
 
+/**
+ * Ground that has capabilities.
+ */
 public abstract class CapableGround extends Ground {
     /**
      * Constructor.
@@ -13,7 +16,7 @@ public abstract class CapableGround extends Ground {
     }
 
     /**
-     * Checks if current Location has capability of Tree.
+     * Checks if current location is a Tree.
      *
      * @return true or false
      */
@@ -22,7 +25,7 @@ public abstract class CapableGround extends Ground {
     }
 
     /**
-     * Checks if current Location has capability of Bush.
+     * Checks if current location is a Bush.
      *
      * @return true or false
      */
@@ -31,7 +34,7 @@ public abstract class CapableGround extends Ground {
     }
 
     /**
-     * Checks if current Location has capability of Lake
+     * Checks if current location is a Lake
      *
      * @return true or false
      */

@@ -8,12 +8,20 @@ import game.dinosaurs.CapableActor;
  * Class that represents the Fruit object.
  */
 public class Fruit extends FoodItem {
+
+    /**
+     * The number of turns that the Fruit spent being on the ground.
+     */
     private int groundTime;
+
+    /**
+     * The amount of food points that can be gained by eating
+     * a fruit on the ground.
+     */
     private final static int FRUIT_HEAL_POINTS = 10;
 
     /**
-     * Constructor
-     *
+     * Constructor.
      */
     public Fruit(){
         super("Fruit",'F');
@@ -37,6 +45,12 @@ public class Fruit extends FoodItem {
 
     }
 
+    /**
+     *
+     * @param capableActor A CapableActor
+     * @param location Location of the Food
+     * @return true if the CapableActor can eat a Fruit on the ground
+     */
     @Override
     public boolean canEat(CapableActor capableActor, Location location) {
         return capableActor.isHerbivorous() && !capableActor.canReachTree();

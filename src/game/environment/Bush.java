@@ -10,9 +10,24 @@ import game.dinosaurs.CapableActor;
  */
 public class Bush extends FertileGround {
 
+    /**
+     * Display character of a small bush.
+     */
     private static final char SMALL = '"';
+
+    /**
+     * Display character of a big bush.
+     */
     private static final char BIG = '*';
+
+    /**
+     * Display character of a big bush that has fruits on it.
+     */
     private static final char FRUITY_BUSH = '^';
+
+    /**
+     * Amount of food points gained by eating a Fruit from a bush.
+     */
     private static final int FRUIT_HEAL_POINTS = 10;
 
     /**
@@ -32,7 +47,6 @@ public class Bush extends FertileGround {
      *
      * @param location the current Location of the Bush
      */
-
     @Override
     public void tick(Location location){
 
@@ -69,26 +83,60 @@ public class Bush extends FertileGround {
         adjustHasFruitCapability();
     }
 
+    /**
+     * Get the amount of food points gained by eating a Fruit from a Bush.
+     * @return amount of food points gained by eating a Fruit from a Bush.
+     */
     @Override
     int getHealPoints(){
         return FRUIT_HEAL_POINTS;
     }
 
+    /**
+     * Returns true if the CapableActor can eat a fruit growing on the Bush,
+     * which is when the CapableActor is a short herbivore and the Bush has fruits growing on it,
+     * returns false otherwise.
+     * @param capableActor A CapableActor
+     * @param location Location of the Bush
+     * @return true if the CapableActor can eat fruits growing on the Bush
+     */
     @Override
     public boolean canEat(CapableActor capableActor, Location location) {
         return capableActor.isHerbivorous() && !capableActor.canReachTree() && hasFruits();
     }
 
+    /**
+     * Simulates DinoActor eating a fruit from the Bush,
+     * and returns the amount of food points gained by the eating the fruit.
+     * @param map map the Actor is on
+     * @param location location the Actor is at
+     * @param biteSize jaw size of the Actor that is trying to eat
+     * @return amount of food points that should be gained by eating a fruit
+     */
     @Override
     public int eat(GameMap map, Location location, int biteSize) {
         return eatFruit();
     }
 
+    /**
+     * Returns true if the CapableActor can lay an Egg on Bush,
+     * which is when the CapableActor is not arboreal (does not live on trees),
+     * returns false otherwise.
+     * @param capableActor A capable actor
+     * @return true if the CapableActor can lay an Egg on Bush, false otherwise
+     */
     @Override
     public boolean canLayEggHere(CapableActor capableActor){
         return !capableActor.isArboreal();
     }
 
+    /**
+     * Returns true if the CapableActor can breed on Bush,
+     * which is when the CapableActor is not arboreal (does not live on trees),
+     * returns false otherwise.
+     * @param capableActor A capable actor
+     * @return true if the CapableActor can breed on Bush, false otherwise
+     */
     @Override
     public boolean canBreedHere(CapableActor capableActor){
         return !capableActor.isArboreal();

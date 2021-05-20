@@ -50,11 +50,25 @@ public class Dirt extends Ground {
 		}
 	}
 
+	/**
+	 * Returns true if the CapableActor can lay an Egg on Dirt,
+	 * which is when the CapableActor is not arboreal (does not live on trees),
+	 * returns false otherwise.
+	 * @param capableActor A capable actor
+	 * @return true if the CapableActor can lay an Egg on Dirt, false otherwise
+	 */
 	@Override
 	public boolean canLayEggHere(CapableActor capableActor){
 		return !capableActor.isArboreal();
 	}
 
+	/**
+	 * Returns true if the CapableActor can breed on Dirt,
+	 * which is when the CapableActor is not arboreal (does not live on trees),
+	 * returns false otherwise.
+	 * @param capableActor A capable actor
+	 * @return true if the CapableActor can breed on Dirt, false otherwise
+	 */
 	@Override
 	public boolean canBreedHere(CapableActor capableActor){
 		return !capableActor.isArboreal();

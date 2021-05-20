@@ -11,10 +11,29 @@ import game.dinosaurs.CapableActor;
  */
 public class Tree extends FertileGround {
 
+	/**
+	 * Display character of a small tree.
+	 */
 	private static final char SMALL = '+';
+
+	/**
+	 * Display character of a medium-sized tree.
+	 */
 	private static final char MEDIUM = 't';
+
+	/**
+	 * Display character of a big tree.
+	 */
 	private static final char BIG = 'T';
+
+	/**
+	 * Display character of a big tree that has fruits on it.
+	 */
 	private static final char FRUITY_TREE = '&';
+
+	/**
+	 * Amount of food points gained by eating a Fruit from a tree.
+	 */
 	private static final int FRUIT_HEAL_POINTS = 5;
 
 	/**
@@ -66,16 +85,36 @@ public class Tree extends FertileGround {
 		adjustHasFruitCapability();
 	}
 
+	/**
+	 * Get the amount of food points gained by eating a Fruit from a Tree.
+	 * @return amount of food points gained by eating a Fruit from a Tree.
+	 */
 	@Override
 	int getHealPoints(){
 		return FRUIT_HEAL_POINTS;
 	}
 
+	/**
+	 * Returns true if the CapableActor can eat fruits growing on the tree,
+	 * which is when the CapableActor is a tall herbivore and the tree has fruits growing on it,
+	 * returns false otherwise.
+	 * @param capableActor A CapableActor
+	 * @param location Location of the Tree
+	 * @return true if the CapableActor can eat fruits growing on the tree
+	 */
 	@Override
 	public boolean canEat(CapableActor capableActor, Location location) {
 		return capableActor.isHerbivorous() && capableActor.canReachTree() && hasFruits();
 	}
 
+	/**
+	 * Simulates DinoActor eating fruits from the Tree,
+	 * and returns the amount of food points gained by the eating the fruits.
+	 * @param map map the Actor is on
+	 * @param location location the Actor is at
+	 * @param biteSize jaw size of the Actor that is trying to eat
+	 * @return amount of food points that should be gained by eating fruits
+	 */
 	@Override
 	public int eat(GameMap map, Location location, int biteSize) {
 		int healPoints = 0;
@@ -87,11 +126,25 @@ public class Tree extends FertileGround {
 		return healPoints;
 	}
 
+	/**
+	 * Returns true if the CapableActor can lay an Egg on Tree,
+	 * which is when the CapableActor is arboreal, meaning it lives on trees,
+	 * returns false otherwise.
+	 * @param capableActor A capable actor
+	 * @return true if the CapableActor can lay an Egg on Tree, false otherwise
+	 */
 	@Override
 	public boolean canLayEggHere(CapableActor capableActor){
 		return capableActor.isArboreal();
 	}
 
+	/**
+	 * Returns true if the CapableActor can breed on Tree,
+	 * which is when the CapableActor is arboreal, meaning it lives on trees,
+	 * returns false otherwise.
+	 * @param capableActor A capable actor
+	 * @return true if the CapableActor can breed on Tree, false otherwise
+	 */
 	@Override
 	public boolean canBreedHere(CapableActor capableActor){
 		return capableActor.isArboreal();

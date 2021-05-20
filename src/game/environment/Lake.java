@@ -11,7 +11,7 @@ public class Lake extends CapableGround implements Food, DrinkingGround {
 
     private int numberOfFish;
     private int waterLevel;
-    private final int CAPACITY = 25;
+    private static final int CAPACITY = 25;
 
     /**
      * Constructor.
@@ -44,6 +44,12 @@ public class Lake extends CapableGround implements Food, DrinkingGround {
         }
     }
 
+    /**
+     * Returns true if the actor has the capability to traverse water,
+     * returns false otherwise.
+     * @param actor the Actor to check
+     * @return true if the actor has the capability to traverse water, returns false otherwise.
+     */
     @Override
     public boolean canActorEnter(Actor actor) {
         if (actor instanceof CapableActor){
@@ -62,11 +68,26 @@ public class Lake extends CapableGround implements Food, DrinkingGround {
         return numberOfFish > 0;
     }
 
+    /**
+     * Returns true if the CapableActor can eat Food in the Lake, which is Fish,
+     * hence the CapableActor must be carnivorous, otherwise returns false.
+     * @param capableActor A CapableActor
+     * @param location Location of the Food
+     * @return true if the CapableActor can eat Food in the Lake, false otherwise
+     */
     @Override
     public boolean canEat(CapableActor capableActor, Location location) {
         return capableActor.isCarnivorous();
     }
 
+    /**
+     * Simulates eating 0,1 or 2 Fish from the Lake,
+     * and returns the amount of food points gained by eating the Fish.
+     * @param map map the Actor is on
+     * @param location location the Actor is at
+     * @param biteSize jaw size of the Actor that is trying to eat
+     * @return amount of food points gained by eating the Fish.
+     */
     @Override
     public int eat(GameMap map, Location location, int biteSize) {
         int healPoints = 0;
@@ -79,21 +100,39 @@ public class Lake extends CapableGround implements Food, DrinkingGround {
         return healPoints;
     }
 
+    /**
+     * Returns name of Food contained in the lake, which is Fish.
+     * @return name of Fish object
+     */
     @Override
     public String foodName(){
         return new Fish().foodName();
     }
 
+    /**
+     * Returns false since no CapableActor should be able to lay an Egg in a Lake.
+     * @param capableActor A capable actor
+     * @return false
+     */
     @Override
     public boolean canLayEggHere(CapableActor capableActor){
         return false;
     }
 
+    /**
+     * Returns false since no CapableActor should be able to breed in a Lake.
+     * @param capableActor A capable actor
+     * @return false
+     */
     @Override
     public boolean canBreedHere(CapableActor capableActor){
         return false;
     }
 
+    /**
+     * Returns true if there is water in the lake, false otherwise.
+     * @return true if there is water in the lake, false otherwise
+     */
     @Override
     public boolean hasWater() {
         return waterLevel > 0;
