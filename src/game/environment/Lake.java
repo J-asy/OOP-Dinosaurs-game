@@ -2,12 +2,13 @@ package game.environment;
 
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.Food;
 import game.Probability;
 import game.dinosaurs.CapableActor;
 
-public class Lake extends CapableGround implements Food, DrinkingGround {
+public class Lake extends Ground implements Food, DrinkingGround {
 
     private int numberOfFish;
     private int waterLevel;
@@ -18,7 +19,6 @@ public class Lake extends CapableGround implements Food, DrinkingGround {
      */
     public Lake() {
         super('~');
-        setLake();
         numberOfFish = 5;
         waterLevel = 25;
     }

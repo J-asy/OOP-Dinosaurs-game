@@ -1,5 +1,6 @@
 package game.environment;
 
+import edu.monash.fit2099.engine.Ground;
 import game.EcoPoints;
 import game.Food;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 /**
  * A class that represents Ground that has fruit-growing plants
  */
-public abstract class FertileGround extends CapableGround implements Food {
+public abstract class FertileGround extends Ground implements Food {
 
     /**
      * age of the plant
@@ -27,6 +28,32 @@ public abstract class FertileGround extends CapableGround implements Food {
      */
     public FertileGround(char displayChar) {
         super(displayChar);
+    }
+
+    void setBush() {
+        addCapability(TerrainType.BUSH);
+    }
+
+    void setTree() {
+        addCapability(TerrainType.TREE);
+    }
+
+    /**
+     * Checks if current location is a Tree.
+     *
+     * @return true or false
+     */
+    public boolean isTree() {
+        return hasCapability(TerrainType.TREE);
+    }
+
+    /**
+     * Checks if current location is a Bush.
+     *
+     * @return true or false
+     */
+    public boolean isBush() {
+        return hasCapability(TerrainType.BUSH);
     }
 
     /**
