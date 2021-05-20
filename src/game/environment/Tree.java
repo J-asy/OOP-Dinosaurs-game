@@ -127,27 +127,23 @@ public class Tree extends FertileGround {
 	}
 
 	/**
-	 * Returns true if the CapableActor can lay an Egg on Tree,
-	 * which is when the CapableActor is arboreal, meaning it lives on trees,
-	 * returns false otherwise.
+	 * Returns true since all CapableActors can lay an Egg on this ground
 	 * @param capableActor A capable actor
-	 * @return true if the CapableActor can lay an Egg on Tree, false otherwise
+	 * @return true
 	 */
 	@Override
 	public boolean canLayEggHere(CapableActor capableActor){
-		return capableActor.isArboreal();
+		return true;
 	}
 
 	/**
-	 * Returns true if the CapableActor can breed on Tree,
-	 * which is when the CapableActor is arboreal, meaning it lives on trees,
-	 * returns false otherwise.
+	 * Returns true since all CapableActors can breed on this ground
 	 * @param capableActor A capable actor
-	 * @return true if the CapableActor can breed on Tree, false otherwise
+	 * @return true
 	 */
 	@Override
 	public boolean canBreedHere(CapableActor capableActor){
-		return capableActor.isArboreal();
+		return true;
 	}
 
 
