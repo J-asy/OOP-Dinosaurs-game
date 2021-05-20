@@ -1,9 +1,9 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
+import game.environment.FertileGround;
 import game.movement.DynamicMovement;
 import game.Food;
-import game.environment.CapableGround;
 import game.environment.Lake;
 
 /**
@@ -110,8 +110,8 @@ public class Pterodactyl extends DinoActor implements DynamicMovement, Food {
      * @return true if the Pterodactyl is on a tree, false otherwise.
      */
     private boolean isOnTree(Ground ground){
-        if (ground instanceof CapableGround){
-            return ((CapableGround)ground).isTree();
+        if (ground instanceof FertileGround){
+            return ((FertileGround)ground).isTree();
         }
         return false;
     }
