@@ -1,8 +1,7 @@
 package game.player;
 
 import edu.monash.fit2099.engine.*;
-import game.EcoPoints;
-import game.environment.CapableGround;
+import game.environment.FertileGround;
 
 /**
  * Class representing the Player.
@@ -40,12 +39,11 @@ public class Player extends Actor {
 
 		Ground ground = map.locationOf(this).getGround();
 
-		if (ground instanceof CapableGround) {
-			CapableGround capableGround = (CapableGround) ground;
-			if (capableGround.isTree() || capableGround.isBush())
-				actions.add(new SearchItemAction());
+		if (ground instanceof FertileGround) {
+			actions.add(new SearchItemAction());
 		}
-		System.out.println("ECO points: " + EcoPoints.getEcoPoints());
+
+		actions.add(new QuitGameAction());
 
 		return menu.showMenu(this, actions, display);
 

@@ -37,10 +37,11 @@ public class BuyAction extends Action {
         System.out.format(strFormat,"4","Stegosaur Egg","| 200");
         System.out.format(strFormat,"5","Brachiosaur Egg","| 500");
         System.out.format(strFormat,"6","Allosaur Egg","| 1000");
-        System.out.format(strFormat,"7","Laser Gun","| 500");
+        System.out.format(strFormat,"7","Pterodactyl Egg","| 200");
+        System.out.format(strFormat,"8","Laser Gun","| 500");
         System.out.println("===========================================|");
         System.out.println("You currently have " + EcoPoints.getEcoPoints() + " Eco Points.");
-        System.out.println("What would you like? Please enter a number from 1 to 7. (Enter 0 to Exit)");
+        System.out.println("What would you like? Please enter a number from 1 to 8. (Enter 0 to Exit)");
 
         int choice = getIntegerInput();
         boolean boughtItem = VendingMachine.choose(choice,actor);
@@ -62,16 +63,16 @@ public class BuyAction extends Action {
     private int getIntegerInput(){
         Scanner scanner = new Scanner(System.in);
         int userInput = -1;
-        boolean errorOccured = true;
+        boolean errorOccurred = true;
         do{
             try{
                 userInput = Integer.parseInt(scanner.nextLine());
-                errorOccured = false;
+                errorOccurred = false;
             }
             catch (NumberFormatException e){
                 System.out.println("Please enter a number.");
             }
-        } while (errorOccured);
+        } while (errorOccurred);
         return userInput;
     }
 }

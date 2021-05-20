@@ -35,10 +35,10 @@ public class AttackAction extends Action {
 	}
 
 	/**
-	 * Performs the action
-	 * @param actor The actor performing the action.
+	 * Performs the attack action.
+	 * @param actor The actor performing the attack action.
 	 * @param map The map the actor is on.
-	 * @return a message string
+	 * @return Description of the attack action
 	 */
 	@Override
 	public String execute(Actor actor, GameMap map) {
@@ -51,7 +51,7 @@ public class AttackAction extends Action {
 
 		int damage = weapon.damage();
 
-		// Adds stegosaur to Allosaur's attackedStego HashMap only after attacking it
+		// Adds stegosaur to Allosaur 's victim HashMap only after attacking it
 		if (actor instanceof Allosaur) {
 			Allosaur actorAsAllosaur = (Allosaur) actor;
 			if (!actorAsAllosaur.hasAttackedVictim(target)) {
@@ -81,9 +81,9 @@ public class AttackAction extends Action {
 		return result;
 	}
 
-
 	@Override
 	public String menuDescription(Actor actor) {
 		return actor + " attacks " + target;
 	}
+
 }

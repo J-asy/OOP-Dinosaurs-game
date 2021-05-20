@@ -40,12 +40,12 @@ public class BreedingAction extends Action {
         String breedingDescription = null;
         if (actor instanceof DinoActor) {
             breedingDescription = menuDescription(actor);
-            DinoActor actorAsDino = (DinoActor) actor;
+            DinoActor dinoActor = (DinoActor) actor;
 
-            if (actorAsDino.getSex() == DinoCapabilities.FEMALE && Probability.generateProbability(0.5F)) {
-                actorAsDino.setPregnant(true);
-                Location dinoLocation = map.locationOf(actorAsDino);
-                breedingDescription += String.format("\n%s at (%d, %d) is pregnant!", actorAsDino, dinoLocation.x(),
+            if (dinoActor.getSex() == DinoCapabilities.FEMALE && Probability.generateProbability(0.5F)) {
+                dinoActor.setPregnant(true);
+                Location dinoLocation = map.locationOf(dinoActor);
+                breedingDescription += String.format("\n%s at (%d, %d) is pregnant!", dinoActor, dinoLocation.x(),
                         dinoLocation.y());
             }
         }

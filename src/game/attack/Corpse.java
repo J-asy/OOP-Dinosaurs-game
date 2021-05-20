@@ -1,76 +1,108 @@
 package game.attack;
 
 import edu.monash.fit2099.engine.Location;
-import game.FoodType;
-import game.PortableItem;
+import game.FoodItem;
+import game.dinosaurs.CapableActor;
 import game.dinosaurs.DinoEncyclopedia;
 import java.util.Map;
 import static java.util.Map.entry;
 
 /**
- * A dead dinosaur
+ * The remains of a dead dinosaur which can be eaten by other DinoActors.
  */
-public class Corpse extends PortableItem {
+public class Corpse extends FoodItem {
 
-    /** dictionary to refer to for the total number of turns to wait till corpse is removed from map
-     *
+    /**
+     * An integer list which first value is the total number of turns to wait till a Stegosaur's corpse
+     * rots and disappears, and second value is the initial food points that the Corpse contains.
      */
-    private final static Map<DinoEncyclopedia, Integer> DINO_CORPSE_DICTIONARY = Map.ofEntries(
-            entry(DinoEncyclopedia.STEGOSAUR, 20),
-            entry(DinoEncyclopedia.BRACHIOSAUR, 40),
-            entry(DinoEncyclopedia.ALLOSAUR, 20)
+    private final static int[] STEGOSAUR_VALUE = {20,50};
+
+    /**
+     * An integer list which first value is the total number of turns to wait till a Brachiosaur's corpse
+     * rots and disappears, and second value is the initial food points that the Corpse contains.
+     */
+    private final static int[] BRACHIOSAUR_VALUE = {40,100};
+
+    /**
+     * An integer list which first value is the total number of turns to wait till a Allosaur's corpse
+     * rots and disappears, and second value is the initial food points that the Corpse contains.
+     */
+    private final static int[] ALLOSAUR_VALUE = {20,50};
+
+    /**
+     * An integer list which first value is the total number of turns to wait till a Pterodactyl's corpse
+     * rots and disappears, and second value is the initial food points that the Corpse contains.
+     */
+    private final static int[] PTERODACTYL_VALUE = {20,30};
+
+    /**
+     * Map that stores useful constants for the Corpse Item according to different dinosaur species.
+     */
+    private final static Map<DinoEncyclopedia, int[]> DINO_CORPSE_DICTIONARY = Map.ofEntries(
+            entry(DinoEncyclopedia.STEGOSAUR, STEGOSAUR_VALUE),
+            entry(DinoEncyclopedia.BRACHIOSAUR, BRACHIOSAUR_VALUE),
+            entry(DinoEncyclopedia.ALLOSAUR, ALLOSAUR_VALUE),
+            entry(DinoEncyclopedia.PTERODACTYL, PTERODACTYL_VALUE)
     );
 
     /**
-     * number of turns until corpse is removed from map
+     * Number of turns until corpse is removed from map.
      */
     private int waitTurns;
 
     /**
-     * Basic state of corpse's parent class instance
+     * Basic state of the species of the dead DinoActor.
      */
-    private final DinoEncyclopedia parent;
+    private final DinoEncyclopedia species;
 
     /**
-     * Constructor
-     * @param newParent parent class of corpse
+     * Constructor.
+     * @param species of the dead DinoActor
      */
-    public Corpse(DinoEncyclopedia newParent) {
+    public Corpse(DinoEncyclopedia species) {
         super("Corpse",'%');
-        parent = newParent;
-        initializeWaitTurns(DINO_CORPSE_DICTIONARY.get(newParent));
-        addCapability(FoodType.CARNIVORE);
+        this.species = species;
+        setForCarnivores();
+        initializeWaitTurns();
+        setHealPoints(getInitialHealPoints());
     }
 
     /**
-     * Initializes number of turns until corpse is removed from map
-     * @param newWaitTurn new number of wait turns
+     * Initializes number of turns until corpse is removed from map.
      */
-    public void initializeWaitTurns(int newWaitTurn){
-        if (newWaitTurn >= 0){
-            waitTurns = newWaitTurn;
-        }
+    private void initializeWaitTurns(){
+        waitTurns = DINO_CORPSE_DICTIONARY.get(species)[0];
     }
 
     /**
-     * Decrements corpse's number of turns
+     * Decrements corpse's number of turns until corpse is removed from map.
      */
-    public void decrementWaitTurn(){
+    private void decrementWaitTurn(){
         if (waitTurns > 0){
             waitTurns--;
         }
     }
 
     /**
-     * Retrieves parent class character on the map
-     * @return parent class character
+     * Returns a constant that represents the species of the corpse.
+     * @return a constant that represents the species of the corpse.
      */
-    public DinoEncyclopedia getParent() {
-        return parent;
+    public DinoEncyclopedia getSpecies() {
+        return species;
     }
 
     /**
-     * Checks if wait turn is over, if yes, remove the corpse.Otherwise, decrement wait turn
+     * Returns the initial amount of food points / heal points that the corpse of
+     * the corresponding species contains.
+     * @return initial amount of food points the corpse contains
+     */
+    private int getInitialHealPoints(){
+        return DINO_CORPSE_DICTIONARY.get(species)[1];
+    }
+
+    /**
+     * Checks if wait turn is over, if yes, remove the corpse. Otherwise, decrement wait turn
      * @param currentLocation The location of the ground on which we lie.
      */
     public void tick(Location currentLocation) {
@@ -82,5 +114,15 @@ public class Corpse extends PortableItem {
         }
     }
 
+    /**
+     * Returns true if the CapableActor attempting to eat it is carnivorous, returns false otherwise.
+     * @param capableActor CapableActor that is attempting to eat the Corpse
+     * @param location location of the CapableActor
+     * @return true if the CapableActor is carnivorous, returns false otherwise
+     */
+    @Override
+    public boolean canEat(CapableActor capableActor, Location location) {
+        return capableActor.isCarnivorous();
+    }
 
 }

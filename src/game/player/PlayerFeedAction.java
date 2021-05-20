@@ -2,8 +2,11 @@ package game.player;
 
 import edu.monash.fit2099.engine.*;
 import game.EcoPoints;
-import game.PortableItem;
-import game.dinosaurs.*;
+import game.FoodItem;
+import game.dinosaurs.DinoActor;
+import game.dinosaurs.Pterodactyl;
+import game.environment.Fruit;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,10 +21,22 @@ public class PlayerFeedAction extends Action {
     private final DinoActor target;
 
     /**
+     * Increment in food level of the DinoActors after feeding it
+     */
+    private final static int INCREMENT_FOOD_LEVEL = 20;
+
+    /**
+     * Increment in eco points after feeding certain DinoActors/ certain FoodItems to DinoActors
+     */
+    private final static int INCREMENT_ECO_POINTS = 10;
+
+    /**
      * Constructor
      * @param target the Actor (DinoActor) to feed
      */
-    public PlayerFeedAction(DinoActor target){ this.target=target; }
+    public PlayerFeedAction(DinoActor target){
+        this.target = target;
+    }
 
     /**
      * Perform the Action.
@@ -38,53 +53,42 @@ public class PlayerFeedAction extends Action {
 
         List<Item> inventoryItems = actor.getInventory();
 
-        if (inventoryItems.size()>0) {
-            System.out.println("0. Decided not to feed/No matching food to feed.");
-            for (int i = 0; i < inventoryItems.size(); i++) {
-                System.out.println((i + 1) + ". " + inventoryItems.get(i).toString());
-            }
-
-            System.out.println("Choose an inventory item to feed the dinosaur: ");
-            int choice = getIntegerInput(inventoryItems.size());
-            if (choice == 0)
-                return "No food chosen.";
-            Item item = inventoryItems.get(choice - 1);
-
-            if (item instanceof PortableItem) {
-
-                PortableItem chosenItem = (PortableItem) item;
-
-                if (target.isHerbivorous()) {
-                    if (chosenItem.edibleByHerbivores()) {
-                        if (chosenItem.toString().equalsIgnoreCase("Fruit"))
-                            EcoPoints.incrementEcoPoints(10);
-                        actor.removeItemFromInventory(chosenItem);
-                        target.heal(20);
-                        return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
-                                ") increases food level by 20!";
-                    }
-                    else
-                        return target + " is a Herbivore. Please choose a suitable item to feed.";
-                }
-                else if (target.isCarnivorous()) {
-
-                    if (chosenItem.edibleByCarnivores()) {
-                        actor.removeItemFromInventory(chosenItem);
-                        target.heal(20);
-                        return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
-                                ") increases food level by 20!";
-                    }
-                    else
-                        return target + " is a Carnivore. Please choose a suitable item to feed.";
-                }
-                else
-                    return target + " is not a dinosaur";
-            }
-            else
-                return "Chosen item is not suitable to feed.";
-        }
-        else
+        if (inventoryItems.size() <= 0)
             return "You currently have no item in your inventory.";
+
+        System.out.println("0. Decided not to feed/No matching food to feed.");
+        for (int i = 0; i < inventoryItems.size(); i++) {
+            System.out.println((i + 1) + ". " + inventoryItems.get(i).toString());
+        }
+
+        System.out.println("Choose an inventory item to feed the dinosaur: ");
+        int choice = getIntegerInput(inventoryItems.size());
+        if (choice == 0)
+            return "No food chosen.";
+        Item item = inventoryItems.get(choice - 1);
+
+        if (item instanceof FoodItem) {
+            FoodItem chosenItem = (FoodItem) item;
+            if (chosenItem.canEat(target)){
+                actor.removeItemFromInventory(chosenItem);
+                target.heal(INCREMENT_FOOD_LEVEL);
+                if (isEcoPointEvent(chosenItem)){
+                    EcoPoints.incrementEcoPoints(INCREMENT_ECO_POINTS);
+                }
+                return target + " at (" + map.locationOf(target).x() + ", " + map.locationOf(target).y() +
+                        ") increases food level by " + INCREMENT_FOOD_LEVEL + "!";
+            }
+        }
+        return "Chosen item is not suitable to feed.";
+    }
+
+    /**
+     * Returns true if the feeding action should increase the EcoPoints, false otherwise
+     * @param foodItem FoodItem to be fed to the DinoActor
+     * @return true if the feeding action should increase the EcoPoints, false otherwise
+     */
+    private boolean isEcoPointEvent(FoodItem foodItem){
+        return foodItem instanceof Fruit || target instanceof Pterodactyl;
     }
 
     @Override
@@ -100,18 +104,18 @@ public class PlayerFeedAction extends Action {
     private int getIntegerInput(int max){
         Scanner scanner = new Scanner(System.in);
         int userInput = -1;
-        boolean errorOccured = true;
+        boolean errorOccurred = true;
         do{
             try{
                 userInput = Integer.parseInt(scanner.nextLine());
-                errorOccured = userInput < 0 || userInput > max;
-                if (errorOccured)
+                errorOccurred = userInput < 0 || userInput > max;
+                if (errorOccurred)
                     System.out.println("Please enter a number within 0 to " + max + ".");
             }
             catch (NumberFormatException e){
                 System.out.println("Please enter a number within 0 to " + max +".");
             }
-        } while (errorOccured);
+        } while (errorOccurred);
         return userInput;
     }
 }

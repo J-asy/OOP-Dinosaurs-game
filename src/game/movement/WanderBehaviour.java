@@ -1,26 +1,25 @@
-package game.wander;
+package game.movement;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import edu.monash.fit2099.engine.Action;
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Exit;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.Location;
+import edu.monash.fit2099.engine.*;
 import game.Behaviour;
 
 /**
- * Simulated the wandering behaviour of DinoActors - wandering may or may not
+ * Simulates the wandering behaviour of DinoActors - wandering may or may not
  * occur depending on whether certain criteria is met.
  */
 public class WanderBehaviour implements Behaviour {
-	
+
+	/**
+	 * An instance of Random class
+	 */
 	private Random random = new Random();
 
 
 	/**
-	 * Returns a MoveAction to wander to a random location, if possible.  
+	 * Returns a DynamicMoveAction to wander to a random location, if possible.
 	 * If no movement is possible, returns null.
 	 * 
 	 * @param actor the Actor enacting the behaviour
@@ -34,7 +33,7 @@ public class WanderBehaviour implements Behaviour {
 		for (Exit exit : map.locationOf(actor).getExits()) {
             Location destination = exit.getDestination();
             if (destination.canActorEnter(actor)) {
-            	actions.add(exit.getDestination().getMoveAction(actor, "around", exit.getHotKey()));
+            	actions.add(new DynamicMoveAction(destination, "around"));
             }
         }
 		

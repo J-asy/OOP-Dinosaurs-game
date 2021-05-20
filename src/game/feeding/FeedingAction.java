@@ -1,141 +1,67 @@
 package game.feeding;
 
-import edu.monash.fit2099.engine.*;
-import game.PortableItem;
-import game.attack.Corpse;
+import edu.monash.fit2099.engine.Action;
+import edu.monash.fit2099.engine.Actor;
+import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Location;
+import game.Food;
 import game.dinosaurs.DinoActor;
-import game.dinosaurs.Egg;
-import game.Probability;
-import game.dinosaurs.DinoEncyclopedia;
-import game.environment.*;
 
+/**
+ * Special action for the DinoActor to feed on a FoodItem that is on the ground
+ * or feed on food that grows on the Ground.
+ */
 public class FeedingAction extends Action {
 
     /**
-     * Identifier if food is on ground or in plant
+     * Instance of Food, including FoodItem that can be eaten (Fruit, Egg, Corpse, Fish, MealKitsItem)
+     * or Ground that DinoActor can feed from (Tree, Bush and Lake).
      */
-    Boolean foodOnGround;
+    private final Food food;
 
     /**
-     * portable item that can be eaten
+     * Constructor.
+     * @param food instance of Food
      */
-    PortableItem portableItem;
-
-
-    /**
-     * Constructor
-     *
-     * @param foodOnGround true if food is on the ground, false if on tree or in bush
-     * @param item edible portable item
-     */
-    public FeedingAction (Boolean foodOnGround, PortableItem item) {
-        this.foodOnGround = foodOnGround;
-        this.portableItem = item;
+    public FeedingAction(Food food) {
+        this.food = food;
     }
 
     /**
-     * Performs the action
+     * Performs the feeding action, increments the food level of the DinoActor appropriately,
+     * and returns a description of the feeding action.
+     *
      * @param actor The actor performing the action.
-     * @param map The map the actor is on.
-     * @return a message string
+     * @param map   The map the actor is on.
+     * @return description of feeding action
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        String foodName = null;
-        Location actorLocation = map.locationOf(actor);
-        Ground ground = actorLocation.getGround();
-        boolean feedingPossible = false;
-        int healPoints = 0;
-
         if (actor instanceof DinoActor) {
-            DinoActor actorAsDino = (DinoActor) actor;
-            if (foodOnGround) {
-                    if (feedOnFruitPossible(actorAsDino, portableItem)) {
-                        feedingPossible = true;
-                        healPoints = 10;
-                    } else if (feedOnMeatPossible(actorAsDino, portableItem)) {
-                        feedingPossible = true;
-
-                        if (portableItem instanceof Egg) {
-                            healPoints = 10;
-                        } else if (portableItem instanceof Corpse) {
-                            Corpse corpse = ((Corpse) portableItem);
-                            if (corpse.getParent() == DinoEncyclopedia.ALLOSAUR ||
-                                    corpse.getParent() == DinoEncyclopedia.STEGOSAUR) {
-                                healPoints = 50;
-                            } else if (corpse.getParent() == DinoEncyclopedia.BRACHIOSAUR) {
-                                healPoints = 100;
-                            }
-                        }
-                    }
-
-                    if (feedingPossible) {
-                        foodName = portableItem.toString();
-                        actorLocation.removeItem(portableItem);
-                        actor.heal(healPoints);
-                    }
-            }
-
-            else {
-                if (actorAsDino.isHerbivorous() && ground instanceof CapableGround) {
-                    CapableGround capableGround = (CapableGround) ground;
-                    if (capableGround.isTree()) {
-                        int noOfTreeFruits = capableGround.getNumberOfFruits();
-                        if (noOfTreeFruits > 0) {
-                            for (int i = 0; i < noOfTreeFruits; i++) {
-                                if (Probability.generateProbability(0.5f)) {
-                                    capableGround.removeFruit();
-                                    actor.heal(10);
-                                }
-                            }
-                            foodName = "Fruits";
-                        }
-
-                    } else if (capableGround.isBush()) {
-                        if (capableGround.getNumberOfFruits() > 0) {
-                            capableGround.removeFruit();
-                            actor.heal(10);
-                            foodName = "Fruit";
-                        }
-                    }
-                }
-            }
+            DinoActor dinoActor = (DinoActor) actor;
+            Location actorLocation = map.locationOf(actor);
+            int healPoints = food.eat(map, actorLocation, dinoActor.getBiteSize());
+            actor.heal(healPoints);
         }
 
-        if (menuDescription(actor).length() == 0) {
-            return menuDescription(actor) + " does not eat";
-        } else {
-            return menuDescription(actor) + " eats " + foodName;
-        }
+        return menuDescription(actor);
     }
 
     /**
-     * Is dino a herbivore and is item edible by only herbivores?
-     * @param actorAsDino DinoActor doing the action
-     * @param item edible portable item
-     * @return true if dinosaur is a herbivore and item is edible by herbivores, false otherwise
-     */
-    private static boolean feedOnFruitPossible(DinoActor actorAsDino, PortableItem item) {
-        return actorAsDino.isHerbivorous() && item.edibleByHerbivores();
-    }
-
-    /**
-     * Is dino a carnivore and is item edible by carnivores?
-     * @param actorAsDino DinoActor doing the action
-     * @param item edible portable item
-     * @return true if dinosaur is a carnivore and item is edible by carnivores, false otherwise
-     */
-    private static boolean feedOnMeatPossible(DinoActor actorAsDino, PortableItem item) {
-        return actorAsDino.isCarnivorous() && item.edibleByCarnivores();
-    }
-
-    /**
-     * Returns the string format of actor's name
-     * @param actor The actor performing the action.
-     * @return String of actor's name
+     * Returns the description of the feeding action if actor eats something.
+     * @param actor The actor performing the feeding action.
+     * @return description of feeding action
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor.toString();
+        String feedingDescription;
+        if (food == null){
+            feedingDescription = actor.toString() + " does not eat anything.";
+        }
+        else {
+            feedingDescription = actor.toString() + " eats " + food.foodName();
+        }
+        return feedingDescription;
     }
+
 }
