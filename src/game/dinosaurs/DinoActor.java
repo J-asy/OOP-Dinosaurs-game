@@ -132,7 +132,6 @@ public abstract class DinoActor extends CapableActor {
         behaviour.add(new FollowVictimBehaviour());
         behaviour.add(new WanderBehaviour());
 
-
         // all behaviours that the DinoActor can perform with another
         // Actor on adjacent squares
         interactiveBehaviours = new ArrayList<>();
@@ -210,6 +209,7 @@ public abstract class DinoActor extends CapableActor {
         else {
             displayChar = Character.toLowerCase(displayChar);
         }
+        adjustBreedingCapability();
     }
 
     public boolean isMatured(){
@@ -450,6 +450,7 @@ public abstract class DinoActor extends CapableActor {
 //        System.out.println();
 //        System.out.println("HP: " + hitPoints);
 //        System.out.println("WL: " + waterLevel);
+        System.out.println(canBreed());
 
 
         // do any necessary processing first
