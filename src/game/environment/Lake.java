@@ -8,7 +8,11 @@ import game.Food;
 import game.Utility;
 import game.dinosaurs.CapableActor;
 
+/**
+ * Class representing terrain of Lake type.
+ */
 public class Lake extends Ground implements Food, DrinkingGround {
+
 
     private int numberOfFish;
     private int waterLevel;
@@ -23,6 +27,13 @@ public class Lake extends Ground implements Food, DrinkingGround {
         waterLevel = 25;
     }
 
+    /**
+     * Updates the lake every turn.
+     * On each tick, status of Rain is checked to see if it is "Raining", if so, water level increases.
+     * There is a probability of 60% for a new fish to be born every turn.
+     *
+     * @param location the current Location of the Lake
+     */
     @Override
     public void tick(Location location){
 
@@ -58,12 +69,19 @@ public class Lake extends Ground implements Food, DrinkingGround {
         return false;
     }
 
+    /**
+     * Decrements the number of fish in the Lake.
+     */
     private void decrementNumberOfFish() {
         if (hasFish()) {
             numberOfFish--;
         }
     }
 
+    /**
+     * Checks if the Lake has fish.
+     * @return true if there are fish in the Lake, false otherwise
+     */
     private boolean hasFish(){
         return numberOfFish > 0;
     }

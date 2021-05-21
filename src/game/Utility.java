@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * A class that contains one static method which is used to generate probability.
+ * A class that contains static utility methods.
  */
 public abstract class Utility {
 

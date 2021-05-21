@@ -162,6 +162,11 @@ public class Application {
 
 	}
 
+	/**
+	 * Outputs the instruction for the game.
+	 * Player can choose either Challenge mode or Sandbox mode to play, or quit the game.
+	 * @return an array which consists of the target points, target moves and mode chosen.
+	 */
 	private static int[] chooseMode(){
 		System.out.println("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		System.out.println(""" 
@@ -225,19 +230,4 @@ public class Application {
 		return pointsMovesMode;
 	}
 
-//	private static int getIntegerInput(){
-//		Scanner scanner = new Scanner(System.in);
-//		int userInput = -1;
-//		boolean errorOccurred = true;
-//		do{
-//			try{
-//				userInput = Integer.parseInt(scanner.nextLine());
-//				errorOccurred = false;
-//			}
-//			catch (NumberFormatException e){
-//				System.out.println("Please enter a number.");
-//			}
-//		} while (errorOccurred);
-//		return userInput;
-//	}
 }
