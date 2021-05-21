@@ -1,31 +1,27 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
-import game.*;
 
-import game.attack.AttackAction;
+import game.Behaviour;
+import game.Utility;
 import game.attack.AttackBehaviour;
 import game.attack.Corpse;
-import game.Probability;
-import game.breed.BreedingAction;
 import game.breed.BreedingBehaviour;
-import game.feeding.FeedingBehaviour;
-import game.follow.FollowFoodOnGroundBehaviour;
-import game.follow.FollowFoodOnPlantBehaviour;
-import game.follow.FollowMateBehaviour;
-import game.follow.FollowVictimBehaviour;
+import game.drinking.DrinkingBehaviour;
+import game.feeding.FeedOnActorBehaviour;
+import game.feeding.FeedOnItemBehaviour;
+import game.movement.*;
 import game.player.FedByPlayerBehaviour;
 import game.pregnancy.LayEggAction;
 import game.pregnancy.PregnancyBehaviour;
-import game.wander.WanderBehaviour;
+import game.movement.WanderBehaviour;
 
 import java.util.ArrayList;
 
 /**
  * Base class for Stegosaur, Brachiosaur and Allosaur for representing dinosaur Actors.
  */
-
-public abstract class DinoActor extends Actor {
+public abstract class DinoActor extends CapableActor {
 
     /**
      * An ArrayList of standard behaviours that the DinoActor should have.
@@ -33,8 +29,13 @@ public abstract class DinoActor extends Actor {
     private ArrayList<Behaviour> behaviour;
 
     /**
+     * ArrayList of Behaviours that requires two Actors to be in adjacent squares.
+     */
+    private ArrayList<Behaviour> interactiveBehaviours;
+
+    /**
      * A reference to DinoEncyclopedia Enum class that indicates the species
-     * of the DinoActor and contains many useful constants for initialization or comparison etc
+     * of the DinoActor and contains many useful constants for initialization or comparison etc.
      */
     private final DinoEncyclopedia dinoType;
 
@@ -52,14 +53,20 @@ public abstract class DinoActor extends Actor {
 
     /**
      * Indicates the number of turns till an unconscious DinoActor
-     * has till it dies
+     * has till it dies.
      */
     private int unconsciousPeriod;
 
     /**
-     * ArrayList of Behaviours that requires two Actors to be in adjacent squares.
+     * Water level.
      */
-    private ArrayList<Behaviour> interactiveBehaviours;
+    private int waterLevel;
+
+    /**
+     * The size of DinoActor's jaw, will determine the amount of hit points gained
+     * if the food size is too big to be eaten whole.
+     */
+    private int biteSize;
 
     /**
      * Constructor.
@@ -70,6 +77,7 @@ public abstract class DinoActor extends Actor {
      */
     public DinoActor(DinoEncyclopedia dinoType, DinoCapabilities sex, Boolean isMatured, int nextId){
         super(dinoType.getName() + " " + nextId, dinoType.getDisplayChar(), dinoType.getInitialHitPoints());
+        this.waterLevel = dinoType.getInitialWaterLevel();
         this.dinoType = dinoType;
         initialization(isMatured);
         setSex(sex);
@@ -82,6 +90,7 @@ public abstract class DinoActor extends Actor {
      */
     public DinoActor(DinoEncyclopedia dinoType, Boolean isMatured, int nextId){
         super(dinoType.getName() + " " + nextId, dinoType.getDisplayChar(), dinoType.getInitialHitPoints());
+        this.waterLevel = dinoType.getInitialWaterLevel();
         this.dinoType = dinoType;
         initialization(isMatured);
         setSex();
@@ -94,6 +103,7 @@ public abstract class DinoActor extends Actor {
      *                  false otherwise
      */
     private void initialization(boolean isMatured){
+        setBiteSize();
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
         if (!isMatured) {
@@ -110,16 +120,19 @@ public abstract class DinoActor extends Actor {
         // all behaviours that the DinoActor can perform alone
         behaviour = new ArrayList<>();
         behaviour.add(new PregnancyBehaviour());
-        behaviour.add(new FeedingBehaviour());
+        behaviour.add(new EvadeDinoBehaviour());
+        behaviour.add(new FeedOnItemBehaviour());
+        behaviour.add(new DrinkingBehaviour());
         behaviour.add(new FollowMateBehaviour());
-        behaviour.add(new FollowFoodOnGroundBehaviour());
-        behaviour.add(new FollowFoodOnPlantBehaviour());
+        behaviour.add(new FollowWaterBehaviour());
+        behaviour.add(new FollowFoodBehaviour());
         behaviour.add(new FollowVictimBehaviour());
         behaviour.add(new WanderBehaviour());
 
         // all behaviours that the DinoActor can perform with another
         // Actor on adjacent squares
         interactiveBehaviours = new ArrayList<>();
+        interactiveBehaviours.add(new FeedOnActorBehaviour(this));
         interactiveBehaviours.add(new BreedingBehaviour(this));
         interactiveBehaviours.add(new AttackBehaviour(this));
         interactiveBehaviours.add(new FedByPlayerBehaviour(this));
@@ -140,7 +153,7 @@ public abstract class DinoActor extends Actor {
      * Randomly assigns a sex for the DinoActor
      */
     private void setSex(){
-        if (Probability.generateProbability(0.5F)){
+        if (Utility.generateProbability(0.5F)){
             addCapability(DinoCapabilities.MALE);
         }
         else {
@@ -154,22 +167,17 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    public DinoCapabilities getSex(){
-        DinoCapabilities sex;
-        if (hasCapability(DinoCapabilities.MALE)){
-            sex = DinoCapabilities.MALE;
-        }
-        else  {
-            sex = DinoCapabilities.FEMALE;
-        }
-        return sex;
+    public DinoCapabilities getSex() {
+        if (isMale()) return DinoCapabilities.MALE;
+        if (isFemale()) return DinoCapabilities.FEMALE;
+        return null;
     }
 
     /**
      * Increments the age of the dinosaur and simulates the action of the dinosaur growing up
      */
     private void aging(){
-        if (age >= dinoType.getMatureWhen()){
+        if (isMatured()){
             displayChar = Character.toUpperCase(getDisplayChar());
         }
         else {
@@ -184,8 +192,9 @@ public abstract class DinoActor extends Actor {
     }
 
     /**
-     * Update the DinoActor's age and display character depending on the
-     * argument passed in. Then, adjusts its breeding capability accordingly.
+     * Updates the DinoActor's age and display character depending on the
+     * argument passed in, and adjusts the breeding capability based on whether
+     * it is matured or not.
      * @param maturityStatus true if intend to set DinoActor as matured,
      *                       false otherwise.
      */
@@ -223,10 +232,51 @@ public abstract class DinoActor extends Actor {
     /**
      * Decrements the dinoActor's food level, which is equivalent to its hitPoints.
      */
-    private void decrementFoodLevel(){
-        if (hitPoints > 0){
-            super.hurt(1);
+    void decrementHitPoints(int decrementBy){
+        int hurtPoints = decrementBy;
+        if (hitPoints - decrementBy < 0){
+            hurtPoints = hitPoints;
         }
+        super.hurt(hurtPoints);
+    }
+
+    private void setBiteSize(){
+        biteSize = dinoType.BITE_SIZE;
+    }
+
+    public int getBiteSize(){
+        return biteSize;
+    }
+
+    /**
+     * Simulates DinoActor drinking water by increasing its water level
+     * according to the gulp size.
+     */
+    public void quench(){
+        waterLevel += dinoType.getGulpSize();
+        waterLevel = Math.min(waterLevel, dinoType.getMaxWaterLevel());
+    }
+
+    void decrementWaterLevel(){
+        if (waterLevel > 0) {
+            this.waterLevel--;
+        }
+    }
+
+    /**
+     * DinoActor will drink rain water and increment water level when it rains.
+     */
+    @Override
+    public void doWhenRaining(){
+        waterLevel = Math.min(waterLevel + 10, dinoType.getMaxWaterLevel());
+    }
+
+    public boolean isHungry(){
+        return hitPoints < dinoType.getHungryWhen();
+    }
+
+    public boolean isThirsty(){
+        return waterLevel < dinoType.getThirstyWhen();
     }
 
     /**
@@ -243,28 +293,18 @@ public abstract class DinoActor extends Actor {
         }
     }
 
-    public boolean isHungry(){
-        return hitPoints < dinoType.getHungryWhen();
-    }
-
-    public boolean isCarnivorous() {
-        return hasCapability(DinoCapabilities.CARNIVORE);
-    }
-
-    public boolean isHerbivorous() {
-        return hasCapability(DinoCapabilities.HERBIVORE);
-    }
-
-    public boolean canBreed() {
-        return hasCapability(DinoCapabilities.CAN_BREED);
-    }
-
-    public boolean canReachTree(){return hasCapability(DinoCapabilities.CAN_REACH_TREE);}
-
-    public boolean canAttack(){return hasCapability(DinoCapabilities.CAN_ATTACK); }
-
-    public boolean canBeAttacked(){
-        return hasCapability(DinoCapabilities.CAN_BE_ATTACKED);
+    /**
+     * Checks if the water level has reached
+     * the point where the dinoActor will get thirsty.
+     * If yes, a hunger message will be printed out to notify the player.
+     * @param map GameMap that the actor is currently on
+     */
+    public void roarIfThirsty(GameMap map){
+        if (isThirsty()){
+            int x = map.locationOf(this).x();
+            int y = map.locationOf(this).y();
+            System.out.printf("%s at (%d, %d) getting thirsty!\n", name, x, y);
+        }
     }
 
     /**
@@ -282,15 +322,6 @@ public abstract class DinoActor extends Actor {
                 removeCapability(DinoCapabilities.CAN_BREED);
             }
         }
-    }
-
-    /**
-     * Returns true if the dinoActor is pregnant, false otherwise.
-     * A dinoActor only has a chance to be pregnant after breeding.
-     * @return true if the dinoActor is pregnant, false otherwise
-     */
-    public boolean isPregnant(){
-        return hasCapability(DinoCapabilities.PREGNANT);
     }
 
     /**
@@ -321,18 +352,11 @@ public abstract class DinoActor extends Actor {
         if (status){
             addCapability(DinoCapabilities.PREGNANT);
             initializePregnancyPeriod();
-            if (hasCapability(DinoCapabilities.CAN_BREED)){
-                removeCapability(DinoCapabilities.CAN_BREED);
-            }
+            removeCapability(DinoCapabilities.CAN_BREED);
         }
         else {
             removeCapability(DinoCapabilities.PREGNANT);
         }
-    }
-
-    @Override
-    public boolean isConscious(){
-        return hasCapability(DinoCapabilities.CONSCIOUS);
     }
 
     /**
@@ -343,24 +367,22 @@ public abstract class DinoActor extends Actor {
     public void setUnconscious(boolean status){
         if (status){
             removeCapability(DinoCapabilities.CONSCIOUS);
-            addCapability(DinoCapabilities.UNCONSCIOUS);
             initializeUnconsciousPeriod();
         }
         else {
-            removeCapability(DinoCapabilities.UNCONSCIOUS);
             addCapability(DinoCapabilities.CONSCIOUS);
         }
     }
 
     /**
      * Adjust the consciousness of the DinoActor appropriately,
-     * according to its current hitPoints.
+     * according to its current hitPoints and/or waterLevel.
      */
     private void adjustConsciousness(){
-        if (isConscious() && hitPoints == 0) {
+        if (isConscious() && (hitPoints <= 0 || waterLevel <= 0)) {
             setUnconscious(true);
         }
-        else if (!isConscious() && hitPoints > 0) {
+        else if (!isConscious() && (hitPoints > 0 && waterLevel > 0)) {
             setUnconscious(false);
         }
     }
@@ -387,15 +409,14 @@ public abstract class DinoActor extends Actor {
      */
     private boolean checkUnconsciousPeriod(GameMap map) {
         Location dinoLocation = map.locationOf(this);
-        if (!this.isConscious()){
+        if (!isConscious()){
             if (unconsciousPeriod > 0){
-                this.decrementUnconsciousPeriod();
+                decrementUnconsciousPeriod();
                 System.out.println(this + " at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is unconscious!");
             }
             else {
                 map.removeActor(this);
-                Corpse corpseDino = new Corpse(dinoType);
-                dinoLocation.addItem(corpseDino);
+                dinoLocation.addItem(new Corpse(dinoType));
                 System.out.println(this + " at (" + dinoLocation.x() + ", " + dinoLocation.y() + ") is dead!")  ;
             }
             return true;
@@ -417,6 +438,7 @@ public abstract class DinoActor extends Actor {
     @Override
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
         Actions validActions = new Actions();
+
         for (Behaviour b : interactiveBehaviours){
             Action resultingAction = b.getAction(otherActor, map);
             if (resultingAction != null){
@@ -439,15 +461,22 @@ public abstract class DinoActor extends Actor {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action actionToExecute = new DoNothingAction();
+        System.out.println();
+        System.out.println("HP: " + hitPoints);
+        System.out.println("WL: " + waterLevel);
+        System.out.println(canBreed());
+
 
         // do any necessary processing first
         aging();
-        decrementFoodLevel();
+        decrementHitPoints(1);
+        decrementWaterLevel();
         adjustConsciousness();
 
         if (!checkUnconsciousPeriod(map)) {
             // do any necessary processing first
             roarIfHungry(map);
+            roarIfThirsty(map);
             adjustBreedingCapability();
 //
 //            // calling getAction for every behaviour can help us to do some necessary processing
@@ -461,13 +490,12 @@ public abstract class DinoActor extends Actor {
 
             if (!(actionToExecute instanceof LayEggAction) && actions.size() > 0){
                 for (Action a: actions) {
-                    if (a instanceof BreedingAction || a instanceof AttackAction) {
+                    if (!(a instanceof MoveActorAction || a instanceof DoNothingAction || a instanceof PickUpItemAction)) {
                         actionToExecute = a;
                         break;
                     }
                 }
             }
-
         }
         return actionToExecute;
     }

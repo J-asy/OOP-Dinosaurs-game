@@ -1,9 +1,13 @@
 package game.player;
 
-import edu.monash.fit2099.engine.*;
+import edu.monash.fit2099.engine.Action;
+import edu.monash.fit2099.engine.Actor;
+import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Ground;
 import game.EcoPoints;
-import game.environment.*;
-import game.Probability;
+import game.Utility;
+import game.environment.FertileGround;
+import game.environment.Fruit;
 
 /**
  * Special Action for Player to search for Fruit on specific terrain (Tree, Bush).
@@ -27,17 +31,16 @@ public class SearchItemAction extends Action {
         Fruit fruit = null;
         int earnedPoints = 0;
         String groundDescription = null;
-        if (ground instanceof CapableGround && Probability.generateProbability(0.4f)){
+        if (ground instanceof FertileGround && Utility.generateProbability(0.4f)){
 
-            CapableGround capableGround = (CapableGround) ground;
-            if (capableGround.isBush()){
-                fruit = capableGround.getFruit();
+            FertileGround fertileGround = (FertileGround) ground;
+            if (fertileGround.isBush()){
+                fruit = fertileGround.getFruit();
                 groundDescription = "bush";
-                System.out.println(groundDescription);
                 earnedPoints = 10;
             }
-            else if (capableGround.isTree()){
-                fruit = capableGround.getFruit();
+            else if (fertileGround.isTree()){
+                fruit = fertileGround.getFruit();
                 groundDescription = "tree";
                 earnedPoints = 10;
             }

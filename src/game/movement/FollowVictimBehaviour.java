@@ -1,4 +1,4 @@
-package game.follow;
+package game.movement;
 
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
@@ -43,7 +43,7 @@ public class FollowVictimBehaviour extends FollowBehaviour {
      * @return true if DinoActor is hungry, false otherwise
      */
     @Override
-     boolean motivatedToFollow(DinoActor dinoActor) {
+     boolean motivatedToFind(DinoActor dinoActor) {
         return dinoActor.isHungry();
     }
 
@@ -54,11 +54,11 @@ public class FollowVictimBehaviour extends FollowBehaviour {
      * null will be returned otherwise.
      * @param map GameMap that the Actor is currently on
      * @param destination Location that is checked for a potential victim
-     * @param actorAsDino DinoActor that is trying to follow a victim
+     * @param dinoActor DinoActor that is trying to follow a victim
      * @return A location if a potential victim to follow is on it, null otherwise
      */
     @Override
-     Location findTarget(GameMap map, Location destination, DinoActor actorAsDino){
+     Location findTarget(GameMap map, Location destination, DinoActor dinoActor){
         Location returnDestination = null;
 
         if (map.isAnActorAt(destination)) {
@@ -67,7 +67,7 @@ public class FollowVictimBehaviour extends FollowBehaviour {
             if (nearbyActor instanceof DinoActor) {
                 DinoActor targetAsDino = (DinoActor) nearbyActor;
 
-                if (actorAsDino.canAttack() && targetAsDino.canBeAttacked()) {
+                if (dinoActor.canAttack() && targetAsDino.canBeAttacked()) {
                     returnDestination = destination;
                 }
 

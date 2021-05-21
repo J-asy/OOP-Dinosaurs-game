@@ -5,5 +5,7 @@ package game;
  */
 public enum FoodType {
     CARNIVORE,
-    HERBIVORE
+    HERBIVORE,
+    SMALL,
+    BIG
 }

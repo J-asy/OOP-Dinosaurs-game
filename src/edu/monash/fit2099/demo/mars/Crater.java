@@ -2,6 +2,7 @@ package edu.monash.fit2099.demo.mars;
 
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Ground;
+import game.dinosaurs.CapableActor;
 
 
 public class Crater extends Ground {
@@ -13,5 +14,15 @@ public class Crater extends Ground {
 	@Override
 	public boolean canActorEnter(Actor a) {
 		return a.hasCapability(DemoCapabilities.SPACETRAVELLER);
+	}
+
+	@Override
+	public boolean canLayEggHere(CapableActor capableActor) {
+		return false;
+	}
+
+	@Override
+	public boolean canBreedHere(CapableActor capableActor) {
+		return false;
 	}
 }

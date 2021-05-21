@@ -5,18 +5,15 @@ import edu.monash.fit2099.engine.Item;
 /**
  * Base class for any item that can be picked up and dropped.
  */
-public class PortableItem extends Item {
+public abstract class PortableItem extends Item {
 
-	public PortableItem(String name, char displayChar) {
-		super(name, displayChar, true);
-	}
-
-	public boolean edibleByHerbivores(){
-		return hasCapability(FoodType.HERBIVORE);
-	}
-
-	public boolean edibleByCarnivores(){
-		return hasCapability(FoodType.CARNIVORE);
-	}
+    /**
+     * Constructor.
+     * @param name name of the Item
+     * @param displayChar display character of the Item to be shown on the terminal
+     */
+    public PortableItem(String name, char displayChar) {
+        super(name, displayChar, true);
+    }
 
 }

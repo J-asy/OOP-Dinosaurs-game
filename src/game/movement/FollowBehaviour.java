@@ -1,4 +1,4 @@
-package game.follow;
+package game.movement;
 
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
@@ -49,17 +49,17 @@ public abstract class FollowBehaviour implements Behaviour {
      * @param dinoActor DinoActor that is acting
      * @return true if the DinoActor should attempt to follow, false otherwise.
      */
-    abstract boolean motivatedToFollow(DinoActor dinoActor);
+    abstract boolean motivatedToFind(DinoActor dinoActor);
 
     /**
      * Checks whether the Location destination has a target that the DinoActor
      * is trying to find and returns it if true, otherwise null is returned.
      * @param map GameMap that the DinoActor is on
      * @param destination Location that is checked for target
-     * @param actorAsDino DinoActor that is finding its target to follow
+     * @param dinoActor DinoActor that is finding its target to follow
      * @return a Location if the target is found on it, null otherwise.
      */
-    abstract Location findTarget(GameMap map, Location destination, DinoActor actorAsDino);
+    abstract Location findTarget(GameMap map, Location destination, DinoActor dinoActor);
 
     /**
      * Checks all locations that are within MIN_RADIUS and MAX_RADIUS away from the
@@ -78,7 +78,7 @@ public abstract class FollowBehaviour implements Behaviour {
         boolean found = false;
         if (actor instanceof DinoActor) {
             DinoActor actorAsDino = (DinoActor) actor;
-            if (motivatedToFollow(actorAsDino)) {
+            if (motivatedToFind(actorAsDino)) {
                 Location actorLocation = map.locationOf(actor);
                 Location actualDestination;
                 while (!found && radius <= MAX_RADIUS) {
@@ -118,7 +118,7 @@ public abstract class FollowBehaviour implements Behaviour {
                 int newDistance = distance(possibleStep, destination);
                 if (newDistance < currentDistance) {
                     String directionDescription = String.format("%s to %s.", exit.getName(), purposeDescription);
-                    return new MoveActorAction(exit.getDestination(), directionDescription);
+                    return new DynamicMoveAction(exit.getDestination(), directionDescription);
                 }
             }
         }

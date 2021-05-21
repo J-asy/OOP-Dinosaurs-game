@@ -3,7 +3,8 @@ package game.environment;
 import edu.monash.fit2099.engine.Exit;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
-import game.Probability;
+import game.Utility;
+import game.dinosaurs.CapableActor;
 
 
 /**
@@ -29,23 +30,48 @@ public class Dirt extends Ground {
 		// Checks the ground around it (up, down, left, right, diagonal) to count the surrounding trees and bushes
 		for (Exit elem : location.getExits()) {
 			Ground groundType = elem.getDestination().getGround();
-
-			if (groundType.hasCapability(TerrainType.BUSH)) {
-				surroundingBushes++;
-			}
-			else if (groundType.hasCapability(TerrainType.TREE)) {
-				adjacentTree = true;
-				break;
+			if (groundType instanceof FertileGround) {
+				FertileGround fertileGround = (FertileGround) groundType;
+				if (fertileGround.isBush()) {
+					surroundingBushes++;
+				} else if (fertileGround.isTree()) {
+					adjacentTree = true;
+					break;
+				}
 			}
 		}
 
 		//if there are no trees and this square is still just bare dirt, grow the bushes according to the probability
 		if (!adjacentTree) {
-			if ((surroundingBushes >= 2 && Probability.generateProbability(0.05f)) ||
-					Probability.generateProbability(0.005f)){
+			if ((surroundingBushes >= 2 && Utility.generateProbability(0.05f)) ||
+					Utility.generateProbability(0.005f)){
 				location.setGround(new Bush());
 			}
 		}
+	}
+
+	/**
+	 * Returns true if the CapableActor can lay an Egg on Dirt,
+	 * which is when the CapableActor is not arboreal (does not live on trees),
+	 * returns false otherwise.
+	 * @param capableActor A capable actor
+	 * @return true if the CapableActor can lay an Egg on Dirt, false otherwise
+	 */
+	@Override
+	public boolean canLayEggHere(CapableActor capableActor){
+		return !capableActor.isArboreal();
+	}
+
+	/**
+	 * Returns true if the CapableActor can breed on Dirt,
+	 * which is when the CapableActor is not arboreal (does not live on trees),
+	 * returns false otherwise.
+	 * @param capableActor A capable actor
+	 * @return true if the CapableActor can breed on Dirt, false otherwise
+	 */
+	@Override
+	public boolean canBreedHere(CapableActor capableActor){
+		return !capableActor.isArboreal();
 	}
 
 

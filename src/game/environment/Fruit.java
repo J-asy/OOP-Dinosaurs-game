@@ -1,23 +1,34 @@
 package game.environment;
 
 import edu.monash.fit2099.engine.Location;
-import game.FoodType;
-import game.PortableItem;
+import game.FoodItem;
+import game.dinosaurs.CapableActor;
 
 /**
  * Class that represents the Fruit object.
  */
-public class Fruit extends PortableItem {
+public class Fruit extends FoodItem {
+
+    /**
+     * The number of turns that the Fruit spent being on the ground.
+     */
     private int groundTime;
 
     /**
-     * Constructor
-     *
+     * The amount of food points that can be gained by eating
+     * a fruit on the ground.
+     */
+    private final static int FRUIT_HEAL_POINTS = 10;
+
+    /**
+     * Constructor.
      */
     public Fruit(){
         super("Fruit",'F');
         groundTime = 0;
-        addCapability(FoodType.HERBIVORE);
+        setForHerbivores();
+        setSmallSize();
+        setHealPoints(FRUIT_HEAL_POINTS);
     }
 
     /**
@@ -27,7 +38,6 @@ public class Fruit extends PortableItem {
      */
     @Override
     public void tick(Location currentLocation) {
-        super.tick(currentLocation);
         groundTime++;
 
         if (groundTime > 15){
@@ -35,4 +45,16 @@ public class Fruit extends PortableItem {
         }
 
     }
+
+    /**
+     *
+     * @param capableActor A CapableActor
+     * @param location Location of the Food
+     * @return true if the CapableActor can eat a Fruit on the ground
+     */
+    @Override
+    public boolean canEat(CapableActor capableActor, Location location) {
+        return capableActor.isHerbivorous() && !capableActor.canReachTree();
+    }
+
 }

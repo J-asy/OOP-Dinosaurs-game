@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.Actions;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
+import game.dinosaurs.CapableActor;
 
 
 public class LockedDoor extends Ground {
@@ -25,5 +26,15 @@ public class LockedDoor extends Ground {
 	@Override
 	public boolean blocksThrownObjects() {
 		return true;
+	}
+
+	@Override
+	public boolean canLayEggHere(CapableActor capableActor) {
+		return false;
+	}
+
+	@Override
+	public boolean canBreedHere(CapableActor capableActor) {
+		return false;
 	}
 }
