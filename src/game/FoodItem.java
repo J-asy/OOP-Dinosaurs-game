@@ -82,7 +82,7 @@ public abstract class FoodItem extends PortableItem implements Food {
 		}
 		removeCapability(FoodType.SMALL);
 	}
-	
+
 	public void setHealPoints(int newHealPoints) {
 		if (newHealPoints > 0){
 			healPoints = newHealPoints;

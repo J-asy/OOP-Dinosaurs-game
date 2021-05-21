@@ -84,7 +84,7 @@ public class Application {
 			world.addGameMap(secondMap);
 
 			Actor player = new Player("Player", '@', 100);
-			world.addPlayer(player, gameMap.at(10, 0));
+			world.addPlayer(player, gameMap.at(10, 4));
 
 			// Bridges on first map
 			TravelItem bridge1 = new TravelItem("Genesis Bridge", '!');
