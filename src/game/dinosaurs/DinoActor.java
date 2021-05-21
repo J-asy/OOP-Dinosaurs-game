@@ -3,9 +3,9 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 
 import game.Behaviour;
+import game.Utility;
 import game.attack.AttackBehaviour;
 import game.attack.Corpse;
-import game.Probability;
 import game.breed.BreedingBehaviour;
 import game.drinking.DrinkingBehaviour;
 import game.feeding.FeedOnActorBehaviour;
@@ -153,7 +153,7 @@ public abstract class DinoActor extends CapableActor {
      * Randomly assigns a sex for the DinoActor
      */
     private void setSex(){
-        if (Probability.generateProbability(0.5F)){
+        if (Utility.generateProbability(0.5F)){
             addCapability(DinoCapabilities.MALE);
         }
         else {

@@ -6,7 +6,7 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 import game.dinosaurs.DinoCapabilities;
 import game.dinosaurs.DinoActor;
-import game.Probability;
+import game.Utility;
 
 /**
  * Special Action for breeding between DinoActors.
@@ -42,7 +42,7 @@ public class BreedingAction extends Action {
             breedingDescription = menuDescription(actor);
             DinoActor dinoActor = (DinoActor) actor;
 
-            if (dinoActor.getSex() == DinoCapabilities.FEMALE && Probability.generateProbability(0.5F)) {
+            if (dinoActor.getSex() == DinoCapabilities.FEMALE && Utility.generateProbability(0.5F)) {
                 dinoActor.setPregnant(true);
                 Location dinoLocation = map.locationOf(dinoActor);
                 breedingDescription += String.format("\n%s at (%d, %d) is pregnant!", dinoActor, dinoLocation.x(),

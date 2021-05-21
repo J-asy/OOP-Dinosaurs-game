@@ -3,7 +3,7 @@ package game.environment;
 import edu.monash.fit2099.engine.Exit;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
-import game.Probability;
+import game.Utility;
 import game.dinosaurs.CapableActor;
 
 
@@ -43,8 +43,8 @@ public class Dirt extends Ground {
 
 		//if there are no trees and this square is still just bare dirt, grow the bushes according to the probability
 		if (!adjacentTree) {
-			if ((surroundingBushes >= 2 && Probability.generateProbability(0.05f)) ||
-					Probability.generateProbability(0.005f)){
+			if ((surroundingBushes >= 2 && Utility.generateProbability(0.05f)) ||
+					Utility.generateProbability(0.005f)){
 				location.setGround(new Bush());
 			}
 		}

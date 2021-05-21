@@ -4,6 +4,8 @@ import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import game.EcoPoints;
+import game.Utility;
+
 import java.util.Scanner;
 
 /**
@@ -43,7 +45,7 @@ public class BuyAction extends Action {
         System.out.println("You currently have " + EcoPoints.getEcoPoints() + " Eco Points.");
         System.out.println("What would you like? Please enter a number from 1 to 8. (Enter 0 to Exit)");
 
-        int choice = getIntegerInput();
+        int choice = Utility.getIntegerInput();
         boolean boughtItem = VendingMachine.choose(choice,actor);
 
         if (choice >= 1 && choice <= 7 && boughtItem)
@@ -60,21 +62,21 @@ public class BuyAction extends Action {
      * Validate the user input to ensure that it is an Integer.
      * @return a valid user input
      */
-    private int getIntegerInput(){
-        Scanner scanner = new Scanner(System.in);
-        int userInput = -1;
-        boolean errorOccurred = true;
-        do{
-            try{
-                userInput = Integer.parseInt(scanner.nextLine());
-                errorOccurred = false;
-            }
-            catch (NumberFormatException e){
-                System.out.println("Please enter a number.");
-            }
-        } while (errorOccurred);
-        return userInput;
-    }
+//    private int getIntegerInput(){
+//        Scanner scanner = new Scanner(System.in);
+//        int userInput = -1;
+//        boolean errorOccurred = true;
+//        do{
+//            try{
+//                userInput = Integer.parseInt(scanner.nextLine());
+//                errorOccurred = false;
+//            }
+//            catch (NumberFormatException e){
+//                System.out.println("Please enter a number.");
+//            }
+//        } while (errorOccurred);
+//        return userInput;
+//    }
 }
 
 

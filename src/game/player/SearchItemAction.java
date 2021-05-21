@@ -5,7 +5,7 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Ground;
 import game.EcoPoints;
-import game.Probability;
+import game.Utility;
 import game.environment.FertileGround;
 import game.environment.Fruit;
 
@@ -31,7 +31,7 @@ public class SearchItemAction extends Action {
         Fruit fruit = null;
         int earnedPoints = 0;
         String groundDescription = null;
-        if (ground instanceof FertileGround && Probability.generateProbability(0.4f)){
+        if (ground instanceof FertileGround && Utility.generateProbability(0.4f)){
 
             FertileGround fertileGround = (FertileGround) ground;
             if (fertileGround.isBush()){

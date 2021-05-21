@@ -2,7 +2,7 @@ package game.environment;
 
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
-import game.Probability;
+import game.Utility;
 import game.dinosaurs.CapableActor;
 
 
@@ -62,7 +62,7 @@ public class Tree extends FertileGround {
 			displayChar = BIG;
 
 		if ((displayChar == BIG || displayChar == FRUITY_TREE) && currentAge > 20){
-			if (Probability.generateProbability(0.5f)){
+			if (Utility.generateProbability(0.5f)){
 				displayChar = FRUITY_TREE;
 				addFruit();
 			}
@@ -74,7 +74,7 @@ public class Tree extends FertileGround {
 			//check if the fruit will fall and set the item as portable and add to location, removed from treeFruits
 			if (getNumberOfFruits() > 0){
 				for (int i = 0; i < getNumberOfFruits(); i++){
-					if (Probability.generateProbability(0.05f)) {
+					if (Utility.generateProbability(0.05f)) {
 						Fruit fruit = getFruit(i);
 						location.addItem(fruit);
 					}
@@ -119,7 +119,7 @@ public class Tree extends FertileGround {
 	public int eat(GameMap map, Location location, int biteSize) {
 		int healPoints = 0;
 		for (int i = 0; i < getNumberOfFruits(); i++) {
-			if (Probability.generateProbability(0.5f)) {
+			if (Utility.generateProbability(0.5f)) {
 				healPoints += eatFruit();
 			}
 		}

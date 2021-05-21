@@ -2,7 +2,7 @@ package game.environment;
 
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
-import game.Probability;
+import game.Utility;
 import game.dinosaurs.CapableActor;
 
 /**
@@ -53,13 +53,13 @@ public class Bush extends FertileGround {
         // If a Brachiosaur steps on the bush, 50% chance ground reverts back to dirt :(
         if (location.getActor() != null && location.getActor() instanceof CapableActor) {
             CapableActor capableActor = (CapableActor) location.getActor();
-            if (capableActor.canDestroyBush() && Probability.generateProbability(0.5f)) {
+            if (capableActor.canDestroyBush() && Utility.generateProbability(0.5f)) {
                 location.setGround(new Dirt());
             }
         }
         else {
             if (getAge() > 10){
-                if (Probability.generateProbability(0.1f)) {
+                if (Utility.generateProbability(0.1f)) {
                    addFruit();
                    displayChar = FRUITY_BUSH;
                 }

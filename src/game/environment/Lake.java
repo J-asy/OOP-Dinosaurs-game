@@ -5,7 +5,7 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.Food;
-import game.Probability;
+import game.Utility;
 import game.dinosaurs.CapableActor;
 
 public class Lake extends Ground implements Food, DrinkingGround {
@@ -39,7 +39,7 @@ public class Lake extends Ground implements Food, DrinkingGround {
                    location.x() + ", "+ location.y() + ")");
        }
 
-        if (Probability.generateProbability(0.6f) && numberOfFish < CAPACITY){
+        if (Utility.generateProbability(0.6f) && numberOfFish < CAPACITY){
             numberOfFish++;
         }
     }
@@ -92,7 +92,7 @@ public class Lake extends Ground implements Food, DrinkingGround {
     public int eat(GameMap map, Location location, int biteSize) {
         int healPoints = 0;
         for (int i = 0; i < 2; i++) {
-            if (hasFish() && Probability.generateProbability(0.5f)) {
+            if (hasFish() && Utility.generateProbability(0.5f)) {
                 decrementNumberOfFish();
                 healPoints += new Fish().getHealPoints();
             }

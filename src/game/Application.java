@@ -194,18 +194,17 @@ public class Application {
 				""");
 		System.out.println("=================================================================");
 
-//		Scanner input = new Scanner(System.in);
 		System.out.println("So adventurer, what mode would you like to play?");
 		System.out.println("1. Challenge Mode ⚡");
 		System.out.println("2. Sandbox Mode 🌈");
 		System.out.println("3. Quit T.T");
-		int mode = getIntegerInput();
+		int mode = Utility.getIntegerInput();
 
 		if (mode == 1){
 			System.out.println("Please enter a target Eco Point:");
-			int targetEcoPoints = getIntegerInput();
+			int targetEcoPoints = Utility.getIntegerInput();
 			System.out.println("Please enter number of moves:");
-			int numOfMoves = getIntegerInput();
+			int numOfMoves = Utility.getIntegerInput();
 
 			if (targetEcoPoints >= 0 && numOfMoves > 0) {
 				pointsMovesMode[0] = targetEcoPoints;
@@ -226,19 +225,19 @@ public class Application {
 		return pointsMovesMode;
 	}
 
-	private static int getIntegerInput(){
-		Scanner scanner = new Scanner(System.in);
-		int userInput = -1;
-		boolean errorOccurred = true;
-		do{
-			try{
-				userInput = Integer.parseInt(scanner.nextLine());
-				errorOccurred = false;
-			}
-			catch (NumberFormatException e){
-				System.out.println("Please enter a number.");
-			}
-		} while (errorOccurred);
-		return userInput;
-	}
+//	private static int getIntegerInput(){
+//		Scanner scanner = new Scanner(System.in);
+//		int userInput = -1;
+//		boolean errorOccurred = true;
+//		do{
+//			try{
+//				userInput = Integer.parseInt(scanner.nextLine());
+//				errorOccurred = false;
+//			}
+//			catch (NumberFormatException e){
+//				System.out.println("Please enter a number.");
+//			}
+//		} while (errorOccurred);
+//		return userInput;
+//	}
 }

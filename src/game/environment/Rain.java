@@ -1,6 +1,6 @@
 package game.environment;
 
-import game.Probability;
+import game.Utility;
 
 public class Rain {
     private static String status = "Clear Sky";
@@ -10,7 +10,7 @@ public class Rain {
         boolean rainingOccurs = false;
         turns++;
         if (turns == 10) {
-            if(Probability.generateProbability(0.2f)) {
+            if(Utility.generateProbability(0.2f)) {
                 turns = 0;
 
                 for (int i = 0; i < 7; i++) {
