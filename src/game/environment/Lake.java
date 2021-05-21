@@ -39,7 +39,7 @@ public class Lake extends Ground implements Food, DrinkingGround {
                    location.x() + ", "+ location.y() + ")");
        }
 
-        if (Probability.generateProbability(0.6f) && numberOfFish <= 25){
+        if (Probability.generateProbability(0.6f) && numberOfFish < CAPACITY){
             numberOfFish++;
         }
     }
