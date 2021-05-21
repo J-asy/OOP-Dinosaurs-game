@@ -3,7 +3,10 @@ package game.movement;
 import edu.monash.fit2099.engine.*;
 import game.Behaviour;
 import game.attack.Corpse;
+import game.dinosaurs.DinoActor;
 import game.dinosaurs.Pterodactyl;
+
+import java.util.List;
 
 /**
  * Simulates behaviour of DinoActor fleeing from other DinoActors.
@@ -28,28 +31,46 @@ public class EvadeDinoBehaviour implements Behaviour {
     public Action getAction(Actor actor, GameMap map) {
         if (actor instanceof Pterodactyl){
             Location location = map.locationOf(actor);
-            boolean hasCorpse = false;
-            for (Item item : location.getItems()){
-                if(item instanceof Corpse){
-                    hasCorpse = true;
-                    break;
-                }
-            }
+            if (landedOnFood(location)) {
+                List<Exit> exits = location.getExits();
+                if (surroundedByDino(location, map, actor)){
 
-            // if Pterodactyl is standing on a corpse
-            if (!hasCorpse){
-                return null;
-            }
+                    for (Exit exit: exits){
+                        Location escapeLocation = exit.getDestination();
+                        if (!escapeLocation.containsAnActor() && !surroundedByDino(escapeLocation, map, actor)){
+                            return new DynamicMoveAction(escapeLocation, exit.getName() +
+                                    " to evade other dinosaurs.");
+                        }
+                    }
 
-            // finds a location to move to and flee from other DinoActors
-            for (Exit exit: location.getExits()){
-                if (!(exit.getDestination().containsAnActor())){
-                    return new DynamicMoveAction(exit.getDestination(), exit.getName() +
-                            " to evade other dinosaurs.");
+
                 }
             }
 
         }
         return null;
     }
+
+    private boolean landedOnFood(Location location){
+        boolean hasCorpse = false;
+        for (Item item : location.getItems()){
+            if (item instanceof Corpse){
+                hasCorpse = true;
+                break;
+            }
+        }
+        return hasCorpse;
+    }
+
+    private boolean surroundedByDino(Location location, GameMap map, Actor actor){
+        for (Exit exit: location.getExits()){
+            Location surroundingLocation = exit.getDestination();
+            Actor surroundingActor = map.getActorAt(surroundingLocation);
+            if (surroundingActor instanceof DinoActor && surroundingActor != actor) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
