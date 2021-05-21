@@ -39,10 +39,12 @@ public class FeedOnActorBehaviour implements Behaviour {
     public Action getAction(Actor actor, GameMap map) {
         if (actor instanceof DinoActor && target instanceof Food){
             DinoActor dinoActor = (DinoActor) actor;
-            Food food = (Food) target;
-            Location targetLocation = map.locationOf(target);
-            if (food.canEat(dinoActor, targetLocation)){
-                return new FeedingAction(food);
+            if (dinoActor.isHungry()) {
+                Food food = (Food) target;
+                Location targetLocation = map.locationOf(target);
+                if (food.canEat(dinoActor, targetLocation)) {
+                    return new FeedingAction(food);
+                }
             }
         }
         return null;

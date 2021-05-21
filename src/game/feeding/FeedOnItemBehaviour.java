@@ -28,24 +28,26 @@ public class FeedOnItemBehaviour implements Behaviour {
 
         if (actor instanceof DinoActor) {
             DinoActor dinoActor = (DinoActor) actor;
-            Location actorLocation = map.locationOf(actor);
+            if (dinoActor.isHungry()) {
+                Location actorLocation = map.locationOf(actor);
 
-            // Check for food item on the ground
-            for (Item item : actorLocation.getItems()) {
-                if (item instanceof Food) {
-                    Food food = (Food) item;
+                // Check for food item on the ground
+                for (Item item : actorLocation.getItems()) {
+                    if (item instanceof Food) {
+                        Food food = (Food) item;
+                        if (food.canEat(dinoActor, actorLocation)) {
+                            return new FeedingAction(food);
+                        }
+                    }
+                }
+
+                // Check for food growing / living on the ground, i.e. fruit or fish
+                Ground ground = actorLocation.getGround();
+                if (ground instanceof Food) {
+                    Food food = (Food) ground;
                     if (food.canEat(dinoActor, actorLocation)) {
                         return new FeedingAction(food);
                     }
-                }
-            }
-
-            // Check for food growing / living on the ground, i.e. fruit or fish
-            Ground ground = actorLocation.getGround();
-            if (ground instanceof Food){
-                Food food = (Food) ground;
-                if (food.canEat(dinoActor, actorLocation)){
-                    return new FeedingAction(food);
                 }
             }
 
