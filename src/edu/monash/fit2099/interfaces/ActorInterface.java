@@ -7,6 +7,9 @@ package edu.monash.fit2099.interfaces;
 
 public interface ActorInterface {
 
+    /**
+     * Allows Actors to do something when it is raining.
+     */
     void actionWhenRaining();
 
 }
