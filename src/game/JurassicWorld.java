@@ -58,17 +58,6 @@ public class JurassicWorld extends World {
             //Show eco points
             System.out.println("ECO points: " + EcoPoints.getEcoPoints());
 
-            // Process all the actors.
-            for (Actor actor : actorLocations) {
-                if (stillRunning())
-                    processActorTurn(actor);
-            }
-
-            // Tick over all the maps. For the map stuff.
-            for (GameMap gameMap : gameMaps) {
-                gameMap.tick();
-            }
-
             totalMoves++;
             if (mode == 1) {
                 int ecoPoints = EcoPoints.getEcoPoints();
@@ -85,7 +74,20 @@ public class JurassicWorld extends World {
 
             if (!stillRunning()){
                 EcoPoints.decrementEcoPoints(EcoPoints.getEcoPoints());
+                continue;
             }
+
+            // Process all the actors.
+            for (Actor actor : actorLocations) {
+                if (stillRunning())
+                    processActorTurn(actor);
+            }
+
+            // Tick over all the maps. For the map stuff.
+            for (GameMap gameMap : gameMaps) {
+                gameMap.tick();
+            }
+
 
         }
         display.println(endGameMessage());
