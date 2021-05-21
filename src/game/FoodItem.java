@@ -23,21 +23,22 @@ public abstract class FoodItem extends PortableItem implements Food {
 		super(name, displayChar);
 	}
 
-	/**
-	 * Returns true if the item is edible by herbivores, false otherwise.
-	 * @return true if the item is edible by herbivores, false otherwise.
-	 */
 	public boolean edibleByHerbivores(){
 		return hasCapability(FoodType.HERBIVORE);
 	}
 
-	/**
-	 * Returns true if the item is edible by carnivores, false otherwise.
-	 * @return true if the item is edible by carnivores, false otherwise.
-	 */
 	public boolean edibleByCarnivores(){
 		return hasCapability(FoodType.CARNIVORE);
 	}
+
+	private boolean isSmall(){
+		return hasCapability(FoodType.SMALL);
+	}
+
+	private boolean isBig(){
+		return hasCapability(FoodType.BIG);
+	}
+
 
 	/**
 	 * Adjusts the capabilities of the FoodItem, so that it is able to be eaten by herbivores.
@@ -59,6 +60,11 @@ public abstract class FoodItem extends PortableItem implements Food {
 		removeCapability(FoodType.HERBIVORE);
 	}
 
+
+	/**
+	 * Adjusts the capabilities of the FoodItem, to indicate that it is able to be eaten
+	 * whole by any DinoActor since it is small in size.
+	 */
 	public void setSmallSize(){
 		if (!isSmall()) {
 			addCapability(FoodType.SMALL);
@@ -66,22 +72,17 @@ public abstract class FoodItem extends PortableItem implements Food {
 		removeCapability(FoodType.BIG);
 	}
 
+	/**
+	 * Adjusts the capabilities of the FoodItem, to indicate that it is able to be eaten
+	 * whole by only DinoActors with big jaws since it is big in size.
+	 */
 	public void setBigSize(){
 		if (!isBig()) {
 			addCapability(FoodType.BIG);
 		}
 		removeCapability(FoodType.SMALL);
 	}
-
-	private boolean isSmall(){
-		return hasCapability(FoodType.SMALL);
-	}
-
-	private boolean isBig(){
-		return hasCapability(FoodType.BIG);
-	}
-
-
+	
 	public void setHealPoints(int newHealPoints) {
 		if (newHealPoints > 0){
 			healPoints = newHealPoints;
