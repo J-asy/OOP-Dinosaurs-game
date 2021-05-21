@@ -158,16 +158,17 @@ public class Pterodactyl extends DinoActor implements DynamicMovement, Food {
         Ground ground = location.getGround();
         if (ground instanceof Lake){
             Lake lake = (Lake) ground;
-            if (lake.canEat(this, location)){
+            if (isHungry() && lake.canEat(this, location)){
                 int healPoints = lake.eat(map, location, getBiteSize());
                 if (healPoints > 0) {
                     heal(healPoints);
-                    System.out.printf("%s eats %s.%n", name, lake.foodName());
+                    System.out.printf("%s eats some %s while flying over lake.%n", name, lake.foodName());
                 }
             }
 
-            if (lake.hasWater()){
+            if (isThirsty() && lake.hasWater()){
                 quench();
+                System.out.printf("%s drinks water while flying over lake.%n", name);
             }
         }
     }
