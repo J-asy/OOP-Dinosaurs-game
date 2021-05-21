@@ -51,6 +51,11 @@ public class EvadeDinoBehaviour implements Behaviour {
         return null;
     }
 
+    /**
+     * Returns true if there is a Corpse on the location, false otherwise.
+     * @param location a Location
+     * @return true if there is a Corpse on the location, false otherwise.
+     */
     private boolean landedOnFood(Location location){
         boolean hasCorpse = false;
         for (Item item : location.getItems()){
@@ -62,6 +67,15 @@ public class EvadeDinoBehaviour implements Behaviour {
         return hasCorpse;
     }
 
+    /**
+     * Returns true if the location does not have any DinoActors around it,
+     * apart from the Actor that is trying to flee itself, returns false otherwise.
+     * @param location a Location
+     * @param map map that the DinoActor is on
+     * @param actor An Actor that is trying to flee from other DinoActors
+     * @return true if the location does not have any DinoActors (that is not the actor)
+     * around it, false otherwise.
+     */
     private boolean surroundedByDino(Location location, GameMap map, Actor actor){
         for (Exit exit: location.getExits()){
             Location surroundingLocation = exit.getDestination();
