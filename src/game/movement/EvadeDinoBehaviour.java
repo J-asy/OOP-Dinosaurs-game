@@ -31,7 +31,7 @@ public class EvadeDinoBehaviour implements Behaviour {
     public Action getAction(Actor actor, GameMap map) {
         if (actor instanceof Pterodactyl){
             Location location = map.locationOf(actor);
-            if (landedOnFood(location)) {
+            if (landedOnCorpse(location)) {
                 List<Exit> exits = location.getExits();
                 if (surroundedByDino(location, map, actor)){
 
@@ -56,7 +56,7 @@ public class EvadeDinoBehaviour implements Behaviour {
      * @param location a Location
      * @return true if there is a Corpse on the location, false otherwise.
      */
-    private boolean landedOnFood(Location location){
+    private boolean landedOnCorpse(Location location){
         boolean hasCorpse = false;
         for (Item item : location.getItems()){
             if (item instanceof Corpse){
