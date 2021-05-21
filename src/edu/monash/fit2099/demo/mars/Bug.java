@@ -39,7 +39,7 @@ public class Bug extends Actor {
 	}
 
 	@Override
-	public void actionWhenRaining() {
+	public void doWhenRaining() {
 
 	}
 }

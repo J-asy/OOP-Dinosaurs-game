@@ -53,6 +53,6 @@ public class Player extends Actor {
 	 * Player does nothing when it rains.
 	 */
 	@Override
-	public void actionWhenRaining() {
+	public void doWhenRaining() {
 	}
 }

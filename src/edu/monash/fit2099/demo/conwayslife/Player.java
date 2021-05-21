@@ -35,7 +35,7 @@ public class Player extends Actor {
 	}
 
 	@Override
-	public void actionWhenRaining() {
+	public void doWhenRaining() {
 
 	}
 

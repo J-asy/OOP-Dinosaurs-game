@@ -267,7 +267,7 @@ public abstract class DinoActor extends CapableActor {
      * DinoActor will drink rain water and increment water level when it rains.
      */
     @Override
-    public void actionWhenRaining(){
+    public void doWhenRaining(){
         waterLevel = Math.min(waterLevel + 10, dinoType.getMaxWaterLevel());
     }
 

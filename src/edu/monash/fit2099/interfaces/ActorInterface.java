@@ -10,6 +10,6 @@ public interface ActorInterface {
     /**
      * Allows Actors to do something when it is raining.
      */
-    void actionWhenRaining();
+    void doWhenRaining();
 
 }
