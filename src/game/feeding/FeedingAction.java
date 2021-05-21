@@ -37,13 +37,17 @@ public class FeedingAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
+        int healPoints = 0;
         if (actor instanceof DinoActor) {
             DinoActor dinoActor = (DinoActor) actor;
             Location actorLocation = map.locationOf(actor);
-            int healPoints = food.eat(map, actorLocation, dinoActor.getBiteSize());
+            healPoints = food.eat(map, actorLocation, dinoActor.getBiteSize());
             actor.heal(healPoints);
         }
 
+        if (healPoints <= 0){
+            return actor.toString() + " did not manage to eat " + food.foodName();
+        }
         return menuDescription(actor);
     }
 
@@ -54,14 +58,7 @@ public class FeedingAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        String feedingDescription;
-        if (food == null){
-            feedingDescription = actor.toString() + " does not eat anything.";
-        }
-        else {
-            feedingDescription = actor.toString() + " eats " + food.foodName();
-        }
-        return feedingDescription;
+        return actor.toString() + " eats " + food.foodName();
     }
 
 }
