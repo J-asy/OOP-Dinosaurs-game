@@ -64,6 +64,7 @@ public class Corpse extends FoodItem {
         super("Corpse",'%');
         this.species = species;
         setForCarnivores();
+        setBigSize();
         initializeWaitTurns();
         setHealPoints(getInitialHealPoints());
     }

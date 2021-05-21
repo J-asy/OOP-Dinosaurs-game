@@ -59,6 +59,29 @@ public abstract class FoodItem extends PortableItem implements Food {
 		removeCapability(FoodType.HERBIVORE);
 	}
 
+	public void setSmallSize(){
+		if (!isSmall()) {
+			addCapability(FoodType.SMALL);
+		}
+		removeCapability(FoodType.BIG);
+	}
+
+	public void setBigSize(){
+		if (!isBig()) {
+			addCapability(FoodType.BIG);
+		}
+		removeCapability(FoodType.SMALL);
+	}
+
+	private boolean isSmall(){
+		return hasCapability(FoodType.SMALL);
+	}
+
+	private boolean isBig(){
+		return hasCapability(FoodType.BIG);
+	}
+
+
 	public void setHealPoints(int newHealPoints) {
 		if (newHealPoints > 0){
 			healPoints = newHealPoints;
@@ -107,11 +130,17 @@ public abstract class FoodItem extends PortableItem implements Food {
 	 */
 	@Override
 	public int eat(GameMap map, Location location, int biteSize) {
-		int beforeHealPoints = healPoints;
-		decrementHealPoints(biteSize);
-		if (healPoints == 0) {
-			location.removeItem(this);
+		if (isBig()) {
+			int beforeHealPoints = healPoints;
+			decrementHealPoints(biteSize);
+			if (healPoints == 0) {
+				location.removeItem(this);
+			}
+			return beforeHealPoints - getHealPoints();
 		}
-		return beforeHealPoints - getHealPoints();
+		else {
+			location.removeItem(this);
+			return getHealPoints();
+		}
 	}
 }

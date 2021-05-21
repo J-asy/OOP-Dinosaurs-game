@@ -1,5 +1,6 @@
 package game.player;
 
+import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 import game.FoodItem;
 import game.dinosaurs.CapableActor;
@@ -27,6 +28,7 @@ public class MealKitsItem extends FoodItem {
      */
     public MealKitsItem(String name) {
         super(name, '=');
+        setSmallSize();
     }
 
     /**
@@ -61,4 +63,5 @@ public class MealKitsItem extends FoodItem {
         return capableActor.isHerbivorous() && edibleByHerbivores() ||
                 capableActor.isCarnivorous() && edibleByCarnivores();
     }
+
 }

@@ -46,7 +46,7 @@ public class FeedingAction extends Action {
         }
 
         if (healPoints <= 0){
-            return actor.toString() + " did not manage to eat " + food.foodName();
+            return actor.toString() + " did not find " + food.foodName() + " to eat. ";
         }
         return menuDescription(actor);
     }
@@ -58,7 +58,7 @@ public class FeedingAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor.toString() + " eats " + food.foodName();
+        return actor.toString() + " eats " + food.foodName() + ".";
     }
 
 }

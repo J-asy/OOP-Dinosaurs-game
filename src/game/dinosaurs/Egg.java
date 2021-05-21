@@ -72,6 +72,7 @@ public class Egg extends FoodItem {
         initializeWaitTurns((DINO_EGG_DICTIONARY.get(parent))[0]);
         setParent(parent);
         setForCarnivores();
+        setSmallSize();
         setHealPoints(EGG_HEAL_POINTS);
     }
 

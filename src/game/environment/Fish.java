@@ -21,6 +21,7 @@ public class Fish extends FoodItem {
         super("Fish", 'Q');
         setForCarnivores();
         setHealPoints(FISH_HEAL_POINTS);
+        setSmallSize();
     }
 
     /**

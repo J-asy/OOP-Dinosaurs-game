@@ -27,6 +27,7 @@ public class Fruit extends FoodItem {
         super("Fruit",'F');
         groundTime = 0;
         setForHerbivores();
+        setSmallSize();
         setHealPoints(FRUIT_HEAL_POINTS);
     }
 
