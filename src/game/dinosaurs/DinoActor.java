@@ -3,11 +3,9 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 
 import game.Behaviour;
-import game.attack.AttackAction;
 import game.attack.AttackBehaviour;
 import game.attack.Corpse;
 import game.Probability;
-import game.breed.BreedingAction;
 import game.breed.BreedingBehaviour;
 import game.drinking.DrinkingBehaviour;
 import game.feeding.FeedOnActorBehaviour;
@@ -122,13 +120,13 @@ public abstract class DinoActor extends CapableActor {
     private void initializeDinoBehaviour(){
         // all behaviours that the DinoActor can perform alone
         behaviour = new ArrayList<>();
-
         behaviour.add(new PregnancyBehaviour());
+        behaviour.add(new EvadeDinoBehaviour());
         behaviour.add(new FeedOnItemBehaviour());
         behaviour.add(new DrinkingBehaviour());
         behaviour.add(new FollowMateBehaviour());
-        behaviour.add(new FollowFoodBehaviour());
         behaviour.add(new FollowWaterBehaviour());
+        behaviour.add(new FollowFoodBehaviour());
         behaviour.add(new FollowVictimBehaviour());
         behaviour.add(new WanderBehaviour());
 
@@ -136,7 +134,6 @@ public abstract class DinoActor extends CapableActor {
         // Actor on adjacent squares
         interactiveBehaviours = new ArrayList<>();
         interactiveBehaviours.add(new FeedOnActorBehaviour(this));
-        interactiveBehaviours.add(new EvadeDinoBehaviour());
         interactiveBehaviours.add(new BreedingBehaviour(this));
         interactiveBehaviours.add(new AttackBehaviour(this));
         interactiveBehaviours.add(new FedByPlayerBehaviour(this));
@@ -239,6 +236,14 @@ public abstract class DinoActor extends CapableActor {
         waterLevel = Math.min(waterLevel, dinoType.getMaxWaterLevel());
     }
 
+    /**
+     * DinoActor will drink rain water and increment water level when it rains.
+     */
+    @Override
+    public void actionWhenRaining(){
+        waterLevel = Math.min(waterLevel + 10, dinoType.getMaxWaterLevel());
+    }
+
     public int getHitPoints() {
         return hitPoints;
     }
@@ -255,8 +260,10 @@ public abstract class DinoActor extends CapableActor {
         super.hurt(hurtPoints);
     }
 
-    void decrementWaterLevel(int decrementBy){
-         this.waterLevel--;
+    void decrementWaterLevel(){
+         if (waterLevel > 0) {
+             this.waterLevel--;
+         }
     }
 
     /**
@@ -447,16 +454,16 @@ public abstract class DinoActor extends CapableActor {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action actionToExecute = new DoNothingAction();
-//        System.out.println();
-//        System.out.println("HP: " + hitPoints);
-//        System.out.println("WL: " + waterLevel);
+        System.out.println();
+        System.out.println("HP: " + hitPoints);
+        System.out.println("WL: " + waterLevel);
         System.out.println(canBreed());
 
 
         // do any necessary processing first
         aging();
         decrementHitPoints(1);
-        decrementWaterLevel(1);
+        decrementWaterLevel();
         adjustConsciousness();
 
         if (!checkUnconsciousPeriod(map)) {
@@ -476,7 +483,7 @@ public abstract class DinoActor extends CapableActor {
 
             if (!(actionToExecute instanceof LayEggAction) && actions.size() > 0){
                 for (Action a: actions) {
-                    if (a instanceof BreedingAction || a instanceof AttackAction || a instanceof DynamicMoveAction) {
+                    if (!(a instanceof MoveActorAction || a instanceof DoNothingAction || a instanceof PickUpItemAction)) {
                         actionToExecute = a;
                         break;
                     }

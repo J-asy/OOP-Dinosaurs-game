@@ -6,7 +6,8 @@ public class Rain {
     private static String status = "Clear Sky";
     private static int turns = 0;
 
-    public static void rainingOrNot(){
+    public static boolean rainingOrNot(){
+        boolean rainingOccurs = false;
         turns++;
         if (turns == 10) {
             if(Probability.generateProbability(0.2f)) {
@@ -20,13 +21,14 @@ public class Rain {
                     System.out.println(rain);
                 }
                 status = "Raining";
+                rainingOccurs = true;
             }
             else {
                 turns = 0;
                 status = "Clear Sky";
             }
         }
-
+        return rainingOccurs;
     }
 
     public static String getStatus(){

@@ -48,4 +48,11 @@ public class Player extends Actor {
 		return menu.showMenu(this, actions, display);
 
 	}
+
+	/**
+	 * Player does nothing when it rains.
+	 */
+	@Override
+	public void actionWhenRaining() {
+	}
 }

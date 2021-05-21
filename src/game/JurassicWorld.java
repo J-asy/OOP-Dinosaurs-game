@@ -1,6 +1,7 @@
 package game;
 
 import edu.monash.fit2099.engine.*;
+import game.dinosaurs.DinoActor;
 import game.environment.Rain;
 
 import java.util.Scanner;
@@ -45,7 +46,11 @@ public class JurassicWorld extends World {
             System.out.println(clouds);
 
             //Rain or no rain
-            Rain.rainingOrNot();
+             if (Rain.rainingOrNot()){
+                 for (Actor actor : actorLocations) {
+                     actor.actionWhenRaining();
+                 }
+             }
 
             GameMap playersMap = actorLocations.locationOf(player).map();
             playersMap.draw(display);
