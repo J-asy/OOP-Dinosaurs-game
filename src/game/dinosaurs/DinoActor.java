@@ -21,7 +21,6 @@ import java.util.ArrayList;
 /**
  * Base class for Stegosaur, Brachiosaur and Allosaur for representing dinosaur Actors.
  */
-
 public abstract class DinoActor extends CapableActor {
 
     /**
@@ -36,7 +35,7 @@ public abstract class DinoActor extends CapableActor {
 
     /**
      * A reference to DinoEncyclopedia Enum class that indicates the species
-     * of the DinoActor and contains many useful constants for initialization or comparison etc
+     * of the DinoActor and contains many useful constants for initialization or comparison etc.
      */
     private final DinoEncyclopedia dinoType;
 
@@ -54,14 +53,19 @@ public abstract class DinoActor extends CapableActor {
 
     /**
      * Indicates the number of turns till an unconscious DinoActor
-     * has till it dies
+     * has till it dies.
      */
     private int unconsciousPeriod;
 
+    /**
+     * Water level.
+     */
     private int waterLevel;
 
-    private int maxWaterLevel;
-
+    /**
+     * The size of DinoActor's jaw, will determine the amount of hit points gained
+     * if the food size is too big to be eaten whole.
+     */
     private int biteSize;
 
     /**
@@ -102,16 +106,11 @@ public abstract class DinoActor extends CapableActor {
         setBiteSize();
         setMaturity(isMatured);
         setMaxHitPoints(dinoType.getMaxHitPoints());
-        setMaxWaterLevel(dinoType.getMaxWaterLevel());
         if (!isMatured) {
             setBabyHitPoints(dinoType.getBabyInitialHitPoints());
         }
         initializeDinoBehaviour();
         initializeCapabilities();
-    }
-
-    private void setBiteSize(){
-        biteSize = dinoType.BITE_SIZE;
     }
 
     /**
@@ -194,7 +193,8 @@ public abstract class DinoActor extends CapableActor {
 
     /**
      * Updates the DinoActor's age and display character depending on the
-     * argument passed in.
+     * argument passed in, and adjusts the breeding capability based on whether
+     * it is matured or not.
      * @param maturityStatus true if intend to set DinoActor as matured,
      *                       false otherwise.
      */
@@ -219,21 +219,48 @@ public abstract class DinoActor extends CapableActor {
         }
     }
 
-    private void setMaxWaterLevel(int newMaxWaterLevel) {
-        if (newMaxWaterLevel >= waterLevel) {
-            maxWaterLevel = newMaxWaterLevel;
-        }
-    }
-
     private void setBabyHitPoints(int newHitPoints) {
         if (newHitPoints > 0 && newHitPoints <= maxHitPoints) {
             hitPoints = newHitPoints;
         }
     }
 
+    public int getHitPoints() {
+        return hitPoints;
+    }
+
+    /**
+     * Decrements the dinoActor's food level, which is equivalent to its hitPoints.
+     */
+    void decrementHitPoints(int decrementBy){
+        int hurtPoints = decrementBy;
+        if (hitPoints - decrementBy < 0){
+            hurtPoints = hitPoints;
+        }
+        super.hurt(hurtPoints);
+    }
+
+    private void setBiteSize(){
+        biteSize = dinoType.BITE_SIZE;
+    }
+
+    public int getBiteSize(){
+        return biteSize;
+    }
+
+    /**
+     * Simulates DinoActor drinking water by increasing its water level
+     * according to the gulp size.
+     */
     public void quench(){
         waterLevel += dinoType.getGulpSize();
         waterLevel = Math.min(waterLevel, dinoType.getMaxWaterLevel());
+    }
+
+    void decrementWaterLevel(){
+        if (waterLevel > 0) {
+            this.waterLevel--;
+        }
     }
 
     /**
@@ -244,26 +271,12 @@ public abstract class DinoActor extends CapableActor {
         waterLevel = Math.min(waterLevel + 10, dinoType.getMaxWaterLevel());
     }
 
-    public int getHitPoints() {
-        return hitPoints;
+    public boolean isHungry(){
+        return hitPoints < dinoType.getHungryWhen();
     }
 
-
-    /**
-     * Decrements the dinoActor's food level, which is equivalent to its hitPoints.
-     */
-     void decrementHitPoints(int decrementBy){
-        int hurtPoints = decrementBy;
-        if (hitPoints - decrementBy < 0){
-            hurtPoints = hitPoints;
-        }
-        super.hurt(hurtPoints);
-    }
-
-    void decrementWaterLevel(){
-         if (waterLevel > 0) {
-             this.waterLevel--;
-         }
+    public boolean isThirsty(){
+        return waterLevel < dinoType.getThirstyWhen();
     }
 
     /**
@@ -280,20 +293,18 @@ public abstract class DinoActor extends CapableActor {
         }
     }
 
+    /**
+     * Checks if the water level has reached
+     * the point where the dinoActor will get thirsty.
+     * If yes, a hunger message will be printed out to notify the player.
+     * @param map GameMap that the actor is currently on
+     */
     public void roarIfThirsty(GameMap map){
         if (isThirsty()){
             int x = map.locationOf(this).x();
             int y = map.locationOf(this).y();
             System.out.printf("%s at (%d, %d) getting thirsty!\n", name, x, y);
         }
-    }
-
-    public boolean isHungry(){
-        return hitPoints < dinoType.getHungryWhen();
-    }
-
-    public boolean isThirsty(){
-        return waterLevel < dinoType.getThirstyWhen();
     }
 
     /**
@@ -311,10 +322,6 @@ public abstract class DinoActor extends CapableActor {
                 removeCapability(DinoCapabilities.CAN_BREED);
             }
         }
-    }
-
-    public int getBiteSize(){
-        return biteSize;
     }
 
     /**
