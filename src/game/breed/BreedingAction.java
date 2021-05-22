@@ -42,7 +42,7 @@ public class BreedingAction extends Action {
             breedingDescription = menuDescription(actor);
             DinoActor dinoActor = (DinoActor) actor;
 
-            if (dinoActor.getSex() == DinoCapabilities.FEMALE && Utility.generateProbability(0.5F)) {
+            if (dinoActor.isFemale() && Utility.generateProbability(0.5F)) {
                 dinoActor.setPregnant(true);
                 Location dinoLocation = map.locationOf(dinoActor);
                 breedingDescription += String.format("\n%s at (%d, %d) is pregnant!", dinoActor, dinoLocation.x(),
