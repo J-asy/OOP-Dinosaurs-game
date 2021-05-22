@@ -65,8 +65,7 @@ public class FollowFoodBehaviour extends FollowBehaviour {
         // check if there is food item on the ground
         for (Item item : destination.getItems()) {
             if (item instanceof Food) {
-                Food foodItem = (Food) item;
-                if (foodItem.canEat(dinoActor, destination)) {
+                if (((Food)item).canEat(dinoActor, destination)) {
                     return destination;
                 }
             }
@@ -75,8 +74,7 @@ public class FollowFoodBehaviour extends FollowBehaviour {
         // check if there is food growing (fruit) / living (fish) on the ground
         Ground ground = destination.getGround();
         if (ground instanceof Food){
-            Food foodGround = (Food) ground;
-            if (foodGround.canEat(dinoActor, destination)) {
+            if (((Food)ground).canEat(dinoActor, destination)) {
                 return destination;
             }
         }
@@ -84,8 +82,7 @@ public class FollowFoodBehaviour extends FollowBehaviour {
         // check if there is a food Actor (Pterodactyl) that carnivore can eat
         if (map.isAnActorAt(destination)){
             if (destination.getActor() instanceof Food){
-                Food foodActor = (Food) destination.getActor();
-                if (foodActor.canEat(dinoActor, destination)){
+                if (((Food)destination.getActor()).canEat(dinoActor, destination)){
                     return destination;
                 }
             }
