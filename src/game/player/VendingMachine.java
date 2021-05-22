@@ -73,8 +73,8 @@ public class VendingMachine extends Ground {
             System.out.println("Allo egg Get!");
         }
         else if (choice == 7 && ecoPoints >= 1000){
-            Egg allosaurEgg = new Egg(DinoEncyclopedia.PTERODACTYL);
-            actor.addItemToInventory(allosaurEgg);
+            Egg pterodactylEgg = new Egg(DinoEncyclopedia.PTERODACTYL);
+            actor.addItemToInventory(pterodactylEgg);
             EcoPoints.decrementEcoPoints(1000);
             System.out.println("Ptero egg Get!");
         }
