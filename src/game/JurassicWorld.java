@@ -55,6 +55,7 @@ public class JurassicWorld extends World {
             //Show eco points
             System.out.println("ECO points: " + EcoPoints.getEcoPoints());
 
+            //Decide whether the player wins or lose if it is Challenge mode
             totalMoves++;
             if (mode == 1) {
                 int ecoPoints = EcoPoints.getEcoPoints();
@@ -69,6 +70,7 @@ public class JurassicWorld extends World {
                 }
             }
 
+            //Updates eco points for next game
             if (!stillRunning()){
                 EcoPoints.decrementEcoPoints(EcoPoints.getEcoPoints());
                 continue;
@@ -90,18 +92,30 @@ public class JurassicWorld extends World {
         display.println(endGameMessage());
     }
 
+    /**
+     * Sets the allowed number of moves that the player can play in Challenge Mode
+     * @param targetMoves the allowed number of moves that player can play
+     */
     public void setTargetMoves(int targetMoves){
         if (targetMoves > 0){
             this.targetMoves = targetMoves;
         }
     }
 
+    /**
+     * The eco points that the player needs to reach within an allowed number of moves
+     * @param targetEcoPoints eco points that player needs to get
+     */
     public void setTargetEcoPoints(int targetEcoPoints){
         if (targetEcoPoints >= 0){
             this.targetEcoPoints = targetEcoPoints;
         }
     }
 
+    /**
+     * Sets the game mode chosen by player (Challenge / Sandbox)
+     * @param mode the game mode
+     */
     public void setMode(int mode){
         this.mode = mode;
     }

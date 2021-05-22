@@ -9,9 +9,10 @@ import java.util.Scanner;
 public abstract class Utility {
 
     /**
-     * Method to generate probability using random float.
-     * @param probability
-     * @return
+     * Method that uses random float to determine whether an event occurs and returns true if it
+     * does or returns false otherwise.
+     * @param probability probability of an event occurring
+     * @return true if event happens, false otherwise
      */
     public static boolean generateProbability(float probability){
 

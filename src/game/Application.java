@@ -17,7 +17,7 @@ import game.player.VendingMachine;
 public class Application {
 
 	public static void main(String[] args) {
-//		World world = new World(new Display());
+
 		int[] pointsMovesMode;
 
 		do {
