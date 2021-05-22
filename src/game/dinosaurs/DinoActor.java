@@ -461,11 +461,6 @@ public abstract class DinoActor extends CapableActor {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action actionToExecute = new DoNothingAction();
-        System.out.println();
-        System.out.println("HP: " + hitPoints);
-        System.out.println("WL: " + waterLevel);
-        System.out.println(canBreed());
-
 
         // do any necessary processing first
         aging();
@@ -478,9 +473,9 @@ public abstract class DinoActor extends CapableActor {
             roarIfHungry(map);
             roarIfThirsty(map);
             adjustBreedingCapability();
-//
-//            // calling getAction for every behaviour can help us to do some necessary processing
-//            // as well even if it returns null in the end
+
+            // calling getAction for every behaviour can help us to do some necessary processing
+            // as well even if it returns null in the end
             for (Behaviour b : behaviour) {
                 Action resultingAction = b.getAction(this, map);
                 if (resultingAction != null && actionToExecute instanceof DoNothingAction) {
