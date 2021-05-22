@@ -132,8 +132,8 @@ public abstract class DinoActor extends CapableActor {
         // all behaviours that the DinoActor can perform with another
         // Actor on adjacent squares
         interactiveBehaviours = new ArrayList<>();
-        interactiveBehaviours.add(new FeedOnActorBehaviour(this));
         interactiveBehaviours.add(new BreedingBehaviour(this));
+        interactiveBehaviours.add(new FeedOnActorBehaviour(this));
         interactiveBehaviours.add(new AttackBehaviour(this));
         interactiveBehaviours.add(new FedByPlayerBehaviour(this));
     }
