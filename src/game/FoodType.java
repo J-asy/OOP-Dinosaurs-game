@@ -6,6 +6,6 @@ package game;
 public enum FoodType {
     CARNIVORE,
     HERBIVORE,
-    SMALL,
-    BIG
+    SMALL, // if food size small, can be eaten whole by all DinoActors
+    BIG // if food size big, cannot be eaten whole by small DinoActors
 }
