@@ -20,6 +20,7 @@ They were very popular in the days before home computers were capable of elabora
 In this game, you are running a dinosaur park. Dinosaurs can eat, breed, attack other dinosaurs and even fly. 
 Players must care for the dinosaurs and maintain an ecological balance so that they have enough to eat.
 
+The following table contains the symbols representing different characters / items in the game for easy reference.
 | Character | Symbol |
 | -------- | ------ |
 | player | @ |
@@ -41,7 +42,7 @@ Players must care for the dinosaurs and maintain an ecological balance so that t
 | MealKitsItem | = |
 | Bridge | ! |
 
-Note that the baby dinosaurs have lowercase symbols, but big dinosaurs have uppercase symbols. Eg, baby stegosaurus - s; matured stegosaurus - S.
+Note that the baby dinosaurs have lowercase symbols, while adult dinosaurs have uppercase symbols. Eg, baby stegosaurus - s; matured stegosaurus - S.
 
 
 
