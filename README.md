@@ -20,6 +20,45 @@ They were very popular in the days before home computers were capable of elabora
 In this game, you are running a dinosaur park. Dinosaurs can eat, breed, attack other dinosaurs and even fly. 
 Players must care for the dinosaurs and maintain an ecological balance so that they have enough to eat.
 
+| Character | Symbol |
+| --------- | ------ |
+| player | @ |
+| --------------- |
+|  Dinosaurs  |
+| --------------- |
+| Stegosuar | s |
+| --------- | ------ |
+| Brachiosaur | b |
+| --------- | ------ |
+| Allosaur | a |
+| --------- | ------ |
+| Pterodactyl | p |
+| --------------- |
+| Fruits on the ground | F |
+| --------------- |
+|  Bush  |
+| --------------- |
+| Small | ~ |
+| Big | * |
+| with fruits | ^ |
+| --------------- |
+|  Tree  |
+| --------------- |
+| Small | ~ |
+| Medium | t |
+| Big | T |
+| with fruits | & |
+| --------------- |
+| Lake | ~ |
+| --------- | ------ |
+| Egg | o |
+| --------- | ------ |
+| Coprse | % |
+| --------- | ------ |
+| MealKitsItem | = |
+| --------- | ------ |
+| Bridge | ! |
+
 
 
 
