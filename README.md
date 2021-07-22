@@ -4,7 +4,7 @@
 
 This project was implemented over the course of 6 weeks with two other teammates. 
 With the game engine provided, our team worked to build on it to develop a dinosaurs game with OOP and design principles (SOLID, DRY) in mind. 
-A design rationale (and other design documents) was prepared for each iteration of the design.
+A [design rationale (and other design documents)](https://github.com/J-asy/OOP-Dinosaurs-game/tree/master/docs) was prepared for each iteration of the design.
 At the end of the project, a document for [recommendations to the game engine](https://github.com/J-asy/OOP-Dinosaurs-game/blob/master/docs/Assignment%203%20docs/Recommendations%20for%20engine%20Assignment%203.pdf) was written with the pros and cons of the suggestions made based on design principles to improve its design.
 
 A [jar file](https://github.com/J-asy/OOP-Dinosaurs-game/blob/master/dino%20game.jar) is available for download to run the game on your command prompt easily:
