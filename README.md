@@ -7,7 +7,7 @@ With the game engine provided, our team worked to build on it to develop a dinos
 A design rationale (and other design documents) was prepared for each iteration of the design.
 At the end of the project, a document for recommendations to the game engine was written with the pros and cons of the suggestions made based on design principles to improve its design.
 
-A jar file is available for download to run the game on your command prompt easily via 'java -jar dino-game.jar'
+A jar file is available for download to run the game on your command prompt easily via `java -jar dino-game.jar`.
 
 
 ## Game description
