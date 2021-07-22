@@ -21,29 +21,26 @@ In this game, you are running a dinosaur park. Dinosaurs can eat, breed, attack 
 Players must care for the dinosaurs and maintain an ecological balance so that they have enough to eat.
 
 | Character | Symbol |
-| --------- | ------ |
 | player | @ |
-|  Dinosaurs  |
 | Stegosuar | s |
 | Brachiosaur | b |
 | Allosaur | a |
 | Pterodactyl | p |
 | Fruits on the ground | F |
-|  Bush  |
-| Small | ~ |
-| Big | * |
-| with fruits | ^ |
-|  Tree  |
-| Small | ~ |
-| Medium | t |
-| Big | T |
-| with fruits | & |
+| Small bush | ~ |
+| Big bush | * |
+| Bush with fruits | ^ |
+| Small tree | ~ |
+| Medium sized tree | t |
+| Big tree | T |
+| Tree with fruits | & |
 | Lake | ~ |
 | Egg | o |
 | Coprse | % |
 | MealKitsItem | = |
 | Bridge | ! |
 
+Note that the baby dinosaurs have lowercase symbols, but big dinosaurs have uppercase symbols. Eg, baby stegosaurus - s; matured stegosaurus - S.
 
 
 
