@@ -21,6 +21,7 @@ In this game, you are running a dinosaur park. Dinosaurs can eat, breed, attack 
 Players must care for the dinosaurs and maintain an ecological balance so that they have enough to eat.
 
 | Character | Symbol |
+| -------- | ------ |
 | player | @ |
 | Stegosuar | s |
 | Brachiosaur | b |
