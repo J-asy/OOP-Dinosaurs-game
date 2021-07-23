@@ -44,5 +44,5 @@ The following table contains the symbols representing different characters / ite
 Note that the baby dinosaurs have lowercase symbols, while adult dinosaurs have uppercase symbols. Eg, baby stegosaurus - s; matured stegosaurus - S.
 
 
-![screen-gif](./"dino game demo"/dino-game-gif.gif)
+![screen-gif](./dino-game-gif.gif)
 
