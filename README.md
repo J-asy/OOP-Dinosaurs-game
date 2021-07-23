@@ -10,7 +10,6 @@ A [jar file](https://github.com/J-asy/OOP-Dinosaurs-game/blob/master/dino%20game
 1. `cd directory-containing-jar-file`
 2. `java -jar "dino game.jar"`
 
-
 ## Game description
 
 This is a text-based “rogue-like” game. Rogue-like games are named after the first such program: a fantasy game named rogue. 
@@ -28,3 +27,7 @@ For more detailed information, take a look at [this markdown](./docs/game-descri
 ## Plagiarism Disclaimer
 
 Code in this repository is not endorsed by Monash University. The author will not be held responsible for any breaches in academic integrity if code is copied without proper referencing.
+
+## Credits
+
+Ascii art from [this site](https://www.asciiart.eu/).
