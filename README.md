@@ -19,8 +19,9 @@ They were very popular in the days before home computers were capable of elabora
 In this game, you are running a dinosaur park. Dinosaurs can eat, breed, attack other dinosaurs and even fly. 
 Players must care for the dinosaurs and maintain an ecological balance so that they have enough to eat.
 
-For more detailed information, take a look at [this](./docs/game-description.pdf).
+For more detailed information, take a look at [this markdown](./docs/game-description.md).
 
-The following is a short demo of game:
+## Demo
+
 ![screen-gif](./docs/dino-game-gif.gif)
 
