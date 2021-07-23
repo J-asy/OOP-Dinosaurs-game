@@ -27,4 +27,4 @@ For more detailed information, take a look at [this markdown](./docs/game-descri
 
 ## Plagiarism Disclaimer
 
-Code in this repository is not endorsed by Monash University. The author will not be held responsible breaches in academic integrity if code is copied without proper referencing.
+Code in this repository is not endorsed by Monash University. The author will not be held responsible for any breaches in academic integrity if code is copied without proper referencing.
