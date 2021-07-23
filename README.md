@@ -26,8 +26,9 @@ For more detailed information, take a look at [this markdown](./docs/game-descri
 
 ## Plagiarism Disclaimer
 
-Code in this repository is not endorsed by Monash University. The author will not be held responsible for any breaches in academic integrity if code is copied without proper referencing.
+Code in this repository is not endorsed by Monash University. The author will not be held responsible for any breaches in academic integrity if code (and design documents) is copied without proper referencing.
 
 ## Credits
 
+Code in [this directory](https://github.com/J-asy/OOP-Dinosaurs-game/tree/master/src/game) building upon game engine by Joanne Ang, Nelly Tay and Jonathan Wong. 
 Ascii art from [this site](https://www.asciiart.eu/).
